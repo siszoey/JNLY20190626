@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //Jdk1.8
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:${APPCOMPAT_VERSION}"
+    implementation "com.android.support:design:${APPCOMPAT_VERSION}"
+
+    //zy加
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.esri.arcgisruntime:arcgis-android:100.4.0'
+    implementation 'com.android.support:multidex:1.0.2'
+    api 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    api 'io.reactivex.rxjava2:rxjava:2.1.12'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'com.google.code.gson:gson:2.8.5'
+    //空间数据库
+    api 'com.github.sevar83:android-spatialite:2.0.0'
+    //移除崩溃处理
+    api 'com.tonystark.android:defense_crash:2.0.0'
+    //rx生命周期
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
+    api 'com.trello.rxlifecycle2:rxlifecycle-navi:2.1.0'
+    //网络请求
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+    //
+    implementation 'com.llew:reflect:1.0.1'//反射
+    api 'com.blankj:utilcode:1.18.2'
+
+}

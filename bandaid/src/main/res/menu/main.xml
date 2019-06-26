@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:visible="false"
+        android:id="@+id/checkboxItem"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/checkbox" />
+
+    <item
+        android:id="@+id/menu_right_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_right_task"
+        android:icon="@drawable/ic_dashboard"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_right_close"
+        android:icon="@drawable/ic_close"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_right_add"
+        android:icon="@drawable/ic_add"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/radiobuttonItem"
+        android:title="@string/radiobutton_clickme"
+        app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/radioOne"
+                    android:title="@string/radiobutton" />
+                <item
+                    android:id="@+id/radioTwo"
+                    android:checked="true"
+                    android:title="@string/radiobutton" />
+                <item
+                    android:id="@+id/radioThree"
+                    android:title="@string/radiobutton" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

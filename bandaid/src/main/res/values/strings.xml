@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">bandaid</string>
+    <string name="add">增</string>
+    <string name="search">搜索</string>
+
+
+    <!--以下是样式引擎-->
+    <string name="settings">Settings</string>
+    <string name="header">Header</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel nisl vel eros accumsan lacinia. Pellentesque vel tellus vitae purus interdum sagittis. Pellentesque vehicula odio ac nibh bibendum suscipit.</string>
+    <string name="checkbox">Checkbox</string>
+    <string name="radiobutton">Ratio Button</string>
+    <string name="edit_text">Input field</string>
+
+    <string name="primary_color">基色</string>
+    <string name="primary_color_summary">更改主主题颜色</string>
+
+    <string name="accent_color">标注主题颜色</string>
+    <string name="accent_color_summary">更改标注主题颜色</string>
+
+    <string name="primary_text_color">主文本颜色</string>
+    <string name="primary_text_color_summary">更改主文本颜色</string>
+
+    <string name="secondary_text_color">次要文本颜色</string>
+    <string name="secondary_text_color_summary">更改次要文本颜色</string>
+
+    <string name="colored_status_bar">状态栏蓝色</string>
+    <string name="colored_status_bar_summary">切换状态栏着色</string>
+
+    <string name="colored_nav_bar">导航条颜色</string>
+    <string name="colored_nav_bar_summary">切换导航条颜色</string>
+
+    <string name="drawer_about">About</string>
+    <string name="drawer_home">Home</string>
+    <string name="drawer_close">Close nav drawer</string>
+    <string name="drawer_open">Open nav drawer</string>
+
+    <string name="about">About</string>
+    <string name="about_body"><![CDATA[
+        app-theme-engine, a library  designed by <b>Aidan Follestad</b>.<br/>
+        <a href=\'http://aidanfollestad.com\'>Website</a>&nbsp;&nbsp;
+        <a href=\'https://twitter.com/afollestad\'>Twitter</a>&nbsp;&nbsp;
+        <a href=\'https://google.com/+AidanFollestad\'>Google+</a>&nbsp;&nbsp;
+        <a href=\'https://github.com/afollestad\'>GitHub</a>&nbsp;&nbsp;
+        <a href=\'https://www.linkedin.com/in/afollestad\'>LinkedIn</a>
+    ]]></string>
+    <string name="dismiss">Dismiss</string>
+    <string name="radiobutton_clickme">Radio button (click me)</string>
+
+    <!--一下崩溃日志-->
+    <string name="system_crash_info">非常抱歉出现这种情况，为了方便排查问题，提升app稳定性，请提交此次崩溃日志！</string>
+    <string name="system_crash_check">记住我的选择</string>
+
+    <!--以下所有网络请求页面根布局-->
+    <string name="status_view_empty_hint">暂无数据</string>
+    <string name="status_view_error_hint">出错了</string>
+    <string name="status_view_nonet_hint">网络错误</string>
+    <string name="status_view_load_hint">加载中</string>
+
+</resources>
