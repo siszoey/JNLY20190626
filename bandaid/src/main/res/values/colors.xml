@@ -4,16 +4,145 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="transparent">#00000000</color>
-    <color name="black">#FF000000</color>
-    <color name="gray">#bfbfbf</color>
+
     <color name="lightgray">#32d3d3d3</color>
     <color name="gainsboro">#dcdcdc</color>
     <color name="aqua">#00ffff</color>
-    <color name="blue">#0000ff</color>
-    <color name="red">#ff0000</color>
     <color name="darkturquoise">#00ced1</color>
     <color name="custom_red">#fe3232</color>
-    <color name="border_clo">#bfbfbf</color>
+
+
+    <!--一下颜色随意-->
+    <color name="themeTextColor">#DDFFFFFF</color>
+    <color name="themeColor">#4ba0ff</color>
+    <color name="themeBg">#F0F3F6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="milky_white">#ffefebe7</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0000ff</color>
+    <color name="transparent">#0000</color>
+    <color name="black">#000000</color>
+    <color name="gray">#ffd9d9d9</color>
+
+    <!--拖动空间-->
+    <color name="subscribe_bg">#fff5f5f5</color>
+    <color name="subscribe_item_text_color_pressed_night">#ff303030</color>
+    <color name="subscribe_item_focused_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_drag_stroke">#ffd2d2d2</color>
+    <color name="subscribe_item_drag_bg">#fff5f5f5</color>
+    <color name="subscribe_item_drag_stroke_night">#ff464646</color>
+    <color name="subscribe_item_drag_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_bg">#ffffffff</color>
+    <color name="subscribe_item_selected_stroke">#ffcc3131</color>
+    <color name="subscribe_item_disabled_bg">#ffefefef</color>
+    <color name="subscribe_item_disabled_stroke">#ffd9d9d9</color>
+    <color name="subscribe_item_pressed_bg">#fff9f9f9</color>
+    <color name="subscribe_item_pressed_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_normal_bg">#fff5f5f5</color>
+    <color name="subscribe_item_normal_stroke">#ffcdcdcd</color>
+    <color name="subscribe_item_focused_bg_night">#ff252525</color>
+    <color name="subscribe_item_focused_stroke_night">#ff464646</color>
+    <color name="subscribe_item_selected_bg_night">#ff252525</color>
+    <color name="subscribe_item_selected_stroke_night">#ffbc494d</color>
+    <color name="subscribe_item_disabled_bg_night">#ff2b2b2b</color>
+
+    <!-- **********************************************************************************
+    ****************************      公共Color(Start)     *********************************
+    **************************************************************************************** -->
+    <!-- 蓝色 -->
+    <color name="hx_blue">#4ba0ff</color>
+    <color name="hx_blue_a">#4ba0ff80</color><!-- 蓝色半透明 -->
+    <color name="sky_blue">#f0ffff</color>
+
+    <!-- 浅蓝色 -->
+    <color name="hx_light_blue">#50c1e9</color>
+    <!--青色-->
+    <color name="hx_cyan">#35FFE2</color>
+    <!-- 粉色 -->
+    <color name="hx_pink">#FC69C9</color>
+    <!-- 银色 -->
+    <color name="hx_silvery">#c0c0c0</color>
+    <!-- 浅蓝色 -->
+    <color name="light_blue">#e3feff</color>
+    <color name="light_blue1">#F2F8FD</color>
+
+    <!-- 淡灰色 -->
+    <color name="hx_ligth_grey_back">#e6e9ed</color>
+
+    <!-- 浅灰色 -->
+    <color name="hx_ligth_grey">#c7cfda</color>
+
+    <!-- 深灰色 -->
+    <color name="hx_deep_grey">#646e78</color>
+
+    <!-- 橙色 -->
+    <color name="hx_orange">#fd6e4e</color>
+
+    <!-- 白色 -->
+    <color name="hx_white">#f6f7fb</color>
+
+    <!-- 黑色 -->
+    <color name="hx_black">#0e0e0e</color>
+
+    <!-- 纯黑色 -->
+    <color name="hx_black_d">#000000</color>
+
+    <!-- 黄色 -->
+    <color name="hx_yellow">#ffae02</color>
+
+    <!-- 绿色 -->
+    <color name="hx_green">#37bd9c</color>
+    <!--紫色-->
+    <color name="hx_purple">#AA66CC</color>
+    <!-- 红色 -->
+    <color name="hx_red">#f55d72</color>
+
+    <!-- 对话框，黑色背景 -->
+    <color name="hx_dialog_black_background">#0e0e0e</color>
+
+    <!-- 对话框，标题颜色 -->
+    <color name="hx_dialog_title">#57954d</color>
+
+    <!-- 对话框，黑色分割线 -->
+    <color name="hx_dialog_black_divider">#000000</color>
+
+    <!-- 对话框，内容字体白色 -->
+    <color name="hx_dialog_content">#ffffff</color>
+
+    <!-- 标题栏按钮背景颜色 -->
+    <drawable name="button_backward_pressed">#FF3030</drawable>
+    <drawable name="button_backward_normal">#0000</drawable>
+
+
+    <!-- **********************************************************************************
+    ****************************      公共Color(End)     *********************************
+    **************************************************************************************** -->
+    <!-- androidColor -->
+    <color name="androidColorA">#33B5E5</color>
+    <color name="androidColorB">#AA66CC</color>
+    <color name="androidColorC">#99CC00</color>
+    <color name="androidColorD">#FFBB33</color>
+    <color name="androidColorE">#ff4444</color>
+
+    <!-- liujifei-->
+    <color name="color_dark_grey">#808080</color>
+    <color name="color_black">#000000</color>
+    <color name="color_green">#00FF00</color>
+    <color name="color_red">#FF0000</color>
+    <color name="color_white">#FFFFFF</color>
+
+    <color name="color_gray">#a7a2a2</color>
+    <color name="color_gray_white">#f1ecec</color>
+    <color name="color_bkgray">#f5f0f0</color>
+
+
+    <!-- 描边颜色 -->
+    <color name="border_clo">#ccc</color>
+    <color name="border_clo1">#E4E4E4</color>
+    <color name="text_clo">#333</color>
+
+    <!--文字图片查看-->
+    <color name="image_pager_title_color">#FF3A3B40</color>
+    <color name="image_pager_bg_color">#020202</color>
+    <color name="image_pager_text_bg_color">#FF3B4151</color>
 </resources>

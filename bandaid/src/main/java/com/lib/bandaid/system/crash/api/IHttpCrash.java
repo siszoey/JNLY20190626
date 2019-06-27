@@ -5,10 +5,10 @@ import com.lib.bandaid.system.crash.bean.CrashInfo;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
-import rx.Observable;
 
 /**
  * Created by zy on 2019/4/24.

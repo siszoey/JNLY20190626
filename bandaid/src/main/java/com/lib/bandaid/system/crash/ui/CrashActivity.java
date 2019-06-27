@@ -16,7 +16,6 @@ import com.lib.bandaid.utils.AppUtil;
 import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.utils.ProgressDialogCUtil;
 
-import rx.Observable;
 
 /**
  * Created by zy on 2019/4/23.

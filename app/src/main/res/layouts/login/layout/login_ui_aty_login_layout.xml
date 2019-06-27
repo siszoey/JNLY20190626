@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/milky_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/ic_mobile_flag" />
+
+
+            <com.lib.bandaid.system.theme.views.ATEEditText
+                android:id="@+id/cetPhoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:focusable="true"
+                android:hint="用户名"
+                android:inputType="textVisiblePassword"
+                android:singleLine="true"
+                android:textColor="@color/color_gray"
+                android:textColorHint="@color/color_gray"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/iv_clean_phone"
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_clear"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View style="@style/h_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="13dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/ic_password_flag" />
+
+            <com.lib.bandaid.system.theme.views.ATEEditText
+                android:id="@+id/cetPwd"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/color_gray"
+                android:textColorHint="@color/color_gray"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/clean_password"
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_clear"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivShowPwd"
+                android:layout_width="40dp"
+                android:layout_height="fill_parent"
+                android:adjustViewBounds="false"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_pass_gone" />
+        </LinearLayout>
+
+        <View style="@style/h_line" />
+
+        <TextView
+            android:id="@+id/tvLoginInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/bg_btn_login_selected"
+            android:text="登录"
+            android:textColor="@color/color_white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="7dp">
+
+        <com.lib.bandaid.system.theme.views.ATECheckBox
+            android:id="@+id/ckRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="4dp"
+            android:checked="true"
+            android:text="记住账号密码"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvResetPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp"
+            android:text="重置密码"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="北京航天泰坦"
+                android:textColor="@color/hx_yellow"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

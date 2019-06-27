@@ -13,7 +13,7 @@ public interface INetRequest {
     public interface BasePresenter<T extends BaseView> {
         void attachView(T view);
 
-        //void detachView(BaseActivity baseActivity);
+        void detachView();
 
         <C, R> C request(Class<C> c, NetWorkListen<R> r);
 
@@ -35,7 +35,7 @@ public interface INetRequest {
         void showSuccess(String message);
 
         //失败重试
-        void showFaild(String message);
+        void showFail(String message);
 
         //显示当前网络不可用
         void showNoNet();

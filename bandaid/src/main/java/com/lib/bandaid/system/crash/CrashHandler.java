@@ -35,7 +35,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by zy on 2017/12/11.
@@ -209,7 +210,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      *
      * @param ex
      * @return 返回文件名称, 便于将文件传送到服务器
-     * @throws Exception
+     * @throws
      */
     private String saveCrashInfoFile(Throwable ex) throws Exception {
         StringBuffer sb = new StringBuffer();

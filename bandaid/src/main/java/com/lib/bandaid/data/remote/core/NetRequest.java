@@ -19,13 +19,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
+import retrofit2.Response;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.BasePresenter<T> {
 
-    protected T mView;
+    protected T view;
     private ConcurrentHashMap<Observable, Disposable> networkMap;
 
     public NetRequest() {
@@ -35,13 +36,13 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
 
     @Override
     public void attachView(T view) {
-        this.mView = view;
+        this.view = view;
     }
 
-    /*@Override
-    public void detachView(BaseActivity baseActivity) {
-
-    }*/
+    @Override
+    public void detachView() {
+        this.view = null;
+    }
 
     @Override
     public <C, R> C request(Class<C> c, NetWorkListen<R> r) {
@@ -50,7 +51,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
 
     @Override
     public <C, R> C request(Class<C> c, NetWorkListen<R> r, boolean isShowLoading) {
-        if (isShowLoading && mView != null) mView.showLoading();
+        if (isShowLoading && view != null) view.showLoading();
         C IApi = RetrofitManager.create(c);
         Object o = Proxy.newProxyInstance(c.getClassLoader(), new Class[]{c}, new InvokeRequestHandler<R>(IApi, r));
         return (C) o;
@@ -58,11 +59,11 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
 
     private final class InvokeRequestHandler<R> implements InvocationHandler {
         private Object obj;
-        private NetWorkListen<R> mNetWorkResult;
+        private NetWorkListen<R> netWorkResult;
 
         public InvokeRequestHandler(Object o, NetWorkListen<R> netWorkResult) {
             obj = o;
-            mNetWorkResult = netWorkResult;
+            this.netWorkResult = netWorkResult;
         }
 
         @Override
@@ -70,24 +71,26 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
             Object invoke = method.invoke(obj, args);
             if (invoke instanceof Observable) {
                 Observable<R> observable = (Observable) invoke;
-                Disposable disposable = observable.compose(mView.bindToLife())
+                Disposable disposable = observable.compose(view.bindToLife())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(dataResponse -> {
                             networkMap.remove(observable);
                             if (dataResponse instanceof BaseResult) {
-                                if (((BaseResult) dataResponse).getCode() == 0) {
-                                    mNetWorkResult.onSuccess(dataResponse);
+                                if (((BaseResult) dataResponse).getCode() == 200) {
+                                    netWorkResult.onSuccess(dataResponse);
                                 } else {
-                                    ToastUtils.showShort("加载失败:服务器响应码:" + ((BaseResult) dataResponse).getCode());
+                                    ToastUtils.showShort("响应码:" + ((BaseResult) dataResponse).getCode() + " 信息:" + ((BaseResult) dataResponse).getMsg());
                                     LogUtils.eTag("NetworkError", ((BaseResult) dataResponse).getCode() + "---" + ((BaseResult) dataResponse).getMsg());
-                                    mNetWorkResult.onError(((BaseResult) dataResponse).getCode(), ((BaseResult) dataResponse).getMsg(), null);
+                                    netWorkResult.onError(((BaseResult) dataResponse).getCode(), ((BaseResult) dataResponse).getMsg(), null);
                                 }
+                            } else if (dataResponse instanceof Response) {
+
                             } else {
-                                mNetWorkResult.onSuccess(dataResponse);
+                                netWorkResult.onSuccess(dataResponse);
                             }
                             if (networkMap.size() == 0) {
-                                if (mView != null) mView.hideLoading();
+                                if (view != null) view.hideLoading();
                             }
                         }, throwable -> {
                             networkMap.remove(observable);
@@ -106,15 +109,14 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                                 HttpException httpException = (HttpException) throwable;
                                 ToastUtils.showShort("加载失败:" + httpException.getMessage());
                                 LogUtils.eTag("NetworkError", httpException.response().raw().toString());
-                                if (mNetWorkResult != null) {
-                                    mNetWorkResult.onError(httpException.code(), throwable.getMessage(), throwable);
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(httpException.code(), throwable.getMessage(), throwable);
                                 }
                             } else if (throwable instanceof SocketTimeoutException) {
-                                //SocketTimeoutException socketTimeoutException = (SocketTimeoutException) throwable;
                                 ToastUtils.showShort("加载失败:" + "响应超时");
                                 LogUtils.eTag("NetworkError", "响应超时:" + value);
-                                if (mNetWorkResult != null) {
-                                    mNetWorkResult.onError(-2, throwable.getMessage(), throwable);
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(-2, throwable.getMessage(), throwable);
                                 }
                             } else if (throwable instanceof UnknownHostException) {
                                 UnknownHostException unknownHostException = (UnknownHostException) throwable;
@@ -124,26 +126,26 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                             } else {
                                 ToastUtils.showShort("加载失败:" + throwable.getMessage());
                                 LogUtils.eTag("NetworkError", throwable.getMessage());
-                                if (mNetWorkResult != null) {
-                                    mNetWorkResult.onError(-1, throwable.getMessage(), throwable);
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(-1, throwable.getMessage(), throwable);
                                 }
                             }
                             throwable.printStackTrace();
                             if (networkMap.size() == 0) {
-                                if (mView != null) mView.hideLoading();
+                                if (view != null) view.hideLoading();
                             }
                         });
                 networkMap.put(observable, disposable);
-                mNetWorkResult.onStart(disposable);
+                netWorkResult.onStart(disposable);
             }
             return invoke;
         }
 
         private void loadError(Throwable throwable) {
-            if (mView != null)mView.hideLoading();
+            if (view != null) view.hideLoading();
             ToastUtils.showShort("加载失败");
-            if (mNetWorkResult != null) {
-                mNetWorkResult.onError(-1, throwable.getMessage(), throwable);
+            if (netWorkResult != null) {
+                netWorkResult.onError(-1, throwable.getMessage(), throwable);
             }
             throwable.printStackTrace();
         }
