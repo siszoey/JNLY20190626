@@ -1,6 +1,7 @@
 package com.titan.jnly.login.ui.aty;
 
 import com.lib.bandaid.data.remote.core.INetRequest;
+import com.titan.jnly.login.bean.User;
 
 public interface LoginAtyContract {
 
@@ -10,7 +11,7 @@ public interface LoginAtyContract {
 
     interface Presenter extends INetRequest.BasePresenter<View> {
 
-        void Login(String account, String password);
+        void Login(User user);
 
     }
 

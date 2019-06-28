@@ -1,7 +1,7 @@
 package com.lib.bandaid.system.theme.aty;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 

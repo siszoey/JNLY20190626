@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <!--app:navigationIcon="@drawable/ic_back"-->
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/_toolbar"
         style="@style/common_tool_bar_style"
         app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
@@ -19,7 +19,7 @@
             android:id="@+id/btnRight"
             style="@style/common_tool_bar_style_button" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <!--<FrameLayout

@@ -2,7 +2,7 @@ package com.lib.bandaid.system.theme.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.AttrRes;
+import androidx.annotation.AttrRes;
 
 /**
  * @author Aidan Follestad (afollestad)

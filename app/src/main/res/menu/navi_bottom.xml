@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navi_decision"
+        android:icon="@drawable/ic_navi_decision_24dp"
+        android:title="林情决策" />
+
+    <item
+        android:id="@+id/navi_manage"
+        android:icon="@drawable/ic_navi_manage_24dp"
+        android:title="资源管理" />
+
+    <item
+        android:id="@+id/navi_watch"
+        android:icon="@drawable/ic_navi_watch_24dp"
+        android:title="林业监管" />
+
+    <item
+        android:id="@+id/navi_my"
+        android:icon="@drawable/ic_navi_my_24dp"
+        android:title="个人中心" />
+</menu>

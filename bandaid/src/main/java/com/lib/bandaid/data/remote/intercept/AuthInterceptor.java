@@ -1,6 +1,6 @@
 package com.lib.bandaid.data.remote.intercept;
 
-import com.lib.bandaid.app.BaseApplication;
+import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.remote.header.ComHeader;
 import com.lib.bandaid.utils.CacheUtil;
 import com.lib.bandaid.utils.SimpleMap;
@@ -38,7 +38,7 @@ public class AuthInterceptor implements Interceptor {
             authInterceptor = new AuthInterceptor();
         }
         if (httpCache == null) {
-            httpCache = CacheUtil.get(BaseApplication.baseApp);
+            httpCache = CacheUtil.get(BaseApp.baseApp);
         }
         return authInterceptor;
     }

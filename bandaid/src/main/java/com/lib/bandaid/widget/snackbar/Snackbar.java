@@ -10,11 +10,11 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.support.annotation.AnimRes;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
-import android.support.v4.view.accessibility.AccessibilityEventCompat;
+import androidx.annotation.AnimRes;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+import androidx.core.view.accessibility.AccessibilityEventCompat;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
@@ -781,14 +781,14 @@ public class Snackbar extends SnackbarLayout {
         DisplayCompat.getSize(display, dispSize);
 
         if (dispSize.x < realDispSize.x) {
-            // navigation bar is placed on right side of the screen
+            // navi_bottom bar is placed on right side of the screen
             if (isTranslucent || isHidden) {
                 int navBarWidth = realDispSize.x - dispSize.x;
                 int overlapWidth = realDispSize.x - dispFrame.right;
                 outInsets.right = Math.max(Math.min(navBarWidth, overlapWidth), 0);
             }
         } else if (dispSize.y < realDispSize.y) {
-            // navigation bar is placed on bottom side of the screen
+            // navi_bottom bar is placed on bottom side of the screen
 
             if (isTranslucent || isHidden) {
                 int navBarHeight = realDispSize.y - dispSize.y;
@@ -1121,7 +1121,7 @@ public class Snackbar extends SnackbarLayout {
             params.bottomMargin = mMarginBottom + mOffset;
         }
 
-        // Add bottom/right margin when navigation bar is hidden or translucent
+        // Add bottom/right margin when navi_bottom bar is hidden or translucent
         updateWindowInsets(targetActivity, mWindowInsets);
 
         params.rightMargin += mWindowInsets.right;

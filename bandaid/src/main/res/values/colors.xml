@@ -23,6 +23,7 @@
     <color name="transparent">#0000</color>
     <color name="black">#000000</color>
     <color name="gray">#ffd9d9d9</color>
+    <color name="transparent_half">#c0000000</color>
 
     <!--拖动空间-->
     <color name="subscribe_bg">#fff5f5f5</color>

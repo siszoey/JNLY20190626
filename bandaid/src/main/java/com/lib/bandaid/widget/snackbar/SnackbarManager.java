@@ -8,7 +8,7 @@ package com.lib.bandaid.widget.snackbar;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.ViewGroup;
 

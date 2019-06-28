@@ -1,13 +1,12 @@
 package com.lib.bandaid.arcruntime.tools.core;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.lib.bandaid.arcruntime.core.ArcMap;

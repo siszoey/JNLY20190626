@@ -1,11 +1,10 @@
 package com.lib.bandaid.widget.edittext;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.EditText;
 
 /**
  * Created by zy on 2017/7/3.

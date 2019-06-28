@@ -18,7 +18,7 @@ import static android.provider.Telephony.Mms.Part.FILENAME;
  * 使用SharedPreferencesHelper保存复杂对象
  */
 
-public class SharedPfUtil {
+public class SPfUtil {
 
     /**
      * desc:保存对象
@@ -28,7 +28,7 @@ public class SharedPfUtil {
      * @param obj     要保存的对象，只能保存实现了serializable的对象
      *                modified:
      */
-    public static boolean saveOrUpdateObject(Context context, String key, Object obj) {
+    private static boolean saveOrUpdateObject(Context context, String key, Object obj) {
         boolean flag;
         try {
             // 保存对象
@@ -51,39 +51,17 @@ public class SharedPfUtil {
         return flag;
     }
 
-    /**
-     * desc:获取保存的Object对象
-     *
-     * @param context
-     * @param key
-     * @return modified:
-     */
-    public static<T> T readT(Context context, String key) {
-        try {
-            SharedPreferences sharedata = context.getSharedPreferences("first_app_perferences", Context.MODE_PRIVATE);
-            if (sharedata.contains(key)) {
-                String string = sharedata.getString(key, "");
-                if (TextUtils.isEmpty(string)) {
-                    return null;
-                } else {
-                    //将16进制的数据转为数组，准备反序列化
-                    byte[] stringToBytes = StringToBytes(string);
-                    ByteArrayInputStream bis = new ByteArrayInputStream(stringToBytes);
-                    ObjectInputStream is = new ObjectInputStream(bis);
-                    //返回反序列化得到的对象
-                    Object readObject = is.readObject();
-                    return (T)readObject;
-                }
-            }
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        //所有异常返回null
-        return null;
+
+    public static <T> T readT(Context context, String key) {
+        return (T) readObject(context, key);
+    }
+
+    public static void putT(Context context, String key, Object obj) {
+        saveOrUpdateObject(context, key, obj);
+    }
+
+    public static void delT(Context context, String key) {
+        deleteObject(context, key);
     }
 
     /**
@@ -93,7 +71,7 @@ public class SharedPfUtil {
      * @param key
      * @return modified:
      */
-    public static Object readObject(Context context, String key) {
+    private static Object readObject(Context context, String key) {
         try {
             SharedPreferences sharedata = context.getSharedPreferences("first_app_perferences", Context.MODE_PRIVATE);
             if (sharedata.contains(key)) {

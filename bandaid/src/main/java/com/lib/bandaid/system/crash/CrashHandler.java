@@ -11,16 +11,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.lib.bandaid.app.ActivityLifeCycle;
-import com.lib.bandaid.app.BaseApplication;
+import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
-import com.lib.bandaid.system.crash.api.IHttpCrash;
 import com.lib.bandaid.system.crash.bean.CrashInfo;
 import com.lib.bandaid.system.crash.ui.CrashActivity;
 import com.lib.bandaid.system.crash.utils.DateUtil;
 import com.lib.bandaid.system.crash.utils.FileUtil;
 import com.lib.bandaid.utils.AppUtil;
-import com.lib.bandaid.utils.SharedPfUtil;
+import com.lib.bandaid.utils.SPfUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -138,7 +137,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             defaultHandler.uncaughtException(thread, ex);
         } else {
             SystemClock.sleep(2000);
-            BaseApplication baseApplication = BaseApplication.baseApp;
+            BaseApp baseApplication = BaseApp.baseApp;
             if (baseApplication != null) {
                 ActivityLifeCycle atyLifecycleCallback = baseApplication.getAtyLifecycleCallback();
                 if (atyLifecycleCallback != null) atyLifecycleCallback.removeAllActivities();
@@ -277,7 +276,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 DbManager.createDefault().save(crashInfo);
 
 
-                Boolean reportError = SharedPfUtil.readT(context, "REPORT_ERROR");
+                Boolean reportError = SPfUtil.readT(context, "REPORT_ERROR");
                 if (reportError == null) {
                     Intent intent = new Intent(context, CrashActivity.class);
                     intent.putExtra(TAG, crashInfo);

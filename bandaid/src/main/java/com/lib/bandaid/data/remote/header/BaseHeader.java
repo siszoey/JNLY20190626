@@ -1,7 +1,7 @@
 package com.lib.bandaid.data.remote.header;
 
 import com.google.gson.Gson;
-import com.lib.bandaid.app.BaseApplication;
+import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.utils.AppUtil;
 import com.lib.bandaid.utils.GsonFactory;
 import com.lib.bandaid.utils.SystemUtil;
@@ -20,19 +20,19 @@ public class BaseHeader implements Serializable {
     /**
      * app名称
      */
-    private String appName = AppUtil.getAppName(BaseApplication.baseApp);
+    private String appName = AppUtil.getAppName(BaseApp.baseApp);
     /**
      * app版本名称
      */
-    private String appVersionName = AppUtil.getApkVersionName(BaseApplication.baseApp);
+    private String appVersionName = AppUtil.getApkVersionName(BaseApp.baseApp);
     /**
      * app版本号
      */
-    private String appVersionCode = AppUtil.getApkVersionCode(BaseApplication.baseApp) + "";
+    private String appVersionCode = AppUtil.getApkVersionCode(BaseApp.baseApp) + "";
     /**
      * 手机设备号
      */
-    private String imei = SystemUtil.getIMEI(BaseApplication.baseApp);
+    private String imei = SystemUtil.getIMEI(BaseApp.baseApp);
     /**
      * 手机设备号
      */

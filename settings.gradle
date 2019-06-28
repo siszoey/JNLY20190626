@@ -1,1 +1,1 @@
-include ':app', ':bandaid'
+include ':app', ':bandaid', ':frgcore'

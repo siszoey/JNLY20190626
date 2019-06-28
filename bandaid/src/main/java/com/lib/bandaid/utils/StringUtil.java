@@ -1,12 +1,13 @@
 package com.lib.bandaid.utils;
 
 import android.os.Build;
-import android.support.v4.util.LongSparseArray;
-import android.support.v4.util.SimpleArrayMap;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
+
+import androidx.collection.LongSparseArray;
+import androidx.collection.SimpleArrayMap;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -18,20 +19,32 @@ public class StringUtil {
 
     /**
      * 显示时候使用
+     *
      * @param obj
      * @return
      */
-    public static String replaceNull(Object obj) {
+    public static String removeNull(Object obj) {
         if (obj == null) return "";
         else return obj.toString();
     }
 
-    private static List<Character> arrayList = new ArrayList<Character>();
+    /**
+     * 保存时候使用
+     *
+     * @param obj
+     * @return
+     */
+    public static String removeEmpty(String obj) {
+        if ("".equals(obj)) return null;
+        else return obj;
+    }
 
-    public static boolean checkPsw(String value){
+    private static List<Character> arrayList = new ArrayList<>();
+
+    public static boolean checkPsw(String value) {
 
 
-        if(value.length()<6){
+        if (value.length() < 6) {
             return false;
         }
 
@@ -49,36 +62,26 @@ public class StringUtil {
         arrayList.add('*');
 
 
-        for(int i=0;i<value.length();i++){
-           char ca = value.charAt(i);
-           if((ca >='a' && ca <='z') || (ca >='A' && ca <='Z')){
-               zimu = true;
-               continue;
-           }
+        for (int i = 0; i < value.length(); i++) {
+            char ca = value.charAt(i);
+            if ((ca >= 'a' && ca <= 'z') || (ca >= 'A' && ca <= 'Z')) {
+                zimu = true;
+                continue;
+            }
 
-           if(ca >='0' && ca <='9'){
-               shuzi = true;
-               continue;
-           }
+            if (ca >= '0' && ca <= '9') {
+                shuzi = true;
+                continue;
+            }
 
-           if(arrayList.contains(ca)){
-               tszf = true;
-               continue;
-           }
+            if (arrayList.contains(ca)) {
+                tszf = true;
+                continue;
+            }
 
-           return false;
+            return false;
         }
         return (zimu && shuzi && tszf);
-    }
-
-    /**
-     * 保存时候使用
-     * @param obj
-     * @return
-     */
-    public static String replaceEmpty(String obj) {
-        if ("".equals(obj)) return null;
-        else return obj;
     }
 
     /**

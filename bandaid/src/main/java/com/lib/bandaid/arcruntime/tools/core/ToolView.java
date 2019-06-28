@@ -9,7 +9,7 @@ import android.view.View;
  * Created by zy on 2018/12/17.
  */
 
-public class ToolView extends android.support.v7.widget.AppCompatCheckBox implements View.OnTouchListener {
+public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implements View.OnTouchListener {
 
     private boolean initOk = false;
 

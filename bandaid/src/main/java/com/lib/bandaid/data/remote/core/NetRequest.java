@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -77,7 +79,8 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                         .subscribe(dataResponse -> {
                             networkMap.remove(observable);
                             if (dataResponse instanceof BaseResult) {
-                                if (((BaseResult) dataResponse).getCode() == 200) {
+                                if (((BaseResult) dataResponse).getCode() == 200 ||
+                                        ((BaseResult) dataResponse).getCode() == 0) {
                                     netWorkResult.onSuccess(dataResponse);
                                 } else {
                                     ToastUtils.showShort("响应码:" + ((BaseResult) dataResponse).getCode() + " 信息:" + ((BaseResult) dataResponse).getMsg());
@@ -88,6 +91,71 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
 
                             } else {
                                 netWorkResult.onSuccess(dataResponse);
+                            }
+                            if (networkMap.size() == 0) {
+                                if (view != null) view.hideLoading();
+                            }
+                        }, throwable -> {
+                            networkMap.remove(observable);
+                            POST postAnnotation = method.getAnnotation(POST.class);
+                            GET getAnnotation = method.getAnnotation(GET.class);
+                            DELETE deleteAnnotation = method.getAnnotation(DELETE.class);
+                            String value = "";
+                            if (postAnnotation != null) {
+                                value = "post:" + postAnnotation.value();
+                            } else if (getAnnotation != null) {
+                                value = "get:" + getAnnotation.value();
+                            } else if (deleteAnnotation != null) {
+                                value = "delete:" + deleteAnnotation.value();
+                            }
+                            if (throwable instanceof HttpException) {
+                                HttpException httpException = (HttpException) throwable;
+                                ToastUtils.showShort("加载失败:" + httpException.getMessage());
+                                LogUtils.eTag("NetworkError", httpException.response().raw().toString());
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(httpException.code(), throwable.getMessage(), throwable);
+                                }
+                            } else if (throwable instanceof SocketTimeoutException) {
+                                ToastUtils.showShort("加载失败:" + "响应超时");
+                                LogUtils.eTag("NetworkError", "响应超时:" + value);
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(-2, throwable.getMessage(), throwable);
+                                }
+                            } else if (throwable instanceof UnknownHostException) {
+                                UnknownHostException unknownHostException = (UnknownHostException) throwable;
+                                ToastUtils.showShort("未知主机:" + unknownHostException.getMessage());
+                                LogUtils.eTag("NetworkError", "未知主机:" +
+                                        unknownHostException.getMessage() + "----" + value);
+                            } else {
+                                ToastUtils.showShort("加载失败:" + throwable.getMessage());
+                                LogUtils.eTag("NetworkError", throwable.getMessage());
+                                if (netWorkResult != null) {
+                                    netWorkResult.onError(-1, throwable.getMessage(), throwable);
+                                }
+                            }
+                            throwable.printStackTrace();
+                            if (networkMap.size() == 0) {
+                                if (view != null) view.hideLoading();
+                            }
+                        });
+                networkMap.put(observable, disposable);
+                netWorkResult.onStart(disposable);
+            }
+            return invoke;
+        }
+
+        //@Override
+        public Object invoke1(Object proxy, Method method, Object[] args) throws Throwable {
+            Object invoke = method.invoke(obj, args);
+            if (invoke instanceof Observable) {
+                Observable<Response<R>> observable = (Observable) invoke;
+                Disposable disposable = observable.compose(view.bindToLife())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(dataResponse -> {
+                            networkMap.remove(observable);
+                            if (dataResponse instanceof Response) {
+                                System.out.println(dataResponse);
                             }
                             if (networkMap.size() == 0) {
                                 if (view != null) view.hideLoading();

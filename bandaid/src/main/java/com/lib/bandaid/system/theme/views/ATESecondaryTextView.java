@@ -3,7 +3,7 @@ package com.lib.bandaid.system.theme.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
 import com.lib.bandaid.system.theme.utils.ATE;

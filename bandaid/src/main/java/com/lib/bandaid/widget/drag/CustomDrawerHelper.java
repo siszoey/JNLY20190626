@@ -1,9 +1,10 @@
 package com.lib.bandaid.widget.drag;
 
 import android.app.Activity;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.DisplayMetrics;
+
+import androidx.customview.widget.ViewDragHelper;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.lang.reflect.Field;
 

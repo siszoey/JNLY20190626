@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.annotation.AttrRes;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.AttrRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.view.View;
 
 import com.lib.bandaid.R;
@@ -228,7 +230,7 @@ public final class Config {
         ATE.apply(activity);
     }
 
-    public void apply(@NonNull android.support.v4.app.Fragment fragment) {
+    public void apply(@NonNull Fragment fragment) {
         commit();
         ATE.apply(fragment);
     }

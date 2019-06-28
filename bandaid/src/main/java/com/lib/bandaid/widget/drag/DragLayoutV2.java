@@ -1,12 +1,13 @@
 package com.lib.bandaid.widget.drag;
 
 import android.content.Context;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.customview.widget.ViewDragHelper;
 
 import com.lib.bandaid.utils.ViewTreeUtil;
 

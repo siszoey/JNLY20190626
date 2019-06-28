@@ -16,6 +16,6 @@ public interface ApiLogin {
 
     @POST("api-admin/login")
     @Headers({"Content-Type:application/json"})
-    Observable<BaseResult<Map>> httpTaskAdd(@Body String map);
+    Observable<BaseResult<Map>> httpLogin(@Body String map);
 
 }

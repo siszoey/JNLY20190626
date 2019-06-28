@@ -3,11 +3,10 @@ package com.lib.bandaid.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,8 +46,8 @@ public abstract class BaseAppCompatAty extends ATEActivity {
     protected void onCreate(Bundle savedInstanceState) {
         if (!ATE.config(this).isConfigured()) {
             ATE.config(this)
-                    .primaryColor(Color.parseColor("#455A64"))
-                    .accentColor(Color.parseColor("#263238"))
+                    .primaryColor(getResources().getColor(R.color.colorPrimary))
+                    .accentColor(getResources().getColor(R.color.colorAccent))
                     .coloredNavigationBar(true)
                     .commit();
         }

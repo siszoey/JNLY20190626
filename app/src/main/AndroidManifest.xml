@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/ATEAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.titan.jnly.main.MainActivity">
+        <activity android:name="com.titan.jnly.main.ui.aty.MainActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

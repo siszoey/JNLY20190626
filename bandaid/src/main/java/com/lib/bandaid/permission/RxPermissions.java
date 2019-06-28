@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.ArrayList;

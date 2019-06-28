@@ -3,9 +3,8 @@ package com.lib.bandaid.system.theme.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
-import android.widget.CheckBox;
 
 import com.lib.bandaid.system.theme.utils.ATE;
 

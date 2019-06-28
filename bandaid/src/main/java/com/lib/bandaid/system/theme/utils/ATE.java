@@ -11,17 +11,20 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.BaseMenuPresenter;
-import android.support.v7.view.menu.ListMenuItemView;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.BaseMenuPresenter;
+import androidx.appcompat.view.menu.ListMenuItemView;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.ActionMenuView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -251,7 +254,7 @@ public final class ATE {
         didPreApply = null;
     }
 
-    public static void apply(@NonNull android.support.v4.app.Fragment fragment) {
+    public static void apply(@NonNull Fragment fragment) {
         if (fragment.getActivity() == null)
             throw new IllegalStateException("Fragment is not attached to an Activity yet.");
         else if (fragment.getView() == null)

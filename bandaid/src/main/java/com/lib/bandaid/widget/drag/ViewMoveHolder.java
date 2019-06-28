@@ -1,7 +1,7 @@
 package com.lib.bandaid.widget.drag;
 
-import android.support.v4.widget.ViewDragHelper;
 import android.view.View;
+import androidx.customview.widget.ViewDragHelper;
 
 /**
  * Created by zy on 2018/1/14.

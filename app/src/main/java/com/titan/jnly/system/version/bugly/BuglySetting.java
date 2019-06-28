@@ -18,9 +18,13 @@ import java.io.File;
  */
 public class BuglySetting {
 
+    public static void checkVersion() {
+        Beta.checkUpgrade();
+    }
+
     public static void init(Context context, String appId) {
         Beta.upgradeDialogLayoutId = R.layout.system_version_bugly_layout;
-        Beta.autoCheckUpgrade = true;
+        Beta.autoCheckUpgrade = false;
         Beta.autoInit = true;
         Beta.initDelay = 500;
         Beta.storageDir = new File(Config.APP_PATH);

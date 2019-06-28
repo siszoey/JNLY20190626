@@ -1,5 +1,6 @@
 package com.titan.jnly.login.ui.aty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -13,15 +14,27 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
+import com.lib.bandaid.utils.SPfUtil;
+import com.lib.bandaid.utils.StringUtil;
 import com.titan.jnly.R;
+import com.titan.jnly.login.bean.User;
+import com.titan.jnly.main.ui.aty.MainActivity;
+import com.titan.jnly.system.Constant;
+
+import javax.inject.Inject;
 
 public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements LoginAtyContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
+    private final static String CONSTANT_IS_REMEMBER = "CONSTANT_IS_REMEMBER";
+
+    private Boolean isRemember;
     private ATEEditText cetPhoneNum, cetPwd;
     private ATECheckBox ckRemember;
     private ImageView ivShowPwd;
     private Button btnLogin;
     private boolean showPwd = false;
+
+    private User user = new User();
 
     @Override
 
@@ -50,13 +63,26 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
 
     @Override
     protected void initClass() {
-
+        isRemember = SPfUtil.readT(_context, CONSTANT_IS_REMEMBER);
+        isRemember = isRemember == null ? false : isRemember;
+        ckRemember.setChecked(isRemember);
+        if (isRemember) {
+            user = Constant.getUser();
+            if (user == null) user = new User();
+            cetPhoneNum.setText(StringUtil.removeNull(user.getName()));
+            cetPwd.setText(StringUtil.removeNull(user.getPwd()));
+        }
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnLogin) {
-            presenter.Login(cetPhoneNum.getText().toString(), cetPhoneNum.getText().toString());
+            //保存账号信息
+            user = new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString());
+            if (isRemember) {
+                Constant.putUser(user);
+            }
+            presenter.Login(user);
         }
         if (v.getId() == R.id.ivShowPwd) {
             showPwd = !showPwd;
@@ -67,11 +93,16 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+        SPfUtil.putT(_context, CONSTANT_IS_REMEMBER, isChecked);
+        isRemember = SPfUtil.readT(_context, CONSTANT_IS_REMEMBER);
+        if (!isChecked) {
+            Constant.delUser();
+        }
     }
 
     @Override
     public void LoginSuccess() {
-        ToastUtils.showLong("页面跳转");
+        Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
+        startActivity(new Intent(_context, MainActivity.class));
     }
 }

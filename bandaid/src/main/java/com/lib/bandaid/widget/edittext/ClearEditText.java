@@ -2,8 +2,8 @@ package com.lib.bandaid.widget.edittext;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.IdRes;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.annotation.IdRes;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;

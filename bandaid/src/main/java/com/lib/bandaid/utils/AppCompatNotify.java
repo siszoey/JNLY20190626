@@ -8,8 +8,8 @@ import android.content.ContextWrapper;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.RequiresApi;
 import android.widget.RemoteViews;
 
 import com.lib.bandaid.R;

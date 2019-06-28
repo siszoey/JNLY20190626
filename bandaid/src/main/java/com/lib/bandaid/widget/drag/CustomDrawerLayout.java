@@ -3,10 +3,11 @@ package com.lib.bandaid.widget.drag;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.widget.DrawerLayout;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.lib.bandaid.utils.MeasureScreen;
 

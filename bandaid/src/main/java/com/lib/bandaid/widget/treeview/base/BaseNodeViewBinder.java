@@ -14,7 +14,7 @@
 
 package com.lib.bandaid.widget.treeview.base;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.lib.bandaid.widget.treeview.action.TreeView;

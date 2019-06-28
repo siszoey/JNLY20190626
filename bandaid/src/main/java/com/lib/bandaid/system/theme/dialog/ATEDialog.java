@@ -2,7 +2,7 @@ package com.lib.bandaid.system.theme.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.R;

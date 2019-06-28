@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.lib.bandaid.R;
 import com.lib.bandaid.widget.snackbar.Snackbar;
 import com.lib.bandaid.widget.snackbar.SnackbarManager;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 

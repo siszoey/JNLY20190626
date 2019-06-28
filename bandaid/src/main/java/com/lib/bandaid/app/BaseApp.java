@@ -2,7 +2,7 @@ package com.lib.bandaid.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 import android.widget.Toast;
 
 import com.android.tony.defenselib.DefenseCrash;
@@ -14,9 +14,9 @@ import com.android.tony.defenselib.handler.IExceptionHandler;
  * BaseApp
  */
 
-public class BaseApplication extends Application implements IExceptionHandler {
+public class BaseApp extends Application implements IExceptionHandler {
 
-    public static BaseApplication baseApp;
+    public static BaseApp baseApp;
 
     private ActivityLifeCycle atyLifecycleCallback = new ActivityLifeCycle();
 
