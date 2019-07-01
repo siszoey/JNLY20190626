@@ -44,7 +44,7 @@ public class CrashActivity extends BaseAppCompatAty implements View.OnClickListe
         tvCrashInfo = $(R.id.tvCrashInfo);
         tvCancel = $(R.id.tvCancel);
         tvSubmit = $(R.id.tvSubmit);
-        DialogFactory.getFactory().get(this).show();
+        DialogFactory.getFactory().show(this);
     }
 
     @Override

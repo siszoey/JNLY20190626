@@ -52,13 +52,13 @@ public final class DialogFactory {
     public void show(Context context) {
         if (concurrentHashMap.containsKey(context.hashCode())) {
             WaitingDialog dialog = concurrentHashMap.get(context.hashCode()).get();
-            if (!dialog.isShowing()) {
+            if (dialog != null && !dialog.isShowing()) {
                 dialog.show();
             }
         }
     }
 
-    public WaitingDialog get(Context context) {
+    private WaitingDialog get(Context context) {
         return concurrentHashMap.get(context.hashCode()).get();
     }
 
@@ -66,7 +66,7 @@ public final class DialogFactory {
     public void dismiss(Context context) {
         if (concurrentHashMap.containsKey(context.hashCode())) {
             WaitingDialog dialog = concurrentHashMap.get(context.hashCode()).get();
-            if (dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
         }

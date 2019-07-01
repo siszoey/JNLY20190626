@@ -46,17 +46,17 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
 
     @Override
     public void showLoading() {
-        DialogFactory.getFactory().get(this).show();
+       // DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void showLoading(String msg) {
-        DialogFactory.getFactory().get(this).show();
+       // DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void hideLoading() {
-        DialogFactory.getFactory().get(this).dismiss();
+        //DialogFactory.getFactory().dismiss(this);
     }
 
     @Override

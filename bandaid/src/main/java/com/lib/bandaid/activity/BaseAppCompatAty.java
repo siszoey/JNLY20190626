@@ -42,6 +42,8 @@ public abstract class BaseAppCompatAty extends ATEActivity {
     protected View _contentView;
     protected Button _btnRight;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!ATE.config(this).isConfigured()) {
@@ -51,6 +53,8 @@ public abstract class BaseAppCompatAty extends ATEActivity {
                     .coloredNavigationBar(true)
                     .commit();
         }
+        _context = this;
+        _activity = this;
         DialogFactory.getFactory().register(this);
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.widget_base_app_compat_activity);
@@ -98,8 +102,6 @@ public abstract class BaseAppCompatAty extends ATEActivity {
 
 
     void init() {
-        _context = this;
-        _activity = this;
         _appBarLayout = findViewById(R.id._appBarLayout);
         _toolbar = findViewById(R.id._toolbar);
         _tvToolbarName = findViewById(R.id._tvToolbarName);
