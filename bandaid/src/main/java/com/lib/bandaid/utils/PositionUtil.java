@@ -64,8 +64,8 @@ public final class PositionUtil {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
-                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        //Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                        //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_SETTINGS);
                         if (context instanceof Activity) {
                             ((Activity) context).startActivityForResult(intent, requestCode);
                         }
@@ -136,8 +136,8 @@ public final class PositionUtil {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
-                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        //Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                        //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_SETTINGS);
                         if (context instanceof Activity) {
                             ((Activity) context).startActivityForResult(intent, requestCode);
                         }
