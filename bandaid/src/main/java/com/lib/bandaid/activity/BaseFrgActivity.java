@@ -23,7 +23,7 @@ import java.util.List;
  * Created by zy on 2019/5/31.
  */
 
-public abstract class BaseFrgActivity extends FragmentActivity {
+public abstract class BaseFrgActivity extends BaseAppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View style="@style/h_line" />
+
     <FrameLayout
         android:id="@+id/framePage"
         android:layout_width="match_parent"

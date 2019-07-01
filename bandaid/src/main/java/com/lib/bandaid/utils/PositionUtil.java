@@ -3,7 +3,9 @@ package com.lib.bandaid.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -62,8 +64,8 @@ public final class PositionUtil {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
-                        //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        //Intent intent = new Intent(Settings.ACTION_SETTINGS);
                         if (context instanceof Activity) {
                             ((Activity) context).startActivityForResult(intent, requestCode);
                         }
@@ -134,8 +136,8 @@ public final class PositionUtil {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
-                        //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        //Intent intent = new Intent(Settings.ACTION_SETTINGS);
                         if (context instanceof Activity) {
                             ((Activity) context).startActivityForResult(intent, requestCode);
                         }

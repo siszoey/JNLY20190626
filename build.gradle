@@ -4,7 +4,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -20,7 +20,7 @@ allprojects {
         jcenter()
         maven {
             url 'https://esri.bintray.com/arcgis'
-    }
+        }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/xuuhaoo/maven/' }
     }
@@ -31,12 +31,15 @@ task clean(type: Delete) {
 }
 
 
+/*
 subprojects {
     configurations.all {
-        /*resolutionStrategy.force 'com.android.support:recyclerview-v7:27.0.1'
+        */
+/*resolutionStrategy.force 'com.android.support:recyclerview-v7:27.0.1'
         resolutionStrategy.force 'com.android.support:support-fragment:27.0.1'
         resolutionStrategy.force 'com.android.support:appcompat-v7:27.0.1'
         resolutionStrategy.force 'com.android.support:support-v4:27.0.1'
-        resolutionStrategy.force 'com.android.support:transition:27.0.1'*/
+        resolutionStrategy.force 'com.android.support:transition:27.0.1'*//*
+
     }
-}
+}*/

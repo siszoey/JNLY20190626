@@ -38,11 +38,7 @@
         android:theme="@style/ATEAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.titan.jnly.main.ui.aty.MainActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity android:name=".login.ui.aty.LoginAty">
             <intent-filter>
@@ -51,6 +47,62 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".main.ui.aty.MainAtyV1">
+
+        </activity>
+
+
+
+
+
+        <!--zy: 服务注册-->
+        <service android:name="com.lib.bandaid.service.imp.LocService" />
+        <service android:name="com.lib.bandaid.service.imp.TraceService" />
+        <!--看门狗服务-->
+        <receiver
+            android:name="com.lib.bandaid.service.dog.WakeReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="com.titan.bandaid.service.CANCEL_JOB_ALARM_SUB" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.lib.bandaid.service.dog.WakeReceiver$WakeUpAutoStartReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.lib.bandaid.service.dog.HomeService$WorkNotificationService" />
+
+        <service
+            android:name="com.lib.bandaid.service.dog.SnapService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":watch" />
+
+        <service
+            android:name="com.lib.bandaid.service.dog.DogService"
+            android:process=":watch" />
+
+        <service
+            android:name="com.lib.bandaid.service.dog.DogService$WatchDogNotificationService"
+            android:process=":watch" />
+        <!--看门狗服务-->
     </application>
 
 </manifest>
