@@ -21,9 +21,11 @@ import com.esri.arcgisruntime.loadable.LoadStatusChangedEvent;
 import com.esri.arcgisruntime.loadable.LoadStatusChangedListener;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
+import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.lib.bandaid.arcruntime.event.ArcMapEventDispatch;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
+import com.lib.bandaid.arcruntime.layer.utils.DataSourceRead;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     private List<String> featureUrls = new ArrayList<>();
     private List<String> mapServerUrls = new ArrayList<>();
     private List<String> mapServerDesc = new ArrayList<>();
+    private List<String> mapLocalUrls = new ArrayList<>();
+
 
     private TocContainer tocContainer = new TocContainer();
     private QueryContainer queryContainer = new QueryContainer();
@@ -125,6 +129,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     public void mapLoad(IMapReady iMapReady) {
         this.iMapReady = iMapReady;
 
+        //加载底图
         {
             ArcGISMap gisMap = new ArcGISMap();
             if (baseMapUrls == null || baseMapUrls.size() == 0) {
@@ -137,12 +142,15 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
             mapView.setMap(gisMap);
         }
 
+        //加载网络数据
         {
             if (mapServerUrls == null) return;
             ArcGISMapImageLayer mapImageLayer;
+            String uri;
             for (int i = 0; i < mapServerUrls.size(); i++) {
-                mapImageLayer = new ArcGISMapImageLayer(mapServerUrls.get(i));
-                mapImageLayer.setDescription(mapServerUrls.get(i));
+                uri = mapServerUrls.get(i);
+                mapImageLayer = new ArcGISMapImageLayer(uri);
+                mapImageLayer.setDescription(uri);
                 if (mapServerDesc != null && mapServerDesc.size() == mapServerUrls.size()) {
                     mapImageLayer.setName(mapServerDesc.get(i));
                 }
@@ -150,6 +158,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
             }
         }
 
+        //加载featureLayer
         {
             if (featureUrls == null) return;
             ServiceFeatureTable featureTable;
@@ -159,6 +168,23 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
                 featureLayer = new FeatureLayer(featureTable);
                 featureLayer.setId(featureUrls.get(i));
                 mapView.getMap().getOperationalLayers().add(featureLayer);
+            }
+        }
+
+        //加载本地数据
+        {
+            if (mapLocalUrls == null) return;
+            String url;
+            LayerList list = mapView.getMap().getOperationalLayers();
+            for (int i = 0; i < mapLocalUrls.size(); i++) {
+                url = mapLocalUrls.get(i);
+                if (url == null) continue;
+                if (url.toLowerCase().endsWith(".shape")) {
+                    DataSourceRead.readShape(list, url);
+                }
+                if (url.toLowerCase().endsWith(".geodatabase")) {
+                    DataSourceRead.readGeoDatabase(list, url);
+                }
             }
         }
     }
@@ -286,6 +312,13 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
         return this;
     }
 
+    public ArcMap setMapLocalUrl(String... urls) {
+        if (urls == null) return this;
+        for (int i = 0; i < urls.length; i++) {
+            mapLocalUrls.add(urls[i]);
+        }
+        return this;
+    }
 
     public MapView getMapView() {
         return mapView;

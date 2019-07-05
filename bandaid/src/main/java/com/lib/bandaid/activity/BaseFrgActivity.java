@@ -36,9 +36,6 @@ public abstract class BaseFrgActivity extends BaseAppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        initialize();
-        registerEvent();
-        initClass();
     }
 
     @Override
@@ -50,11 +47,11 @@ public abstract class BaseFrgActivity extends BaseAppCompatActivity {
         iOnActivityResults = null;
     }
 
-    protected abstract void initialize();
+/*    protected abstract void initialize();
 
     protected abstract void registerEvent();
 
-    protected abstract void initClass();
+    protected abstract void initClass();*/
 
 
     /**

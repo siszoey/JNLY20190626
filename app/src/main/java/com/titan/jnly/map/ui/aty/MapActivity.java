@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.activity.BaseFrgActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
@@ -22,7 +23,7 @@ import com.titan.jnly.map.ui.frame.FrameQuery;
 import com.titan.jnly.map.ui.tools.QuerySel;
 import com.titan.jnly.map.ui.tools.ToolSel;
 
-public class MapActivity extends BaseFrgActivity implements ArcMap.IMapReady {
+public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady {
 
 
     CustomDrawerLayout drawerLayout;
@@ -40,6 +41,8 @@ public class MapActivity extends BaseFrgActivity implements ArcMap.IMapReady {
         ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class);
         ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolSel.class, QuerySel.class);
         WidgetContainer.registerWidget(FrameQuery.class);
+        //WidgetContainer.registerWidget(FrameLayer.class);
+
         setContentView(R.layout.map_ui_aty_map);
     }
 

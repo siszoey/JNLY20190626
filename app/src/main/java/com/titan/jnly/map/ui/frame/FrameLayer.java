@@ -11,8 +11,11 @@ import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.utils.NodeIteration;
+
+import java.io.File;
 
 /**
  * Created by zy on 2019/5/23.
@@ -57,6 +60,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         //arcMap.setBaseMapUrl(Config.APP_ARC_MAP_BASE);
         //arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
         //arcMap.setMapServerDesc("图层1", "图层2");
+        arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL.concat(File.separator).concat("青岛造林2018.geodatabase"));
         arcMap.getTocContainer().addILayerLoaded(this);
         arcMap.mapLoad(new ArcMap.IMapReady() {
             @Override
