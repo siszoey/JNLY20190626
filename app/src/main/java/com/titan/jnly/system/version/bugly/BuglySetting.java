@@ -19,19 +19,20 @@ import java.io.File;
 public class BuglySetting {
 
     public static void checkVersion() {
-       Beta.checkUpgrade();
+        Beta.checkUpgrade();
     }
 
     public static void init(Context context, String appId) {
-       Beta.upgradeDialogLayoutId = R.layout.system_version_bugly_layout;
+        Beta.upgradeDialogLayoutId = R.layout.system_version_bugly_layout;
         Beta.autoCheckUpgrade = false;
         Beta.autoInit = true;
         Beta.initDelay = 500;
+        Beta.canShowApkInfo = true;
         Beta.storageDir = new File(Config.APP_PATH);
         Beta.autoInstallApk = true;
         Beta.autoDownloadOnWifi = false;
         Beta.enableHotfix = true;
-        Beta.enableNotification = true;
+        Beta.enableNotification = false;
         Beta.registerDownloadListener(new DownloadListener() {
             @Override
             public void onReceive(DownloadTask downloadTask) {

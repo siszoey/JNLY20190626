@@ -1,5 +1,6 @@
 package com.lib.bandaid.utils;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.lib.bandaid.widget.dialog.WaitingDialog;
@@ -32,40 +33,40 @@ public final class DialogFactory {
         return singleton;
     }
 
-    public WaitingDialog register(Context context) {
-        if (!concurrentHashMap.containsKey(context.hashCode())) {
-            SoftReference<WaitingDialog> dialogSoftReference = new SoftReference<>(new WaitingDialog(context, 100, 100));
-            concurrentHashMap.put(context.hashCode(), dialogSoftReference);
+    public WaitingDialog register(Activity activity) {
+        if (!concurrentHashMap.containsKey(activity.getTaskId())) {
+            SoftReference<WaitingDialog> dialogSoftReference = new SoftReference<>(new WaitingDialog(activity, 100, 100));
+            concurrentHashMap.put(activity.getTaskId(), dialogSoftReference);
         }
-        return get(context);
+        return get(activity);
     }
 
-    public void unRegister(Context context) {
-        int hashCode = context.hashCode();
-        if (concurrentHashMap.containsKey(hashCode)) {
-            WaitingDialog dialog = concurrentHashMap.get(hashCode).get();
+    public void unRegister(Activity activity) {
+        int taskId = activity.getTaskId();
+        if (concurrentHashMap.containsKey(taskId)) {
+            WaitingDialog dialog = concurrentHashMap.get(taskId).get();
             if (dialog != null) dialog.dismiss();
-            concurrentHashMap.remove(hashCode);
+            concurrentHashMap.remove(taskId);
         }
     }
 
-    public void show(Context context) {
-        if (concurrentHashMap.containsKey(context.hashCode())) {
-            WaitingDialog dialog = concurrentHashMap.get(context.hashCode()).get();
+    public void show(Activity activity) {
+        if (concurrentHashMap.containsKey(activity.getTaskId())) {
+            WaitingDialog dialog = concurrentHashMap.get(activity.getTaskId()).get();
             if (dialog != null && !dialog.isShowing()) {
                 dialog.show();
             }
         }
     }
 
-    private WaitingDialog get(Context context) {
-        return concurrentHashMap.get(context.hashCode()).get();
+    private WaitingDialog get(Activity activity) {
+        return concurrentHashMap.get(activity.getTaskId()).get();
     }
 
 
-    public void dismiss(Context context) {
-        if (concurrentHashMap.containsKey(context.hashCode())) {
-            WaitingDialog dialog = concurrentHashMap.get(context.hashCode()).get();
+    public void dismiss(Activity activity) {
+        if (concurrentHashMap.containsKey(activity.getTaskId())) {
+            WaitingDialog dialog = concurrentHashMap.get(activity.getTaskId()).get();
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }

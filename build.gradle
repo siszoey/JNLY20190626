@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
         classpath "com.tencent.bugly:tinker-support:1.1.5"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:2.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -29,17 +30,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-
-/*
-subprojects {
-    configurations.all {
-        */
-/*resolutionStrategy.force 'com.android.support:recyclerview-v7:27.0.1'
-        resolutionStrategy.force 'com.android.support:support-fragment:27.0.1'
-        resolutionStrategy.force 'com.android.support:appcompat-v7:27.0.1'
-        resolutionStrategy.force 'com.android.support:support-v4:27.0.1'
-        resolutionStrategy.force 'com.android.support:transition:27.0.1'*//*
-
-    }
-}*/

@@ -22,7 +22,6 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -46,17 +45,17 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
 
     @Override
     public void showLoading() {
-       // DialogFactory.getFactory().show(this);
+        DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void showLoading(String msg) {
-       // DialogFactory.getFactory().show(this);
+        DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void hideLoading() {
-        //DialogFactory.getFactory().dismiss(this);
+        DialogFactory.getFactory().dismiss(this);
     }
 
     @Override

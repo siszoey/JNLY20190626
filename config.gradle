@@ -24,11 +24,11 @@ ext {
     // 最低支持Android版本
     MIN_SDK_VERSION = 19
     // 目标版本
-    TARGET_SDK_VERSION = 26
+    TARGET_SDK_VERSION = 25
     // 设置是否使用混淆
     MINIFY_ENABLED = false
     // 设置是否在打包时压缩资源
     ZIP_SOURCE = false
     //api引用版本
-    APPCOMPAT_VERSION = '27.0.1'
+    APPCOMPAT_VERSION = '25.0.1'
 }

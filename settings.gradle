@@ -1,1 +1,1 @@
-include ':app', ':bandaid', ':frgcore'
+include ':app', ':bandaid', ':frgcore', ':foxcamera'
