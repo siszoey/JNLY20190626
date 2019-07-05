@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lib.bandaid.widget.drag.CustomDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/mainFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.lib.bandaid.arcruntime.core.ArcMap
+            android:id="@+id/arcMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <!--右侧菜单布局-->
+    <LinearLayout
+        android:id="@+id/menuRight"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:background="#F0F3F6"
+        android:clickable="true"
+        android:orientation="vertical" />
+
+
+</com.lib.bandaid.widget.drag.CustomDrawerLayout>

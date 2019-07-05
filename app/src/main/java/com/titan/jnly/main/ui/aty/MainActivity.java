@@ -9,8 +9,14 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 
+import com.lib.bandaid.permission.Permission;
+import com.lib.bandaid.permission.RxConsumer;
+import com.lib.bandaid.permission.RxPermissionFactory;
+import com.lib.bandaid.permission.SimplePermission;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.utils.PositionUtil;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.common.activity.BaseFragmentAty;
 import com.titan.jnly.common.fragment.BaseMainFragment;
@@ -40,8 +46,8 @@ public class MainActivity extends BaseFragmentAty
         setContentView(R.layout.main_ui_aty_main_layout);
         //检查更新
         BuglySetting.checkVersion();
-        //开启定位
-        PositionUtil.reqGps(this, LocService.class, this);
+        //权限
+        permissions();
     }
 
     @Override
@@ -123,5 +129,23 @@ public class MainActivity extends BaseFragmentAty
     @Override
     public void refuse() {
         finish();
+    }
+
+    void permissions() {
+        PositionUtil.reqGps(_context, LocService.class, this);
+        RxPermissionFactory
+                .getRxPermissions(_context)
+                .requestEachCombined(SimplePermission.MANIFEST_STORAGE)
+                .subscribe(new RxConsumer(_context) {
+                    @Override
+                    public void accept(Permission permission) {
+                        super.accept(permission);
+                        if (permission.granted) {
+                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
+                        } else {
+                            finish();
+                        }
+                    }
+                });
     }
 }

@@ -23,6 +23,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.OverScroller;
 import android.widget.Scroller;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import com.camera.lib.view.photoview.RotateGestureDetector.OnRotateListener;
 import com.camera.lib.view.photoview.RotateGestureDetector.RotateGestureDetector;
 
@@ -33,7 +35,7 @@ import com.camera.lib.view.photoview.RotateGestureDetector.RotateGestureDetector
  * </p>
  * 如有任何意见和建议可邮件 bmme@vip.qq.com
  */
-public class PhotoView extends android.support.v7.widget.AppCompatImageView {
+public class PhotoView extends AppCompatImageView {
 
 	private final static int MIN_ROTATE = 35;
 	private final static int ANIMA_DURING = 320;

@@ -1,6 +1,7 @@
 package com.lib.bandaid.arcruntime.core;
 
 import android.location.Location;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.esri.arcgisruntime.data.Feature;
@@ -101,19 +102,21 @@ public class MapControl extends BaseContainer {
         this.location = location;
     }
 
-    public void useDefaultLocation() {
+    public MapControl initDefaultLocation() {
         locationDisplay = arcMap.getMapView().getLocationDisplay();
         //设置定位模式
         locationDisplay.setNavigationPointHeightFactor(0.5f);
         locationDisplay.setAutoPanMode(LocationDisplay.AutoPanMode.RECENTER);
-        locationDisplay.startAsync();
-        /*locationDisplay.addDataSourceStatusChangedListener(new LocationDisplay.DataSourceStatusChangedListener() {
-            @Override
-            public void onStatusChanged(LocationDisplay.DataSourceStatusChangedEvent dataSourceStatusChangedEvent) {
+        //locationDisplay.startAsync();
+        return this;
+    }
 
+    public void useDefaultLocation(long delay) {
+        new Handler().postDelayed(new Runnable() {
+
+            public void run() {
+                if (locationDisplay != null) locationDisplay.startAsync();
             }
-        });*/
-        //监听位置的变化
-
+        }, delay);
     }
 }

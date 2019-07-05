@@ -13,8 +13,11 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 
 public class ArcMapEventDispatch extends DefaultMapViewOnTouchListener implements IArcMapExtendEvent {
 
+    ArcMap arcMap;
+
     public ArcMapEventDispatch(ArcMap arcMap) {
         super(arcMap.getContext(), arcMap.getMapView());
+        this.arcMap = arcMap;
     }
 
 
@@ -75,7 +78,12 @@ public class ArcMapEventDispatch extends DefaultMapViewOnTouchListener implement
     public boolean onRotate(MotionEvent event, double rotationAngle) {
         if (iMapEvent != null)
             if (iMapEvent.onRotate(event, rotationAngle)) return true;
-        return super.onRotate(event, rotationAngle);
+
+        if (arcMap.isCanRotate()) {
+            return super.onRotate(event, rotationAngle);
+        } else {
+            return true;
+        }
     }
 
     @Override

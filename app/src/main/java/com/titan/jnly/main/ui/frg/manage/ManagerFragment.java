@@ -21,25 +21,25 @@ public class ManagerFragment extends BaseMainFragment implements ArcMap.IMapRead
         return fragment;
     }
 
-    View view;
-    ArcMap arcMap;
+    private View view;
+    private ArcMap arcMap;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.main_ui_frg_manage_layout, container, false);
-            //arcMap = ViewUtil.findViewById(view, R.id.arcMap);
-            //arcMap.mapLoad(this);
+            arcMap = ViewUtil.findViewById(view, R.id.arcMap);
+            arcMap.mapLoad(this);
         }
         ViewGroup parent = (ViewGroup) view.getParent();
-        if (parent != null)
-            parent.removeView(view);
+        if (parent != null) parent.removeView(view);
         return view;
     }
 
     @Override
     public void onMapReady() {
-
+        //arcMap.getMapControl().initDefaultLocation();
+        arcMap.getMapControl().initDefaultLocation().useDefaultLocation(500);
     }
 }

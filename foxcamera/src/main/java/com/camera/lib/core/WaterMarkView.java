@@ -5,14 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.camera.lib.util.DateUtil;
-import com.camera.lib.util.DeviceGesture;
+import androidx.annotation.NonNull;
 import com.camera.lib.util.MeasureScreen;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

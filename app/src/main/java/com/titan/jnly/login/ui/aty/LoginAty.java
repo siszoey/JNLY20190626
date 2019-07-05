@@ -19,6 +19,7 @@ import com.lib.bandaid.utils.StringUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
 import com.titan.jnly.main.ui.aty.MainActivity;
+import com.titan.jnly.map.ui.aty.MapActivity;
 import com.titan.jnly.system.Constant;
 
 import javax.inject.Inject;
@@ -103,6 +104,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     @Override
     public void LoginSuccess() {
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
-        startActivity(new Intent(_context, MainActivity.class));
+        //startActivity(new Intent(_context, MainActivity.class));
+        startActivity(new Intent(_context, MapActivity.class));
     }
 }

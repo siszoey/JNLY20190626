@@ -208,7 +208,7 @@ public final class AppCompatNotify extends ContextWrapper {
     public void notifyLocation(int id, String channelId, String title, String content, @DrawableRes int smallIcon) {
         Notification notification;
         RemoteViews customView = new RemoteViews(context.getPackageName(), R.layout.system_notify_normal_layout);
-        customView.setImageViewResource(R.id.ivLoc, R.mipmap.ic_launcher);
+        customView.setImageViewResource(R.id.ivLoc, R.drawable.ic_location);
         customView.setTextViewText(R.id.tvNotifyTitle, title);
         customView.setTextColor(R.id.tvNotifyTitle, Color.BLACK);
         customView.setTextViewText(R.id.tvNotifySub, content);

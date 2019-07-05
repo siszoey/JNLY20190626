@@ -35,11 +35,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ATEAppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.titan.jnly.main.ui.aty.MainActivity">
+        android:theme="@style/ATEAppTheme">
 
-        </activity>
+        <activity android:name="com.titan.jnly.main.ui.aty.MainActivity" />
+        <activity android:name="com.titan.jnly.map.ui.aty.MapActivity" />
+
         <activity android:name=".login.ui.aty.LoginAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,13 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".main.ui.aty.MainAtyV1">
-
-        </activity>
-
-
-
 
 
         <!--zy: 服务注册-->

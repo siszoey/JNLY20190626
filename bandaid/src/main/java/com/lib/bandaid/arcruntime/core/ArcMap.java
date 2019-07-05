@@ -1,8 +1,10 @@
 package com.lib.bandaid.arcruntime.core;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -31,6 +33,8 @@ import java.util.List;
  */
 
 public class ArcMap extends RelativeLayout implements LoadStatusChangedListener, IContainer {
+
+    private boolean canRotate = false;
     private Context context;
     /**
      * 卫星影像地图
@@ -285,5 +289,16 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     public MapView getMapView() {
         return mapView;
+    }
+
+    /**
+     * **************************************地图属性设置*******************************************
+     */
+    public boolean isCanRotate() {
+        return canRotate;
+    }
+
+    public void setCanRotate(boolean canRotate) {
+        this.canRotate = canRotate;
     }
 }
