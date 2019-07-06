@@ -321,12 +321,28 @@ public final class FileUtil {
         return map;
     }
 
+
+    public static Map<String, List<File>> fileTrees(String path, String extendName) {
+        Map<File, String> tree = fileTree(path, extendName);
+        Map<String, List<File>> res = new HashMap<>();
+        String value;
+        String temp;
+        for (File file : tree.keySet()) {
+            value = tree.get(file);
+            temp = path.concat(File.separator).concat(value);
+            if (!res.containsKey(temp)) res.put(temp, new ArrayList<>());
+            res.get(temp).add(file);
+        }
+        return res;
+    }
+
+
     /**
-     * 非递归
-     *
      * @param path
+     * @param extendName 查找指定后缀的文件
+     * @return
      */
-    public static Map<File, String> fileTree(String path, String filter) {
+    public static Map<File, String> fileTree(String path, String extendName) {
         Map<File, String> mapTree = new HashMap<>();
         int fileNum = 0, folderNum = 0;
         File file = new File(path);
@@ -341,12 +357,11 @@ public final class FileUtil {
                 } else {
                     System.out.println("文件:" + file2.getAbsolutePath());
                     fileNum++;
-
                     String _name = file2.getName();
                     String _path = file2.getAbsolutePath();
                     _path = _path.replace(path + "/", "");
                     _path = _path.replace(_name, "");
-                    if (filter != null && !_name.endsWith(filter)) {
+                    if (_name.endsWith(extendName)) {
                         mapTree.put(file2, _path);
                     }
                 }
@@ -368,7 +383,7 @@ public final class FileUtil {
                         String _path = file2.getAbsolutePath();
                         _path = _path.replace(path + "/", "");
                         _path = _path.replace(_name, "");
-                        if (filter != null && !_name.endsWith(filter)) {
+                        if (_name.endsWith(extendName)) {
                             mapTree.put(file2, _path);
                         }
                     }

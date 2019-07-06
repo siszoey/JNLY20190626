@@ -26,9 +26,12 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import com.lib.bandaid.arcruntime.event.ArcMapEventDispatch;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
 import com.lib.bandaid.arcruntime.layer.utils.DataSourceRead;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zy on 2019/5/9.
@@ -174,6 +177,16 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
         //加载本地数据
         {
             if (mapLocalUrls == null) return;
+            Map<String, List<File>> localTree;
+            LayerList list = mapView.getMap().getOperationalLayers();
+            for (int i = 0; i < mapLocalUrls.size(); i++) {
+                localTree = FileUtil.fileTrees(mapLocalUrls.get(i), "geodatabase");
+                DataSourceRead.read(list, localTree);
+            }
+        }
+        //加载本地数据
+       /* {
+            if (mapLocalUrls == null) return;
             String url;
             LayerList list = mapView.getMap().getOperationalLayers();
             for (int i = 0; i < mapLocalUrls.size(); i++) {
@@ -181,12 +194,15 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
                 if (url == null) continue;
                 if (url.toLowerCase().endsWith(".shape")) {
                     DataSourceRead.readShape(list, url);
-                }
-                if (url.toLowerCase().endsWith(".geodatabase")) {
+                } else if (url.toLowerCase().endsWith(".geodatabase")) {
                     DataSourceRead.readGeoDatabase(list, url);
+                } else {
+                    //DataSourceRead.readGeoDatabase();
                 }
             }
-        }
+        }*/
+
+
     }
 
     @Override
@@ -316,6 +332,14 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
         if (urls == null) return this;
         for (int i = 0; i < urls.length; i++) {
             mapLocalUrls.add(urls[i]);
+        }
+        return this;
+    }
+
+    public ArcMap setMapLocalUrl(List<String> urls) {
+        if (urls == null) return this;
+        for (int i = 0; i < urls.size(); i++) {
+            mapLocalUrls.add(urls.get(i));
         }
         return this;
     }

@@ -137,7 +137,37 @@ public class TreeViewAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
-        } else if (treeNode.isItemClickEnable()) {
+        } else if (treeNode.isItemClickEnable()&&treeNode.hasChild()) {
+            nodeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onNodeToggled(treeNode);
+                    viewBinder.onNodeToggled(treeNode, treeNode.isExpanded());
+                }
+            });
+        } else if(treeNode.isItemClickEnable()){
+            nodeView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (iTreeViewNodeListening != null) {
+                        iTreeViewNodeListening.nodeClickListening(treeNode);
+                    }
+                }
+            });
+
+            nodeView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (iTreeViewNodeListening != null) {
+                        iTreeViewNodeListening.nodeLongClickListening(treeNode);
+                    }
+                    return true;
+                }
+            });
+        }
+
+
+        /*else if (treeNode.isItemClickEnable()) {
             nodeView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -161,10 +191,10 @@ public class TreeViewAdapter extends RecyclerView.Adapter {
                     if (iTreeViewNodeListening != null) {
                         iTreeViewNodeListening.nodeLongClickListening(treeNode);
                     }
-                    return false;
+                    return true;
                 }
             });
-        }
+        }*/
 
         if (viewBinder instanceof CheckableNodeViewBinder) {
             final View view = nodeView.findViewById(((CheckableNodeViewBinder) viewBinder).getCheckableViewId());

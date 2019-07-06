@@ -3,10 +3,15 @@ package com.titan.jnly.map.ui.frame;
 import android.content.Context;
 import android.widget.LinearLayout;
 
+import com.esri.arcgisruntime.geometry.Envelope;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.layers.LayerContent;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
+import com.lib.bandaid.arcruntime.layer.info.Extent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;
@@ -16,6 +21,8 @@ import com.titan.jnly.R;
 import com.titan.jnly.map.utils.NodeIteration;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zy on 2019/5/23.
@@ -57,10 +64,13 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
 
 
     void loadMap() {
+        //Map<String, List<File>> tree = FileUtil.fileTrees(Config.APP_MAP_SPATIAL, "geodatabase");
         //arcMap.setBaseMapUrl(Config.APP_ARC_MAP_BASE);
-        //arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
-        //arcMap.setMapServerDesc("图层1", "图层2");
-        arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL.concat(File.separator).concat("青岛造林2018.geodatabase"));
+        arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
+        arcMap.setMapServerDesc("图层1", "图层2");
+
+        arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL);
+        //arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL.concat(File.separator).concat("青岛造林多表.geodatabase"));
         arcMap.getTocContainer().addILayerLoaded(this);
         arcMap.mapLoad(new ArcMap.IMapReady() {
             @Override
@@ -75,6 +85,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         treeView.addNode(treeRoot, treeNode);
     }
 
+
     @Override
     public void nodeCheckListening(boolean checked, TreeNode treeNode) {
         if (treeNode.getValue() != null) {
@@ -84,12 +95,19 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
 
     @Override
     public void nodeClickListening(TreeNode treeNode) {
-        System.out.println(1122);
+        //移动到数据范围
+        if (treeNode.getValue() != null) {
+            LayerContent layerContent = ((LayerNode) treeNode.getValue()).getLayerContent();
+            if (layerContent instanceof FeatureLayer) {
+                Envelope extent = ((FeatureLayer) layerContent).getFeatureTable().getExtent();
+                arcMap.getMapControl().zoomG(extent);
+            }
+        }
     }
 
     @Override
     public void nodeLongClickListening(TreeNode treeNode) {
-        System.out.println(1122);
+
     }
 
 

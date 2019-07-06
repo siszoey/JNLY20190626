@@ -13,9 +13,18 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
+import com.lib.bandaid.arcruntime.tools.ZoomLocal;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
+import com.lib.bandaid.permission.Permission;
+import com.lib.bandaid.permission.RxConsumer;
+import com.lib.bandaid.permission.RxPermissionFactory;
+import com.lib.bandaid.permission.SimplePermission;
+import com.lib.bandaid.rw.file.utils.FileUtil;
+import com.lib.bandaid.service.imp.LocService;
+import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
@@ -26,8 +35,9 @@ import com.titan.jnly.map.ui.tools.ToolNavi;
 import com.titan.jnly.map.ui.tools.ToolQuery;
 import com.titan.jnly.map.ui.tools.ToolSel;
 import com.titan.jnly.map.ui.tools.ToolTrack;
+import com.titan.jnly.system.version.bugly.BuglySetting;
 
-public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady {
+public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady, PositionUtil.ILocStatus {
 
 
     CustomDrawerLayout drawerLayout;
@@ -42,8 +52,29 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "济南名木", Gravity.CENTER);
         initMapWidget();
-
         setContentView(R.layout.map_ui_aty_map);
+        //检查更新
+        BuglySetting.checkVersion();
+        //权限
+        permissions();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        arcMap.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        arcMap.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        arcMap.destroy();
     }
 
     @Override
@@ -60,7 +91,7 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
     protected void initialize() {
         arcMap = $(R.id.arcMap);
         drawerLayout = $(R.id.drawerLayout);
-        drawerLayout.setMargin(0.618f);
+        drawerLayout.setMargin(0.5f);
         menuRight = $(R.id.menuRight);
         mainFrame = $(R.id.mainFrame);
 
@@ -90,7 +121,35 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
 
     void initMapWidget() {
         ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolLocal.class, ToolClear.class);
-        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class);
+        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLocal.class);
         WidgetContainer.registerWidget(FrameQuery.class);
+    }
+
+    void permissions() {
+        PositionUtil.reqGps(_context, LocService.class, this);
+        RxPermissionFactory
+                .getRxPermissions(_context)
+                .requestEachCombined(SimplePermission.MANIFEST_STORAGE)
+                .subscribe(new RxConsumer(_context) {
+                    @Override
+                    public void accept(Permission permission) {
+                        super.accept(permission);
+                        if (permission.granted) {
+                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
+                        } else {
+                            finish();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void agree() {
+
+    }
+
+    @Override
+    public void refuse() {
+        finish();
     }
 }

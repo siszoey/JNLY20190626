@@ -54,7 +54,38 @@ public class TocContainer extends BaseContainer {
         }
     }
 
+    /**
+     * 生成节点
+     *
+     * @param node
+     */
     public void addLayerNode(LayerNode node) {
+      /*  String uri = node.getUri();
+        if (uri.endsWith(".shape")) {
+            LayerNode layerNode = getLayerNodeByUri(uri);
+            if (layerNode == null) {
+                layerNode = new LayerNode();
+                layerNode.setName("1122");
+                layerNode.setUri(uri);
+            }
+            layerNode.addNode(node);
+            //服务器图层
+            layerNodes.add(layerNode);
+        } else if (uri.endsWith(".geodatabase")) {
+            LayerNode layerNode = getLayerNodeByUri(uri);
+            if (layerNode == null) {
+                layerNode = new LayerNode();
+                layerNode.setName("1122");
+                layerNode.setUri(uri);
+            }
+            layerNode.addNode(node);
+            //服务器图层
+            layerNodes.add(layerNode);
+        } else {
+            //服务器图层
+            layerNodes.add(node);
+        }*/
+
         layerNodes.add(node);
     }
 
@@ -66,7 +97,7 @@ public class TocContainer extends BaseContainer {
         layersLoaded.add(layerLoad);
     }
 
-    public void notifyLayerLoad(LayerNode node) {
+    private void notifyLayerLoad(LayerNode node) {
         for (ILayerLoaded layerLoad : layersLoaded) {
             layerLoad.iLayerLoaded(node);
         }
@@ -82,6 +113,14 @@ public class TocContainer extends BaseContainer {
         for (LayerNode node : layerNodes) {
             layer = node.filterLayer(uri);
             if (layer != null) return layer;
+        }
+        return null;
+    }
+
+    public LayerNode getLayerNodeByUri(String uri) {
+        if (layerNodes == null) return null;
+        for (LayerNode node : layerNodes) {
+            if (node.getUri().equals(uri)) return node;
         }
         return null;
     }

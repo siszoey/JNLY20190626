@@ -98,7 +98,8 @@ public class LayerNode implements Serializable {
     }
 
     public boolean getVisible() {
-        return layerContent == null ? false : layerContent.isVisible();
+        //return layerContent == null ? false : layerContent.isVisible();
+        return layerContent == null ? true : layerContent.isVisible();
     }
 
     public LayerInfo getInfo() {
@@ -116,11 +117,20 @@ public class LayerNode implements Serializable {
         for (LayerNode node : temp) {
             if (!node.getVisible()) return true;
         }
-        return layerContent == null ? false : layerContent.isVisible();
+        return !getVisible();
     }
 
     public void setVisible(boolean visible) {
         iteration(this, visible);
+    }
+
+    /**
+     * 判断是否为本地图层
+     *
+     * @return
+     */
+    public boolean isLocal() {
+        return !uri.toLowerCase().startsWith("http");
     }
 
     public List<LayerNode> getLeftNode() {
@@ -163,6 +173,7 @@ public class LayerNode implements Serializable {
         }
         return null;
     }
+
 
     //----------------------------------------------------------------------------------------------
 

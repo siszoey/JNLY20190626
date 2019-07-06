@@ -6,6 +6,10 @@ import java.io.File;
 
 public final class Config extends Config_dev {
 
+    public final static String APP_ARC_MAP_SERVICE = "http://222.85.147.144:6080/arcgis/rest/services/GYLY_BASEDATA/LDLJXB/MapServer";
+    public final static String APP_ARC_MAP_SERVICE_2015_SS = "http://222.85.147.144:6080/arcgis/rest/services/GYLY_BASEDATA/ED_QXFQ_2015BZ/MapServer";
+
+
     public static String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath().toString();
     public static String APP_PATH = ROOT_PATH.concat(File.separator).concat(APP_PATH_NAME);
     public static String APP_DB_PATH = APP_PATH.concat(File.separator).concat(APP_DB_NAME);
