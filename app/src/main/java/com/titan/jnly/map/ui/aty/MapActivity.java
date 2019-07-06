@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.lib.bandaid.activity.BaseAppCompatActivity;
-import com.lib.bandaid.activity.BaseFrgActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
@@ -21,7 +20,12 @@ import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
 import com.titan.jnly.map.ui.tools.QuerySel;
+import com.titan.jnly.map.ui.tools.ToolClear;
+import com.titan.jnly.map.ui.tools.ToolLocal;
+import com.titan.jnly.map.ui.tools.ToolNavi;
+import com.titan.jnly.map.ui.tools.ToolQuery;
 import com.titan.jnly.map.ui.tools.ToolSel;
+import com.titan.jnly.map.ui.tools.ToolTrack;
 
 public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady {
 
@@ -37,11 +41,7 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "济南名木", Gravity.CENTER);
-
-        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class);
-        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolSel.class, QuerySel.class);
-        WidgetContainer.registerWidget(FrameQuery.class);
-        //WidgetContainer.registerWidget(FrameLayer.class);
+        initMapWidget();
 
         setContentView(R.layout.map_ui_aty_map);
     }
@@ -86,5 +86,11 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
 
     public void toggle() {
         drawerLayout.toggle();
+    }
+
+    void initMapWidget() {
+        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolLocal.class, ToolClear.class);
+        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class);
+        WidgetContainer.registerWidget(FrameQuery.class);
     }
 }

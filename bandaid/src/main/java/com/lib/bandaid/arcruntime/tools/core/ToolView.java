@@ -1,6 +1,7 @@
 package com.lib.bandaid.arcruntime.tools.core;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,7 @@ public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implem
     }
 
     private void init() {
+        this.setBackgroundColor(Color.WHITE);
         this.setButtonDrawable(normalRes);
         this.setOnTouchListener(this);
         initOk = true;
