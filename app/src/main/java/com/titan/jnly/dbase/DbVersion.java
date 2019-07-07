@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.lib.bandaid.data.local.sqlite.config.DbConfig;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
+import com.lib.bandaid.service.bean.Loc;
 import com.titan.jnly.Config;
 
 
@@ -22,15 +23,13 @@ public class DbVersion extends DbConfig {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql;
-        /*if (db.getPath().equals(privateDbPath())) {
-            sql = SqlBuilder.getTableBuildingSQL(DownInfo.class);
-            db.execSQL(sql);
+        if (db.getPath().equals(privateDbPath())) {
+            //sql = SqlBuilder.getTableBuildingSQL(DownInfo.class);
+            //db.execSQL(sql);
         } else if (db.getPath().equals(defaultDbPath())) {
-            sql = SqlBuilder.getTableBuildingSQL(new DbTest1());
+            sql = SqlBuilder.getTableBuildingSQL(new Loc());
             db.execSQL(sql);
-            sql = SqlBuilder.getTableBuildingSQL(new DbTest2());
-            db.execSQL(sql);
-        }*/
+        }
     }
 
     @Override
@@ -38,11 +37,11 @@ public class DbVersion extends DbConfig {
         if (db.getPath().equals(privateDbPath())) {
 
         } else if (db.getPath().equals(defaultDbPath())) {
-           /* String sql = SqlBuilder.getDropSql(DownInfo.class);
+            String sql = SqlBuilder.getDropSql(Loc.class);
             db.execSQL(sql);
 
-            sql = SqlBuilder.getTableBuildingSQL(DownInfo.class);
-            db.execSQL(sql);*/
+            sql = SqlBuilder.getTableBuildingSQL(Loc.class);
+            db.execSQL(sql);
         }
     }
 
@@ -63,7 +62,7 @@ public class DbVersion extends DbConfig {
 
     @Override
     public int defaultVersion() {
-        return 4;
+        return 5;
     }
 
     @Override

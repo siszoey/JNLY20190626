@@ -43,9 +43,12 @@ public class MapControl extends BaseContainer {
         if (geometries == null) return;
         List<Geometry> list = CollectUtil.array2List(geometries);
         if (list.size() == 1) {
-            arcMap.getMapView().setViewpointGeometryAsync(GeometryEngine.simplify(list.get(0)));
+            Geometry geometry = GeometryEngine.simplify(list.get(0));
+            if (geometry.isEmpty()) return;
+            arcMap.getMapView().setViewpointGeometryAsync(geometry);
         } else {
             Envelope envelope = GeometryEngine.combineExtents(list);
+            if (envelope.isEmpty()) return;
             arcMap.getMapView().setViewpointGeometryAsync(envelope);
         }
     }

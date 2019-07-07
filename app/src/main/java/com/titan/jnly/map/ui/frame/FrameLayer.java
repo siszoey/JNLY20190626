@@ -114,7 +114,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     void initLayerTree() {
         if (treeView != null) treeView.reMoveAllNode();
         nodeProject = TreeNode.root();
-        treeRoot = TreeNode.level(0).setLabel("一张图图层").setExpanded(true).setItemClickEnable(true);
+        treeRoot = TreeNode.level(0).setLabel("图层").setExpanded(true).setItemClickEnable(true);
         treeRoot.setLevel(0);
         treeRoot.setExpanded(true);
         treeRoot.setItemClickEnable(true);

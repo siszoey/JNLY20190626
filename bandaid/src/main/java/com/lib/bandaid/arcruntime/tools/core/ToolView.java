@@ -3,14 +3,20 @@ package com.lib.bandaid.arcruntime.tools.core;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.lib.bandaid.utils.MeasureScreen;
 
 /**
  * Created by zy on 2018/12/17.
  */
 
 public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implements View.OnTouchListener {
+
+    private int with = 48;
+    private int high = 48;
 
     private boolean initOk = false;
 
@@ -51,13 +57,16 @@ public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implem
 
     private void init() {
         this.setBackgroundColor(Color.WHITE);
+
+        /*this.setWidth(MeasureScreen.dip2px(getContext(), with));
+        this.setHeight(MeasureScreen.dip2px(getContext(), high));
+        this.setGravity(Gravity.CENTER);*/
         this.setButtonDrawable(normalRes);
         this.setOnTouchListener(this);
         initOk = true;
     }
 
-    public void setNormalBnt(boolean _isNormalBnt)
-    {
+    public void setNormalBnt(boolean _isNormalBnt) {
         this.isNormalBnt = _isNormalBnt;
     }
 
@@ -124,7 +133,7 @@ public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implem
     }
 
     public interface ILongClick {
-        public void toolViewLongClick(View view);
+        public void viewLongClick(View view);
     }
 
     public interface IClick {
@@ -160,8 +169,7 @@ public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implem
 
         @Override
         public void run() {
-
-            if (iLongClick != null) iLongClick.toolViewLongClick(ToolView.this);
+            if (iLongClick != null) iLongClick.viewLongClick(ToolView.this);
         }
 
     }

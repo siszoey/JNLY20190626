@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
+import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
 import com.esri.arcgisruntime.layers.ArcGISTiledLayer;
 import com.esri.arcgisruntime.layers.FeatureLayer;
@@ -53,6 +54,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     private TocContainer tocContainer = new TocContainer();
     private QueryContainer queryContainer = new QueryContainer();
+    private SelectContainer selectContainer = new SelectContainer();
     private MapControl mapControl = new MapControl();
     private WidgetContainer widgetContainer = new WidgetContainer();
 
@@ -217,6 +219,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     public void create(ArcMap arcMap) {
         tocContainer.create(arcMap);
         queryContainer.create(arcMap);
+        selectContainer.create(arcMap);
         mapControl.create(arcMap);
         widgetContainer.create(arcMap);
         sketchTool.create(arcMap);
@@ -229,6 +232,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     public void ready(List<Layer> layers) {
         tocContainer.ready(layers);
         queryContainer.ready(layers);
+        selectContainer.ready(layers);
         mapControl.ready(layers);
         widgetContainer.ready(layers);
         sketchTool.ready(layers);
@@ -241,6 +245,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     public void destroy() {
         if (tocContainer != null) tocContainer.destroy();
         if (queryContainer != null) queryContainer.destroy();
+        if (selectContainer != null) selectContainer.destroy();
         if (mapControl != null) mapControl.destroy();
         if (widgetContainer != null) widgetContainer.destroy();
         if (sketchTool != null) sketchTool.destroy();
@@ -272,8 +277,16 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
         return tocContainer;
     }
 
+    public GraphicContainer getGraphicContainer() {
+        return graphicContainer;
+    }
+
     public QueryContainer getQueryContainer() {
         return queryContainer;
+    }
+
+    public SelectContainer getSelectContainer() {
+        return selectContainer;
     }
 
     public MapControl getMapControl() {
@@ -346,6 +359,10 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     public MapView getMapView() {
         return mapView;
+    }
+
+    public Point screenToLocation(MotionEvent e) {
+        return mapView.screenToLocation(new android.graphics.Point((int) e.getX(), (int) e.getY()));
     }
 
     /**

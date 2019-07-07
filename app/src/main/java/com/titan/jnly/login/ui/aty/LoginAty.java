@@ -83,7 +83,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
             if (isRemember) {
                 Constant.putUser(user);
             }
-            presenter.Login(user);
+           // presenter.Login(user);
+            LoginSuccess();
         }
         if (v.getId() == R.id.ivShowPwd) {
             showPwd = !showPwd;

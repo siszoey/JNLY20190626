@@ -1,68 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/common_dialog_layout_bg"
-    android:orientation="vertical">
+    android:background="@drawable/common_dialog_layout_bg">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center_horizontal"
-        android:padding="12dp"
-        android:text="坐标定位"
-        android:textColor="@color/black"
-        android:visibility="invisible"
-        android:textSize="16sp" />
-
-    <View style="@style/h_line"></View>
-
-    <!--验标面积-->
-    <LinearLayout style="@style/layoutItem">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            style="@style/textItem"
-            android:layout_width="wrap_content"
-            android:text="经度（十进制）："
-            android:textSize="12sp" />
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:padding="12dp"
+            android:text="坐标定位"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
-        <com.lib.bandaid.widget.edittext.ClearEditText
-            android:id="@+id/cetLon"
-            style="@style/editItem"
-            android:layout_weight="2"
-            android:hint="如：118.000001"
-            android:inputType="number|numberDecimal" />
+        <View style="@style/h_line"></View>
 
-        <TextView style="@style/textItem_necessary" />
+        <!--验标面积-->
+        <LinearLayout style="@style/layoutItem">
+
+            <TextView
+                style="@style/textItem"
+                android:layout_width="wrap_content"
+                android:text="经度（十进制）："
+                android:textSize="12sp" />
+
+            <com.lib.bandaid.widget.edittext.ClearEditText
+                android:id="@+id/cetLon"
+                style="@style/editItem"
+                android:layout_weight="2"
+                android:hint="如：118.000001"
+                android:inputType="number|numberDecimal" />
+
+            <TextView style="@style/textItem_necessary" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/layoutItem">
+
+            <TextView
+                style="@style/textItem"
+                android:layout_width="wrap_content"
+                android:text="纬度（十进制）："
+                android:textSize="12sp" />
+
+            <com.lib.bandaid.widget.edittext.ClearEditText
+                android:id="@+id/cetLat"
+                style="@style/editItem"
+                android:layout_weight="1"
+                android:hint="如：34.000001"
+                android:inputType="number|numberDecimal" />
+
+            <TextView style="@style/textItem_necessary" />
+
+        </LinearLayout>
+
+        <View style="@style/h_line"></View>
 
     </LinearLayout>
-
-    <LinearLayout style="@style/layoutItem">
-
-        <TextView
-            style="@style/textItem"
-            android:layout_width="wrap_content"
-            android:text="纬度（十进制）："
-            android:textSize="12sp" />
-
-        <com.lib.bandaid.widget.edittext.ClearEditText
-            android:id="@+id/cetLat"
-            style="@style/editItem"
-            android:layout_weight="1"
-            android:hint="如：34.000001"
-            android:inputType="number|numberDecimal" />
-
-        <TextView style="@style/textItem_necessary" />
-
-    </LinearLayout>
-
-    <View style="@style/h_line"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <TextView
@@ -90,4 +97,5 @@
 
     </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

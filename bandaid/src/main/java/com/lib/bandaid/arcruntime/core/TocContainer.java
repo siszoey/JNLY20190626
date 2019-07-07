@@ -85,7 +85,6 @@ public class TocContainer extends BaseContainer {
             //服务器图层
             layerNodes.add(node);
         }*/
-
         layerNodes.add(node);
     }
 
@@ -123,5 +122,37 @@ public class TocContainer extends BaseContainer {
             if (node.getUri().equals(uri)) return node;
         }
         return null;
+    }
+
+    public List<LayerNode> getLeafLayerNodes() {
+        if (layerNodes == null) return null;
+        List<LayerNode> list = new ArrayList<>();
+        List<LayerNode> temp;
+        for (LayerNode node : layerNodes) {
+            temp = node.getLeafNode();
+            if (temp == null) continue;
+            list.addAll(temp);
+        }
+        return list;
+    }
+
+    public List<LayerNode> getLeafLayerNodesVisible() {
+        List<LayerNode> list = getLeafLayerNodes();
+        if (list == null) return null;
+        List<LayerNode> res = new ArrayList<>();
+        for (LayerNode node : list) {
+            if (node.getVisible()) res.add(node);
+        }
+        return res;
+    }
+
+    public List<LayerNode> getLeafLayerNodesInVisible() {
+        List<LayerNode> list = getLeafLayerNodes();
+        if (list == null) return null;
+        List<LayerNode> res = new ArrayList<>();
+        for (LayerNode node : list) {
+            if (!node.getVisible()) res.add(node);
+        }
+        return res;
     }
 }

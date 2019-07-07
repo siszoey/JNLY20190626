@@ -3,10 +3,13 @@ package com.lib.bandaid.widget.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.appbar.AppBarLayout;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -22,8 +25,10 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.R;
+import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.widget.dialog.i.IView;
 import com.lib.bandaid.widget.layout.RootStatusView;
 
 
@@ -31,7 +36,7 @@ import com.lib.bandaid.widget.layout.RootStatusView;
  * Created by zy on 2019/4/21.
  */
 
-public abstract class BaseDialogFrg extends DialogFragment {
+public abstract class BaseDialogFrg extends DialogFragment implements IView {
 
     protected Context context;
 
@@ -132,8 +137,7 @@ public abstract class BaseDialogFrg extends DialogFragment {
     }
 
 
-    protected void showProgressDialog() {
-        //if (dialog == null) dialog = MaterialDialogUtil.showLoadProgress(context, "加载中...", true);
+    protected void showWaitDialog() {
         synchronized (dialogCount) {
             dialogCount++;
         }
@@ -142,7 +146,7 @@ public abstract class BaseDialogFrg extends DialogFragment {
         }
     }
 
-    protected void stopProgressDialog() {
+    protected void hideWaitDialog() {
         synchronized (dialogCount) {
             if (dialogCount > 0) dialogCount--;
         }
@@ -186,25 +190,44 @@ public abstract class BaseDialogFrg extends DialogFragment {
         _frameLayout.setOnViewStatusChangeListener(listener);
     }
 
-    protected void showContent() {
+    //----------------------------------------------------------------------------------------------
+    @Override
+    public void showContent() {
         _frameLayout.showContent();
     }
 
-    protected void showNoNetwork() {
+    @Override
+    public void showNoNetwork() {
         _frameLayout.showNoNetwork();
     }
 
-    protected void showEmpty() {
+    @Override
+    public void showEmpty() {
         _frameLayout.showEmpty();
     }
 
-    protected void showLoading() {
+    @Override
+    public void showLoading() {
         _frameLayout.showLoading();
     }
 
-    protected void showError() {
+    @Override
+    public void showError() {
         _frameLayout.showError();
     }
+
+    @Override
+    public void dialogLoading() {
+        DialogFactory.getFactory().show(getActivity());
+    }
+
+    @Override
+    public void dialogHiding() {
+        DialogFactory.getFactory().dismiss(getActivity());
+    }
+
+
+
     //----------------------------------------------------------------------------------------------
 
 }

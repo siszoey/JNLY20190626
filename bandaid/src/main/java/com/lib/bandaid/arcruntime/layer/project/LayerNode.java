@@ -2,6 +2,7 @@ package com.lib.bandaid.arcruntime.layer.project;
 
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
+import com.esri.arcgisruntime.layers.SublayerList;
 import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
 import com.lib.bandaid.thread.rx.RxSimpleUtil;
 import com.lib.bandaid.utils.HttpSimpleUtil;
@@ -106,13 +107,17 @@ public class LayerNode implements Serializable {
         return info;
     }
 
+    public boolean hasChildNode() {
+        return nodes != null && nodes.size() > 0;
+    }
+
     /**
      * 判断子图层是否有不可见的
      *
      * @return
      */
     public boolean hasInVisible() {
-        List<LayerNode> temp = getLeftNode();
+        List<LayerNode> temp = getLeafNode();
         if (temp == null) return false;
         for (LayerNode node : temp) {
             if (!node.getVisible()) return true;
@@ -133,10 +138,10 @@ public class LayerNode implements Serializable {
         return !uri.toLowerCase().startsWith("http");
     }
 
-    public List<LayerNode> getLeftNode() {
+    public List<LayerNode> getLeafNode() {
         List<LayerNode> res = new ArrayList<>();
-        if (getLayerContent() != null) {
-            System.out.println(getName());
+        if (getLayerContent() != null && !hasChildNode()) {
+            //System.out.println(getName());
             res.add(this);
         }
         List<LayerNode> nodes = this.getNodes();
@@ -144,14 +149,14 @@ public class LayerNode implements Serializable {
         LayerNode _layerNode;
         for (int i = 0; i < nodes.size(); i++) {
             _layerNode = nodes.get(i);
-            getLeftNode(res, _layerNode);
+            getLeafNode(res, _layerNode);
         }
         return res;
     }
 
-    private void getLeftNode(List<LayerNode> in, LayerNode layerNode) {
+    private void getLeafNode(List<LayerNode> in, LayerNode layerNode) {
         if (layerNode.getLayerContent() != null) {
-            System.out.println(layerNode.getName());
+            //System.out.println(layerNode.getName());
             in.add(layerNode);
         }
         List<LayerNode> nodes = layerNode.getNodes();
@@ -159,12 +164,12 @@ public class LayerNode implements Serializable {
         LayerNode _layerNode;
         for (int i = 0; i < nodes.size(); i++) {
             _layerNode = nodes.get(i);
-            getLeftNode(in, _layerNode);
+            getLeafNode(in, _layerNode);
         }
     }
 
     public Layer filterLayer(String uri) {
-        List<LayerNode> nodes = getLeftNode();
+        List<LayerNode> nodes = getLeafNode();
         LayerNode node;
         for (int i = 0, len = nodes.size(); i < len; i++) {
             node = nodes.get(i);

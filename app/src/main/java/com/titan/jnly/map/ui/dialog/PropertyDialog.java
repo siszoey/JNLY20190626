@@ -68,21 +68,25 @@ public class PropertyDialog extends BaseDialogFrg {
 
     @Override
     protected void initClass() {
-        if (info == null) return;
-        Map<String, Object> _property = new HashMap<>();
-        List<Field> fields = info.getFields();
-        Field field;
-        boolean equal = false;
-        for (int i = 0, len = fields.size(); i < len; i++) {
-            field = fields.get(i);
-            for (Object name : property.keySet()) {
-                equal = ObjectUtil.baseTypeIsEqual(name, field.getName());
-                if (equal) {
-                    _property.put(field.getAlias(), property.get(name));
-                    break;
+        if (info != null) {
+            Map<String, Object> _property = new HashMap<>();
+            List<Field> fields = info.getFields();
+            Field field;
+            boolean equal = false;
+            for (int i = 0, len = fields.size(); i < len; i++) {
+                field = fields.get(i);
+                for (Object name : property.keySet()) {
+                    equal = ObjectUtil.baseTypeIsEqual(name, field.getName());
+                    if (equal) {
+                        _property.put(field.getAlias(), property.get(name));
+                        break;
+                    }
                 }
             }
+            entityLayoutView.setData(_property).resolutionData();
+        }else {
+            entityLayoutView.setData(property).resolutionData();
         }
-        entityLayoutView.setData(_property).resolutionData();
+
     }
 }

@@ -1,4 +1,4 @@
-package com.lib.bandaid.data.local;
+package com.lib.bandaid.data.local.util;
 
 /**
  * Created by zy on 2018/6/10.

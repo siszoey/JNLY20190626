@@ -72,7 +72,7 @@ public class ToolSel extends BaseTool {
         List<LayerNode> leftNodes;
         QueryParameters queryParameters;
         for (LayerNode node : nodes) {
-            leftNodes = node.getLeftNode();
+            leftNodes = node.getLeafNode();
             for (LayerNode leftNode : leftNodes) {
                 if (!leftNode.getVisible() || !leftNode.isValid()) continue;
                 queryParameters = new QueryParameters();

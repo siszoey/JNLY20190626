@@ -1,6 +1,7 @@
 package com.titan.jnly.system;
 
 import com.lib.bandaid.app.BaseApp;
+import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.utils.CacheUtil;
 import com.titan.jnly.login.bean.User;
 
@@ -14,6 +15,7 @@ public final class Constant {
     private static CacheUtil cacheUtil = CacheUtil.get(BaseApp.baseApp);
 
     public static void putUser(User user) {
+        Loc.USER_ID = user.getName();
         cacheUtil.put(KEY_USER, user);
     }
 

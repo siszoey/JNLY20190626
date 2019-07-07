@@ -21,6 +21,7 @@ import com.lib.bandaid.system.theme.utils.ATE;
 import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.widget.dialog.i.IView;
 import com.lib.bandaid.widget.layout.RootStatusView;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import java.util.List;
  * 精简版
  */
 
-public abstract class BaseAppCompatAty extends ATEActivity {
+public abstract class BaseAppCompatAty extends ATEActivity implements IView {
     protected Context _context;
     protected Activity _activity;
     protected String _titleName;
@@ -176,25 +177,41 @@ public abstract class BaseAppCompatAty extends ATEActivity {
         _frameLayout.setOnViewStatusChangeListener(listener);
     }
 
-    protected void showContent() {
+    @Override
+    public void showContent() {
         _frameLayout.showContent();
     }
 
-    protected void showNoNetwork() {
+    @Override
+    public void showNoNetwork() {
         _frameLayout.showNoNetwork();
     }
 
-    protected void showEmpty() {
+    @Override
+    public void showEmpty() {
         _frameLayout.showEmpty();
     }
 
-    protected void showLoading() {
+    @Override
+    public void showLoading() {
         _frameLayout.showLoading();
     }
 
-    protected void showError() {
+    @Override
+    public void showError() {
         _frameLayout.showError();
     }
+
+    @Override
+    public void dialogLoading() {
+        DialogFactory.getFactory().show(this);
+    }
+
+    @Override
+    public void dialogHiding() {
+        DialogFactory.getFactory().dismiss(this);
+    }
+
     //----------------------------------------------------------------------------------------------
 
     /**

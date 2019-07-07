@@ -13,7 +13,6 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
-import com.lib.bandaid.arcruntime.tools.ZoomLocal;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
@@ -28,13 +27,12 @@ import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
-import com.titan.jnly.map.ui.tools.QuerySel;
 import com.titan.jnly.map.ui.tools.ToolClear;
 import com.titan.jnly.map.ui.tools.ToolLocal;
 import com.titan.jnly.map.ui.tools.ToolNavi;
 import com.titan.jnly.map.ui.tools.ToolQuery;
-import com.titan.jnly.map.ui.tools.ToolSel;
 import com.titan.jnly.map.ui.tools.ToolTrack;
+import com.titan.jnly.map.ui.tools.ZoomLoc;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 
 public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady, PositionUtil.ILocStatus {
@@ -121,7 +119,7 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
 
     void initMapWidget() {
         ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolLocal.class, ToolClear.class);
-        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLocal.class);
+        ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLoc.class);
         WidgetContainer.registerWidget(FrameQuery.class);
     }
 

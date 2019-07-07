@@ -13,11 +13,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.lib.bandaid.data.local.sqlite.proxy.mvc.service.i.IMvcService;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
+import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.service.com.baseservices.v2.BaseService;
 import com.lib.bandaid.utils.AppCompatNotify;
 import com.lib.bandaid.R;
+
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -28,6 +34,7 @@ import java.util.Random;
 
 public class LocService extends BaseService implements LocationListener, GpsStatus.Listener {
 
+    private String trackId = UUIDTool.get32UUID();
     /**
      * 定位时间间隔
      */
@@ -41,6 +48,7 @@ public class LocService extends BaseService implements LocationListener, GpsStat
 
     private ServiceLocation.ESignal eSignal;
     private ServiceLocation serviceLocation;
+    private IMvcService iMvcService;
 
     Handler handler = new Handler() {
         @Override
@@ -52,6 +60,7 @@ public class LocService extends BaseService implements LocationListener, GpsStat
     @Override
     @SuppressLint("MissingPermission")
     protected void doInBackGroundingInitialize() {
+        iMvcService = DbManager.createDefault();
         /**
          * 公交车 注册
          */
@@ -182,7 +191,7 @@ public class LocService extends BaseService implements LocationListener, GpsStat
         }
         if (serviceLocation != null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
                 && (serviceLocation.geteSignal() == null || ServiceLocation.ESignal.LOW == serviceLocation.geteSignal())
-                ) {
+        ) {
             provider = locationManager.getProvider(LocationManager.NETWORK_PROVIDER).getName();
             if (cLocation != null) {
                 synchronized (cLocation) {
@@ -207,7 +216,21 @@ public class LocService extends BaseService implements LocationListener, GpsStat
          */
         if (serviceLocation.getLocation() != null) {
             EventBus.getDefault().post(serviceLocation);
-            AppCompatNotify.create(this).notifyLocation(notifyId, channelId, notifyTitle, new Random().nextFloat() + "", R.drawable.ic_location);
+            Location location = serviceLocation.getLocation();
+            String flag = location.getLongitude() + "," + location.getLatitude();
+            AppCompatNotify.create(this).notifyLocation(notifyId, channelId, notifyTitle, flag, R.drawable.ic_location);
+
+
+            //保存轨迹
+            Loc loc = new Loc();
+            loc.setTrackId(trackId);
+            loc.setLat(location.getLatitude() + "");
+            loc.setLng(location.getLongitude() + "");
+            if (iMvcService.save(loc)) {
+                System.out.println("轨迹保存成功");
+            } else {
+                System.out.println("轨迹保存失败");
+            }
         }
     }
 

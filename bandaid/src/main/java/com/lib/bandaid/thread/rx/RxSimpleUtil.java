@@ -2,6 +2,8 @@ package com.lib.bandaid.thread.rx;
 
 import androidx.annotation.NonNull;
 
+import com.lib.bandaid.widget.dialog.i.IView;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,6 +17,42 @@ import io.reactivex.schedulers.Schedulers;
 public final class RxSimpleUtil {
 
     private RxSimpleUtil() {
+    }
+
+    public static <T> void simple(@NonNull IView iView, @NonNull final ISimpleBack<T> iCallBack) {
+        if(iView!=null)iView.dialogLoading();
+        Observable.create(new RxSimpleSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                T t = iCallBack.run();
+                emitter.onNext(t);
+                emitter.onComplete();
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSimpleObserver<T>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                    }
+
+                    @Override
+                    public void onNext(T t) {
+                        if(iView!=null)iView.dialogHiding();
+                        iCallBack.success(t);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if(iView!=null)iView.dialogHiding();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     public static <T> void simple(@NonNull final ISimpleBack<T> iCallBack) {

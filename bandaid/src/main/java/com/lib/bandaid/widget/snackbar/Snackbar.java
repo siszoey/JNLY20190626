@@ -550,7 +550,7 @@ public class Snackbar extends SnackbarLayout {
     public Snackbar attachToRecyclerView(View recyclerView) {
 
         try {
-            Class.forName("android.support.v7.widget.RecyclerView");
+            Class.forName("androidx.recyclerview.widget.RecyclerView");
 
             // We got here, so now we can safely check
             RecyclerUtil.setScrollListener(this, recyclerView);
