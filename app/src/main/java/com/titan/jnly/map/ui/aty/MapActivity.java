@@ -27,7 +27,9 @@ import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
+import com.titan.jnly.map.ui.frame.VectorBar;
 import com.titan.jnly.map.ui.tools.ToolClear;
+import com.titan.jnly.map.ui.tools.ToolEdit;
 import com.titan.jnly.map.ui.tools.ToolLocal;
 import com.titan.jnly.map.ui.tools.ToolNavi;
 import com.titan.jnly.map.ui.tools.ToolQuery;
@@ -118,9 +120,10 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
     }
 
     void initMapWidget() {
-        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolLocal.class, ToolClear.class);
+        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolEdit.class, ToolClear.class);
         ToolContainer.registerTool("辅助", EGravity.RIGHT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLoc.class);
         WidgetContainer.registerWidget(FrameQuery.class);
+        WidgetContainer.registerWidget(VectorBar.class);
     }
 
     void permissions() {

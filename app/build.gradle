@@ -4,10 +4,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("../foxcore_release.jks")
-            storePassword "yanzhao123"
-            keyAlias "key0"
-            keyPassword "yanzhao123"
+            storeFile file("../android")
+            storePassword "123123"
+            keyAlias "apk打包"
+            keyPassword "123123"
         }
     }
 

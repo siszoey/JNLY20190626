@@ -10,8 +10,11 @@ public class ToolClear extends BaseTool {
     public ToolClear() {
         id = getClass().getSimpleName();
         name = "清空";
-        resId = R.drawable.ic_map_clear;
-        checkedResId = R.drawable.ic_tool_pressed;
+        /*resId = R.drawable.ic_map_clear;
+        checkedResId = R.drawable.ic_tool_pressed;*/
+
+        resId = R.mipmap.ic_map_clear_normal;
+        checkedResId = R.mipmap.ic_map_clear_pressed;
     }
 
     @Override

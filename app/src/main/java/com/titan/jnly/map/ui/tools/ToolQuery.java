@@ -20,8 +20,11 @@ public class ToolQuery extends BaseTool implements QueryContainer.ICallBack {
     public ToolQuery() {
         id = getClass().getSimpleName();
         name = "识别";
-        resId = R.drawable.ic_map_query;
-        checkedResId = R.drawable.ic_tool_pressed;
+        /*resId = R.drawable.ic_map_query;
+        checkedResId = R.drawable.ic_tool_pressed;*/
+
+        resId = R.mipmap.ic_map_query_normal;
+        checkedResId = R.mipmap.ic_map_query_pressed;
     }
 
     @Override

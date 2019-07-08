@@ -1,7 +1,9 @@
 package com.lib.bandaid.arcruntime.tools.core;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -15,8 +17,8 @@ import com.lib.bandaid.utils.MeasureScreen;
 
 public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implements View.OnTouchListener {
 
-    private int with = 48;
-    private int high = 48;
+    private int with = 45;
+    private int high = 45;
 
     private boolean initOk = false;
 
@@ -57,13 +59,20 @@ public class ToolView extends androidx.appcompat.widget.AppCompatCheckBox implem
 
     private void init() {
         this.setBackgroundColor(Color.WHITE);
-
-        /*this.setWidth(MeasureScreen.dip2px(getContext(), with));
+        this.setWidth(MeasureScreen.dip2px(getContext(), with));
         this.setHeight(MeasureScreen.dip2px(getContext(), high));
-        this.setGravity(Gravity.CENTER);*/
+        //this.setText("12221122");
+        this.setGravity(Gravity.CENTER);
         this.setButtonDrawable(normalRes);
+
         this.setOnTouchListener(this);
         initOk = true;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
     }
 
     public void setNormalBnt(boolean _isNormalBnt) {

@@ -1,6 +1,7 @@
 package com.titan.jnly.system.version.bugly;
 
 import android.content.Context;
+import android.os.Environment;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.tencent.bugly.Bugly;
@@ -28,27 +29,29 @@ public class BuglySetting {
         Beta.autoInit = true;
         Beta.initDelay = 500;
         Beta.canShowApkInfo = true;
-        Beta.storageDir = new File(Config.APP_PATH);
+        Beta.smallIconId = R.drawable.ic_file_download;
+        //Beta.storageDir = new File(Config.APP_PATH);
+        Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         Beta.autoInstallApk = true;
         Beta.autoDownloadOnWifi = false;
         Beta.enableHotfix = true;
-        Beta.enableNotification = false;
-        Beta.registerDownloadListener(new DownloadListener() {
+        Beta.enableNotification = true;
+       /* Beta.registerDownloadListener(new DownloadListener() {
             @Override
             public void onReceive(DownloadTask downloadTask) {
-                LogUtils.iTag("更新：", downloadTask.getSavedLength() / downloadTask.getTotalLength());
+                LogUtils.iTag(">>>>更新：", downloadTask.getSavedLength() / downloadTask.getTotalLength());
             }
 
             @Override
             public void onCompleted(DownloadTask downloadTask) {
-                LogUtils.iTag("下载完成：", 100);
+                LogUtils.iTag(">>>>下载完成：", 100);
             }
 
             @Override
             public void onFailed(DownloadTask downloadTask, int i, String s) {
-                LogUtils.iTag("下载失败：", s);
+                LogUtils.iTag(">>>>下载失败：", s);
             }
-        });
+        });*/
 
         //企鹅的崩溃
         Bugly.init(context, appId, false);

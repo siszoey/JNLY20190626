@@ -2,12 +2,7 @@ package com.titan.jnly;
 
 public class Config_dev {
     public static String APP_PATH_NAME = "jnly_dev";
-    public static String APP_SPATIAL_PATH = "spatial";
-
     public static String APP_DB_NAME = "jnly_dev.db";
-    public static String APP_MAP_DB = "map_cache";
-    public static String APP_SDB_NAME = "threeLevel.sqlite";
-    public static String APP_CRASH_NAME = "crash_dev";
 
 
     public interface BASE_URL {
@@ -19,4 +14,8 @@ public class Config_dev {
         String SAT = "Sat";
         String SUN = "Sun";
     }
+
+
+    public final static String APP_ARC_MAP_SERVICE = "http://222.85.147.144:6080/arcgis/rest/services/GYLY_BASEDATA/LDLJXB/MapServer";
+    public final static String APP_ARC_MAP_SERVICE_2015_SS = "http://222.85.147.144:6080/arcgis/rest/services/GYLY_BASEDATA/ED_QXFQ_2015BZ/MapServer";
 }
