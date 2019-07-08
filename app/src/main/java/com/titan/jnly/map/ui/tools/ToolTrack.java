@@ -21,8 +21,10 @@ public class ToolTrack extends BaseTool {
     public ToolTrack() {
         id = getClass().getSimpleName();
         name = "轨迹";
-        resId = R.drawable.ic_map_track;
-        checkedResId = R.drawable.ic_tool_pressed;
+        /*resId = R.drawable.ic_map_track;
+        checkedResId = R.drawable.ic_tool_pressed;*/
+        resId = R.mipmap.ic_map_track_normal;
+        checkedResId = R.mipmap.ic_map_track_pressed;
     }
 
     @Override
