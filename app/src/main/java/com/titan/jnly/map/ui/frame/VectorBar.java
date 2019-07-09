@@ -18,7 +18,7 @@ import com.titan.jnly.vector.tool.SketchEditorTools;
 
 import java.util.List;
 
-public class VectorBar extends BaseMapWidget implements View.OnClickListener,ValueCallback {
+public class VectorBar extends BaseMapWidget implements View.OnClickListener {
 
     RadioButton rb_xbbj;
 
@@ -31,8 +31,6 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener,Val
         h = -1f;
         layoutGravity = EGravity.BOTTOM_CENTER.getValue();
         setContentView(R.layout.include_feature_tools);
-
-
     }
 
 
@@ -55,23 +53,21 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener,Val
 
     @Override
     public void onClick(View v) {
-        arcMap.getSketchTool().setCallBack(this);
         if (v.getId() == rb_xbbj.getId()) {
             actionModel = ActionModel.ADDFEATURE;
+            arcMap.getSketchTool().setCallBack(new ValueCallback() {
+                @Override
+                public void onGeometry(Geometry geometry) {
+                    if(actionModel == ActionModel.ADDFEATURE){
+                        List<LayerNode> layerNodes = arcMap.getTocContainer().getLeafLayerNodesVisible();
+                        FeatureTable table = layerNodes.get(0).tryGetFeaTable();
+                        tools.addLineToLayer(table,(Polyline) geometry,null);
+                    }
+                }
+            });
             arcMap.getSketchTool().activate(DrawType.FREEHAND_POLYLINE);
-        }
-    }
 
-    @Override
-    public void onGeometry(Geometry geometry) {
-        if(geometry != null){
-            return;
-        }
 
-        if(actionModel == ActionModel.ADDFEATURE){
-            List<LayerNode> layerNodes = arcMap.getTocContainer().getLeafLayerNodesVisible();
-            FeatureTable table = layerNodes.get(0).tryGetFeaTable();
-            tools.addLineToLayer(table,(Polyline) geometry,null);
         }
     }
 }
