@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bandaid" />
+            <option value="$PROJECT_DIR$/foxcamera" />
+            <option value="$PROJECT_DIR$/frgcore" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -45,7 +45,7 @@ public class EasyMapEvent implements IArcMapEvent {
 
     @Override
     public boolean onRotate(MotionEvent event, double rotationAngle) {
-        return false;
+        return true;
     }
 
     @Override

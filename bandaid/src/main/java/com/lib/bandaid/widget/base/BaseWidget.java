@@ -174,6 +174,14 @@ public abstract class BaseWidget implements IWidget, IOnActivityResult {
     }
 
 
+    public float getW() {
+        return w;
+    }
+
+    public float getH() {
+        return h;
+    }
+
     /**
      * *********************************************************************************************
      * 提示框
