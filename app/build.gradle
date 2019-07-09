@@ -80,7 +80,7 @@ dependencies {
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 
-    implementation 'com.esri.arcgisruntime:arcgis-android:100.4.0'
+    implementation 'com.esri.arcgisruntime:arcgis-android:100.5.0'
     api project(path: ':bandaid')
     api project(path: ':frgcore')
     api project(path: ':foxcamera')

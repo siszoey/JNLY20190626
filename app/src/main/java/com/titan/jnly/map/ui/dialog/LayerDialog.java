@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.titan.jnly.R;
 
+/**
+ * 图层选择（在操作图斑时候，如果需要，就弹出对话框，让用户选择数据）
+ */
 public class LayerDialog extends BaseDialogFrg implements View.OnClickListener {
 
     public static LayerDialog newInstance() {

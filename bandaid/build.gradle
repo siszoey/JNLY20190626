@@ -35,7 +35,7 @@ dependencies {
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     api 'com.google.code.gson:gson:2.8.5'
     //空间数据库
-    implementation 'com.esri.arcgisruntime:arcgis-android:100.4.0'
+    implementation 'com.esri.arcgisruntime:arcgis-android:100.5.0'
     //移除崩溃处理
     api 'com.tonystark.android:defense_crash:2.0.0'
     //rx生命周期
