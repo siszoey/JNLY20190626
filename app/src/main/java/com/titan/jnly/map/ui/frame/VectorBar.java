@@ -7,13 +7,14 @@ import android.widget.RadioButton;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.Polyline;
+import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.draw.DrawType;
 import com.lib.bandaid.arcruntime.core.draw.ValueCallback;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.widget.base.EGravity;
 import com.titan.jnly.R;
-import com.titan.jnly.map.bean.ActionModel;
+import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 
 import java.util.List;
@@ -33,10 +34,14 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener {
         setContentView(R.layout.include_feature_tools);
     }
 
+    @Override
+    public void create(ArcMap arcMap) {
+        super.create(arcMap);
+        tools = new SketchEditorTools(arcMap);
+    }
 
     @Override
     public void initialize() {
-        tools = new SketchEditorTools(arcMap);
         rb_xbbj = $(R.id.rb_xbbj);
     }
 

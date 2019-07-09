@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.mapping.view.SketchEditor;
+import com.lib.bandaid.R;
 import com.lib.bandaid.arcruntime.event.ArcMapEventDispatch;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
 import com.lib.bandaid.arcruntime.layer.utils.DataSourceRead;
@@ -42,6 +44,7 @@ import java.util.Map;
 public class ArcMap extends RelativeLayout implements LoadStatusChangedListener, IContainer {
 
     private boolean canRotate = false;
+    private boolean canOffline = false;
     private Context context;
     /**
      * 卫星影像地图
@@ -81,6 +84,11 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     public ArcMap(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcMap);
+        canRotate = typedArray.getBoolean(R.styleable.ArcMap_canRotate, false);
+        canOffline = typedArray.getBoolean(R.styleable.ArcMap_canOffline, false);
+        typedArray.recycle();
+
         this.context = context;
         init();
     }
@@ -97,7 +105,9 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     }
 
     void initMap() {
-        ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud8065403504,none,RP5X0H4AH7CLJ9HSX018");
+        if (!canOffline) {
+            ArcGISRuntimeEnvironment.setLicense("runtimelite,1000,rud8065403504,none,RP5X0H4AH7CLJ9HSX018");
+        }
         this.removeAllViews();
         this.mapView = new MapView(context);
         this.mapView.setAttributionTextVisible(false);
@@ -376,5 +386,13 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     public void setCanRotate(boolean canRotate) {
         this.canRotate = canRotate;
+    }
+
+    public boolean isCanOffline() {
+        return canOffline;
+    }
+
+    public void setCanOffline(boolean canOffline) {
+        this.canOffline = canOffline;
     }
 }

@@ -74,7 +74,7 @@ public class LayerNode implements Serializable {
 
     public FeatureTable tryGetFeaTable() {
         FeatureLayer featureLayer = tryGetFeaLayer();
-        if (featureLayer == null) return featureLayer.getFeatureTable();
+        if (featureLayer != null) return featureLayer.getFeatureTable();
         return null;
     }
 

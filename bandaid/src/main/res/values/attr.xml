@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ArcMap">
+        <attr name="canRotate" format="boolean" />
+        <attr name="canOffline" format="boolean" />
+    </declare-styleable>
+
     <!--基础布局-->
     <declare-styleable name="RootStatusView">
         <attr name="loadingView" format="reference" />

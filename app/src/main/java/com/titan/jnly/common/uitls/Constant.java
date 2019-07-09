@@ -2,6 +2,8 @@ package com.titan.jnly.common.uitls;
 
 import android.annotation.SuppressLint;
 
+import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.esri.arcgisruntime.geometry.SpatialReferences;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -31,12 +33,16 @@ public class Constant {
 
 
     /*String 字符串保留两位小数*/
-    public static String strFormat(String value){
+    public static String strFormat(String value) {
         return Constant.disFormat.format(new BigDecimal(value));
     }
 
     public static RequestBody requestBody(Object obj) {
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(obj));
+    }
+
+    public static SpatialReference getDefaultSpatialReference() {
+        return SpatialReference.create(4509);
     }
 
 }

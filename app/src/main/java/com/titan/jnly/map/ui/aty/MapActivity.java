@@ -94,7 +94,7 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
         drawerLayout.setMargin(0.5f);
         menuRight = $(R.id.menuRight);
         mainFrame = $(R.id.mainFrame);
-
+        
         frameLayer = new FrameLayer(this);
         frameLayer.create(arcMap);
         menuRight.addView(frameLayer.getView());

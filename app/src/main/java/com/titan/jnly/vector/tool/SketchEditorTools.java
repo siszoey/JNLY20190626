@@ -24,7 +24,7 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.utils.ToastUtil;
 import com.titan.jnly.common.uitls.Constant;
 import com.titan.jnly.common.uitls.ConverterUtils;
-import com.titan.jnly.map.bean.MyLayer;
+import com.titan.jnly.vector.bean.MyLayer;
 import com.titan.jnly.vector.inter.IMap;
 import com.titan.jnly.vector.bean.RepealInfo;
 import com.titan.jnly.vector.inter.ValueBack;
@@ -48,6 +48,8 @@ public class SketchEditorTools {
 
     public SketchEditorTools(ArcMap arcmap) {
         this.arcMap = arcmap;
+        this.mapView = arcmap.getMapView();
+        this.context = arcmap.getContext();
     }
 
     /**
@@ -72,17 +74,14 @@ public class SketchEditorTools {
         try {
 
             final Geometry geo = GisUtils.LineToPolygon(line, mapView);
-
             Geometry geometry = GeometryEngine.project(geo, table.getSpatialReference());
             if (map == null) {
                 GeodatabaseFeatureTable tb = (GeodatabaseFeatureTable) table;
                 Feature feature = tb.createFeature(tb.getFeatureTemplates().get(0));
                 map = feature.getAttributes();
             }
-
             final Map<String, Object> oMap = map;
             final Feature feature = Objects.requireNonNull(table).createFeature(map, geometry);
-
             //拓扑相交检查
             DatabaseHelper.checkFeature(table, feature, new ValueBack() {
                 @Override
@@ -90,14 +89,12 @@ public class SketchEditorTools {
                     FeatureQueryResult queryResult = (FeatureQueryResult) o;
                     Iterator<Feature> iterator = queryResult.iterator();
                     ArrayList<Feature> features = new ArrayList<>();
-
                     while (iterator.hasNext()) {
                         features.add(iterator.next());
                     }
-
                     if (features.size() > 0) {
                         //有拓扑相交时
-                        getnewFeature(table,oMap, feature.getGeometry(), features, xbh);
+                        getnewFeature(table, oMap, feature.getGeometry(), features, xbh);
                     } else {
                         addFeatureToLayer(table, feature, xbh);
                     }
@@ -129,7 +126,7 @@ public class SketchEditorTools {
     /**
      * 面添加  原始数据为面时
      */
-    public void addGeometry(final FeatureTable featureTable, final Geometry geol,Map<String, Object> map, String xbh) {
+    public void addGeometry(final FeatureTable featureTable, final Geometry geol, Map<String, Object> map, String xbh) {
         try {
 
             Geometry geometry = GeometryEngine.project(geol, featureTable.getSpatialReference());
@@ -142,7 +139,7 @@ public class SketchEditorTools {
             final Map<String, Object> oMap = map;
             final Feature feature = Objects.requireNonNull(featureTable).createFeature(map, geometry);
             //拓扑相交检查
-            DatabaseHelper.checkFeature(table,feature, new ValueBack() {
+            DatabaseHelper.checkFeature(table, feature, new ValueBack() {
                 @Override
                 public void onGeometry(Geometry geometry) {
 
@@ -186,7 +183,9 @@ public class SketchEditorTools {
     }
 
 
-    /**添加小班数据*/
+    /**
+     * 添加小班数据
+     */
     private void addFeatureToLayer(final FeatureTable table, final Feature feature, String xbh) {
         Map<String, Object> map = feature.getAttributes();
 
@@ -229,7 +228,7 @@ public class SketchEditorTools {
         });
     }
 
-    private void getnewFeature(final FeatureTable table,Map<String, Object> map, Geometry geometry, ArrayList<Feature> features, String xbbh) {
+    private void getnewFeature(final FeatureTable table, Map<String, Object> map, Geometry geometry, ArrayList<Feature> features, String xbbh) {
 
         Polyline line;
 
@@ -266,7 +265,7 @@ public class SketchEditorTools {
             return;
         }
 
-        Feature feature = table.createFeature(map,list.get(0));
+        Feature feature = table.createFeature(map, list.get(0));
 
         addFeatureToLayer(table, feature, xbbh);
     }
@@ -283,7 +282,7 @@ public class SketchEditorTools {
     }
 
     private void addGbs(final FeatureTable featureTable, Geometry drawline, ArrayList<Feature> features, String xbbh) {
-        Polyline polyline = (Polyline) GeometryEngine.project(drawline,featureTable.getSpatialReference());
+        Polyline polyline = (Polyline) GeometryEngine.project(drawline, featureTable.getSpatialReference());
 
         ArrayList<Polyline> newBoundaries = new ArrayList<>();
         newBoundaries.add(polyline);
@@ -837,7 +836,7 @@ public class SketchEditorTools {
         ArrayList<MyLayer> getSelLayers();
     }
 
-    private void addFiled(){
+    private void addFiled() {
 
     }
 }

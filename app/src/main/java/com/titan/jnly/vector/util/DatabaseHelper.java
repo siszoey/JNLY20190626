@@ -7,7 +7,7 @@ import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
-import com.titan.jnly.map.bean.MyLayer;
+import com.titan.jnly.vector.bean.MyLayer;
 import com.titan.jnly.vector.inter.ValueBack;
 
 import java.util.Iterator;
