@@ -5,8 +5,9 @@ import android.util.Log;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
+import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
-import com.titan.jnly.vector.bean.MyLayer;
+import com.titan.jnly.map.bean.MyLayer;
 import com.titan.jnly.vector.inter.ValueBack;
 
 import java.util.Iterator;
@@ -16,10 +17,10 @@ import java.util.concurrent.ExecutionException;
 
 public class DatabaseHelper {
 
-    public static void getMaxXbh(MyLayer myLayer, String tbname, final ValueBack callBack) {
+    public static void getMaxXbh(FeatureTable table, String tbname, final ValueBack callBack) {
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.setWhereClause("XBH = (select MAX(XBH) from " + tbname.trim() + ")");
-        final ListenableFuture<FeatureQueryResult> result = myLayer.getTable().queryFeaturesAsync(queryParameters);
+        final ListenableFuture<FeatureQueryResult> result = table.queryFeaturesAsync(queryParameters);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -85,13 +86,13 @@ public class DatabaseHelper {
         });
     }
 
-    public static void checkFeature(MyLayer myLayer, Feature feature, final ValueBack callBack) {
+    public static void checkFeature(FeatureTable table, Feature feature, final ValueBack callBack) {
         QueryParameters param = new QueryParameters();
         param.setGeometry(feature.getGeometry());
         //param.setReturnGeometry(true);
         param.setSpatialRelationship(QueryParameters.SpatialRelationship.INTERSECTS);
 
-        final ListenableFuture<FeatureQueryResult> result = myLayer.getTable().queryFeaturesAsync(param);
+        final ListenableFuture<FeatureQueryResult> result = table.queryFeaturesAsync(param);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {

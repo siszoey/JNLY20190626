@@ -20,10 +20,11 @@ import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.utils.ToastUtil;
 import com.titan.jnly.common.uitls.Constant;
 import com.titan.jnly.common.uitls.ConverterUtils;
-import com.titan.jnly.vector.bean.MyLayer;
+import com.titan.jnly.map.bean.MyLayer;
 import com.titan.jnly.vector.inter.IMap;
 import com.titan.jnly.vector.bean.RepealInfo;
 import com.titan.jnly.vector.inter.ValueBack;
@@ -43,47 +44,47 @@ public class SketchEditorTools {
 
     private MapView mapView;
     private Context context;
-    private IMap iMap;
+    private ArcMap arcMap;
 
-    public SketchEditorTools(IMap iMap) {
-        this.iMap = iMap;
+    public SketchEditorTools(ArcMap arcmap) {
+        this.arcMap = arcmap;
     }
 
     /**
      * 添加小班  手动画线添加小班 检查是否有小班号或者地块编号字段
      */
-    public void addLineToLayer(final MyLayer myLayer, final Polyline line, Map<String, Object> map) {
+    public void addLineToLayer(final FeatureTable ftable, final Polyline line, Map<String, Object> map) {
 
         if (map == null) {
-            GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) myLayer.getTable();
+            GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) ftable;
             Feature feature = table.createFeature(table.getFeatureTemplates().get(0));
             map = feature.getAttributes();
         }
         final Map<String, Object> oMap = map;
 
-        addPolygon(myLayer, line, oMap, "");
+        addPolygon(ftable, line, oMap, "");
     }
 
     /**
      * 线转面 添加面 进行拓扑相交检查
      */
-    private void addPolygon(final MyLayer myLayer, final Polyline line, Map<String, Object> map, String xbh) {
+    private void addPolygon(final FeatureTable table, final Polyline line, Map<String, Object> map, String xbh) {
         try {
 
             final Geometry geo = GisUtils.LineToPolygon(line, mapView);
 
-            Geometry geometry = GeometryEngine.project(geo, myLayer.getLayer().getSpatialReference());
+            Geometry geometry = GeometryEngine.project(geo, table.getSpatialReference());
             if (map == null) {
-                GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) myLayer.getTable();
-                Feature feature = table.createFeature(table.getFeatureTemplates().get(0));
+                GeodatabaseFeatureTable tb = (GeodatabaseFeatureTable) table;
+                Feature feature = tb.createFeature(tb.getFeatureTemplates().get(0));
                 map = feature.getAttributes();
             }
 
             final Map<String, Object> oMap = map;
-            final Feature feature = Objects.requireNonNull(myLayer.getTable()).createFeature(map, geometry);
+            final Feature feature = Objects.requireNonNull(table).createFeature(map, geometry);
 
             //拓扑相交检查
-            DatabaseHelper.checkFeature(myLayer, feature, new ValueBack() {
+            DatabaseHelper.checkFeature(table, feature, new ValueBack() {
                 @Override
                 public void onSuccess(Object o) {
                     FeatureQueryResult queryResult = (FeatureQueryResult) o;
@@ -96,9 +97,9 @@ public class SketchEditorTools {
 
                     if (features.size() > 0) {
                         //有拓扑相交时
-                        getnewFeature(myLayer,oMap, feature.getGeometry(), features, xbh);
+                        getnewFeature(table,oMap, feature.getGeometry(), features, xbh);
                     } else {
-                        addFeatureToLayer(myLayer, feature, xbh);
+                        addFeatureToLayer(table, feature, xbh);
                     }
                 }
 
@@ -113,13 +114,9 @@ public class SketchEditorTools {
                 }
             });
 
-            Envelope envelope = myLayer.getTable().getExtent();
+            Envelope envelope = table.getExtent();
             Geometry fEnv = GeometryEngine.simplify(envelope);
             boolean flag = GeometryEngine.contains(fEnv, geometry);
-            /*if (!flag) {
-                ToastUtil.showLong(mapView.getContext(), "勾绘小班范围超出图层边界范围");
-                return;
-            }*/
 
 
         } catch (Exception e) {
@@ -132,20 +129,25 @@ public class SketchEditorTools {
     /**
      * 面添加  原始数据为面时
      */
-    public void addGeometry(final MyLayer myLayer, final Geometry geol,Map<String, Object> map, String xbh) {
+    public void addGeometry(final FeatureTable featureTable, final Geometry geol,Map<String, Object> map, String xbh) {
         try {
 
-            Geometry geometry = GeometryEngine.project(geol, myLayer.getLayer().getSpatialReference());
+            Geometry geometry = GeometryEngine.project(geol, featureTable.getSpatialReference());
+            final GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) featureTable;
+
             if (map == null) {
-                GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) myLayer.getTable();
-                Feature feature = table.createFeature(table.getFeatureTemplates().get(0));
-                map = feature.getAttributes();
+                Feature fe = table.createFeature(table.getFeatureTemplates().get(0));
+                map = fe.getAttributes();
             }
             final Map<String, Object> oMap = map;
-            final Feature feature = Objects.requireNonNull(myLayer.getTable()).createFeature(map, geometry);
-
+            final Feature feature = Objects.requireNonNull(featureTable).createFeature(map, geometry);
             //拓扑相交检查
-            DatabaseHelper.checkFeature(myLayer, feature, new ValueBack() {
+            DatabaseHelper.checkFeature(table,feature, new ValueBack() {
+                @Override
+                public void onGeometry(Geometry geometry) {
+
+                }
+
                 @Override
                 public void onSuccess(Object o) {
                     FeatureQueryResult queryResult = (FeatureQueryResult) o;
@@ -157,25 +159,20 @@ public class SketchEditorTools {
                     }
 
                     if (features.size() > 0) {
-                        getnewFeature(myLayer,oMap,geometry, features, xbh);
+                        getnewFeature(table, oMap, geometry, features, xbh);
                     } else {
 
-                        addFeatureToLayer(myLayer, feature, xbh);
+                        addFeatureToLayer(table, feature, xbh);
                     }
                 }
 
                 @Override
-                public void onFail(@NonNull String code) {
-
-                }
-
-                @Override
-                public void onGeometry(@NonNull Geometry geometry) {
+                public void onFail(String info) {
 
                 }
             });
 
-            Envelope envelope = myLayer.getTable().getExtent();
+            Envelope envelope = featureTable.getExtent();
             Geometry fEnv = GeometryEngine.simplify(envelope);
             boolean flag = GeometryEngine.contains(fEnv, geometry);
             /*if (!flag) {
@@ -190,7 +187,7 @@ public class SketchEditorTools {
 
 
     /**添加小班数据*/
-    private void addFeatureToLayer(final MyLayer myLayer, final Feature feature, String xbh) {
+    private void addFeatureToLayer(final FeatureTable table, final Feature feature, String xbh) {
         Map<String, Object> map = feature.getAttributes();
 
         if (map.containsKey("MIANJI")) {
@@ -209,7 +206,7 @@ public class SketchEditorTools {
             map.put("DKBH", xbh);
         }
 
-        final ListenableFuture<Void> result = myLayer.getTable().addFeatureAsync(feature);
+        final ListenableFuture<Void> result = table.addFeatureAsync(feature);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -221,7 +218,7 @@ public class SketchEditorTools {
                         if (mapView.getSketchEditor() != null) {
                             mapView.getSketchEditor().clearGeometry();
                         }
-                        addRepealInfo(feature, myLayer.getTable(), "add", null);
+                        addRepealInfo(feature, table, "add", null);
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
@@ -232,7 +229,7 @@ public class SketchEditorTools {
         });
     }
 
-    private void getnewFeature(final MyLayer myLayer,Map<String, Object> map, Geometry geometry, ArrayList<Feature> features, String xbbh) {
+    private void getnewFeature(final FeatureTable table,Map<String, Object> map, Geometry geometry, ArrayList<Feature> features, String xbbh) {
 
         Polyline line;
 
@@ -269,49 +266,24 @@ public class SketchEditorTools {
             return;
         }
 
-        Feature feature = myLayer.getTable().createFeature(map,list.get(0));
+        Feature feature = table.createFeature(map,list.get(0));
 
-        addFeatureToLayer(myLayer, feature, xbbh);
+        addFeatureToLayer(table, feature, xbbh);
     }
 
     /**
      * 共边增班
      */
-    public void addFeatureGb(final MyLayer myLayer, final Geometry drawline, final ArrayList<Feature> features) {
+    public void addFeatureGb(final FeatureTable table, final Geometry drawline, final ArrayList<Feature> features) {
 
         Feature feature = features.get(0);
         Map<String, Object> map = feature.getAttributes();
 
-        if (map.containsKey("XBH")) {
-            DatabaseHelper.getMaxXbh(myLayer, myLayer.getlName(), new ValueBack() {
-                @Override
-                public void onSuccess(Object o) {
-                    int max = ConverterUtils.toInt(o) + 1;
-                    int length = o.toString().length();
-                    if (length == 1) {
-                        length = 5;
-                    }
-                    String value = String.format("%" + o.toString().length() + "d", max).replace(" ", "0");
-                    addGbs(myLayer, drawline, features, value);
-                }
-
-                @Override
-                public void onFail(@NonNull String code) {
-
-                }
-
-                @Override
-                public void onGeometry(@NonNull Geometry geometry) {
-
-                }
-            });
-        } else {
-            addGbs(myLayer, drawline, features, "");
-        }
+        addGbs(table, drawline, features, "");
     }
 
-    private void addGbs(final MyLayer myLayer, Geometry drawline, ArrayList<Feature> features, String xbbh) {
-        Polyline polyline = (Polyline) GeometryEngine.project(drawline, myLayer.getTable().getSpatialReference());
+    private void addGbs(final FeatureTable featureTable, Geometry drawline, ArrayList<Feature> features, String xbbh) {
+        Polyline polyline = (Polyline) GeometryEngine.project(drawline,featureTable.getSpatialReference());
 
         ArrayList<Polyline> newBoundaries = new ArrayList<>();
         newBoundaries.add(polyline);
@@ -328,9 +300,9 @@ public class SketchEditorTools {
             return;
         }
 
-        GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) myLayer.getTable();
+        GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) featureTable;
         Feature feature1 = table.createFeature(table.getFeatureTemplates().get(0));
-        addFeatureToLayer(myLayer, feature1, xbbh);
+        addFeatureToLayer(table, feature1, xbbh);
 
     }
 
@@ -487,7 +459,7 @@ public class SketchEditorTools {
     /**
      * 小班切割
      */
-    public void cutFeature(final MyLayer myLayer, Geometry drawGeometry, Feature feature) {
+    public void cutFeature(final FeatureTable table, Geometry drawGeometry, Feature feature) {
         Geometry bGeometry = feature.getGeometry();
         Geometry geometry2 = GeometryEngine.project(drawGeometry, feature.getFeatureTable().getSpatialReference());
         boolean flag = GeometryEngine.intersects(feature.getGeometry(), geometry2);
@@ -515,9 +487,9 @@ public class SketchEditorTools {
             //更新原有小班
             feature.setGeometry(maxGeometry);
 
-            Feature bfeature = myLayer.getTable().createFeature(feature.getAttributes(), bGeometry);
+            Feature bfeature = table.createFeature(feature.getAttributes(), bGeometry);
 
-            updataFeature(myLayer, feature, bfeature);
+            updataFeature(table, feature, bfeature);
 
             Map<String, Object> map = feature.getAttributes();
             if (map.containsKey("MIANJI")) {
@@ -526,61 +498,13 @@ public class SketchEditorTools {
                 map.put("MIANJI", ConverterUtils.toDouble(area));
             }
 
-            Feature ufeature = myLayer.getTable().createFeature(map, feature.getGeometry());
-            updataFeature(myLayer, ufeature, bfeature);
+            Feature ufeature = table.createFeature(map, feature.getGeometry());
+            updataFeature(table, ufeature, bfeature);
         }
 
 
         for (final Geometry g : tempList) {
-            if (feature.getAttributes().containsKey("XBH")) {
-                DatabaseHelper.getMaxXbh(myLayer, myLayer.getlName(), new ValueBack() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        int max = ConverterUtils.toInt(o) + 1;
-                        int length = o.toString().length();
-                        if (length < 5) {
-                            length = 5;
-                        }
-                        String value = String.format("%" + length + "d", max).replace(" ", "0");
-                        addGeometry(myLayer, (Polygon) g, feature.getAttributes(), value);
-                    }
-
-                    @Override
-                    public void onFail(@NonNull String code) {
-
-                    }
-
-                    @Override
-                    public void onGeometry(@NonNull Geometry geometry) {
-
-                    }
-                });
-            } else if (feature.getAttributes().containsKey("DKBH")) {
-                DatabaseHelper.getMaxDkbh(myLayer, myLayer.getlName(), new ValueBack() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        int max = ConverterUtils.toInt(o) + 1;
-                        int length = o.toString().length();
-                        if (length < 2) {
-                            length = 2;
-                        }
-                        String value = String.format("%" + length + "d", max).replace(" ", "0");
-                        addGeometry(myLayer, (Polygon) g, feature.getAttributes(), value);
-                    }
-
-                    @Override
-                    public void onFail(@NonNull String code) {
-
-                    }
-
-                    @Override
-                    public void onGeometry(@NonNull Geometry geometry) {
-
-                    }
-                });
-            } else {
-                addGeometry(myLayer, (Polygon) g, feature.getAttributes(), "");
-            }
+            addGeometry(table, (Polygon) g, feature.getAttributes(), "");
 
 
         }
@@ -589,7 +513,7 @@ public class SketchEditorTools {
     /**
      * 修班保存
      */
-    public void editor(MyLayer myLayer, Polyline drawline, ArrayList<Feature> features) {
+    public void editor(FeatureTable table, Polyline drawline, ArrayList<Feature> features) {
 
         //修班分两种情况
         // 1、裁剪部分边界 保留面积比较大的部分
@@ -599,7 +523,7 @@ public class SketchEditorTools {
 
                 final Feature feature = features.get(0);
 
-                Polyline polyline = (Polyline) GeometryEngine.project(drawline, myLayer.getTable().getSpatialReference());
+                Polyline polyline = (Polyline) GeometryEngine.project(drawline, table.getSpatialReference());
                 if (polyline.getParts().size() == 0) {
                     return;
                 }
@@ -624,8 +548,8 @@ public class SketchEditorTools {
                     Geometry union = GeometryEngine.union(geometries);
                     feature.setGeometry(union);
 
-                    Feature bfeature = myLayer.getTable().createFeature(feature.getAttributes(), polygon);
-                    upDateFeature(myLayer, feature, bfeature);
+                    Feature bfeature = table.createFeature(feature.getAttributes(), polygon);
+                    upDateFeature(table, feature, bfeature);
 
                 } else if (!startflag && !endflag) {
 
@@ -643,8 +567,8 @@ public class SketchEditorTools {
                     if (geometry1 != null && !geometry1.isEmpty()) {
                         feature.setGeometry(geometry1);
 
-                        Feature bfeature = myLayer.getTable().createFeature(feature.getAttributes(), polygon);
-                        updataFeature(myLayer, feature, bfeature);
+                        Feature bfeature = table.createFeature(feature.getAttributes(), polygon);
+                        updataFeature(table, feature, bfeature);
 
                         Map<String, Object> map = feature.getAttributes();
                         if (map.containsKey("MIANJI")) {
@@ -653,8 +577,8 @@ public class SketchEditorTools {
                             map.put("MIANJI", ConverterUtils.toDouble(area));
                         }
 
-                        Feature nfeature = myLayer.getTable().createFeature(map, feature.getGeometry());
-                        updataFeature(myLayer, nfeature, bfeature);
+                        Feature nfeature = table.createFeature(map, feature.getGeometry());
+                        updataFeature(table, nfeature, bfeature);
                     }
                 }
             }
@@ -668,9 +592,9 @@ public class SketchEditorTools {
      * feature 修改后的feature
      * bfeature 修改前的 图形
      */
-    private void upDateFeature(final MyLayer myLayer, final Feature feature, final Feature bfeature) {
+    private void upDateFeature(final FeatureTable table, final Feature feature, final Feature bfeature) {
 
-        DatabaseHelper.checkFeature(myLayer, feature, new ValueBack() {
+        DatabaseHelper.checkFeature(table, feature, new ValueBack() {
             @Override
             public void onSuccess(Object o) {
                 FeatureQueryResult queryResult = (FeatureQueryResult) o;
@@ -703,7 +627,7 @@ public class SketchEditorTools {
                         Geometry union = GeometryEngine.union(geometries);
                         feature.setGeometry(union);
 
-                        updataFeature(myLayer, feature, bfeature);
+                        updataFeature(table, feature, bfeature);
 
                         Map<String, Object> map = feature.getAttributes();
                         if (map.containsKey("MIANJI")) {
@@ -712,12 +636,12 @@ public class SketchEditorTools {
                             map.put("MIANJI", ConverterUtils.toDouble(area));
                         }
 
-                        Feature nfeature = myLayer.getTable().createFeature(map, feature.getGeometry());
-                        updataFeature(myLayer, nfeature, bfeature);
+                        Feature nfeature = table.createFeature(map, feature.getGeometry());
+                        updataFeature(table, nfeature, bfeature);
                     }
                     //Feature nFeature = myLayer.getTable().createFeature(feature.getAttributes(),union);
                 } else if (features.size() == 1) {
-                    updataFeature(myLayer, feature, bfeature);
+                    updataFeature(table, feature, bfeature);
 
                     Map<String, Object> map = feature.getAttributes();
                     if (map.containsKey("MIANJI")) {
@@ -726,8 +650,8 @@ public class SketchEditorTools {
                         map.put("MIANJI", ConverterUtils.toDouble(area));
                     }
 
-                    Feature nfeature = myLayer.getTable().createFeature(map, feature.getGeometry());
-                    updataFeature(myLayer, nfeature, bfeature);
+                    Feature nfeature = table.createFeature(map, feature.getGeometry());
+                    updataFeature(table, nfeature, bfeature);
                 }
             }
 
@@ -743,9 +667,9 @@ public class SketchEditorTools {
         });
     }
 
-    private void updataFeature(final MyLayer myLayer, Feature feature, final Feature bfeature) {
+    private void updataFeature(final FeatureTable table, Feature feature, final Feature bfeature) {
 
-        final ListenableFuture<Void> future = Objects.requireNonNull(myLayer.getTable()).updateFeatureAsync(feature);
+        final ListenableFuture<Void> future = Objects.requireNonNull(table).updateFeatureAsync(feature);
         future.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -757,7 +681,7 @@ public class SketchEditorTools {
                         if (mapView.getSketchEditor() != null) {
                             mapView.getSketchEditor().clearGeometry();
                         }
-                        addRepealInfo(feature, myLayer.getTable(), "update", bfeature);
+                        addRepealInfo(feature, table, "update", bfeature);
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
