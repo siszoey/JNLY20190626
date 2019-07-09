@@ -1,5 +1,7 @@
 package com.lib.bandaid.arcruntime.layer.project;
 
+import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
 import com.esri.arcgisruntime.layers.SublayerList;
@@ -62,6 +64,18 @@ public class LayerNode implements Serializable {
 
     public void setLayerContent(LayerContent layerContent) {
         this.layerContent = layerContent;
+    }
+
+    public FeatureLayer tryGetFeaLayer() {
+        if (layerContent == null) return null;
+        if (layerContent instanceof FeatureLayer) return (FeatureLayer) layerContent;
+        return null;
+    }
+
+    public FeatureTable tryGetFeaTable() {
+        FeatureLayer featureLayer = tryGetFeaLayer();
+        if (featureLayer == null) return featureLayer.getFeatureTable();
+        return null;
     }
 
     public List<LayerNode> getNodes() {

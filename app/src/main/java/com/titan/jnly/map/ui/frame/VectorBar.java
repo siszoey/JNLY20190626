@@ -43,7 +43,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == rb_xbbj.getId()) {
-            
+
             arcMap.getSketchTool().activate(DrawType.FREEHAND_POLYLINE);
             arcMap.getSketchTool().setCallBack(new ValueCallback() {
                 @Override

@@ -146,16 +146,6 @@ public class TocContainer extends BaseContainer {
         return res;
     }
 
-    public List<LayerNode> getLeafLayerNodesVisible1() {
-        List<LayerNode> list = getLeafLayerNodes();
-        if (list == null) return null;
-        List<LayerNode> res = new ArrayList<>();
-        for (LayerNode node : list) {
-            if (node.getVisible()) res.add(node);
-        }
-        return res;
-    }
-
     public List<LayerNode> getLeafLayerNodesInVisible() {
         List<LayerNode> list = getLeafLayerNodes();
         if (list == null) return null;
