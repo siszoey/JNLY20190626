@@ -1,6 +1,7 @@
 package com.lib.bandaid.arcruntime.core;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.esri.arcgisruntime.geometry.PointCollection;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.esri.arcgisruntime.layers.Layer;
+import com.esri.arcgisruntime.mapping.view.DefaultMapViewOnTouchListener;
 import com.esri.arcgisruntime.mapping.view.Graphic;
 import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
 import com.esri.arcgisruntime.mapping.view.MapView;
@@ -95,17 +97,15 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
         this.active = true;
         if (sketchEditor == null) {
             sketchEditor = new SketchEditor();
-
             SimpleMarkerSymbol mPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.SQUARE, 0xFFFF0000, 20);
-
             SketchStyle sketchStyle = new SketchStyle();
             sketchStyle.setFeedbackVertexSymbol(mPointSymbol);
             sketchStyle.setLineSymbol(DrawSymbol.mLineSymbol);
             sketchStyle.setFillSymbol(DrawSymbol.mFillSymbol);
-            sketchEditor.setSketchStyle(sketchStyle);
-            sketchEditor.addGeometryChangedListener(this);
-
-            mapView.setSketchEditor(sketchEditor);
+            this.sketchEditor.setSketchStyle(sketchStyle);
+            this.sketchEditor.addGeometryChangedListener(this);
+            this.mapView.setSketchEditor(sketchEditor);
+            this.mapView.setOnTouchListener(new MapTouchListener(arcMap.getContext(),arcMap.getMapView()));
         }
         switch (this.drawType) {
             case DrawType.POINT:
@@ -186,6 +186,17 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
         isGeoChanged = true;
     }
 
+    class MapTouchListener extends DefaultMapViewOnTouchListener{
+
+        public MapTouchListener(Context context, MapView mapView) {
+            super(context, mapView);
+        }
+
+        @Override
+        public boolean onRotate(MotionEvent event, double rotationAngle) {
+            return false;
+        }
+    }
 
     /**
      * 扩展MapOnTouchListener，实现画图功能

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources >
-
+<resources>
     <!--小班编辑-->
     <string name="tools_xbbj">新增小班</string>
     <string name="tools_gbzb">共边增班</string>
@@ -12,5 +11,4 @@
     <string name="tools_sxbj">属性编辑</string>
     <string name="tools_xzxb">选择小班</string>
     <string name="tools_py">平移</string>
-
 </resources>

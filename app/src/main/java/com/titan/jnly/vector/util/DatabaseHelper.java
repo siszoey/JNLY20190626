@@ -6,59 +6,20 @@ import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
 import com.esri.arcgisruntime.data.QueryParameters;
-import com.titan.jnly.map.bean.MyLayer;
+import com.titan.jnly.vector.bean.MyLayer;
 import com.titan.jnly.vector.inter.ValueBack;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
-import jsqlite.Callback;
-import jsqlite.Database;
 
 
 public class DatabaseHelper {
 
-    /**
-     * 获取空间数据库表 最大小班号
-     */
-    public static List<String> getMaxXbh(String dbpath,String tbname) {
-        final List<String> list = new ArrayList<>();
-        try {
-            Class.forName("jsqlite.JDBCDriver").newInstance();
-            Database db = new jsqlite.Database();
-            db.open(dbpath, jsqlite.Constants.SQLITE_READONLY);
-            String sql = "select MAX(XBH) from "+tbname;
-            db.exec(sql, new Callback() {
-
-                @Override
-                public void types(String[] arg0) {
-                }
-
-                @Override
-                public boolean newrow(String[] data) {// 3 5 6
-                    list.add(data[0]);
-                    return false;
-                }
-
-                @Override
-                public void columns(String[] arg0) {
-
-                }
-            });
-            db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public static void getMaxXbh(MyLayer myLayer, String tbname,final ValueBack callBack){
+    public static void getMaxXbh(MyLayer myLayer, String tbname, final ValueBack callBack) {
         QueryParameters queryParameters = new QueryParameters();
-        queryParameters.setWhereClause("XBH = (select MAX(XBH) from "+tbname.trim()+")");
-        final ListenableFuture<FeatureQueryResult> result= myLayer.getTable().queryFeaturesAsync(queryParameters);
+        queryParameters.setWhereClause("XBH = (select MAX(XBH) from " + tbname.trim() + ")");
+        final ListenableFuture<FeatureQueryResult> result = myLayer.getTable().queryFeaturesAsync(queryParameters);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -66,7 +27,7 @@ public class DatabaseHelper {
                     FeatureQueryResult queryResult = result.get();
                     Iterator iterator = queryResult.iterator();
                     Object xbh = "00000";
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Feature queryFeature = (Feature) iterator.next();
                         Map<String, Object> map = queryFeature.getAttributes();
                         xbh = map.get("XBH");
@@ -80,10 +41,10 @@ public class DatabaseHelper {
         });
     }
 
-    public static void getMaxDkbh(MyLayer myLayer, String tbname,final ValueBack callBack){
+    public static void getMaxDkbh(MyLayer myLayer, String tbname, final ValueBack callBack) {
         QueryParameters queryParameters = new QueryParameters();
-        queryParameters.setWhereClause("DKBH = (select MAX(DKBH) from "+tbname.trim()+")");
-        final ListenableFuture<FeatureQueryResult> result= myLayer.getTable().queryFeaturesAsync(queryParameters);
+        queryParameters.setWhereClause("DKBH = (select MAX(DKBH) from " + tbname.trim() + ")");
+        final ListenableFuture<FeatureQueryResult> result = myLayer.getTable().queryFeaturesAsync(queryParameters);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -91,7 +52,7 @@ public class DatabaseHelper {
                     FeatureQueryResult queryResult = result.get();
                     Iterator iterator = queryResult.iterator();
                     Object xbh = "00";
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         Feature queryFeature = (Feature) iterator.next();
                         Map<String, Object> map = queryFeature.getAttributes();
                         xbh = map.get("DKBH");
@@ -100,16 +61,16 @@ public class DatabaseHelper {
                     callBack.onSuccess(xbh);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
-                    Log.e("00000000000======",e.getMessage());
+                    Log.e("00000000000======", e.getMessage());
                 }
             }
         });
     }
 
-    public static void getFeature(MyLayer myLayer, Feature feature, final ValueBack callBack){
+    public static void getFeature(MyLayer myLayer, Feature feature, final ValueBack callBack) {
         QueryParameters queryParameters = new QueryParameters();
-        queryParameters.setWhereClause("OBJECTID = "+feature.getAttributes().get("OBJECTID"));
-        final ListenableFuture<Long> result= myLayer.getTable().queryFeatureCountAsync(queryParameters);
+        queryParameters.setWhereClause("OBJECTID = " + feature.getAttributes().get("OBJECTID"));
+        final ListenableFuture<Long> result = myLayer.getTable().queryFeatureCountAsync(queryParameters);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -124,13 +85,13 @@ public class DatabaseHelper {
         });
     }
 
-    public static void checkFeature(MyLayer myLayer, Feature feature, final ValueBack callBack){
+    public static void checkFeature(MyLayer myLayer, Feature feature, final ValueBack callBack) {
         QueryParameters param = new QueryParameters();
         param.setGeometry(feature.getGeometry());
         //param.setReturnGeometry(true);
         param.setSpatialRelationship(QueryParameters.SpatialRelationship.INTERSECTS);
 
-        final ListenableFuture<FeatureQueryResult> result= myLayer.getTable().queryFeaturesAsync(param);
+        final ListenableFuture<FeatureQueryResult> result = myLayer.getTable().queryFeaturesAsync(param);
         result.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -138,7 +99,7 @@ public class DatabaseHelper {
                     FeatureQueryResult queryResult = result.get();
                     Iterator iterator = queryResult.iterator();
                     int count = 0;
-                    while (iterator.hasNext()){
+                    while (iterator.hasNext()) {
                         count++;
                         break;
                     }

@@ -66,11 +66,9 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     void loadMap() {
         //Map<String, List<File>> tree = FileUtil.fileTrees(Config.APP_MAP_SPATIAL, "geodatabase");
         //arcMap.setBaseMapUrl(Config.APP_ARC_MAP_BASE);
-        arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
-        arcMap.setMapServerDesc("图层1", "图层2");
-
-        arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL);
-        //arcMap.setMapLocalUrl(Config.APP_MAP_SPATIAL.concat(File.separator).concat("青岛造林多表.geodatabase"));
+        //arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
+        //arcMap.setMapServerDesc("图层1", "图层2");
+        arcMap.setMapLocalUrl(Config.APP_SDB_PATH);
         arcMap.getTocContainer().addILayerLoaded(this);
         arcMap.mapLoad(new ArcMap.IMapReady() {
             @Override

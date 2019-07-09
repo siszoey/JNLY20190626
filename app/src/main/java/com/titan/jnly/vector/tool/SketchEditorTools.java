@@ -3,6 +3,8 @@ package com.titan.jnly.vector.tool;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
@@ -21,14 +23,13 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import com.lib.bandaid.utils.ToastUtil;
 import com.titan.jnly.common.uitls.Constant;
 import com.titan.jnly.common.uitls.ConverterUtils;
-import com.titan.jnly.map.bean.MyLayer;
-import com.titan.jnly.map.inter.IMap;
+import com.titan.jnly.vector.bean.MyLayer;
+import com.titan.jnly.vector.inter.IMap;
 import com.titan.jnly.vector.bean.RepealInfo;
 import com.titan.jnly.vector.inter.ValueBack;
 import com.titan.jnly.vector.util.DatabaseHelper;
 import com.titan.jnly.vector.util.GisUtils;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -102,12 +103,12 @@ public class SketchEditorTools {
                 }
 
                 @Override
-                public void onFail(@NotNull String code) {
+                public void onFail(@NonNull String code) {
 
                 }
 
                 @Override
-                public void onGeometry(@NotNull Geometry geometry) {
+                public void onGeometry(@NonNull Geometry geometry) {
 
                 }
             });
@@ -164,12 +165,12 @@ public class SketchEditorTools {
                 }
 
                 @Override
-                public void onFail(@NotNull String code) {
+                public void onFail(@NonNull String code) {
 
                 }
 
                 @Override
-                public void onGeometry(@NotNull Geometry geometry) {
+                public void onGeometry(@NonNull Geometry geometry) {
 
                 }
             });
@@ -295,12 +296,12 @@ public class SketchEditorTools {
                 }
 
                 @Override
-                public void onFail(@NotNull String code) {
+                public void onFail(@NonNull String code) {
 
                 }
 
                 @Override
-                public void onGeometry(@NotNull Geometry geometry) {
+                public void onGeometry(@NonNull Geometry geometry) {
 
                 }
             });
@@ -402,12 +403,12 @@ public class SketchEditorTools {
             }
 
             @Override
-            public void onFail(@NotNull String code) {
+            public void onFail(@NonNull String code) {
 
             }
 
             @Override
-            public void onGeometry(@NotNull Geometry geometry) {
+            public void onGeometry(@NonNull Geometry geometry) {
 
             }
         });
@@ -545,12 +546,12 @@ public class SketchEditorTools {
                     }
 
                     @Override
-                    public void onFail(@NotNull String code) {
+                    public void onFail(@NonNull String code) {
 
                     }
 
                     @Override
-                    public void onGeometry(@NotNull Geometry geometry) {
+                    public void onGeometry(@NonNull Geometry geometry) {
 
                     }
                 });
@@ -568,12 +569,12 @@ public class SketchEditorTools {
                     }
 
                     @Override
-                    public void onFail(@NotNull String code) {
+                    public void onFail(@NonNull String code) {
 
                     }
 
                     @Override
-                    public void onGeometry(@NotNull Geometry geometry) {
+                    public void onGeometry(@NonNull Geometry geometry) {
 
                     }
                 });
@@ -731,12 +732,12 @@ public class SketchEditorTools {
             }
 
             @Override
-            public void onFail(@NotNull String code) {
+            public void onFail(@NonNull String code) {
 
             }
 
             @Override
-            public void onGeometry(@NotNull Geometry geometry) {
+            public void onGeometry(@NonNull Geometry geometry) {
 
             }
         });

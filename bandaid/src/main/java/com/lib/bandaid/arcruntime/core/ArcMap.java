@@ -24,6 +24,7 @@ import com.esri.arcgisruntime.mapping.ArcGISMap;
 import com.esri.arcgisruntime.mapping.Basemap;
 import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.view.MapView;
+import com.esri.arcgisruntime.mapping.view.SketchEditor;
 import com.lib.bandaid.arcruntime.event.ArcMapEventDispatch;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
 import com.lib.bandaid.arcruntime.layer.utils.DataSourceRead;
@@ -129,6 +130,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     void setEvent(IArcMapEvent event) {
         arcMapEventDispatch.setCurIMapEvent(event);
+        this.mapView.setOnTouchListener(arcMapEventDispatch);
     }
 
     public void mapLoad(IMapReady iMapReady) {
