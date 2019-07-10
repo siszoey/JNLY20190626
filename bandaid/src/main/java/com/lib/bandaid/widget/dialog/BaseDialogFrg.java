@@ -31,6 +31,8 @@ import com.lib.bandaid.utils.ViewUtil;
 import com.lib.bandaid.widget.dialog.i.IView;
 import com.lib.bandaid.widget.layout.RootStatusView;
 
+import java.io.Serializable;
+
 
 /**
  * Created by zy on 2019/4/21.
@@ -225,7 +227,6 @@ public abstract class BaseDialogFrg extends DialogFragment implements IView {
     public void dialogHiding() {
         DialogFactory.getFactory().dismiss(getActivity());
     }
-
 
 
     //----------------------------------------------------------------------------------------------

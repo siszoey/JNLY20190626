@@ -68,6 +68,10 @@ public abstract class BaseNodeViewBinder extends RecyclerView.ViewHolder {
         return 0;
     }
 
+    public int getSingleViewId() {
+        return 0;
+    }
+
     /**
      * Callback when a toggle action happened (only by clicked)
      *

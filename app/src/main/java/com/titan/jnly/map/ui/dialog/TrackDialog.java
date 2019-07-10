@@ -28,12 +28,14 @@ import java.util.Map;
 public class TrackDialog extends BaseDialogFrg implements BaseRecycleAdapter.IViewClickListener<Map> {
 
 
-    public static TrackDialog newInstance(ICallBack iCallBack) {
+    public static TrackDialog newInstance() {
         TrackDialog fragment = new TrackDialog();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("data", iCallBack);
-        fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public TrackDialog setCallBack(ICallBack iCallBack) {
+        this.iCallBack = iCallBack;
+        return this;
     }
 
     RecyclerView rvTrackList;
@@ -44,7 +46,7 @@ public class TrackDialog extends BaseDialogFrg implements BaseRecycleAdapter.IVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(null, "历史轨迹", Gravity.CENTER);
-        iCallBack = (ICallBack) getArguments().getSerializable("data");
+        //iCallBack = (ICallBack) getArguments().getSerializable("data");
         setContentView(R.layout.map_dialog_history_track);
         w = 0.9f;
     }
@@ -109,12 +111,12 @@ public class TrackDialog extends BaseDialogFrg implements BaseRecycleAdapter.IVi
             @Override
             public void success(List<Loc> res) {
                 dismiss();
-                if(iCallBack!=null)iCallBack.sure(res);
+                if (iCallBack != null) iCallBack.sure(res);
             }
         });
     }
 
-    public interface ICallBack extends Serializable {
+    public interface ICallBack {
         public void sure(List<Loc> res);
     }
 }

@@ -357,6 +357,35 @@ public class SketchEditorTools {
         }
     }
 
+
+    /**
+     * 删除小班
+     */
+    public void delFeature(final FeatureTable feaTable, final Feature feature) {
+
+        DatabaseHelper.getFeature(feaTable, feature, new ValueBack() {
+            @Override
+            public void onSuccess(Object o) {
+                String value = o.toString();
+                if (value.equals("1")) {
+                    delete(feaTable, feature);
+                } else {
+                    ToastUtil.showLong(context, "小班不存在");
+                }
+            }
+
+            @Override
+            public void onFail(@NonNull String code) {
+
+            }
+
+            @Override
+            public void onGeometry(@NonNull Geometry geometry) {
+
+            }
+        });
+    }
+
     /**
      * 删除小班
      */
@@ -383,6 +412,28 @@ public class SketchEditorTools {
 
             }
         });
+    }
+
+    private void delete(final FeatureTable feaTable, final Feature feature) {
+        try {
+            final ListenableFuture<Void> future = feaTable.deleteFeatureAsync(feature);
+            future.addDoneListener(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        future.get();
+                        if (future.isDone()) {
+                            Log.e("tag", "小班删除成功");
+                            addRepealInfo(null, feaTable, "del", feature);
+                        }
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.e("tag", "删除小班失败：" + e);
+        }
     }
 
     private void delete(final MyLayer myLayer, final Feature feature, final List<Feature> features) {

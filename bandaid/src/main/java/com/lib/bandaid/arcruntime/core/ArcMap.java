@@ -138,7 +138,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
         return super.dispatchTouchEvent(ev);
     }
 
-    void setEvent(IArcMapEvent event) {
+    public void setEvent(IArcMapEvent event) {
         arcMapEventDispatch.setCurIMapEvent(event);
         this.mapView.setOnTouchListener(arcMapEventDispatch);
     }

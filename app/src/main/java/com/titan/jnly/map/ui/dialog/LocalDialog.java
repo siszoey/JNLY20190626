@@ -36,7 +36,7 @@ public class LocalDialog extends BaseDialogFrg implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         iCallBack = (ICallBack) getArguments().getSerializable("data");
         initTitle(null, "坐标定位", Gravity.CENTER);
-        setContentView(R.layout.component_map_dialog_loc);
+        setContentView(R.layout.map_ui_dialog_loc);
         w = 0.85f;
         h = 0.5f;
     }

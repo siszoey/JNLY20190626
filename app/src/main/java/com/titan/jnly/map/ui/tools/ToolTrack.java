@@ -30,7 +30,7 @@ public class ToolTrack extends BaseTool {
     @Override
     public void viewClick(View view) {
         super.viewClick(view);
-        TrackDialog.newInstance(new TrackDialog.ICallBack() {
+        TrackDialog.newInstance().setCallBack(new TrackDialog.ICallBack() {
             @Override
             public void sure(List<Loc> res) {
                 createTrack(res);

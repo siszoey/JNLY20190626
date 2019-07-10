@@ -12,10 +12,16 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.permission.Permission;
+import com.lib.bandaid.permission.RxConsumer;
+import com.lib.bandaid.permission.RxPermissionFactory;
+import com.lib.bandaid.permission.SimplePermission;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
 import com.lib.bandaid.utils.SPfUtil;
 import com.lib.bandaid.utils.StringUtil;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
 import com.titan.jnly.main.ui.aty.MainActivity;
@@ -44,6 +50,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "登录", Gravity.CENTER);
         setContentView(R.layout.login_ui_aty_login_layout);
+        permissions();
     }
 
     @Override
@@ -83,7 +90,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
             if (isRemember) {
                 Constant.putUser(user);
             }
-           // presenter.Login(user);
+            // presenter.Login(user);
             LoginSuccess();
         }
         if (v.getId() == R.id.ivShowPwd) {
@@ -107,5 +114,23 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
         //startActivity(new Intent(_context, MainActivity.class));
         startActivity(new Intent(_context, MapActivity.class));
+        finish();
+    }
+
+    private void permissions() {
+        RxPermissionFactory
+                .getRxPermissions(_context)
+                .requestEachCombined(SimplePermission.MANIFEST_STORAGE)
+                .subscribe(new RxConsumer(_context) {
+                    @Override
+                    public void accept(Permission permission) {
+                        super.accept(permission);
+                        if (permission.granted) {
+                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
+                        } else {
+                            finish();
+                        }
+                    }
+                });
     }
 }

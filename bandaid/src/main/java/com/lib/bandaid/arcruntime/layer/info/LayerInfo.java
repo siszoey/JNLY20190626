@@ -3,6 +3,7 @@
  */
 package com.lib.bandaid.arcruntime.layer.info;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class LayerInfo {
+public class LayerInfo implements Serializable {
 
     private double currentVersion;
     private int id;

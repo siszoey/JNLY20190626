@@ -11,12 +11,60 @@ import com.esri.arcgisruntime.layers.LayerContent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SelectContainer extends BaseContainer {
+    /**
+     * 选择集
+     */
+    private final Map<LayerNode, List<Feature>> selResult = new LinkedHashMap();
+
+    FeatureLayer.SelectionMode mode;
+
+    public SelectContainer setting(FeatureLayer.SelectionMode mode) {
+        this.mode = mode;
+        return this;
+    }
+
+    public Map<LayerNode, List<Feature>> getSelResult() {
+        return selResult;
+    }
+
+    /**
+     * 获取选择集中 有数据的数量
+     *
+     * @return
+     */
+    public int hasDataCount() {
+        int count = 0;
+        List<Feature> features;
+        for (LayerNode node : selResult.keySet()) {
+            features = selResult.get(node);
+            if (features != null && features.size() > 0) count++;
+        }
+        return count;
+    }
+
+    public Map<LayerNode, List<Feature>> getHasDataResult() {
+        if (hasDataCount() == 0) return null;
+        List<Feature> features;
+        Map<LayerNode, List<Feature>> res = new LinkedHashMap();
+        for (LayerNode node : selResult.keySet()) {
+            features = selResult.get(node);
+            if (features != null && features.size() > 0) {
+                res.put(node, features);
+            }
+        }
+        return res;
+    }
+
 
     public void clearSelection(final LayerNode node) {
+        selResult.remove(node);
         if (node == null) return;
         LayerContent layerContent = node.getLayerContent();
         if (layerContent instanceof FeatureLayer) {
@@ -25,25 +73,54 @@ public class SelectContainer extends BaseContainer {
         }
     }
 
-    public void queryByGeometry(final LayerNode node, Geometry geometry, final QueryContainer.ICallBack iCallBack) {
+    public void clearSelection(final List<LayerNode> nodes) {
+        if (nodes == null) return;
+        for (LayerNode node : nodes) {
+            clearSelection(node);
+        }
+    }
+
+    public void queryByGeometry(final List<LayerNode> nodes, Geometry geometry) {
+        selResult.clear();
+        if (nodes == null) return;
+        for (LayerNode node : nodes) {
+            queryByGeometry(node, geometry, null);
+        }
+    }
+
+    public void queryByGeometry(final List<LayerNode> nodes, Geometry geometry, final ICallBack iCallBack) {
+        selResult.clear();
         try {
-            if (node == null) return;
-            if (iCallBack != null) iCallBack.ready();
-            LayerContent layerContent = node.getLayerContent();
-            if (layerContent instanceof FeatureLayer) {
-                FeatureLayer featureLayer = (FeatureLayer) layerContent;
-                queryFeaLayerByGeometry(featureLayer, geometry, iCallBack);
+            if (nodes == null) return;
+            for (LayerNode node : nodes) {
+                queryByGeometry(node, geometry, iCallBack);
             }
         } catch (Exception e) {
             if (iCallBack != null) iCallBack.fail(e);
         }
     }
 
-    private void queryFeaLayerByGeometry(FeatureLayer featureLayer, Geometry geometry, QueryContainer.ICallBack iCallBack) {
+    public void queryByGeometry(final LayerNode node, Geometry geometry, final ICallBack iCallBack) {
+        try {
+            if (node == null) return;
+            queryFeaLayerByGeometry(node, geometry, iCallBack);
+        } catch (Exception e) {
+            if (iCallBack != null) iCallBack.fail(e);
+        }
+    }
+
+    private void queryFeaLayerByGeometry(LayerNode node, Geometry geometry, ICallBack iCallBack) {
+        LayerContent layerContent = node.getLayerContent();
+        FeatureLayer featureLayer = null;
+        if (layerContent instanceof FeatureLayer) {
+            featureLayer = (FeatureLayer) layerContent;
+        }
+        Map res = new HashMap();
         QueryParameters params = new QueryParameters();
         params.setGeometry(geometry);
         params.setReturnGeometry(true);
-        final ListenableFuture<FeatureQueryResult> future = featureLayer.selectFeaturesAsync(params, FeatureLayer.SelectionMode.NEW);
+        if (mode == null) mode = FeatureLayer.SelectionMode.NEW;
+        final ListenableFuture<FeatureQueryResult> future = featureLayer.selectFeaturesAsync(params, mode);
         future.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -56,11 +133,20 @@ public class SelectContainer extends BaseContainer {
                         feature = iterator.next();
                         features.add(feature);
                     }
-                    if (iCallBack != null) iCallBack.success(features);
+                    res.put(node, features);
+                    selResult.put(node, features);
+                    if (iCallBack != null) iCallBack.success(res);
                 } catch (Exception e) {
                     if (iCallBack != null) iCallBack.fail(e);
                 }
             }
         });
+    }
+
+
+    public interface ICallBack {
+        public void success(Map<LayerNode, List<Feature>> res);
+
+        public void fail(Exception e);
     }
 }

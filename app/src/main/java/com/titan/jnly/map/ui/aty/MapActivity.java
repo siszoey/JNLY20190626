@@ -6,8 +6,11 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
@@ -20,6 +23,7 @@ import com.lib.bandaid.permission.RxPermissionFactory;
 import com.lib.bandaid.permission.SimplePermission;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
@@ -94,7 +98,7 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
         drawerLayout.setMargin(0.5f);
         menuRight = $(R.id.menuRight);
         mainFrame = $(R.id.mainFrame);
-        
+
         frameLayer = new FrameLayer(this);
         frameLayer.create(arcMap);
         menuRight.addView(frameLayer.getView());
@@ -128,20 +132,6 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
 
     void permissions() {
         PositionUtil.reqGps(_context, LocService.class, this);
-        RxPermissionFactory
-                .getRxPermissions(_context)
-                .requestEachCombined(SimplePermission.MANIFEST_STORAGE)
-                .subscribe(new RxConsumer(_context) {
-                    @Override
-                    public void accept(Permission permission) {
-                        super.accept(permission);
-                        if (permission.granted) {
-                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
-                        } else {
-                            finish();
-                        }
-                    }
-                });
     }
 
     @Override
@@ -152,5 +142,21 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
     @Override
     public void refuse() {
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new ATEDialog.Theme_Alert(_context)
+                .title("提示")
+                .content("确认退出？")
+                .positiveText("退出")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        finish();
+                    }
+                }).show();
+
     }
 }

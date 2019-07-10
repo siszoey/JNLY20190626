@@ -3,13 +3,15 @@
  */
 package com.lib.bandaid.arcruntime.layer.info;
 
+import java.io.Serializable;
+
 /**
  * Auto-generated: 2019-06-04 14:6:24
  *
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Extent {
+public class Extent implements Serializable {
 
     private double xmin;
     private double ymin;

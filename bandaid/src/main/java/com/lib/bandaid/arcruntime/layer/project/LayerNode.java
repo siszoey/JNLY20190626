@@ -1,6 +1,7 @@
 package com.lib.bandaid.arcruntime.layer.project;
 
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.geometry.GeometryType;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
@@ -75,6 +76,12 @@ public class LayerNode implements Serializable {
     public FeatureTable tryGetFeaTable() {
         FeatureLayer featureLayer = tryGetFeaLayer();
         if (featureLayer != null) return featureLayer.getFeatureTable();
+        return null;
+    }
+
+    public GeometryType tryGetGeometryType() {
+        FeatureTable table = tryGetFeaTable();
+        if(table!=null)return table.getGeometryType();
         return null;
     }
 

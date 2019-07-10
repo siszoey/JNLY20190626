@@ -68,6 +68,24 @@ public class DatabaseHelper {
         });
     }
 
+    public static void getFeature(FeatureTable feaTable, Feature feature, final ValueBack callBack) {
+        QueryParameters queryParameters = new QueryParameters();
+        queryParameters.setWhereClause("OBJECTID = " + feature.getAttributes().get("OBJECTID"));
+        final ListenableFuture<Long> result = feaTable.queryFeatureCountAsync(queryParameters);
+        result.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    long count = result.get();
+                    callBack.onSuccess(count);
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
     public static void getFeature(MyLayer myLayer, Feature feature, final ValueBack callBack) {
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.setWhereClause("OBJECTID = " + feature.getAttributes().get("OBJECTID"));
