@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.geometry.Geometry;
+import com.esri.arcgisruntime.geometry.GeometryType;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
@@ -31,6 +32,7 @@ import com.titan.jnly.map.ui.dialog.LayerDialog;
 import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,8 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
     RadioButton rb_fgxb;
     //复制
     RadioButton rb_xbfz;
+    //修版
+    RadioButton rb_xb;
 
     ActionModel actionModel;
     SketchEditorTools tools;
@@ -76,6 +80,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
         rb_sxbj = $(R.id.rb_sxbj);
         rb_fgxb = $(R.id.rb_fgxb);
         rb_xbfz = $(R.id.rb_xbfz);
+        rb_xb = $(R.id.rb_xb);
     }
 
     @Override
@@ -87,6 +92,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
         rb_sxbj.setOnClickListener(this);
         rb_fgxb.setOnClickListener(this);
         rb_xbfz.setOnClickListener(this);
+        rb_xb.setOnClickListener(this);
     }
 
     @Override
@@ -103,7 +109,8 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
         }
         //申请地图事件
         if (id == rb_xzxb.getId()) {
-            arcMap.setEvent(this);
+            //arcMap.setEvent(this);
+            selFeature();
         }
         if (id == rb_py.getId()) {
             clearAll();
@@ -120,6 +127,20 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
         if (id == rb_xbfz.getId()) {
             copyGeometry();
         }
+        if (id == rb_xb.getId()) {
+            editGeometry();
+        }
+    }
+
+    void selFeature() {
+        arcMap.getSketchTool().activate(DrawType.ENVELOPE);
+        arcMap.getSketchTool().setCallBack(new ValueCallback() {
+            @Override
+            public void onGeometry(Geometry geometry) {
+                //System.out.println(geometry);
+                selFeature(geometry);
+            }
+        });
     }
 
     /**
@@ -137,11 +158,21 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                         if (actionModel == ActionModel.ADDFEATURE) {
                             FeatureTable table = layerNode.tryGetFeaTable();
                             if (table == null) return;
-                            tools.addLineToLayer(table, (Polyline) geometry, null);
+                            if (table.getGeometryType() == GeometryType.POLYLINE || table.getGeometryType() == GeometryType.POLYGON) {
+                                tools.addLineToLayer(table, (Polyline) geometry, null);
+                            } else {
+                                tools.addGeometry(table, geometry, null, "");
+                            }
                         }
                     }
                 });
-                arcMap.getSketchTool().activate(DrawType.FREEHAND_POLYLINE);
+                if (layerNode.tryGetGeometryType() == null) {
+                    ToastUtil.showLong(context, "无法获取所要新增图层的几何类型！");
+                } else if (layerNode.tryGetGeometryType() == GeometryType.POLYGON || layerNode.tryGetGeometryType() == GeometryType.POLYLINE) {
+                    arcMap.getSketchTool().activate(DrawType.FREEHAND_POLYLINE);
+                } else {
+                    arcMap.getSketchTool().activate(DrawType.POINT);
+                }
             }
         }).show(context);
     }
@@ -230,12 +261,18 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                         new ATEDialog.Theme_Alert(context)
                                 .title("提示")
                                 .content("确认修斑？")
-                                .positiveText("分割")
+                                .positiveText("修斑")
                                 .negativeText("取消")
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        //arcMap.getSketchTool().
+                                        LayerNode layerNode = (LayerNode) data.getTag();
+                                        if (layerNode == null) return;
+                                        FeatureTable feaTable = layerNode.tryGetFeaTable();
+                                        Feature feature = data.getData();
+                                        ArrayList<Feature> list = new ArrayList<>();
+                                        list.add(feature);
+                                        tools.editor(feaTable, (Polyline) geometry, list);
                                     }
                                 }).show();
                     }
@@ -283,7 +320,11 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
             @Override
             public void callBack(GroupItem<Feature> data) {
                 List<LayerNode> list = arcMap.getTocContainer().getLeafLayerNodesVisible();
-                list.remove(data.getTag());
+                LayerNode node = (LayerNode) data.getTag();
+                //移除图层列表中的自身
+                list.remove(node);
+                //过滤出与自身图层类型相同的图层
+                list = LayerNode.getLayerNodeByGeoType(list, node.tryGetGeometryType());
                 LayerDialog.newInstance().setCallBack(list, new LayerDialog.ICallBack() {
                     @Override
                     public void callBack(LayerNode layerNode) {
@@ -303,7 +344,6 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                                     }
                                 }).show();
 
-
                     }
                 }).show(context);
             }
@@ -315,6 +355,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
      */
     private void clearAll() {
         arcMap.setEvent(null);
+        arcMap.getSketchTool().deactivate();
         List<LayerNode> layerNodes = arcMap.getTocContainer().getLeafLayerNodes();
         arcMap.getSelectContainer().clearSelection(layerNodes);
     }

@@ -1,5 +1,7 @@
 package com.lib.bandaid.arcruntime.layer.project;
 
+import androidx.annotation.NonNull;
+
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.geometry.GeometryType;
 import com.esri.arcgisruntime.layers.FeatureLayer;
@@ -81,7 +83,7 @@ public class LayerNode implements Serializable {
 
     public GeometryType tryGetGeometryType() {
         FeatureTable table = tryGetFeaTable();
-        if(table!=null)return table.getGeometryType();
+        if (table != null) return table.getGeometryType();
         return null;
     }
 
@@ -219,5 +221,19 @@ public class LayerNode implements Serializable {
             _layerNode = nodes.get(i);
             iteration(_layerNode, visible);
         }
+    }
+
+    public static List<LayerNode> getLayerNodeByGeoType(List<LayerNode> layerNodes, @NonNull GeometryType type) {
+        if (layerNodes == null) return null;
+        List<LayerNode> res = new ArrayList<>();
+        LayerNode layerNode;
+        for (int i = 0; i < layerNodes.size(); i++) {
+            layerNode = layerNodes.get(i);
+            if (layerNode == null) continue;
+            if (layerNode.tryGetGeometryType() != null && layerNode.tryGetGeometryType() == type) {
+                res.add(layerNode);
+            }
+        }
+        return res;
     }
 }

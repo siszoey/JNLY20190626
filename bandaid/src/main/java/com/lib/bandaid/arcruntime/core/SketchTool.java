@@ -57,10 +57,10 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
 
     //=======================================================================================================
     private PointCollection pointCollection;
-
     public SketchEditor sketchEditor;
     private ValueCallback callBack;
     private SpatialReference defaultSpatial;
+    private EventStatus eventStatus;
 
     public SketchTool() {
 
@@ -103,9 +103,10 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
             sketchStyle.setLineSymbol(DrawSymbol.mLineSymbol);
             sketchStyle.setFillSymbol(DrawSymbol.mFillSymbol);
             this.sketchEditor.setSketchStyle(sketchStyle);
+
             this.sketchEditor.addGeometryChangedListener(this);
+
             this.mapView.setSketchEditor(sketchEditor);
-            this.mapView.setOnTouchListener(new MapTouchListener(arcMap.getContext(),arcMap.getMapView()));
         }
         switch (this.drawType) {
             case DrawType.POINT:
@@ -123,6 +124,7 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
             case DrawType.FREEHAND_POLYLINE:
                 sketchEditor.start(SketchCreationMode.FREEHAND_LINE);
                 break;
+            //圆和矩形是自定义绘制，所以自己监听事件
             case DrawType.CIRCLE:
                 pointCollection = new PointCollection(mapView.getSpatialReference());
                 break;
@@ -179,22 +181,13 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
         }
     }
 
-    boolean isGeoChanged = false;
-
     @Override
     public void geometryChanged(SketchGeometryChangedEvent sketchGeometryChangedEvent) {
-        isGeoChanged = true;
-    }
-
-    class MapTouchListener extends DefaultMapViewOnTouchListener{
-
-        public MapTouchListener(Context context, MapView mapView) {
-            super(context, mapView);
-        }
-
-        @Override
-        public boolean onRotate(MotionEvent event, double rotationAngle) {
-            return false;
+        if (eventStatus == EventStatus.ACTION_CANCEL) {
+            if (sketchEditor.isSketchValid()) {
+                Geometry geometry = sketchGeometryChangedEvent.getGeometry();
+                if (callBack != null) callBack.onGeometry(geometry);
+            }
         }
     }
 
@@ -204,20 +197,23 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
     class DrawTouchListener extends EasyMapEvent {
 
         @Override
+        public boolean onTouchStart(MotionEvent motionEvent) {
+            eventStatus = EventStatus.ACTION_DOWN;
+            return super.onTouchStart(motionEvent);
+        }
+
+        @Override
         public boolean onTouchMoving(MotionEvent motionEvent) {
-            isGeoChanged = false;
+            eventStatus = EventStatus.ACTION_MOVE;
             return super.onTouchMoving(motionEvent);
         }
 
         @Override
         public boolean onTouchCancel(MotionEvent motionEvent) {
+            eventStatus = EventStatus.ACTION_CANCEL;
             if (drawType == DrawType.CIRCLE || drawType == DrawType.ENVELOPE) {
                 if (drawGraphic != null && isMapTouch) {
                     if (callBack != null) callBack.onGeometry(drawGraphic.getGeometry());
-                }
-            } else {
-                if (sketchEditor != null && isGeoChanged && sketchEditor.isSketchValid()) {
-                    if (callBack != null) callBack.onGeometry(sketchEditor.getGeometry());
                 }
             }
             return super.onTouchCancel(motionEvent);
@@ -352,5 +348,11 @@ public class SketchTool extends BaseContainer implements SketchGeometryChangedLi
             DrawEventListener listener = en.nextElement();
             listener.handleDrawEvent(event);
         }
+    }
+
+    public enum EventStatus {
+        ACTION_DOWN,
+        ACTION_MOVE,
+        ACTION_CANCEL
     }
 }
