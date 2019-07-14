@@ -55,4 +55,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     implementation files('libs/xstream-1.4.7.jar')
     implementation files('libs/dom4j-1.6.1.jar')
+
+    //日期选择
+    implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
 }

@@ -4,8 +4,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.esri.arcgisruntime.data.Feature;
+import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
 import com.esri.arcgisruntime.geometry.Point;
-import com.lib.bandaid.arcruntime.core.QueryContainer;
 import com.lib.bandaid.arcruntime.core.SelectContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
@@ -62,7 +63,12 @@ public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
         for (LayerNode node : res.keySet()) {
             List<Feature> features = res.get(node);
             if (features == null || features.size() == 0) continue;
-            PropertyDialog.newInstance(node.getName(), null, features.get(0).getAttributes()).show(context);
+            FeatureTable feaTable = node.tryGetFeaTable();
+            List<Field> fields = null;
+            if (feaTable != null) {
+                fields = feaTable.getFields();
+            }
+            PropertyDialog.newInstance(node.getName(), fields, features.get(0).getAttributes()).show(context);
             break;
         }
     }

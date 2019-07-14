@@ -5,11 +5,13 @@ import android.view.Gravity;
 
 import androidx.annotation.Nullable;
 
-import com.lib.bandaid.arcruntime.layer.info.Field;
+import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
+import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.arcruntime.wiget.MapLayoutView;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
-import com.lib.bandaid.widget.layout.EntityLayoutView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,29 +23,29 @@ import java.util.Map;
 
 public class PropertyDialog extends BaseDialogFrg {
 
-    public static PropertyDialog newInstance(String title, LayerInfo info, Map property) {
+    public static PropertyDialog newInstance(String title, List<Field> fields, Map property) {
         PropertyDialog fragment = new PropertyDialog();
-        fragment.setProperty(property);
-        fragment.setInfo(info);
         fragment.setTitle(title);
+        fragment.setInfo(fields);
+        fragment.setProperty(property);
         return fragment;
     }
 
     private String title;
-    private LayerInfo info;
     private Map property;
-    private EntityLayoutView entityLayoutView;
+    private List<Field> fields;
+    private MapLayoutView entityLayoutView;
 
-    public void setInfo(LayerInfo info) {
-        this.info = info;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private void setInfo(List<Field> fields) {
+        this.fields = fields;
     }
 
     private void setProperty(Map property) {
         this.property = property;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class PropertyDialog extends BaseDialogFrg {
         initTitle(null, title, Gravity.CENTER);
         w = 0.8f;
         h = 0.8f;
-        entityLayoutView = new EntityLayoutView<Map>(getContext());
+        entityLayoutView = new MapLayoutView(getContext());
         setContentView(entityLayoutView);
     }
 
@@ -68,9 +70,8 @@ public class PropertyDialog extends BaseDialogFrg {
 
     @Override
     protected void initClass() {
-        if (info != null) {
-            Map<String, Object> _property = new HashMap<>();
-            List<Field> fields = info.getFields();
+        if (fields != null) {
+            Map<Field, Object> _property = new HashMap<>();
             Field field;
             boolean equal = false;
             for (int i = 0, len = fields.size(); i < len; i++) {
@@ -78,15 +79,14 @@ public class PropertyDialog extends BaseDialogFrg {
                 for (Object name : property.keySet()) {
                     equal = ObjectUtil.baseTypeIsEqual(name, field.getName());
                     if (equal) {
-                        _property.put(field.getAlias(), property.get(name));
+                        _property.put(field, property.get(name));
                         break;
                     }
                 }
             }
             entityLayoutView.setData(_property).resolutionData();
-        }else {
+        } else {
             entityLayoutView.setData(property).resolutionData();
         }
-
     }
 }

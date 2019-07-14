@@ -1,5 +1,9 @@
 package com.lib.bandaid.utils;
 
+import androidx.annotation.NonNull;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 public final class ObjectUtil {
@@ -121,5 +125,70 @@ public final class ObjectUtil {
             return ((Boolean) o1).compareTo(((Boolean) o2));
         }
         return 0;
+    }
+
+
+    public static boolean isNumber(@NonNull Class<?> clazz) {
+        if (clazz == Double.class || clazz == double.class) {
+            return true;
+        }
+        if (clazz == Integer.class || clazz == int.class) {
+            return true;
+        }
+        if (clazz == Long.class || clazz == long.class) {
+            return true;
+        }
+        if (clazz == Short.class || clazz == short.class) {
+            return true;
+        }
+        if (clazz == Byte.class || clazz == byte.class) {
+            return true;
+        }
+        if (clazz == Float.class || clazz == float.class) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNumber(Object o) {
+        Number res = 0;
+        if (o == null) return false;
+        if (o instanceof Double) {
+            return true;
+        }
+        if (o instanceof Integer) {
+            return true;
+        }
+        if (o instanceof Long) {
+            return true;
+        }
+        if (o instanceof Short) {
+            return true;
+        }
+        if (o instanceof Byte) {
+            return true;
+        }
+        if (o instanceof Float) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isDate(Class<?> o) {
+        if (o == GregorianCalendar.class
+                || o == Date.class
+                || o == java.sql.Date.class) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isDate(Object o) {
+        if (o instanceof GregorianCalendar
+                || o instanceof Date
+                || o instanceof java.sql.Date) {
+            return true;
+        }
+        return false;
     }
 }

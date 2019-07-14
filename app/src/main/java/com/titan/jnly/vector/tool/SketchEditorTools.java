@@ -274,10 +274,8 @@ public class SketchEditorTools {
      * 共边增班
      */
     public void addFeatureGb(final FeatureTable table, final Geometry drawline, final ArrayList<Feature> features) {
-
         Feature feature = features.get(0);
         Map<String, Object> map = feature.getAttributes();
-
         addGbs(table, drawline, features, "");
     }
 
@@ -718,7 +716,6 @@ public class SketchEditorTools {
     }
 
     private void updataFeature(final FeatureTable table, Feature feature, final Feature bfeature) {
-
         final ListenableFuture<Void> future = Objects.requireNonNull(table).updateFeatureAsync(feature);
         future.addDoneListener(new Runnable() {
             @Override
@@ -853,6 +850,21 @@ public class SketchEditorTools {
         }
     }
 
+    public void updateFeature(FeatureTable table, Feature feature, final @NonNull ICallBack iCallBack) {
+        final ListenableFuture future = table.updateFeatureAsync(feature);
+        future.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    future.get();
+                    if (iCallBack != null) iCallBack.ok();
+                } catch (Exception e) {
+                    ToastUtil.showLong(context, e.getMessage());
+                }
+            }
+        });
+    }
+
     /**
      * 添加小班修改信息
      *
@@ -889,5 +901,9 @@ public class SketchEditorTools {
 
     private void addFiled() {
 
+    }
+
+    public interface ICallBack {
+        public void ok();
     }
 }

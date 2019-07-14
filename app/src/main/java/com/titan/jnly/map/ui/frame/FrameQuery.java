@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
@@ -83,7 +85,11 @@ public class FrameQuery extends BaseMapWidget implements View.OnClickListener, B
     @Override
     public void onClick(View view, FeatureTaker<LayerNode> data, int position) {
         LayerNode node = data.getData();
-        LayerInfo info = node.getInfo();
-        PropertyDialog.newInstance(data.getData().getName(), info, data.getFeature().getAttributes()).show(context);
+        FeatureTable feaTable = node.tryGetFeaTable();
+        List<Field> fields = null;
+        if (feaTable != null) {
+            fields = feaTable.getFields();
+        }
+        PropertyDialog.newInstance(data.getData().getName(), fields, data.getFeature().getAttributes()).show(context);
     }
 }

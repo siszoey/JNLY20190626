@@ -157,6 +157,5 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
                         finish();
                     }
                 }).show();
-
     }
 }

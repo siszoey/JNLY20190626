@@ -55,13 +55,51 @@ final public class ViewTreeUtil {
         @Override
         public void process(View view) {
             Object viewTag = view.getTag();
-
             if (viewTag != null && viewTag.equals(searchTag)) {
                 views.add(view);
             }
         }
 
         private List<View> getViews() {
+            return views;
+        }
+    }
+
+    public static List<View> findAllUnNullTag(ViewGroup root) {
+        FinderByNuNullTag allNuNullTag = new FinderByNuNullTag(null);
+        LayoutTraverser.build(allNuNullTag).traverse(root);
+        return allNuNullTag.getViews();
+    }
+
+    public static <T> List<T> findTUnNullTag(ViewGroup root, Class<T> type) {
+        FinderByNuNullTag allNuNullTag = new FinderByNuNullTag(type);
+        LayoutTraverser.build(allNuNullTag).traverse(root);
+        return allNuNullTag.getViews();
+    }
+
+    private static class FinderByNuNullTag<T extends View> implements LayoutTraverser.Processor {
+        private final Class<T> type;
+        private final List<T> views;
+
+        private FinderByNuNullTag(Class<T> type) {
+            this.type = type;
+            views = new ArrayList<T>();
+        }
+
+        @Override
+        public void process(View view) {
+            if (type == null) {
+                if (view.getTag() != null) {
+                    views.add((T) view);
+                }
+            } else {
+                if (type.isInstance(view) && view.getTag() != null) {
+                    views.add((T) view);
+                }
+            }
+        }
+
+        public List<T> getViews() {
             return views;
         }
     }
@@ -76,7 +114,6 @@ final public class ViewTreeUtil {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public void process(View view) {
             if (type.isInstance(view)) {
                 views.add((T) view);

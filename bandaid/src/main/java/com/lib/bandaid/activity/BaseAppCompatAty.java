@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.appbar.AppBarLayout;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +46,6 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
     protected RootStatusView _frameLayout;
     protected View _contentView;
     protected Button _btnRight;
-
 
 
     @Override
@@ -144,6 +147,17 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
     public void setContentView(int layoutResID) {
         _frameLayout.removeAllViews();
         _contentView = View.inflate(this, layoutResID, null);
+        _frameLayout.addView(_contentView);
+        onContentChanged();
+
+        initialize();
+        registerEvent();
+        initClass();
+    }
+
+    public void setContentView(View view) {
+        _frameLayout.removeAllViews();
+        _contentView = view;
         _frameLayout.addView(_contentView);
         onContentChanged();
 

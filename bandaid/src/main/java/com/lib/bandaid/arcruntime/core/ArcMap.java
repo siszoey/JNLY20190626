@@ -43,6 +43,8 @@ import java.util.Map;
 
 public class ArcMap extends RelativeLayout implements LoadStatusChangedListener, IContainer {
 
+    public static ArcMap arcMap;
+
     private boolean canRotate = false;
     private boolean canOffline = false;
     private Context context;
@@ -102,6 +104,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     void init() {
         initMap();
         create(this);
+        arcMap = this;
     }
 
     void initMap() {

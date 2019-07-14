@@ -1,6 +1,7 @@
 package com.titan.jnly.map.ui.frame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.titan.jnly.map.ui.dialog.FeatureDialog;
 import com.titan.jnly.map.ui.dialog.LayerDialog;
 import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.tool.SketchEditorTools;
+import com.titan.jnly.vector.ui.aty.PropertyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,23 +228,18 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
         if (map == null) {
             ToastUtil.showLong(context, "没有找到要编辑的数据！");
         } else {
-            int count = arcMap.getSelectContainer().hasDataCount();
-            if (count == 1) {
-
-            } else if (count > 1) {
-                FeatureDialog.newInstance().initData("选择要编辑的要素", map, new FeatureDialog.ICallBack() {
-                    @Override
-                    public void callBack(GroupItem<Feature> data) {
-                        LayerNode layerNode = (LayerNode) data.getTag();
-                        if (layerNode == null) return;
-                        FeatureTable feaTable = layerNode.tryGetFeaTable();
-                        Feature feature = data.getData();
-                        // tools.delFeature(feaTable, feature);
-                    }
-                }).show(context);
-            } else {
-                ToastUtil.showLong(context, "没有找到要编辑的数据！");
-            }
+            FeatureDialog.newInstance().initData("选择要编辑的要素", map, new FeatureDialog.ICallBack() {
+                @Override
+                public void callBack(GroupItem<Feature> data) {
+                    LayerNode layerNode = (LayerNode) data.getTag();
+                    if (layerNode == null) return;
+                    Feature feature = data.getData();
+                    if (feature == null) return;
+                    PropertyActivity.data = data;
+                    Intent intent = new Intent(context, PropertyActivity.class);
+                    startActivity(intent);
+                }
+            }).show(context);
         }
     }
 

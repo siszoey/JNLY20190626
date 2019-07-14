@@ -169,7 +169,6 @@ public class DateUtil {
             try {
                 date = df.parse(str);
             } catch (ParseException e) {
-                // log.error("DateParse Error!");
             }
         }
         return date;
