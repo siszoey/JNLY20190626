@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <com.lib.bandaid.widget.other.UploadImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/ic_pic_dir" />
+
+    <ImageView
+        android:id="@+id/iv_picture_close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/ic_pic_dir"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_close" />
+
+</RelativeLayout>

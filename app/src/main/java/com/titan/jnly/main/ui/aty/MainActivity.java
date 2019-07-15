@@ -141,7 +141,12 @@ public class MainActivity extends BaseFragmentAty
                     public void accept(Permission permission) {
                         super.accept(permission);
                         if (permission.granted) {
-                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
+                            FileUtil.createFileSmart(Config.APP_DB_PATH,
+                                    Config.APP_SDB_PATH,
+                                    Config.APP_MAP_CACHE,
+                                    Config.APP_PATH_CRASH,
+                                    Config.APP_PHOTO_DIR
+                            );
                         } else {
                             finish();
                         }

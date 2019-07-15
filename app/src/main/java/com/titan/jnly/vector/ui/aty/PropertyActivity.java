@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.Field;
@@ -21,6 +24,7 @@ import com.lib.bandaid.arcruntime.wiget.MapLayoutView;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 
@@ -63,10 +67,22 @@ public class PropertyActivity extends BaseAppCompatActivity implements View.OnCl
     protected void registerEvent() {
         btnExit.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        entityLayoutView.setImgFields("GSZP");
+        entityLayoutView.setImgAdapter(new MapLayoutView.ImgAdapter() {
+            @Override
+            public String adapter(Object val) {
+                return null;
+            }
+        });
         entityLayoutView.setInputFace(new MapLayoutView.InputFace() {
             @Override
             public void input(View v) {
-                TimePickerDialogUtil.bindTimePickerFull(_context, v);
+                if (v instanceof EditText) {
+                    TimePickerDialogUtil.bindTimePickerFull(_context, v);
+                }
+                if (v instanceof ImageView) {
+                    PhotoActivity.start(_context, false, Config.APP_PHOTO_PATH, true, true, null);
+                }
             }
         });
     }

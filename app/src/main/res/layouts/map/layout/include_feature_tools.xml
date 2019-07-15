@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/milky_white"
+    android:orientation="vertical"
     android:visibility="gone">
 
     <RadioGroup
@@ -65,7 +65,8 @@
             android:gravity="center"
             android:onClick="myClick"
             android:text="@string/tools_cx"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="gone" />
     </RadioGroup>
 
     <RadioGroup

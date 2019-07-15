@@ -111,7 +111,7 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
 
         jCameraView.setJCameraLisenter(this).isNormal(isNormal);
         //设置既可以拍照又能录视频
-        jCameraView.setFeatures(JCameraView.BUTTON_STATE_ONLY_CAPTURE);
+        //jCameraView.setFeatures(JCameraView.BUTTON_STATE_ONLY_CAPTURE);
         jCameraView.setSaveVideoPath(parentPath);
         jCameraView.getWaterMarkView().setMarkListener(this);
         getPermissions();
