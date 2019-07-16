@@ -33,4 +33,7 @@ public class SimplePermission {
     //相机权限
     public final static String[] MANIFEST_CAMERA = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+
+    //简单
+    public final static String[] MANIFEST_EASY = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 }

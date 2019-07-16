@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
@@ -19,6 +20,7 @@ import com.lib.bandaid.permission.SimplePermission;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
+import com.lib.bandaid.utils.AppUtil;
 import com.lib.bandaid.utils.SPfUtil;
 import com.lib.bandaid.utils.StringUtil;
 import com.titan.jnly.Config;
@@ -34,6 +36,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
 
     private final static String CONSTANT_IS_REMEMBER = "CONSTANT_IS_REMEMBER";
 
+    private TextView copyRight;
     private Boolean isRemember;
     private ATEEditText cetPhoneNum, cetPwd;
     private ATECheckBox ckRemember;
@@ -55,6 +58,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
 
     @Override
     protected void initialize() {
+        copyRight = $(R.id.copyRight);
         cetPhoneNum = $(R.id.cetPhoneNum);
         cetPwd = $(R.id.cetPwd);
         ivShowPwd = $(R.id.ivShowPwd);
@@ -67,6 +71,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
         btnLogin.setOnClickListener(this);
         ivShowPwd.setOnClickListener(this);
         ckRemember.setOnCheckedChangeListener(this);
+        boolean isDebug = AppUtil.isApkInDebug(this);
+        copyRight.setText("北京航天泰坦:" + AppUtil.getApkVersionName(this));
     }
 
     @Override
@@ -120,13 +126,19 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     private void permissions() {
         RxPermissionFactory
                 .getRxPermissions(_context)
-                .requestEachCombined(SimplePermission.MANIFEST_STORAGE)
+                .requestEachCombined(SimplePermission.MANIFEST_EASY)
                 .subscribe(new RxConsumer(_context) {
                     @Override
                     public void accept(Permission permission) {
                         super.accept(permission);
                         if (permission.granted) {
-                            FileUtil.createFileSmart(Config.APP_DB_PATH, Config.APP_SDB_PATH, Config.APP_MAP_CACHE, Config.APP_PATH_CRASH);
+                            FileUtil.createFileSmart(
+                                    Config.APP_DB_PATH,
+                                    Config.APP_SDB_PATH,
+                                    Config.APP_MAP_CACHE,
+                                    Config.APP_PATH_CRASH,
+                                    Config.APP_PHOTO_DIR
+                            );
                         } else {
                             finish();
                         }
