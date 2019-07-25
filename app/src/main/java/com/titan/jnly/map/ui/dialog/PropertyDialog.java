@@ -5,11 +5,8 @@ import android.view.Gravity;
 
 import androidx.annotation.Nullable;
 
-import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.Field;
-import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
-import com.lib.bandaid.arcruntime.layer.project.LayerNode;
-import com.lib.bandaid.arcruntime.wiget.MapLayoutView;
+import com.lib.bandaid.widget.easyui.ui.MapLayoutView;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 

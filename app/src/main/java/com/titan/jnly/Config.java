@@ -9,7 +9,7 @@ public final class Config extends Config_pro {
     public static String APP_SPATIAL_DIR = "spatial";
     public static String APP_CACHE_DIR = "cache";
     public static String APP_PHOTO_DIR = "photo";
-    public static String APP_CRASH_DIR= "crash";
+    public static String APP_CRASH_DIR = "crash";
 
     public static String ROOT_PATH = Environment.getExternalStorageDirectory().getAbsolutePath().toString();
     public static String APP_PATH = ROOT_PATH.concat(File.separator).concat(APP_PATH_NAME);
@@ -18,6 +18,8 @@ public final class Config extends Config_pro {
     public static String APP_PATH_CRASH = APP_PATH.concat(File.separator).concat(APP_CRASH_DIR);
     public static String APP_MAP_CACHE = APP_PATH.concat(File.separator).concat(APP_CACHE_DIR);
     public static String APP_PHOTO_PATH = APP_PATH.concat(File.separator).concat(APP_PHOTO_DIR);
+
+    public static String[] GEO_TB_MODULE = new String[]{"geodb/tb_moudle/property_point.xml", "geodb/tb_moudle/property_area.xml"};
 
     private Config() {
     }

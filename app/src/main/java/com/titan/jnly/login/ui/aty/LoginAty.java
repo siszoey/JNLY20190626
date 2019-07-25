@@ -139,6 +139,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                                     Config.APP_PATH_CRASH,
                                     Config.APP_PHOTO_DIR
                             );
+                            Constant.initEasyUiXml(_context, Config.GEO_TB_MODULE);
                         } else {
                             finish();
                         }

@@ -1,4 +1,4 @@
-package com.lib.bandaid.arcruntime.wiget;
+package com.lib.bandaid.widget.easyui.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,13 +7,19 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.esri.arcgisruntime.data.CodedValue;
+import com.esri.arcgisruntime.data.CodedValueDomain;
+import com.esri.arcgisruntime.data.Domain;
 import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.R;
+import com.lib.bandaid.adapter.com.CollectAdapter;
 import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.ImgUtil;
 import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.StringUtil;
@@ -33,28 +39,34 @@ import static android.widget.LinearLayout.VERTICAL;
  * arcgis 属性布局
  */
 
-public class MapLayoutViewV1 extends ScrollView {
+public class MapLayoutView extends ScrollView {
 
     private Mode mode = Mode.READ_ONLY;
     private Context context;
     private LinearLayout layout;
     private Map<Field, Object> entity;
-
     //
     private int lineHigh = 45;
     private LinearLayout.LayoutParams params;
     private LinearLayout.LayoutParams lineParams;
+    //图片字段
+    private String[] imgFields;
+    private Map<String, CollectAdapter> adaptCache = new HashMap<>();
 
 
-    public MapLayoutViewV1(Context context) {
+    public MapLayoutView(Context context) {
         super(context);
         this.context = context;
         init();
     }
 
-    public MapLayoutViewV1 setData(Map<Field, Object> t) {
+    public MapLayoutView setData(Map<Field, Object> t) {
         this.entity = t;
         return this;
+    }
+
+    public void setImgFields(String... imgFields) {
+        this.imgFields = imgFields;
     }
 
     private void init() {
@@ -74,11 +86,11 @@ public class MapLayoutViewV1 extends ScrollView {
         if (entity == null) return;
         View view;
         int index = 0;
-        for (Field key : entity.keySet()) {
+        for (Field field : entity.keySet()) {
             if (mode == Mode.READ_ONLY) {
-                view = createViewItemReadOnly(key, entity.get(key));
+                view = createViewItemReadOnly(field, entity.get(field));
             } else {
-                view = createViewItemReadWrite(key, entity.get(key));
+                view = createViewItemReadWrite(field, entity.get(field));
             }
             if (index % 2 == 0) {
                 view.setBackgroundColor(context.getResources().getColor(R.color.sky_blue));
@@ -134,13 +146,24 @@ public class MapLayoutViewV1 extends ScrollView {
     }
 
     private View createViewItemReadWrite(Field field, Object val) {
+        Domain domain = field.getDomain();
+        CodedValueDomain codedValueDomain;
+        List<CodedValue> codedValues = null;
+        if (domain != null && domain instanceof CodedValueDomain) {
+            codedValueDomain = (CodedValueDomain) domain;
+            if (codedValueDomain != null) {
+                codedValues = codedValueDomain.getCodedValues();
+                System.out.println(codedValues);
+            }
+        }
+
+
         String name = field.getAlias();
         LinearLayout item = new LinearLayout(context);
         params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER | Gravity.BOTTOM;
         item.setLayoutParams(params);
         item.setOrientation(HORIZONTAL);
-
         //key
         params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, lineHigh);
         params.weight = 5;
@@ -152,16 +175,44 @@ public class MapLayoutViewV1 extends ScrollView {
         item.addView(nameView);
         //------------------------------------------------------------------------------------------
         //val
-        params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, lineHigh);
-        params.weight = 2;
-        EditText valueView = new EditText(context);
-        valueView.setLayoutParams(params);
-        valueView.setBackground(null);
-        valueView.setPadding(5, 0, 5, 0);
-        valueView.setGravity(Gravity.LEFT | Gravity.CENTER);
-        setEditText(field, valueView, val);
+
+        View valueView;
+        if (isImg(field)) {
+            params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            params.weight = 2;
+            valueView = new ImageView(context);
+            valueView.setLayoutParams(params);
+            setImg(field, (ImageView) valueView, val);
+        } else {
+            params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, lineHigh);
+            params.weight = 2;
+            valueView = new EditText(context);
+            valueView.setLayoutParams(params);
+            valueView.setBackground(null);
+            valueView.setPadding(5, 0, 5, 0);
+            ((EditText) valueView).setGravity(Gravity.LEFT | Gravity.CENTER);
+            setEditText(field, (EditText) valueView, val);
+        }
         item.addView(valueView);
         return item;
+    }
+
+    private void setImg(Field field, ImageView imageView, Object val) {
+        String uri;
+        if (imgAdapter == null) {
+            uri = val + "";
+        } else {
+            uri = imgAdapter.adapter(val);
+        }
+        ImgUtil.simpleLoadImg(imageView, uri);
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputFace != null) {
+                    inputFace.input(v);
+                }
+            }
+        });
     }
 
     private void setEditText(Field field, EditText editText, Object val) {
@@ -184,7 +235,6 @@ public class MapLayoutViewV1 extends ScrollView {
                     }
                 }
             });
-
         } else {
             editText.setText(val == null ? "" : val.toString());
         }
@@ -193,41 +243,11 @@ public class MapLayoutViewV1 extends ScrollView {
         }
     }
 
-    public enum Mode {
-        READ_ONLY,
-        READ_WRITE
-    }
 
     public void setMode(Mode mode) {
         this.mode = mode;
     }
 
-    private boolean isNumber(Field field) {
-        if (field == null) return false;
-        if (field.getFieldType() == Field.Type.DOUBLE
-                || field.getFieldType() == Field.Type.FLOAT
-                || field.getFieldType() == Field.Type.INTEGER
-                || field.getFieldType() == Field.Type.SHORT) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isDate(Field field) {
-        if (field == null) return false;
-        if (field.getFieldType() == Field.Type.DATE) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isObject(Field field) {
-        if (field == null) return false;
-        if (field.getFieldType() == Field.Type.OID) {
-            return true;
-        }
-        return false;
-    }
 
     private InputFace inputFace;
 
@@ -235,8 +255,18 @@ public class MapLayoutViewV1 extends ScrollView {
         public void input(View view);
     }
 
+    private ImgAdapter imgAdapter;
+
+    public interface ImgAdapter {
+        public String adapter(Object val);
+    }
+
     public void setInputFace(InputFace inputFace) {
         this.inputFace = inputFace;
+    }
+
+    public void setImgAdapter(ImgAdapter imgAdapter) {
+        this.imgAdapter = imgAdapter;
     }
 
     public Map getForm() {
@@ -289,5 +319,49 @@ public class MapLayoutViewV1 extends ScrollView {
             res = NumberUtil.try2Long(text);
         }
         return res;
+    }
+
+
+    //----------------------------------------------------------------------------------------------
+    public enum Mode {
+        READ_ONLY,
+        READ_WRITE
+    }
+
+    private boolean isNumber(Field field) {
+        if (field == null) return false;
+        if (field.getFieldType() == Field.Type.DOUBLE
+                || field.getFieldType() == Field.Type.FLOAT
+                || field.getFieldType() == Field.Type.INTEGER
+                || field.getFieldType() == Field.Type.SHORT) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isDate(Field field) {
+        if (field == null) return false;
+        if (field.getFieldType() == Field.Type.DATE) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isObject(Field field) {
+        if (field == null) return false;
+        if (field.getFieldType() == Field.Type.OID) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isImg(Field field) {
+        if (field == null) return false;
+        if (imgFields == null) return false;
+        String name = field.getName();
+        for (String imgField : imgFields) {
+            if (name.equals(imgField)) return true;
+        }
+        return false;
     }
 }

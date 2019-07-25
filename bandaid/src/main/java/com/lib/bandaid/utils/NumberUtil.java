@@ -2,6 +2,7 @@ package com.lib.bandaid.utils;
 
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 
 /**
@@ -30,6 +31,28 @@ public final class NumberUtil {
             return true;
         }
         if (clazz == Float.class || clazz == float.class) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNumber(@NonNull Type type) {
+        if (type == Double.class || type == double.class) {
+            return true;
+        }
+        if (type == Integer.class || type == int.class) {
+            return true;
+        }
+        if (type == Long.class || type == long.class) {
+            return true;
+        }
+        if (type == Short.class || type == short.class) {
+            return true;
+        }
+        if (type == Byte.class || type == byte.class) {
+            return true;
+        }
+        if (type == Float.class || type == float.class) {
             return true;
         }
         return false;

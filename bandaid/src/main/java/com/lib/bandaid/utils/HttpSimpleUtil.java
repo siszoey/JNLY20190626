@@ -16,7 +16,7 @@ import java.net.URLConnection;
 
 
 
-public class HttpSimpleUtil {
+public class  HttpSimpleUtil {
 
 
     public static void get(final String url, final ICallBack iCallBack) {

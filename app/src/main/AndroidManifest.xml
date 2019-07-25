@@ -50,6 +50,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".hardware.ui.aty.HardWareAty">
+
+        </activity>
 
         <!--zy: 服务注册-->
         <service android:name="com.lib.bandaid.service.imp.LocService" />

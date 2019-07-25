@@ -2,11 +2,55 @@ package com.lib.bandaid.utils;
 
 import androidx.annotation.NonNull;
 
+import com.lib.bandaid.data.local.sqlite.utils.DateUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 
 public final class ObjectUtil {
+
+
+    public static Object str2SimpleObj(Type type, String s) {
+        Object o = null;
+        try {
+            if (null == s) {
+                return null;
+            } else if ("".equals(s)) {
+                return null;
+            } else if (type == Integer.class || type == int.class) {
+                o = Integer.parseInt(s);
+            } else if (type == Float.class || type == float.class) {
+                o = Float.parseFloat(s);
+            } else if (type == Double.class || type == double.class) {
+                o = Double.parseDouble(s);
+            } else if (type == Long.class || type == long.class) {
+                o = Long.parseLong(s);
+            } else if (type == Short.class || type == short.class) {
+                o = Short.parseShort(s);
+            } else if (type == String.class) {
+                o = s;
+            } else if (type == Date.class) {
+                o = DateUtil.strToDateTime(s);
+            } else if (type == GregorianCalendar.class) {
+                Date date = DateUtil.strToDateTime(s);
+                if (date == null) {
+                    o = null;
+                } else {
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    calendar.setTime(date);
+                    o = calendar;
+                }
+            }
+        } catch (Exception e) {
+            o = null;
+            e.printStackTrace();
+        }
+        return o;
+    }
 
     public static boolean baseTypeIsEqual(Object o1, Object o2, boolean nullEqual) {
         if (nullEqual) {
@@ -87,7 +131,6 @@ public final class ObjectUtil {
         }
         return isEqual;
     }
-
 
     public static boolean baseTypeLike(Object baseObj, Object obj) {
         if (baseObj == null || obj == null) return false;

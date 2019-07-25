@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EasyUiXml>
+    <name>古树群调查表</name>
+    <alias>古树群调查表</alias>
+    <uiXml>
+        <UiXml>
+            <alias>OBJECTID</alias>
+            <code>OBJECTID</code>
+            <dataType class="java-class">java.lang.Long</dataType>
+            <readOnly>true</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>县（区、市）</alias>
+            <code>XIAN</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <itemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370102</code>
+                    <value>历下区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370103</code>
+                    <value>市中区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370104</code>
+                    <value>槐荫区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370105</code>
+                    <value>天桥区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370112</code>
+                    <value>历城区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370113</code>
+                    <value>长清区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370114</code>
+                    <value>章丘区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370115</code>
+                    <value>济阳区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370116</code>
+                    <value>莱芜区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370117</code>
+                    <value>钢城区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370124</code>
+                    <value>平阴县</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370126</code>
+                    <value>商河县</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370171</code>
+                    <value>高新区</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">370191</code>
+                    <value>南山区</value>
+                </ItemXml>
+            </itemXml>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>乡镇（街道）</alias>
+            <code>XIANG</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>调查顺序号</alias>
+            <code>DCXH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>主要树种</alias>
+            <code>ZYSZ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>四周界限</alias>
+            <code>SZJX</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>古树株数</alias>
+            <code>GSZS</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>林分平均高度/m</alias>
+            <code>LFPJG</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>林分平均胸（地）围/cm
+                胸（地）围/cm
+            </alias>
+            <code>LFPJXW</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>特征代码</alias>
+            <code>TZDM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>平均树龄</alias>
+            <code>PJSL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>郁闭度</alias>
+            <code>YBD</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>海拔/m</alias>
+            <code>HAIBA</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>坡度</alias>
+            <code>PODU</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>坡向</alias>
+            <code>POXIANG</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>土壤类型</alias>
+            <code>TRLX</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>土壤厚度/cm</alias>
+            <code>TRHD</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>下木种类</alias>
+            <code>XMZL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>下木密度</alias>
+            <code>XMMD</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>地被物种类</alias>
+            <code>DBWZL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>地被物密度</alias>
+            <code>DBWMD</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>管护现状</alias>
+            <code>GHXZ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>人为经营活动情况</alias>
+            <code>RWJJHDQK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>管护单位</alias>
+            <code>GHDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>科</alias>
+            <code>KE</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>属</alias>
+            <code>SHU</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>种</alias>
+            <code>ZHONG</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>保护建议</alias>
+            <code>BHJY</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>调查人</alias>
+            <code>DCR</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>调查日期</alias>
+            <code>DCRQ</code>
+            <dataType class="java-class">java.util.GregorianCalendar</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>审核人</alias>
+            <code>SHR</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>审核日期</alias>
+            <code>SHRQ</code>
+            <dataType class="java-class">java.util.GregorianCalendar</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+        <UiXml>
+            <alias>备注</alias>
+            <code>REMARK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readOnly>false</readOnly>
+            <status>single</status>
+        </UiXml>
+    </uiXml>
+</EasyUiXml>

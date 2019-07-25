@@ -41,6 +41,14 @@ public final class IoXml {
         }
     }
 
+    /**
+     *
+     * @param context
+     * @param clazz
+     * @param filePath
+     * @param <T>
+     * @return
+     */
     public static <T> T readXmlFromAssets(Context context, Class clazz, String filePath) {
         try {
             if (domDriver == null) {

@@ -686,12 +686,12 @@ public class DateUtil {
     public static String lastWeek() {
         /*
          * Calendar calendar = Calendar.getInstance(); int
-		 * minus=calendar.get(GregorianCalendar.DAY_OF_WEEK)+1;
-		 * calendar.add(GregorianCalendar.DATE,-minus); String end=new
-		 * java.sql.Date(calendar.getTime().getTime()).toString();
-		 * calendar.add(GregorianCalendar.DATE,-4); String begin=new
-		 * java.sql.Date(calendar.getTime().getTime()).toString();
-		 */
+         * minus=calendar.get(GregorianCalendar.DAY_OF_WEEK)+1;
+         * calendar.add(GregorianCalendar.DATE,-minus); String end=new
+         * java.sql.Date(calendar.getTime().getTime()).toString();
+         * calendar.add(GregorianCalendar.DATE,-4); String begin=new
+         * java.sql.Date(calendar.getTime().getTime()).toString();
+         */
         String beginTime = getPreviousWeekday();
         String endTime = getPreviousWeekSunday();
         return beginTime + "," + endTime;
@@ -740,14 +740,21 @@ public class DateUtil {
 
     /**
      * 这个方法获取的结果是24小时制的，月份也正确 网络时间
+     *
      * @return
      */
-    public static String getTimeZone(){
+    public static String getTimeZone() {
         SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dff.setTimeZone(TimeZone.getTimeZone("GMT+08"));
         String ee = dff.format(new Date());
-        System.out.println("ee="+ee);
+        System.out.println("ee=" + ee);
         return ee;
+    }
+
+    public static GregorianCalendar getCurrentCalendar() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        return calendar;
     }
 
 }
