@@ -131,22 +131,42 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                     public void accept(Permission permission) {
                         super.accept(permission);
                         if (permission.granted) {
-                            //创建文集目录
-                            FileUtil.createFileSmart(
-                                    Config.APP_DB_PATH,
-                                    Config.APP_SDB_PATH,
-                                    Config.APP_MAP_CACHE,
-                                    Config.APP_PATH_CRASH,
-                                    Config.APP_PHOTO_DIR
-                            );
-                            //读取布局模板
-                            Constant.initEasyUiXml(_context, Config.GEO_TB_MODULE);
-                            //创建系统字典表
-                            FileUtil.copyAssets(_context, Config.DIC_DB_MODULE,Config.APP_DB_PATH );
+                            handlePermission();
                         } else {
                             finish();
                         }
                     }
                 });
+    }
+
+    public void handlePermission() {
+        //创建文集目录
+        FileUtil.createFileSmart(
+                Config.APP_DB_PATH,
+                Config.APP_SDB_PATH,
+                Config.APP_MAP_CACHE,
+                Config.APP_PATH_CRASH,
+                Config.APP_PHOTO_DIR
+        );
+        //读取布局模板
+        Constant.initEasyUiXml(_context, Config.GEO_TB_MODULE);
+        //创建系统字典表
+        FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DB_PATH);
+        //是否为app首次安装
+        appFirstInstall();
+        //是否为当前版本首次安装
+        versionFirstInstall();
+    }
+
+    private void appFirstInstall() {
+        boolean flag = AppUtil.isAppFirstInstall(_context);
+    }
+
+    private void versionFirstInstall() {
+        boolean flag = AppUtil.isVersionFirstInstall(_context);
+        if (flag) {
+            FileUtil.deleteFile(Config.APP_DB_PATH);
+            FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DB_PATH);
+        }
     }
 }

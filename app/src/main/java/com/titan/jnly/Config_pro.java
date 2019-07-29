@@ -4,7 +4,6 @@ public class Config_pro {
 
     public static String APP_PATH_DIR = "jnly";
     public static String APP_DB_NAME = "jnly.db";
-    public static String DIC_DB_NAME = "jnly.db";
 
 
     public interface BASE_URL {

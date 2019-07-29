@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -21,10 +22,45 @@ import java.util.Map;
  * Created by zy on 2016/10/17.
  */
 
-public class AppUtil {
+public final class AppUtil {
 
     private AppUtil() {
+    }
 
+    /**
+     * 是不是app第一次安装
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isAppFirstInstall(Context context) {
+        String flag = "APP_IS_FIRST_INSTALL".hashCode() + "";
+        Boolean first = SPfUtil.readT(context, flag);
+        if (first == null) {
+            SPfUtil.putT(context, flag, false);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是不是当前版本第一次安装
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isVersionFirstInstall(Context context) {
+        //获取当前版本号
+        String flag = "APP_LAST_INSTALL_VERSION".hashCode() + "";
+        Integer currentVersion = getApkVersionCode(context);
+        Integer lastVersion = SPfUtil.readT(context, flag);
+        lastVersion = lastVersion == null ? 0 : lastVersion;
+        if (currentVersion > lastVersion) {
+            SPfUtil.putT(context, flag, currentVersion);
+            return true;
+        }
+        return false;
     }
 
     /**
