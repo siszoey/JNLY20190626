@@ -40,7 +40,7 @@
 
         <activity android:name="com.titan.jnly.main.ui.aty.MainActivity" />
         <activity android:name="com.titan.jnly.map.ui.aty.MapActivity" />
-        <activity android:name=".vector.ui.aty.PropertyActivity" />
+        <activity android:name=".vector.ui.aty.SingleEditActivity" />
 
         <activity android:name=".demo.DemoActivity">
 

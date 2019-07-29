@@ -31,8 +31,9 @@ import com.titan.jnly.R;
 import com.titan.jnly.map.ui.dialog.FeatureDialog;
 import com.titan.jnly.map.ui.dialog.LayerDialog;
 import com.titan.jnly.vector.bean.ActionModel;
+import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
-import com.titan.jnly.vector.ui.aty.PropertyActivity;
+import com.titan.jnly.vector.ui.aty.SingleEditActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,9 +162,9 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                             FeatureTable table = layerNode.tryGetFeaTable();
                             if (table == null) return;
                             if (table.getGeometryType() == GeometryType.POLYLINE || table.getGeometryType() == GeometryType.POLYGON) {
-                                tools.addLineToLayer(table, (Polyline) geometry, null);
+                                tools.addLineToLayer(table, (Polyline) geometry, DataStatus.createAdd());
                             } else {
-                                tools.addGeometry(table, geometry, null, "");
+                                tools.addGeometry(table, geometry, DataStatus.createAdd(), "");
                             }
                         }
                     }
@@ -235,8 +236,8 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                     if (layerNode == null) return;
                     Feature feature = data.getData();
                     if (feature == null) return;
-                    PropertyActivity.data = data;
-                    Intent intent = new Intent(context, PropertyActivity.class);
+                    SingleEditActivity.data = data;
+                    Intent intent = new Intent(context, SingleEditActivity.class);
                     startActivity(intent);
                 }
             }).show(context);

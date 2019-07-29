@@ -668,7 +668,7 @@
         </UiXml>
         <UiXml>
             <alias>回归模型树龄</alias>
-            <code>HGSL</code>
+            <code>MODEL_AGE</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <readonly>true</readonly>
             <VerifyXml>
@@ -678,7 +678,7 @@
         </UiXml>
         <UiXml>
             <alias>估测树龄</alias>
-            <code>GCSL</code>
+            <code>GUESS_AGE</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -687,7 +687,7 @@
         </UiXml>
         <UiXml>
             <alias>文献树龄</alias>
-            <code>WXSL</code>
+            <code>DOC_AGE</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -696,7 +696,7 @@
         </UiXml>
         <UiXml>
             <alias>文献依据</alias>
-            <code>WXSL</code>
+            <code>DOC_SRC</code>
             <dataType class="java-class">java.lang.String</dataType>
         </UiXml>
         <UiXml>
@@ -718,10 +718,10 @@
                 </ItemXml>
             </itemXml>
             <status>single</status>-->
-           <!-- <VerifyXml>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>-->
+            <!-- <VerifyXml>
+                 <regex>^(?=.*\S).+$</regex>
+                 <msg>不能为空!</msg>
+             </VerifyXml>-->
 
             <!--<VerifyXml>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
