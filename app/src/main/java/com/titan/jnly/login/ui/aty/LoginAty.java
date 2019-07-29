@@ -118,7 +118,6 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     @Override
     public void LoginSuccess() {
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
-        //startActivity(new Intent(_context, MainActivity.class));
         startActivity(new Intent(_context, MapActivity.class));
         finish();
     }
@@ -132,6 +131,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                     public void accept(Permission permission) {
                         super.accept(permission);
                         if (permission.granted) {
+                            //创建文集目录
                             FileUtil.createFileSmart(
                                     Config.APP_DB_PATH,
                                     Config.APP_SDB_PATH,
@@ -139,7 +139,10 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                                     Config.APP_PATH_CRASH,
                                     Config.APP_PHOTO_DIR
                             );
+                            //读取布局模板
                             Constant.initEasyUiXml(_context, Config.GEO_TB_MODULE);
+                            //创建系统字典表
+                            FileUtil.copyAssets(_context, Config.DIC_DB_MODULE,Config.APP_DB_PATH );
                         } else {
                             finish();
                         }

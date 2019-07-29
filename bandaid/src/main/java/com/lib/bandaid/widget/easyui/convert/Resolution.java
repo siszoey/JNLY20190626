@@ -75,7 +75,7 @@ public final class Resolution {
         UiXml uiXml = new UiXml();
         uiXml.setCode(field.getName());
         uiXml.setAlias(field.getAlias());
-        uiXml.setReadOnly(!field.isEditable());
+        uiXml.setReadonly(!field.isEditable());
         Type type = convertJavaFieldType(field);
         uiXml.setDataType(type);
         if (domain != null && domain instanceof CodedValueDomain) {

@@ -182,7 +182,6 @@ public final class CursorUtil<T> {
             if (jsonArray == null || jsonArray.length() == 0) {
                 o = null;
             }
-            //Field[] fields = clazz.getDeclaredFields();
             List<Field> fields = ReflectUtil.getIterationFields(clazz);
             Integer length = jsonArray.length();
             list = new ArrayList<>();
@@ -220,17 +219,23 @@ public final class CursorUtil<T> {
         Object o = null;
         try {
             List<Field> fields = ReflectUtil.getIterationFields(clazz);
+            Field field;
+            String fieldName;
+            Method setMethod;
+            int index;
+            String v;
+            Object value;
             while (cursor.moveToNext()) {
                 o = clazz.newInstance();
                 for (int i = 0; i < fields.size(); i++) {
-                    Field field = fields.get(i);
-                    String fieldName = field.getName();
+                    field = fields.get(i);
+                    fieldName = field.getName();
                     if (field.isAnnotationPresent(Column.class)) {
-                        Method setMethod = ReflectUtil.setMethod(clazz, field);
+                        setMethod = ReflectUtil.setMethod(clazz, field);
                         if (null != setMethod) {
-                            int index = cursor.getColumnIndex(fieldName);
-                            String v = cursor.getString(index);
-                            Object value = TransferUtil.string2SimpleObject(field, v);
+                            index = cursor.getColumnIndex(fieldName);
+                            v = cursor.getString(index);
+                            value = TransferUtil.string2SimpleObject(field, v);
                             setMethod.invoke(o, value);
                         }
                     }
@@ -256,26 +261,27 @@ public final class CursorUtil<T> {
         Object o = null;
         try {
             List<Field> fields = ReflectUtil.getIterationFields(clazz);
+            Field field;
+            String fieldName;
+            Method setMethod;
+            int index;
+            String v;
+            Object value;
             while (cursor.moveToNext()) {
                 o = clazz.newInstance();
                 for (int i = 0; i < fields.size(); i++) {
-                    Field field = fields.get(i);
-                    String fieldName;
+                    field = fields.get(i);
                     if (idDbColumn) {
-                        try {
-                            fieldName = ReflectUtil.getColumnName(field);
-                        } catch (Exception e) {
-                            continue;
-                        }
+                        fieldName = ReflectUtil.getColumnName(field);
                     } else {
                         fieldName = field.getName();
                     }
                     if (field.isAnnotationPresent(Column.class)) {
-                        Method setMethod = ReflectUtil.setMethod(clazz, field);
+                        setMethod = ReflectUtil.setMethod(clazz, field);
                         if (null != setMethod) {
-                            int index = cursor.getColumnIndex(fieldName);
-                            String v = cursor.getString(index);
-                            Object value = TransferUtil.string2SimpleObject(field, v);
+                            index = cursor.getColumnIndex(fieldName);
+                            v = cursor.getString(index);
+                            value = TransferUtil.string2SimpleObject(field, v);
                             setMethod.invoke(o, value);
                         }
                     }
@@ -303,63 +309,23 @@ public final class CursorUtil<T> {
         try {
             list = new ArrayList<>();
             List<Field> fields = ReflectUtil.getIterationFields(clazz);
+            Field field;
+            String fieldName;
+            Method setMethod;
+            int index;
+            String v;
+            Object value;
             while (cursor.moveToNext()) {
                 o = clazz.newInstance();
                 for (int i = 0; i < fields.size(); i++) {
-                    Field field = fields.get(i);
-                    String fieldName = field.getName();
+                    field = fields.get(i);
+                    fieldName = field.getName();
                     if (field.isAnnotationPresent(Column.class)) {
-                        Method setMethod = ReflectUtil.setMethod(clazz, field);
+                        setMethod = ReflectUtil.setMethod(clazz, field);
                         if (null != setMethod) {
-                            int index = cursor.getColumnIndex(fieldName);
-                            String v = cursor.getString(index);
-                            Object value = TransferUtil.string2SimpleObject(field, v);
-                            setMethod.invoke(o, value);
-                        }
-                    }
-                }
-                list.add(o);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            list = null;
-        } finally {
-            cursor.close();
-            cursor = null;
-        }
-        return list;
-    }
-
-    /**
-     * @param clazz
-     * @param cursor
-     * @return
-     */
-    public static Object cursor2ListV2(Class<?> clazz, Cursor cursor, boolean idDbColumn) {
-        Object o = null;
-        List<Object> list = null;
-        try {
-            list = new ArrayList<>();
-            List<Field> fields = ReflectUtil.getIterationFields(clazz);
-            while (cursor.moveToNext()) {
-                o = clazz.newInstance();
-                for (int i = 0; i < fields.size(); i++) {
-                    Field field = fields.get(i);
-                    String fieldName;
-                    if (idDbColumn) {
-                        fieldName = ReflectUtil.getColumnName(field);
-                    } else {
-                        fieldName = field.getName();
-                    }
-                    if (field.isAnnotationPresent(Column.class)) {
-                        Method setMethod = ReflectUtil.setMethod(clazz, field);
-                        if (null != setMethod) {
-                            int index = cursor.getColumnIndex(fieldName);
-                            if (index == -1) {
-                                continue;
-                            }
-                            String v = cursor.getString(index);
-                            Object value = TransferUtil.string2SimpleObject(field, v);
+                            index = cursor.getColumnIndex(fieldName);
+                            v = cursor.getString(index);
+                            value = TransferUtil.string2SimpleObject(field, v);
                             setMethod.invoke(o, value);
                         }
                     }
@@ -387,11 +353,16 @@ public final class CursorUtil<T> {
         try {
             list = new ArrayList<>();
             List<Field> fields = ReflectUtil.getIterationFields(clazz);
+            Field field;
+            String fieldName;
+            Method setMethod;
+            int index;
+            String v;
+            Object value;
             while (cursor.moveToNext()) {
                 o = clazz.newInstance();
                 for (int i = 0; i < fields.size(); i++) {
-                    Field field = fields.get(i);
-                    String fieldName;
+                    field = fields.get(i);
                     if (field.isAnnotationPresent(Column.class)) {
                         if (idDbColumn) {
                             fieldName = ReflectUtil.getColumnName(field);
@@ -399,14 +370,12 @@ public final class CursorUtil<T> {
                             fieldName = field.getName();
                         }
 
-                        Method setMethod = ReflectUtil.setMethod(clazz, field);
+                        setMethod = ReflectUtil.setMethod(clazz, field);
                         if (null != setMethod) {
-                            int index = cursor.getColumnIndex(fieldName);
-                            if (index == -1) {
-                                continue;
-                            }
-                            String v = cursor.getString(index);
-                            Object value = TransferUtil.string2SimpleObject(field, v);
+                            index = cursor.getColumnIndex(fieldName);
+                            if (index == -1) continue;
+                            v = cursor.getString(index);
+                            value = TransferUtil.string2SimpleObject(field, v);
                             setMethod.invoke(o, value);
                         }
                     }

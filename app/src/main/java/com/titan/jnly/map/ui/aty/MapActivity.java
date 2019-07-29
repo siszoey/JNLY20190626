@@ -17,6 +17,7 @@ import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
 import com.lib.bandaid.permission.RxPermissionFactory;
@@ -40,6 +41,9 @@ import com.titan.jnly.map.ui.tools.ToolQuery;
 import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
 import com.titan.jnly.system.version.bugly.BuglySetting;
+import com.titan.jnly.vector.bean.TreeMode;
+
+import java.util.List;
 
 public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady, PositionUtil.ILocStatus {
 
@@ -111,7 +115,6 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
 
     @Override
     protected void initClass() {
-
     }
 
 

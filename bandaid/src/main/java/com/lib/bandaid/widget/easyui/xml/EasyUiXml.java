@@ -82,11 +82,19 @@ public class EasyUiXml implements Serializable {
         Map<String, Object> res = new HashMap<>();
         Object val;
         for (UiXml ui : uiXml) {
-            //val = ui.getViewLabel();
             val = ui.getViewCode();
             if (val == null) continue;
             res.put(ui.getCode(), val);
         }
         return res;
+    }
+
+    public boolean verifyForm() {
+        if (uiXml == null) return false;
+        boolean verify = true;
+        for (UiXml ui : uiXml) {
+            if (!ui.verify()) verify = false;
+        }
+        return verify;
     }
 }

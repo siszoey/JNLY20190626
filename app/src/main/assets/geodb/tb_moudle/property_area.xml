@@ -7,7 +7,7 @@
             <alias>OBJECTID</alias>
             <code>OBJECTID</code>
             <dataType class="java-class">java.lang.Long</dataType>
-            <readOnly>true</readOnly>
+            <readonly>true</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
@@ -86,49 +86,49 @@
                     <value>南山区</value>
                 </ItemXml>
             </itemXml>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>乡镇（街道）</alias>
             <code>XIANG</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>调查顺序号</alias>
             <code>DCXH</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>主要树种</alias>
             <code>ZYSZ</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>四周界限</alias>
             <code>SZJX</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>古树株数</alias>
             <code>GSZS</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>林分平均高度/m</alias>
             <code>LFPJG</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
@@ -137,175 +137,175 @@
             </alias>
             <code>LFPJXW</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>特征代码</alias>
             <code>TZDM</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>平均树龄</alias>
             <code>PJSL</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>郁闭度</alias>
             <code>YBD</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>海拔/m</alias>
             <code>HAIBA</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>坡度</alias>
             <code>PODU</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>坡向</alias>
             <code>POXIANG</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>土壤类型</alias>
             <code>TRLX</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>土壤厚度/cm</alias>
             <code>TRHD</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>下木种类</alias>
             <code>XMZL</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>下木密度</alias>
             <code>XMMD</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>地被物种类</alias>
             <code>DBWZL</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>地被物密度</alias>
             <code>DBWMD</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>管护现状</alias>
             <code>GHXZ</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>人为经营活动情况</alias>
             <code>RWJJHDQK</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>管护单位</alias>
             <code>GHDW</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>科</alias>
             <code>KE</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>属</alias>
             <code>SHU</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>种</alias>
             <code>ZHONG</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>保护建议</alias>
             <code>BHJY</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>调查人</alias>
             <code>DCR</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>调查日期</alias>
             <code>DCRQ</code>
             <dataType class="java-class">java.util.GregorianCalendar</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>审核人</alias>
             <code>SHR</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>审核日期</alias>
             <code>SHRQ</code>
             <dataType class="java-class">java.util.GregorianCalendar</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
         <UiXml>
             <alias>备注</alias>
             <code>REMARK</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readOnly>false</readOnly>
+            <readonly>false</readonly>
             <status>single</status>
         </UiXml>
     </uiXml>

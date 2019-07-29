@@ -142,7 +142,17 @@ public final class EasyUtil {
         if (list == null) return null;
         for (UiXml uiXml : list) {
             if (uiXml == null) continue;
-            if(uiXml.getCode().equals(key))return uiXml;
+            if (uiXml.getCode().equals(key)) return uiXml;
+        }
+        return null;
+    }
+
+    public static UiXml findUiXmlByAlias(EasyUiXml easyUiXml, String alias) {
+        List<UiXml> list = easyUiXml.getUiXml();
+        if (list == null) return null;
+        for (UiXml uiXml : list) {
+            if (uiXml == null) continue;
+            if (uiXml.getAlias().equals(alias)) return uiXml;
         }
         return null;
     }

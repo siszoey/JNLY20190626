@@ -1,26 +1,27 @@
 package com.lib.bandaid.widget.easyui.xml;
 
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lib.bandaid.data.local.sqlite.utils.ReflectUtil;
-import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.enums.UiType;
 import com.lib.bandaid.widget.easyui.ui.EventImageView;
+import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
+import com.lib.bandaid.widget.easyui.utils.RegexUtil;
+import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
+import com.lib.bandaid.widget.text.SimpleTextWatch;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -37,9 +38,7 @@ public class UiXml implements Serializable {
 
     @XStreamAlias("alias")
     private String alias;
-    /**
-     * ui名称
-     */
+
     @XStreamAlias("value")
     private Object value;
     /**
@@ -62,8 +61,14 @@ public class UiXml implements Serializable {
     @XStreamAlias("status")
     private Status status = Status.single;
 
-    @XStreamAlias("readOnly")
-    private Boolean readOnly = false;
+    @XStreamAlias("readonly")
+    private Boolean readonly = false;
+
+    @XStreamAlias("visible")
+    private Boolean visible = true;
+
+    @XStreamAlias("VerifyXml")
+    private VerifyXml verifyXml;
 
     public String getCode() {
         return code;
@@ -131,12 +136,28 @@ public class UiXml implements Serializable {
         this.status = status;
     }
 
-    public Boolean getReadOnly() {
-        return readOnly;
+    public Boolean getReadonly() {
+        return readonly == null ? false : readonly;
     }
 
-    public void setReadOnly(Boolean readOnly) {
-        this.readOnly = readOnly;
+    public void setReadonly(Boolean readonly) {
+        this.readonly = readonly;
+    }
+
+    public Boolean getVisible() {
+        return visible == null ? true : visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+
+    public VerifyXml getVerifyXml() {
+        return verifyXml;
+    }
+
+    public void setVerifyXml(VerifyXml verifyXml) {
+        this.verifyXml = verifyXml;
     }
 
     @XStreamOmitField
@@ -150,16 +171,17 @@ public class UiXml implements Serializable {
         this.view = view;
     }
 
+
     /**
-     * 获取控件绑定的值
+     * 获取控件绑定的Label
      *
      * @return
      */
     public Object getViewLabel() {
         if (view == null) return null;
         String label = null;
-        if (view instanceof TextView) {
-            label = ((TextView) view).getText().toString();
+        if (view instanceof ComplexTextView) {
+            label = ((ComplexTextView) view).getText();
         }
         if (view instanceof ImageView) {
             label = ((EventImageView) view).getUuid();
@@ -177,8 +199,8 @@ public class UiXml implements Serializable {
     public Object getViewCode() {
         if (view == null) return null;
         String label = null;
-        if (view instanceof TextView) {
-            label = ((TextView) view).getText().toString();
+        if (view instanceof ComplexTextView) {
+            label = ((ComplexTextView) view).getText().toString();
         }
         if (view instanceof ImageView) {
             label = ((EventImageView) view).getUuid();
@@ -191,6 +213,18 @@ public class UiXml implements Serializable {
             setValue(convertRunTimeObj(label));
             return getValue();
         }
+    }
+
+    public boolean verify() {
+        if (verifyXml == null) return true;
+        String regex = verifyXml.getRegex();
+        getViewLabel();
+        String text = value == null ? "" : value.toString();
+        boolean verify = RegexUtil.match(regex, text);
+        if (!verify && view instanceof ComplexTextView) {
+            ((ComplexTextView) view).setError(verifyXml.getMsg());
+        }
+        return verify;
     }
 
     public Object getDisPlay() {

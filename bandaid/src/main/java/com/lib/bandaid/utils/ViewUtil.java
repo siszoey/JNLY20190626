@@ -13,6 +13,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 
 import com.lib.bandaid.R;
+import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 
 /**
  * Created by zy on 2018/1/8.
@@ -54,6 +55,11 @@ public class ViewUtil {
             Drawable drawable = context.getResources().getDrawable(id);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             ((TextView) view).setCompoundDrawables(null, null, drawable, null);
+        }
+        if (view instanceof ComplexTextView) {
+            Drawable drawable = context.getResources().getDrawable(id);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            (((ComplexTextView) view).getEditText()).setCompoundDrawables(null, null, drawable, null);
         }
         return (T) view;
     }

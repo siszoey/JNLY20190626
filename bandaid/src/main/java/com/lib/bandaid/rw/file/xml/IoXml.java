@@ -62,6 +62,7 @@ public final class IoXml {
             T tt = (T) xStream.fromXML(xml);
             return tt;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

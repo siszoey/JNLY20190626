@@ -7,6 +7,7 @@ import com.lib.bandaid.data.local.sqlite.config.DbConfig;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.lib.bandaid.service.bean.Loc;
 import com.titan.jnly.Config;
+import com.titan.jnly.vector.bean.TreeMode;
 
 
 /**
@@ -37,10 +38,7 @@ public class DbVersion extends DbConfig {
         if (db.getPath().equals(privateDbPath())) {
 
         } else if (db.getPath().equals(defaultDbPath())) {
-            String sql = SqlBuilder.getDropSql(Loc.class);
-            db.execSQL(sql);
-
-            sql = SqlBuilder.getTableBuildingSQL(Loc.class);
+            String sql = SqlBuilder.getTableBuildingSQL(Loc.class);
             db.execSQL(sql);
         }
     }
@@ -62,7 +60,7 @@ public class DbVersion extends DbConfig {
 
     @Override
     public int defaultVersion() {
-        return 5;
+        return 1;
     }
 
     @Override

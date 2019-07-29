@@ -370,7 +370,6 @@ public class MvcDao<T> extends Status<T> implements IMvcDao<T> {
         } catch (Exception e) {
             list = null;
             e.printStackTrace();
-            ;
         } finally {
             SessionFactory.close(null, cursor);
         }
@@ -387,7 +386,6 @@ public class MvcDao<T> extends Status<T> implements IMvcDao<T> {
         } catch (Exception e) {
             list = null;
             e.printStackTrace();
-            ;
         } finally {
             SessionFactory.close(null, cursor);
         }
@@ -421,7 +419,6 @@ public class MvcDao<T> extends Status<T> implements IMvcDao<T> {
         } catch (Exception e) {
             t = null;
             e.printStackTrace();
-            ;
         } finally {
             SessionFactory.close(null, cursor);
         }
