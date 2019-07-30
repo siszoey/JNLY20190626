@@ -16,14 +16,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
@@ -41,8 +42,8 @@ import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
-import com.titan.jnly.vector.util.TreeModeUtil;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -115,12 +116,6 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                     List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
                     data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
                 }
-                if (uiXml.getCode().equals("CUN")) {
-                    Object val = county.getViewCode();
-                    String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
                 return data;
             }
         });
@@ -131,6 +126,12 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         tools = new SketchEditorTools(ArcMap.arcMap);
         feature = data.getData();
         feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
+
+
+       /* EasyUiXml temp = Resolution.convert2EasyUiXml(feaTable.getFields());
+        IoXml.saveOrUpDate(temp, Config.APP_PATH.concat(File.separator).concat("area.xml"));*/
+
+
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
         easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, feature.getAttributes());
         propertyView.setListener(new ILifeCycle() {
@@ -161,6 +162,7 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
             }
             Map map = propertyView.getForm();
             map.remove("OBJECTID");
+            map.putAll(DataStatus.createEdit());
             feature.getAttributes().putAll(map);
             tools.updateFeature(feaTable, feature, new SketchEditorTools.ICallBack() {
                 @Override
@@ -236,18 +238,10 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
 
         ComplexTextView city = propertyView.getViewByKey("XIAN");
         ComplexTextView county = propertyView.getViewByKey("XIANG");
-        ComplexTextView village = propertyView.getViewByKey("CUN");
         WidgetUtil.setViewTextChangeLister(city, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String name) {
                 county.setText("");
-            }
-        });
-
-        WidgetUtil.setViewTextChangeLister(county, new WidgetUtil.IChangeLister() {
-            @Override
-            public void changeLister(String name) {
-                village.setText("");
             }
         });
     }

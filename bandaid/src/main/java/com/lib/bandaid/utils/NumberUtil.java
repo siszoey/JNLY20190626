@@ -12,6 +12,7 @@ import java.text.DecimalFormat;
 public final class NumberUtil {
 
     private NumberUtil() {
+
     }
 
     public static boolean isNumber(@NonNull Class<?> clazz) {
@@ -105,6 +106,7 @@ public final class NumberUtil {
         }
         return res;
     }
+
 
     /**
      * 将数据保留两位小数

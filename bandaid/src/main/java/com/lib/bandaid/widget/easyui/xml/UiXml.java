@@ -216,13 +216,6 @@ public class UiXml implements Serializable {
         return getValue();
     }
 
-   /* public void reset() {
-        if (view instanceof ComplexTextView) {
-            ((ComplexTextView) view).setText("");
-        }
-        value = null;
-    }*/
-
     /**
      * 获取控件绑定的code（需要映射）或 value
      *
@@ -241,36 +234,20 @@ public class UiXml implements Serializable {
         if (EasyUtil.canConcat(this)) {
             String codes = EasyUtil.label2Codes(this, label);
             setValue(codes);
-            //return codes;
         } else {
             setValue(convertRunTimeObj(label));
         }
         return getValue();
     }
 
-    public Object obtainVal() {
-        if (view == null) return null;
-        String label = null;
-        if (view instanceof ComplexTextView) {
-            label = ((ComplexTextView) view).getText();
-        }
-        if (view instanceof ImageView) {
-            label = ((EventImageView) view).getUuid();
-        }
-        label = StringUtil.removeEmpty(label);
-        if (EasyUtil.canConcat(this)) {
-            String codes = EasyUtil.label2Codes(this, label);
-            return codes;
-        } else {
-            return convertRunTimeObj(label);
-        }
-    }
 
     public boolean verify() {
         if (verifyXml == null) return true;
         String regex = verifyXml.getRegex();
         getViewLabel();
-        String text = value == null ? "" : value.toString();
+        //String text = value == null ? "" : value.toString();
+        String text = StringUtil.removeNull(value);
+        if (verifyXml.getCanNull() && StringUtil.isEmpty(text)) return true;
         boolean verify = RegexUtil.match(regex, text);
         if (!verify && view instanceof ComplexTextView) {
             ((ComplexTextView) view).setError(verifyXml.getMsg());

@@ -35,6 +35,8 @@ import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.ui.aty.MultiEditActivity;
 import com.titan.jnly.vector.ui.aty.SingleEditActivity;
+import com.titan.jnly.vector.util.GisUtils;
+import com.titan.jnly.vector.util.MultiCompute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,8 +165,24 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                             FeatureTable table = layerNode.tryGetFeaTable();
                             if (table == null) return;
                             if (table.getGeometryType() == GeometryType.POLYLINE || table.getGeometryType() == GeometryType.POLYGON) {
-                                tools.addLineToLayer(table, (Polyline) geometry, DataStatus.createAdd());
+
+                                //群调查
+                                Geometry polygon = GisUtils.LineToPolygon((Polyline) geometry, arcMap.getMapView());
+                                MultiCompute.newCrowd(polygon, new MultiCompute.IProperty() {
+                                    @Override
+                                    public void computeProperty(int count, Map property) {
+                                        if (count == 0) {
+                                            ToastUtil.showLong(context, "未能找到单株古树，因此无法构成古树群");
+                                            return;
+                                        }
+                                        property.putAll(DataStatus.createAdd());
+                                        tools.addLineToLayer(table, (Polyline) geometry, property);
+                                    }
+                                });
+
+
                             } else {
+                                //单株调查
                                 tools.addGeometry(table, geometry, DataStatus.createAdd(), "");
                             }
                         }
@@ -237,11 +255,11 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                     if (layerNode == null) return;
                     Feature feature = data.getData();
                     if (feature == null) return;
-                    if(feature.getGeometry().getGeometryType()==GeometryType.POINT) {
+                    if (feature.getGeometry().getGeometryType() == GeometryType.POINT) {
                         SingleEditActivity.data = data;
                         Intent intent = new Intent(context, SingleEditActivity.class);
                         startActivity(intent);
-                    }else {
+                    } else {
                         MultiEditActivity.data = data;
                         Intent intent = new Intent(context, MultiEditActivity.class);
                         startActivity(intent);

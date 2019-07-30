@@ -196,8 +196,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             }
             Map map = propertyView.getForm();
             map.remove("OBJECTID");
+            map.putAll(DataStatus.createEdit());
             feature.getAttributes().putAll(map);
-            feature.getAttributes().putAll(DataStatus.createEdit());
             tools.updateFeature(feaTable, feature, new SketchEditorTools.ICallBack() {
                 @Override
                 public void ok() {

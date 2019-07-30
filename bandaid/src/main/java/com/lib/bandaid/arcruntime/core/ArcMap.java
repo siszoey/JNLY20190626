@@ -281,7 +281,7 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
     @Override
     public void destroyDrawingCache() {
         super.destroyDrawingCache();
-        destroy();
+        //destroy();
     }
 
     public interface IMapReady {

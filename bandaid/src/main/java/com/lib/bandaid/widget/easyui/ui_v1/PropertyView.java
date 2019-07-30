@@ -203,6 +203,7 @@ public class PropertyView extends ScrollView {
                 complexTextView.addTextChangedListener(new SimpleTextWatch(new SimpleTextWatch.IAfter() {
                     @Override
                     public void after(String s) {
+                        if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
                         boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
                         if (verify) complexTextView.setError(null);
                         else complexTextView.setError(verifyXml.getMsg());

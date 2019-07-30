@@ -8,9 +8,7 @@
             <code>OBJECTID</code>
             <dataType class="java-class">java.lang.Long</dataType>
             <readonly>true</readonly>
-            <status>single</status>
         </UiXml>
-
 
         <UiXml>
             <alias>县（市、区）</alias>
@@ -20,6 +18,7 @@
             <status>single</status>
             <itemFrom>other</itemFrom>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -32,23 +31,11 @@
             <status>single</status>
             <itemFrom>other</itemFrom>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
         </UiXml>
-        <UiXml>
-            <alias>村（居委会）</alias>
-            <code>CUN</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <uiType>dialog</uiType>
-            <status>single</status>
-            <itemFrom>other</itemFrom>
-            <VerifyXml>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-
 
         <UiXml>
             <alias>调查顺序号</alias>
@@ -385,6 +372,7 @@
             </itemXml>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -401,6 +389,7 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <readonly>true</readonly>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -411,6 +400,7 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <readonly>true</readonly>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -423,6 +413,7 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <readonly>true</readonly>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -436,9 +427,10 @@
         <UiXml>
             <alias>平均树龄</alias>
             <code>PJSL</code>
-            <dataType class="java-class">java.lang.String</dataType>
+            <dataType class="java-class">java.lang.Double</dataType>
             <readonly>true</readonly>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -446,10 +438,11 @@
         <UiXml>
             <alias>郁闭度</alias>
             <code>YBD</code>
-            <dataType class="java-class">java.lang.String</dataType>
+            <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
+                <canNull>false</canNull>
+                <regex>\b(0(\.\d{1,2})?)|1\b</regex>
+                <msg>0-1之间,最多保留两位小数!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
@@ -457,6 +450,7 @@
             <code>HAIBA</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(([1-9]{1}\d*)|(0{1}))(\.\d{0,14})$</regex>
                 <msg>必须为保留两位有效数字的正数!</msg>
             </VerifyXml>
@@ -464,15 +458,16 @@
         <UiXml>
             <alias>坡度</alias>
             <code>PODU</code>
-            <dataType class="java-class">java.lang.String</dataType>
+            <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>坡向</alias>
-            <code>POXAING</code>
+            <code>POXIANG</code>
             <dataType class="java-class">java.lang.String</dataType>
             <itemXml>
                 <ItemXml>
@@ -523,6 +518,7 @@
             </itemXml>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -565,6 +561,7 @@
             </itemXml>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -572,8 +569,9 @@
         <UiXml>
             <alias>土壤厚度/cm</alias>
             <code>TRHD</code>
-            <dataType class="java-class">java.lang.String</dataType>
+            <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -597,8 +595,6 @@
             <alias>地被物密度</alias>
             <code>DBWMD</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readonly>false</readonly>
-            <status>single</status>
         </UiXml>
         <UiXml>
             <alias>管护现状</alias>
@@ -616,6 +612,7 @@
             </itemXml>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -625,6 +622,7 @@
             <code>RWJJHDQK</code>
             <dataType class="java-class">java.lang.String</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -634,6 +632,7 @@
             <code>GHDW</code>
             <dataType class="java-class">java.lang.String</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -645,6 +644,7 @@
             <readonly>true</readonly>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -656,6 +656,7 @@
             <readonly>true</readonly>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -667,6 +668,7 @@
             <readonly>true</readonly>
             <status>single</status>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -676,6 +678,7 @@
             <code>BHJY</code>
             <dataType class="java-class">java.lang.String</dataType>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>
@@ -684,8 +687,8 @@
             <alias>调查人</alias>
             <code>DCR</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readonly>true</readonly>
             <VerifyXml>
+                <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
             </VerifyXml>

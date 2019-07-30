@@ -124,6 +124,14 @@ public class TocContainer extends BaseContainer {
         return null;
     }
 
+    public LayerNode getLayerNodeByName(String name) {
+        if (layerNodes == null) return null;
+        for (LayerNode node : layerNodes) {
+            if (node.getName().equals(name)) return node;
+        }
+        return null;
+    }
+
     public List<LayerNode> getLeafLayerNodes() {
         if (layerNodes == null) return null;
         List<LayerNode> list = new ArrayList<>();

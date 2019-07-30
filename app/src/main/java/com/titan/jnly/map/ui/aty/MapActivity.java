@@ -1,7 +1,9 @@
 package com.titan.jnly.map.ui.aty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -68,6 +70,25 @@ public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.menu_right_up_load).setVisible(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            toggle();
+            return true;
+        }
+        if (id == R.id.menu_right_up_load) {
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         arcMap.resume();
@@ -83,16 +104,6 @@ public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.
     protected void onDestroy() {
         super.onDestroy();
         arcMap.destroy();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            toggle();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

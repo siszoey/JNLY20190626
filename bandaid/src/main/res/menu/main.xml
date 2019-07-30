@@ -17,6 +17,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_right_up_load"
+        android:icon="@drawable/ic_cloud_upload"
+        android:orderInCategory="100"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_right_task"
         android:icon="@drawable/ic_dashboard"
         android:orderInCategory="100"

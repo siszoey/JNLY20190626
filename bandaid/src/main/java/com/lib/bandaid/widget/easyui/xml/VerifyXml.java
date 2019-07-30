@@ -4,6 +4,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.io.Serializable;
 
+/**
+ * 数据验证
+ */
 @XStreamAlias("VerifyXml")
 public class VerifyXml implements Serializable {
     /**
@@ -11,6 +14,11 @@ public class VerifyXml implements Serializable {
      */
     @XStreamAlias("regex")
     private String regex;
+    /**
+     * 是否允许为null
+     */
+    @XStreamAlias("canNull")
+    private Boolean canNull;
     /**
      * 提示
      */
@@ -24,6 +32,14 @@ public class VerifyXml implements Serializable {
 
     public void setRegex(String regex) {
         this.regex = regex;
+    }
+
+    public Boolean getCanNull() {
+        return canNull == null ? true : canNull;
+    }
+
+    public void setCanNull(Boolean canNull) {
+        this.canNull = canNull;
     }
 
     public String getMsg() {
