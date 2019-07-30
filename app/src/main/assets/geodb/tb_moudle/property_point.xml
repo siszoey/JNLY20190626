@@ -13,84 +13,9 @@
             <alias>县（市、区）</alias>
             <code>XIAN</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370102</code>
-                    <value>历下区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370103</code>
-                    <value>市中区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370104</code>
-                    <value>槐荫区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370105</code>
-                    <value>天桥区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370112</code>
-                    <value>历城区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370113</code>
-                    <value>长清区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370114</code>
-                    <value>章丘区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370115</code>
-                    <value>济阳区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370116</code>
-                    <value>莱芜区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370117</code>
-                    <value>钢城区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370124</code>
-                    <value>平阴县</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370126</code>
-                    <value>商河县</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370171</code>
-                    <value>高新区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370191</code>
-                    <value>南山区</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">370193</code>
-                    <value>先行区</value>
-                </ItemXml>
-            </itemXml>
+            <uiType>dialog</uiType>
             <status>single</status>
+            <itemFrom>other</itemFrom>
             <VerifyXml>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
@@ -100,7 +25,9 @@
             <alias>乡镇(街道)</alias>
             <code>XIANG</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
             <status>single</status>
+            <itemFrom>other</itemFrom>
             <VerifyXml>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
@@ -110,7 +37,9 @@
             <alias>村（居委会）</alias>
             <code>CUN</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
             <status>single</status>
+            <itemFrom>other</itemFrom>
             <VerifyXml>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
@@ -1168,6 +1097,10 @@
             <code>DCR</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
+            <VerifyXml>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>调查日期</alias>

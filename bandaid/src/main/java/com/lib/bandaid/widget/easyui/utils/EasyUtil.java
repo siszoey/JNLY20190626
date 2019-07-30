@@ -23,6 +23,25 @@ public final class EasyUtil {
         return label.toString();
     }
 
+    public static List<Integer> label2Index(List<ItemXml> list, String labels) {
+        if (labels == null) return null;
+        String[] array = labels.split(SPLIT);
+        if (array == null) return null;
+        List<Integer> res = new ArrayList<>();
+        ItemXml value;
+        for (String label : array) {
+            if (label == null) continue;
+            for (int j = 0; j < list.size(); j++) {
+                value = list.get(j);
+                if (value == null) continue;
+                if (label.equals(value.getValue())) {
+                    if (!res.contains(j)) res.add(j);
+                }
+            }
+        }
+        return res;
+    }
+
     public static List<Integer> label2Index(UiXml uiXml, String labels) {
         if (labels == null) return null;
         String[] array = labels.split(SPLIT);

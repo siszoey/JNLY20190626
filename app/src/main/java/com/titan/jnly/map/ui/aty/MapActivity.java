@@ -45,7 +45,7 @@ import com.titan.jnly.vector.bean.TreeMode;
 
 import java.util.List;
 
-public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapReady, PositionUtil.ILocStatus {
+public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.ILocStatus {
 
 
     CustomDrawerLayout drawerLayout;
@@ -117,10 +117,6 @@ public class MapActivity extends BaseAppCompatActivity implements ArcMap.IMapRea
     protected void initClass() {
     }
 
-
-    @Override
-    public void onMapReady() {
-    }
 
     public void toggle() {
         drawerLayout.toggle();

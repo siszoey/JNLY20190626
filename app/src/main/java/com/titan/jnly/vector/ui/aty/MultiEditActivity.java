@@ -1,5 +1,6 @@
 package com.titan.jnly.vector.ui.aty;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -19,18 +20,30 @@ import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
+import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.NumberUtil;
+import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.utils.SimpleMap;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
-import com.lib.bandaid.widget.easyui.ui.PropertyEditView;
+import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
+import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
+import com.lib.bandaid.widget.easyui.xml.ItemXml;
+import com.lib.bandaid.widget.easyui.xml.UiXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
+import com.titan.jnly.vector.bean.District;
+import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
+import com.titan.jnly.vector.util.TreeModeUtil;
 
+import java.util.List;
 import java.util.Map;
 
 public class MultiEditActivity extends BaseAppCompatActivity implements View.OnClickListener {
@@ -65,13 +78,13 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
     protected void registerEvent() {
         btnExit.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
-        propertyView.setImgAdapter(new PropertyEditView.ImgAdapter() {
+        propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
             public String adapter(Object val) {
                 return null;
             }
         });
-        propertyView.setInputFace(new PropertyEditView.InputFace() {
+        propertyView.setInputFace(new PropertyView.InputFace() {
             @Override
             public void input(View v) {
                 if (v instanceof EditText) {
@@ -80,6 +93,35 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                 if (v instanceof ImageView) {
                     PhotoActivity.start(_context, false, Config.APP_PHOTO_PATH, true, true, null);
                 }
+            }
+        });
+
+        propertyView.setListAdapter(new PropertyView.ListAdapter() {
+
+            @Override
+            public List<ItemXml> listAdapter(UiXml uiXml) {
+                List<ItemXml> data = null;
+                UiXml city = propertyView.getUiXmlByKey("XIAN");
+                UiXml county = propertyView.getUiXmlByKey("XIANG");
+                Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
+                if (uiXml.getCode().equals("XIAN")) {
+                    String where = " where length(f_code) = 6";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                if (uiXml.getCode().equals("XIANG")) {
+                    Object val = city.getViewCode();
+                    String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                if (uiXml.getCode().equals("CUN")) {
+                    Object val = county.getViewCode();
+                    String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                return data;
             }
         });
     }
@@ -94,12 +136,12 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         propertyView.setListener(new ILifeCycle() {
             @Override
             public void beforeCreate() {
-                //initDefaultData(easyUiXml);
+                initDefaultData(easyUiXml);
             }
 
             @Override
             public void afterCreate() {
-                //dealInnerLogic();
+                dealInnerLogic();
             }
         }).resolutionData(easyUiXml);
     }
@@ -151,4 +193,77 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                     }
                 }).show();
     }
+
+
+    private void initDefaultData(EasyUiXml easyUiXml) {
+        Location location = Constant.location;
+        UiXml dcrq = easyUiXml.getUiXml("DCRQ");
+        UiXml dcr = easyUiXml.getUiXml("DCR");
+        if (DataStatus.isAdd(feature)) {
+            dcrq.setValue(DateUtil.getCurrentCalendar());
+            dcr.setValue(Constant.getUser().getName());
+            //设置经度纬度海拔
+            if (location != null) {
+                UiXml alt = easyUiXml.getUiXml("HAIBA");
+                if (alt != null) alt.setValue(location.getAltitude());
+            }
+        }
+    }
+
+    /**
+     * 处理内部逻辑
+     */
+    private void dealInnerLogic() {
+        //中文名
+        ComplexTextView name = propertyView.getViewByKey("ZYSZ");
+
+        //主要树种就是要保护的
+        ComplexTextView ke = propertyView.getViewByKey("KE");
+        ComplexTextView shu = propertyView.getViewByKey("SHU");
+        ComplexTextView zhong = propertyView.getViewByKey("ZHONG");
+
+        WidgetUtil.setViewTextChangeLister(name, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String text) {
+                String[] info = getBiologyInfo(text);
+                if (info == null || info.length < 4) return;
+                zhong.setText(info[0]);
+                ke.setText(info[1]);
+                shu.setText(info[2]);
+            }
+        });
+
+
+        ComplexTextView city = propertyView.getViewByKey("XIAN");
+        ComplexTextView county = propertyView.getViewByKey("XIANG");
+        ComplexTextView village = propertyView.getViewByKey("CUN");
+        WidgetUtil.setViewTextChangeLister(city, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String name) {
+                county.setText("");
+            }
+        });
+
+        WidgetUtil.setViewTextChangeLister(county, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String name) {
+                village.setText("");
+            }
+        });
+    }
+
+    private String[] getBiologyInfo(String name) {
+        String[] biology = getResources().getStringArray(R.array.array_biology_string);
+        if (biology == null) return null;
+        String[] info;
+        for (String flag : biology) {
+            if (flag == null) continue;
+            if (flag.startsWith(name)) {
+                info = flag.split("\\|");
+                return info;
+            }
+        }
+        return null;
+    }
+
 }

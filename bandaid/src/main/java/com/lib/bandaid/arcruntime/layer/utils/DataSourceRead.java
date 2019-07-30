@@ -29,9 +29,6 @@ public final class DataSourceRead {
             public void run() {
                 for (GeodatabaseFeatureTable gdbFeatureTable : geodatabase.getGeodatabaseFeatureTables()) {
                     Layer layer = new FeatureLayer(gdbFeatureTable);
-                    if (gdbFeatureTable.getGeometryType() == GeometryType.POLYGON) {
-                        setRender((FeatureLayer) layer);
-                    }
                     layer.setDescription(path);
                     list.add(layer);
                 }

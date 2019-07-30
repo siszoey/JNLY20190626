@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.widget.easyui.enums.ItemFrom;
 import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.enums.UiType;
 import com.lib.bandaid.widget.easyui.ui.EventImageView;
@@ -55,6 +56,9 @@ public class UiXml implements Serializable {
 
     @XStreamAlias("itemXml")
     private List<ItemXml> itemXml;
+
+    @XStreamAlias("itemFrom")
+    private ItemFrom itemFrom = ItemFrom.xml;
     /**
      * 选择项单选还是多选
      */
@@ -94,6 +98,19 @@ public class UiXml implements Serializable {
         this.value = value;
     }
 
+    public void setLabel(String label) {
+        if (view instanceof ComplexTextView) {
+            ((ComplexTextView) view).setText(label);
+        }
+        label = StringUtil.removeEmpty(label);
+        if (EasyUtil.canConcat(this)) {
+            String codes = EasyUtil.label2Codes(this, label);
+            setValue(codes);
+        } else {
+            setValue(convertRunTimeObj(label));
+        }
+    }
+
     public UiType getUiType() {
         return uiType;
     }
@@ -126,6 +143,14 @@ public class UiXml implements Serializable {
     public void addItemXml(List<ItemXml> itemXml) {
         if (this.itemXml == null) this.itemXml = new ArrayList<>();
         this.itemXml.addAll(itemXml);
+    }
+
+    public ItemFrom getItemFrom() {
+        return itemFrom == null ? ItemFrom.xml : itemFrom;
+    }
+
+    public void setItemFrom(ItemFrom itemFrom) {
+        this.itemFrom = itemFrom;
     }
 
     public Status getStatus() {
@@ -191,6 +216,13 @@ public class UiXml implements Serializable {
         return getValue();
     }
 
+   /* public void reset() {
+        if (view instanceof ComplexTextView) {
+            ((ComplexTextView) view).setText("");
+        }
+        value = null;
+    }*/
+
     /**
      * 获取控件绑定的code（需要映射）或 value
      *
@@ -200,7 +232,27 @@ public class UiXml implements Serializable {
         if (view == null) return null;
         String label = null;
         if (view instanceof ComplexTextView) {
-            label = ((ComplexTextView) view).getText().toString();
+            label = ((ComplexTextView) view).getText();
+        }
+        if (view instanceof ImageView) {
+            label = ((EventImageView) view).getUuid();
+        }
+        label = StringUtil.removeEmpty(label);
+        if (EasyUtil.canConcat(this)) {
+            String codes = EasyUtil.label2Codes(this, label);
+            setValue(codes);
+            //return codes;
+        } else {
+            setValue(convertRunTimeObj(label));
+        }
+        return getValue();
+    }
+
+    public Object obtainVal() {
+        if (view == null) return null;
+        String label = null;
+        if (view instanceof ComplexTextView) {
+            label = ((ComplexTextView) view).getText();
         }
         if (view instanceof ImageView) {
             label = ((EventImageView) view).getUuid();
@@ -210,8 +262,7 @@ public class UiXml implements Serializable {
             String codes = EasyUtil.label2Codes(this, label);
             return codes;
         } else {
-            setValue(convertRunTimeObj(label));
-            return getValue();
+            return convertRunTimeObj(label);
         }
     }
 

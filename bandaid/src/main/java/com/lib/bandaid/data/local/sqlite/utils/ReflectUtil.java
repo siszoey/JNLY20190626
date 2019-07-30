@@ -336,10 +336,12 @@ public final class ReflectUtil {
     public static Field getFileByAliasName(Class clazz, String aliasName) {
         try {
             Field[] fields = clazz.getDeclaredFields();
+            Field field;
+            String _aliasName;
             for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
+                field = fields[i];
                 if (field.isAnnotationPresent(Column.class)) {
-                    String _aliasName = getColumnAlias(field);
+                    _aliasName = getColumnAlias(field);
                     if (_aliasName.equals(aliasName)) {
                         return field;
                     }
@@ -354,10 +356,12 @@ public final class ReflectUtil {
     public static Field getFileByColumnName(Class clazz, String columnName) {
         try {
             Field[] fields = clazz.getDeclaredFields();
+            Field field;
+            String _columnName;
             for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
+                field = fields[i];
                 if (field.isAnnotationPresent(Column.class)) {
-                    String _columnName = getColumnName(field);
+                    _columnName = getColumnName(field);
                     if (_columnName.equals(columnName)) {
                         return field;
                     }

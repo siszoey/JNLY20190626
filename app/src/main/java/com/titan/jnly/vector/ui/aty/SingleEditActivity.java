@@ -22,10 +22,12 @@ import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.utils.SimpleMap;
 import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.widget.easyui.ui.PropertyEditView;
@@ -36,14 +38,18 @@ import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
 import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
+import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
+import com.titan.jnly.login.bean.User;
 import com.titan.jnly.system.Constant;
+import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.util.TreeModeUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,13 +87,15 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     protected void registerEvent() {
         btnExit.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
-        propertyView.setImgAdapter(new PropertyEditView.ImgAdapter() {
+
+
+        propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
             public String adapter(Object val) {
                 return null;
             }
         });
-        propertyView.setInputFace(new PropertyEditView.InputFace() {
+        propertyView.setInputFace(new PropertyView.InputFace() {
             @Override
             public void input(View v) {
                 if (v instanceof EditText) {
@@ -98,11 +106,46 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 }
             }
         });
+
+
+        propertyView.setListAdapter(new PropertyView.ListAdapter() {
+
+            @Override
+            public List<ItemXml> listAdapter(UiXml uiXml) {
+                List<ItemXml> data = null;
+                UiXml city = propertyView.getUiXmlByKey("XIAN");
+                UiXml county = propertyView.getUiXmlByKey("XIANG");
+                Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
+                if (uiXml.getCode().equals("XIAN")) {
+                    String where = " where length(f_code) = 6";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                if (uiXml.getCode().equals("XIANG")) {
+                    Object val = city.getViewCode();
+                    String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                if (uiXml.getCode().equals("CUN")) {
+                    Object val = county.getViewCode();
+                    String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
+                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+                }
+                return data;
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tools = new SketchEditorTools(ArcMap.arcMap);
     }
 
     @Override
     protected void initClass() {
-        tools = new SketchEditorTools(ArcMap.arcMap);
         feature = data.getData();
         feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
@@ -123,8 +166,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private void initDefaultData(EasyUiXml easyUiXml) {
         Location location = Constant.location;
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
+        UiXml dcr = easyUiXml.getUiXml("DCR");
         if (DataStatus.isAdd(feature)) {
-            if (dcrq != null) dcrq.setValue(DateUtil.getCurrentCalendar());
+            dcrq.setValue(DateUtil.getCurrentCalendar());
+            dcr.setValue(Constant.getUser().getName());
             //设置经度纬度海拔
             if (location != null) {
                 UiXml lon = easyUiXml.getUiXml("LON");
@@ -213,12 +258,28 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             }
         });
 
+        ComplexTextView city = propertyView.getViewByKey("XIAN");
+        ComplexTextView county = propertyView.getViewByKey("XIANG");
+        ComplexTextView village = propertyView.getViewByKey("CUN");
+        WidgetUtil.setViewTextChangeLister(city, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String name) {
+                county.setText("");
+            }
+        });
+
+        WidgetUtil.setViewTextChangeLister(county, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String name) {
+                village.setText("");
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (easyUiXml != null) easyUiXml.release();
+        super.onDestroy();
     }
 
     private String[] getBiologyInfo(String name) {

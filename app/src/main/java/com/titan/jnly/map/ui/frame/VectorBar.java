@@ -33,6 +33,7 @@ import com.titan.jnly.map.ui.dialog.LayerDialog;
 import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
+import com.titan.jnly.vector.ui.aty.MultiEditActivity;
 import com.titan.jnly.vector.ui.aty.SingleEditActivity;
 
 import java.util.ArrayList;
@@ -236,9 +237,15 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                     if (layerNode == null) return;
                     Feature feature = data.getData();
                     if (feature == null) return;
-                    SingleEditActivity.data = data;
-                    Intent intent = new Intent(context, SingleEditActivity.class);
-                    startActivity(intent);
+                    if(feature.getGeometry().getGeometryType()==GeometryType.POINT) {
+                        SingleEditActivity.data = data;
+                        Intent intent = new Intent(context, SingleEditActivity.class);
+                        startActivity(intent);
+                    }else {
+                        MultiEditActivity.data = data;
+                        Intent intent = new Intent(context, MultiEditActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }).show(context);
         }

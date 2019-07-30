@@ -1,17 +1,11 @@
 package com.lib.bandaid.widget.easyui.ui_v1;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -20,12 +14,11 @@ import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.ImgUtil;
 import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.utils.StringUtil;
-import com.lib.bandaid.utils.ViewTreeUtil;
 import com.lib.bandaid.utils.ViewUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
+import com.lib.bandaid.widget.easyui.enums.ItemFrom;
 import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.ui.EventImageView;
-import com.lib.bandaid.widget.easyui.ui.PropertyEditView;
 import com.lib.bandaid.widget.easyui.ui.SimpleDialog;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
 import com.lib.bandaid.widget.easyui.utils.RegexUtil;
@@ -145,12 +138,20 @@ public class PropertyView extends ScrollView {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ItemXml> list = uiXml.getItemXml();
-                List<Integer> sel = EasyUtil.label2Index(uiXml, view.getText().toString());
+                List<ItemXml> list;
+                if (uiXml.getItemFrom() == ItemFrom.xml) {
+                    list = uiXml.getItemXml();
+                } else {
+                    if (listAdapter != null) uiXml.setItemXml(listAdapter.listAdapter(uiXml));
+                    list = uiXml.getItemXml();
+                }
+                if (list == null) return;
+                List<Integer> sel = EasyUtil.label2Index(uiXml, view.getText());
                 SimpleDialog.newInstance(list, sel, uiXml.getStatus() == Status.multi, new BaseDialogFrg.ICallBack<List<ItemXml>>() {
                     @Override
                     public void callback(List<ItemXml> values) {
-                        view.setText(EasyUtil.list2Label(values));
+                        //view.setText(EasyUtil.list2Label(values));
+                        uiXml.setLabel(EasyUtil.list2Label(values));
                     }
                 }).show(context);
             }
@@ -229,27 +230,6 @@ public class PropertyView extends ScrollView {
         }
     }
 
-
-    private PropertyEditView.InputFace inputFace;
-
-    public interface InputFace {
-        public void input(View view);
-    }
-
-    private PropertyEditView.ImgAdapter imgAdapter;
-
-    public interface ImgAdapter {
-        public String adapter(Object val);
-    }
-
-    public void setInputFace(PropertyEditView.InputFace inputFace) {
-        this.inputFace = inputFace;
-    }
-
-    public void setImgAdapter(PropertyEditView.ImgAdapter imgAdapter) {
-        this.imgAdapter = imgAdapter;
-    }
-
     public boolean verifyForm() {
         return entity.verifyForm();
     }
@@ -262,6 +242,36 @@ public class PropertyView extends ScrollView {
     public Map getForm() {
         Map<String, Object> map = entity.getFormMap();
         return map;
+    }
+
+
+    private InputFace inputFace;
+    private ImgAdapter imgAdapter;
+    private ListAdapter listAdapter;
+
+    public interface InputFace {
+        public void input(View view);
+    }
+
+
+    public interface ImgAdapter {
+        public String adapter(Object val);
+    }
+
+    public interface ListAdapter {
+        public List<ItemXml> listAdapter(UiXml uiXml);
+    }
+
+    public void setInputFace(InputFace inputFace) {
+        this.inputFace = inputFace;
+    }
+
+    public void setImgAdapter(ImgAdapter imgAdapter) {
+        this.imgAdapter = imgAdapter;
+    }
+
+    public void setListAdapter(ListAdapter listAdapter) {
+        this.listAdapter = listAdapter;
     }
 
     //----------------------------------------------------------------------------------------------

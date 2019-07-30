@@ -1,11 +1,17 @@
 package com.titan.jnly.map.ui.frame;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.LinearLayout;
 
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
+import com.esri.arcgisruntime.mapping.LayerList;
+import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
+import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
+import com.esri.arcgisruntime.symbology.SimpleRenderer;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
@@ -73,8 +79,21 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         arcMap.mapLoad(new ArcMap.IMapReady() {
             @Override
             public void onMapReady() {
+                LayerList list = arcMap.getMapView().getMap().getOperationalLayers();
+                for (Layer layer : list) {
+                    String name = layer.getName();
+                    if (name.equals("古树群调查表")) {
+                        setRender((FeatureLayer) layer);
+                    }
+                }
             }
         });
+    }
+
+    public static void setRender(FeatureLayer layer) {
+        SimpleLineSymbol simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.RED, 2);
+        SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.TRANSPARENT, simpleLineSymbol);
+        layer.setRenderer(new SimpleRenderer(simpleFillSymbol));
     }
 
     @Override

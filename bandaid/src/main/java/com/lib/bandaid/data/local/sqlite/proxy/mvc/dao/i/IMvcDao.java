@@ -211,18 +211,18 @@ public interface IMvcDao<T> {
     /**
      * @param clazz
      * @param sql
-     * @param isDbColumn
+     * @param _2DbColumn
      * @return
      */
-    public List<T> getListTBySql(Class<?> clazz, String sql, boolean isDbColumn);
+    public List<T> getListTBySql(Class<?> clazz, String sql, boolean _2DbColumn);
 
     /**
      * @param clazz
      * @param sql
-     * @param isDbColumn
+     * @param _2DbColumn
      * @return
      */
-    public T getTBySql(Class<?> clazz, String sql, boolean isDbColumn);
+    public T getTBySql(Class<?> clazz, String sql, boolean _2DbColumn);
 
     public T getTBySql(Class<?> clazz, String sql);
 }

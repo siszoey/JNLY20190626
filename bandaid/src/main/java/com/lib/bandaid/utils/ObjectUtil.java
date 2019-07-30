@@ -15,9 +15,11 @@ import com.lib.bandaid.data.local.sqlite.utils.DateUtil;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,7 +129,6 @@ public final class ObjectUtil {
         return false;
     }
 
-
     public static boolean objFieldsIsEqual(Object o1, Object o2, Map<String, String> fields) {
         boolean isEqual = false;
         Object v1, v2;
@@ -180,6 +181,39 @@ public final class ObjectUtil {
         return 0;
     }
 
+    public static Object copyFields(Object src, Object trg, Map<String, String> fields) {
+        if (src == null || trg == null) return trg;
+        if (fields == null || fields.size() == 0) return trg;
+        Map<String, Object> property = new HashMap<>();
+        Object o;
+        for (String field : fields.keySet()) {
+            o = ReflectUtil.getFieldValue(src, field);
+            property.put(fields.get(field), o);
+        }
+        ReflectUtil.setFieldValues(trg, property);
+        return trg;
+    }
+
+    public static <T> List<T> createListTFromList(List list, Class clazz, Map<String, String> fields) {
+        if (list == null) return null;
+        if (list.size() == 0) return new ArrayList<>();
+        Object src;
+        Object trg;
+        List<T> res = new ArrayList<>();
+        try {
+            for (int i = 0, len = list.size(); i < len; i++) {
+                src = list.get(i);
+                if (src == null) continue;
+                trg = clazz.newInstance();
+                trg = copyFields(src, trg, fields);
+                res.add((T) trg);
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static boolean isNumber(@NonNull Class<?> clazz) {
         if (clazz == Double.class || clazz == double.class) {
