@@ -247,6 +247,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                                     FeatureTable feaTable = layerNode.tryGetFeaTable();
                                     Feature feature = data.getData();
                                     tools.delFeature(feaTable, feature);
+                                    arcMap.getSelectContainer().clearSelection(layerNode);
                                 }
                             }).show();
                 }

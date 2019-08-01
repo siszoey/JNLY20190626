@@ -171,7 +171,7 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
     }
 
     void initMapWidget() {
-        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolQuery.class, ToolEdit.class, ToolClear.class);
+        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class,  ToolEdit.class, ToolClear.class);//ToolQuery.class,
         ToolContainer.registerTool("辅助", EGravity.LEFT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLoc.class);
         WidgetContainer.registerWidget(FrameQuery.class);
         WidgetContainer.registerWidget(VectorBar.class);
