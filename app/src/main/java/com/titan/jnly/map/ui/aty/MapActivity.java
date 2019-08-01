@@ -13,10 +13,13 @@ import androidx.annotation.Nullable;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.esri.arcgisruntime.data.Feature;
+import com.esri.arcgisruntime.data.FeatureTable;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
+import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
@@ -28,8 +31,10 @@ import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.PositionUtil;
+import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
+import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
@@ -42,12 +47,18 @@ import com.titan.jnly.map.ui.tools.ToolNavi;
 import com.titan.jnly.map.ui.tools.ToolQuery;
 import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
+import com.titan.jnly.task.ui.aty.DataSyncAty;
 import com.titan.jnly.vector.bean.TreeMode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.ILocStatus {
+public class MapActivity extends BaseAppCompatActivity implements PositionUtil.ILocStatus {
 
 
     CustomDrawerLayout drawerLayout;
@@ -72,7 +83,7 @@ public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_right_up_load).setVisible(true);
+        menu.findItem(R.id.menu_right_up_load_group).setVisible(true);
         return true;
     }
 
@@ -83,7 +94,33 @@ public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.
             toggle();
             return true;
         }
-        if (id == R.id.menu_right_up_load) {
+        if (id == R.id.menu_right_up_load_group_single) {
+            LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+            if (layerNode != null) {
+                FeatureTable table = layerNode.tryGetFeaTable();
+                if (table != null) {
+                    EventBus.getDefault().postSticky(table);
+                    startActivity(new Intent(_context, DataSyncAty.class));
+                } else {
+                    ToastUtil.showLong(_context, "未能找到要上传的数据！");
+                }
+            } else {
+                showLongToast("地图尚未加载完成，请稍等！");
+            }
+        }
+        if (id == R.id.menu_right_up_load_group_multi) {
+            LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树群调查表");
+            if (layerNode != null) {
+                FeatureTable table = layerNode.tryGetFeaTable();
+                if (table != null) {
+                    EventBus.getDefault().postSticky(table);
+                    startActivity(new Intent(_context, DataSyncAty.class));
+                } else {
+                    ToastUtil.showLong(_context, "未能找到要上传的数据！");
+                }
+            } else {
+                showLongToast("地图尚未加载完成，请稍等！");
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -167,5 +204,16 @@ public class MapActivity extends BaseAppCompatActivity implements  PositionUtil.
                         finish();
                     }
                 }).show();
+    }
+
+
+    /**
+     * 完善数据
+     *
+     * @param feature
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void fillData(Feature feature) {
+        arcMap.getMapControl().zoomF(feature);
     }
 }

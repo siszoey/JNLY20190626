@@ -2,6 +2,7 @@ package com.titan.jnly.demo;
 
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.titan.jnly.vector.bean.District;
+import com.titan.jnly.vector.enums.DataStatus;
 
 public class Test {
 
@@ -11,6 +12,12 @@ public class Test {
 
         String sql = SqlBuilder.getTableBuildingSQL(new District());
         System.out.println(sql);
+
+        DataStatus dataStatus = DataStatus.getEnum((short) 0);
+        System.out.println(dataStatus);
+
+        dataStatus = DataStatus.getEnum("远程同步");
+        System.out.println(dataStatus);
     }
 
 

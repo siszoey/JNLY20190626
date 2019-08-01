@@ -58,7 +58,8 @@ android {
                     'src/main/res/layouts/main',
                     'src/main/res/layouts/map',
                     'src/main/res/layouts/vector',
-                    'src/main/res/layouts/hardware'
+                    'src/main/res/layouts/hardware',
+                    'src/main/res/layouts/task'
             ]
         }
     }
@@ -84,4 +85,7 @@ dependencies {
     api project(path: ':frgcore')
     api project(path: ':foxcamera')
     implementation files('libs/RfidSDK.jar')
+
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
 }

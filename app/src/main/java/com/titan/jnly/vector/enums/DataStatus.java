@@ -35,6 +35,34 @@ public enum DataStatus {
         return status;
     }
 
+    /**
+     * 根据枚举整型表达式获取枚举对象
+     */
+    public static DataStatus getEnum(short status) {
+        DataStatus dbType = null;
+
+        for (int i = 0; i < DataStatus.values().length; i++) {
+            if (DataStatus.values()[i].getStatus()==status) {
+                dbType = DataStatus.values()[i];
+                break;
+            }
+        }
+        return dbType;
+    }
+    /**
+     * 根据枚举描名称获取枚举对象
+     */
+    public static DataStatus getEnum(String name) {
+        DataStatus type = null;
+        for (int i = 0; i < DataStatus.values().length; i++) {
+            if (DataStatus.values()[i].getName().equalsIgnoreCase(name.trim())) {
+                type = DataStatus.values()[i];
+                break;
+            }
+        }
+        return type;
+    }
+
     public static Map createAdd() {
         return new SimpleMap().push("UUID", UUIDTool.get32UUID()).push("DATA_STATUS", DataStatus.LOCAL_ADD.getStatus());
     }

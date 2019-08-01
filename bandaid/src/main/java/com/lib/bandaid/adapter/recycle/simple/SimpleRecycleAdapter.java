@@ -27,10 +27,6 @@ public class SimpleRecycleAdapter<T> extends BaseRecycleAdapter<T, BaseViewHolde
         return new Holder(parent, android.R.layout.simple_list_item_1);
     }
 
-    @Override
-    public void isPosItemVisible(int firstItemPosition, int lastItemPosition) {
-
-    }
 
     @Override
     public void scrollState(RecyclerView recyclerView, int newState) {

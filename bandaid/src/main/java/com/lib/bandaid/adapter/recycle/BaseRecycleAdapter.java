@@ -453,16 +453,11 @@ public abstract class BaseRecycleAdapter<M, H extends BaseViewHolder<M>> extends
             if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                 //获取最后一个可见view的位置
-                int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                 lastItemPosition = linearManager.findLastVisibleItemPosition();
                 //获取第一个可见view的位置
-                int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                isPosItemVisible(firstItemPosition, lastItemPosition);
+                 firstItemPosition = linearManager.findFirstVisibleItemPosition();
             }
         }
-    }
-
-    public void isPosItemVisible(int firstItemPosition, int lastItemPosition) {
-
     }
 
     public void scrollState(RecyclerView recyclerView, int newState) {

@@ -103,7 +103,6 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
             public List<ItemXml> listAdapter(UiXml uiXml) {
                 List<ItemXml> data = null;
                 UiXml city = propertyView.getUiXmlByKey("XIAN");
-                UiXml county = propertyView.getUiXmlByKey("XIANG");
                 Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
                 if (uiXml.getCode().equals("XIAN")) {
                     String where = " where length(f_code) = 6";
@@ -209,6 +208,20 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                 UiXml alt = easyUiXml.getUiXml("HAIBA");
                 if (alt != null) alt.setValue(location.getAltitude());
             }
+        }
+        //替换区划代码
+        else {
+            District district;
+            UiXml item;
+            String cityCode = (String) feature.getAttributes().get("XIAN");
+            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", cityCode));
+            item = easyUiXml.getUiXml("XIAN");
+            item.setValue(district.getAreaName());
+
+            String countyCode = (String) feature.getAttributes().get("XIANG");
+            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", countyCode));
+            item = easyUiXml.getUiXml("XIANG");
+            item.setValue(district.getAreaName());
         }
     }
 

@@ -180,6 +180,25 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (alt != null) alt.setValue(location.getAltitude());
             }
         }
+        //替换区划代码
+        else {
+            District district;
+            UiXml item;
+            String cityCode = (String) feature.getAttributes().get("XIAN");
+            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", cityCode));
+            item = easyUiXml.getUiXml("XIAN");
+            item.setValue(district.getAreaName());
+
+            String countyCode = (String) feature.getAttributes().get("XIANG");
+            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", countyCode));
+            item = easyUiXml.getUiXml("XIANG");
+            item.setValue(district.getAreaName());
+
+            String villageCode = (String) feature.getAttributes().get("CUN");
+            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", villageCode));
+            item = easyUiXml.getUiXml("CUN");
+            item.setValue(district.getAreaName());
+        }
     }
 
     @Override

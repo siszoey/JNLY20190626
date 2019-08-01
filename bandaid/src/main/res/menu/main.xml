@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:visible="false"
         android:id="@+id/checkboxItem"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/checkbox" />
+        android:title="@string/checkbox"
+        android:visible="false" />
 
     <item
         android:id="@+id/menu_right_search"
@@ -45,9 +45,27 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_right_up_load_group"
+        android:icon="@drawable/ic_cloud_upload"
+        android:orderInCategory="100"
         android:visible="false"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/menu_right_up_load_group_single"
+                    android:title="单株调查" />
+                <item
+                    android:id="@+id/menu_right_up_load_group_multi"
+                    android:title="群调查" />
+            </group>
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/radiobuttonItem"
         android:title="@string/radiobutton_clickme"
+        android:visible="false"
         app:showAsAction="never">
         <menu>
             <group android:checkableBehavior="single">

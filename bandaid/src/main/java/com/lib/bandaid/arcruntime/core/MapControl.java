@@ -45,7 +45,11 @@ public class MapControl extends BaseContainer {
         if (list.size() == 1) {
             Geometry geometry = GeometryEngine.simplify(list.get(0));
             if (geometry.isEmpty()) return;
-            arcMap.getMapView().setViewpointGeometryAsync(geometry);
+            if (geometry instanceof Point) {
+                arcMap.getMapView().setViewpoint(new Viewpoint((Point) geometry,2000d));
+            } else {
+                arcMap.getMapView().setViewpointGeometryAsync(geometry);
+            }
         } else {
             Envelope envelope = GeometryEngine.combineExtents(list);
             if (envelope.isEmpty()) return;
@@ -79,7 +83,12 @@ public class MapControl extends BaseContainer {
 
     public void zoomF(Feature feature) {
         if (feature == null) return;
-        zoomG(feature.getGeometry());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                zoomG(feature.getGeometry());
+            }
+        }, 100);
     }
 
     public void zoomP(double lon, double lat) {
