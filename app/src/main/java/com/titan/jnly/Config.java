@@ -32,6 +32,9 @@ public final class Config extends Config_pro {
      * 业务布局模板
      */
     public static String[] GEO_TB_MODULE = new String[]{"geodb/tb_moudle/property_point.xml", "geodb/tb_moudle/property_area.xml"};
+
+    public static String[] GEO_DB_NAME = new String[]{"单株调查.geodatabase", "群调查.geodatabase"};
+    public static String[] GEO_DB_MODULE = new String[]{"geodb/".concat(GEO_DB_NAME[0]), "geodb/".concat(GEO_DB_NAME[1])};
     /**
      * 系统字典表
      */

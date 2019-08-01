@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--小班编辑-->
-    <string name="tools_xbbj">新增小班</string>
+    <string name="tools_xbbj">新增</string>
     <string name="tools_gbzb">共边增班</string>
-    <string name="tools_xbfz">小班复制</string>
-    <string name="tools_xbsc">小班删除</string>
+    <string name="tools_xbfz">复制</string>
+    <string name="tools_xbsc">删除</string>
     <string name="tools_cx">撤销</string>
-    <string name="tools_fgxb">分割小班</string>
-    <string name="tools_xb">修班</string>
+    <string name="tools_fgxb">分割</string>
+    <string name="tools_xb">修改</string>
     <string name="tools_sxbj">属性编辑</string>
-    <string name="tools_xzxb">选择小班</string>
+    <string name="tools_xzxb">选择</string>
     <string name="tools_py">平移</string>
 </resources>

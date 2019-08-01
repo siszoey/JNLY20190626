@@ -59,7 +59,6 @@ public class DataSyncAty extends BaseAppCompatActivity
     private RecyclerView rvList;
     private FeatureTable table;
     private DataSyncAdapter adapter;
-    private UiXml uiXml;
 
 
     @Override
@@ -89,8 +88,6 @@ public class DataSyncAty extends BaseAppCompatActivity
     public void getTable(FeatureTable table) {
         this.table = table;
         this.title = table.getTableName() + title;
-        EasyUiXml easyUiXml = Constant.getEasyUiXmlByName(_context, table.getTableName());
-        uiXml = easyUiXml.getUiXml("SZZWM");
     }
 
     @Override
@@ -110,7 +107,7 @@ public class DataSyncAty extends BaseAppCompatActivity
 
     @Override
     protected void initClass() {
-        adapter = new DataSyncAdapter(rvList, uiXml, this);
+        adapter = new DataSyncAdapter(rvList, this);
         adapter.setIViewClickListener(this);
         queryData(pageNum);
     }

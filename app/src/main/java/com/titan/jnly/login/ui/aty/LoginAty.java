@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
 import com.lib.bandaid.permission.RxPermissionFactory;
@@ -29,6 +30,10 @@ import com.titan.jnly.login.bean.User;
 import com.titan.jnly.main.ui.aty.MainActivity;
 import com.titan.jnly.map.ui.aty.MapActivity;
 import com.titan.jnly.system.Constant;
+import com.titan.jnly.vector.bean.Species;
+
+import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -78,7 +83,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     @Override
     protected void initClass() {
         isRemember = SPfUtil.readT(_context, CONSTANT_IS_REMEMBER);
-        isRemember = isRemember == null ? false : isRemember;
+        isRemember = isRemember == null ? true : isRemember;
         ckRemember.setChecked(isRemember);
         if (isRemember) {
             user = Constant.getUser();
@@ -148,8 +153,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                 Config.APP_PATH_CRASH,
                 Config.APP_PHOTO_DIR
         );
-        //读取布局模板
-        Constant.initEasyUiXml(_context, Config.GEO_TB_MODULE);
+        //读取数据到内存里
+        Constant.initialize(_context, Config.GEO_TB_MODULE);
         //创建系统字典表
         FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DB_PATH);
         //是否为app首次安装
@@ -160,6 +165,11 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
 
     private void appFirstInstall() {
         boolean flag = AppUtil.isAppFirstInstall(_context);
+        //如果app是首次安装，则复制业务库模板到指定文件夹
+        if (flag) {
+            FileUtil.copyAssets(_context, Config.GEO_DB_MODULE[0], Config.APP_SDB_PATH.concat(File.separator).concat(Config.GEO_DB_NAME[0]));
+            FileUtil.copyAssets(_context, Config.GEO_DB_MODULE[1], Config.APP_SDB_PATH.concat(File.separator).concat(Config.GEO_DB_NAME[1]));
+        }
     }
 
     private void versionFirstInstall() {

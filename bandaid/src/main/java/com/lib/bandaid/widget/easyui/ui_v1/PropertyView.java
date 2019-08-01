@@ -142,7 +142,7 @@ public class PropertyView extends ScrollView {
                 if (uiXml.getItemFrom() == ItemFrom.xml) {
                     list = uiXml.getItemXml();
                 } else {
-                    if (listAdapter != null) uiXml.setItemXml(listAdapter.listAdapter(uiXml));
+                    if (listAdapter != null) listAdapter.listAdapter(uiXml);
                     list = uiXml.getItemXml();
                 }
                 if (list == null) return;
@@ -260,7 +260,7 @@ public class PropertyView extends ScrollView {
     }
 
     public interface ListAdapter {
-        public List<ItemXml> listAdapter(UiXml uiXml);
+        public void listAdapter(UiXml uiXml);
     }
 
     public void setInputFace(InputFace inputFace) {

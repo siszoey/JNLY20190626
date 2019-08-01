@@ -20,6 +20,8 @@ import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
 import com.titan.jnly.R;
+import com.titan.jnly.system.Constant;
+import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 
 import java.util.Date;
@@ -29,14 +31,12 @@ import java.util.Map;
 
 public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<Feature>> {
 
-    UiXml uiXml;
 
     private NotifyArrayList<Integer> records;
 
-    public DataSyncAdapter(@Nullable RecyclerView recyclerView, UiXml uiXml, NotifyArrayList.IListener iListener) {
+    public DataSyncAdapter(@Nullable RecyclerView recyclerView, NotifyArrayList.IListener iListener) {
         super(recyclerView);
         recyclerView.addOnScrollListener(new ScrollListen());
-        this.uiXml = uiXml;
         this.records = new NotifyArrayList<>(iListener);
     }
 
@@ -95,12 +95,12 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
 
             Short status = (Short) property.get(DataStatus.DATA_STATUS);
             DataStatus dataStatus = DataStatus.getEnum(status);
-
-            String name = EasyUtil.code2Labels(uiXml, code);
-
+            Species species = Constant.getSpeciesByCode(code);
 
             tvNum.setText(sign);
-            tvName.setText(name);
+            if (species != null) {
+                tvName.setText(species.getSpecies());
+            }
             tvDate.setText(dateStr);
             tvAge.setText(age);
 

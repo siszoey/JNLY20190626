@@ -45,6 +45,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
+import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.util.TreeModeUtil;
@@ -111,29 +112,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         propertyView.setListAdapter(new PropertyView.ListAdapter() {
 
             @Override
-            public List<ItemXml> listAdapter(UiXml uiXml) {
-                List<ItemXml> data = null;
-                UiXml city = propertyView.getUiXmlByKey("XIAN");
-                UiXml county = propertyView.getUiXmlByKey("XIANG");
-                Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
-                if (uiXml.getCode().equals("XIAN")) {
-                    String where = " where length(f_code) = 6";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
-                if (uiXml.getCode().equals("XIANG")) {
-                    Object val = city.getViewCode();
-                    String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
-                if (uiXml.getCode().equals("CUN")) {
-                    Object val = county.getViewCode();
-                    String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
-                return data;
+            public void listAdapter(UiXml uiXml) {
+                initArea(uiXml);
             }
         });
     }
@@ -182,24 +162,42 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         }
         //替换区划代码
         else {
-            District district;
-            UiXml item;
-            String cityCode = (String) feature.getAttributes().get("XIAN");
-            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", cityCode));
-            item = easyUiXml.getUiXml("XIAN");
-            item.setValue(district.getAreaName());
-
-            String countyCode = (String) feature.getAttributes().get("XIANG");
-            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", countyCode));
-            item = easyUiXml.getUiXml("XIANG");
-            item.setValue(district.getAreaName());
-
-            String villageCode = (String) feature.getAttributes().get("CUN");
-            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", villageCode));
-            item = easyUiXml.getUiXml("CUN");
-            item.setValue(district.getAreaName());
+            initArea(easyUiXml.getUiXml("XIAN"));
+            initArea(easyUiXml.getUiXml("XIANG"));
+            initArea(easyUiXml.getUiXml("CUN"));
         }
+
+        List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
+        UiXml item = easyUiXml.getUiXml("SZZWM");
+        item.setItemXml(items);
     }
+
+    private void initArea(UiXml uiXml) {
+        String flag = uiXml.getCode();
+        List<ItemXml> data = null;
+        Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
+        if (flag.equals("XIAN")) {
+            String where = " where length(f_code) = 6";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        if (flag.equals("XIANG")) {
+            UiXml city = easyUiXml.getUiXml("XIAN");
+            Object val = city.getValue();
+            String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        if (flag.equals("CUN")) {
+            UiXml county = easyUiXml.getUiXml("XIANG");
+            Object val = county.getValue();
+            String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        uiXml.setItemXml(data);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -243,11 +241,11 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         WidgetUtil.setViewTextChangeLister(name, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String text) {
-                String[] info = getBiologyInfo(text);
-                if (info == null || info.length < 4) return;
-                ke.setText(info[1]);
-                shu.setText(info[2]);
-                latinName.setText(info[3]);
+                Species species = Constant.getSpecies(text);
+                if (species == null) return;
+                ke.setText(species.getFamily());
+                shu.setText(species.getGenus());
+                latinName.setText(species.getIatin());
             }
         });
 
@@ -299,20 +297,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     protected void onDestroy() {
         if (easyUiXml != null) easyUiXml.release();
         super.onDestroy();
-    }
-
-    private String[] getBiologyInfo(String name) {
-        String[] biology = getResources().getStringArray(R.array.array_biology_string);
-        if (biology == null) return null;
-        String[] info;
-        for (String flag : biology) {
-            if (flag == null) continue;
-            if (flag.startsWith(name)) {
-                info = flag.split("\\|");
-                return info;
-            }
-        }
-        return null;
     }
 
     @Override

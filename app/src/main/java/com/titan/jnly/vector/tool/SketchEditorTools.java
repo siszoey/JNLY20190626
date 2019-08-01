@@ -850,7 +850,14 @@ public class SketchEditorTools {
         }
     }
 
-    public void updateFeature(FeatureTable table, Feature feature, final @NonNull ICallBack iCallBack) {
+    public void updateFeatures(FeatureTable table, List<Feature> features) {
+        if (table == null || features == null || features.size() == 0) return;
+        for (Feature feature : features) {
+            updateFeature(table, feature, null);
+        }
+    }
+
+    public void updateFeature(FeatureTable table, Feature feature, final ICallBack iCallBack) {
         final ListenableFuture future = table.updateFeatureAsync(feature);
         future.addDoneListener(new Runnable() {
             @Override

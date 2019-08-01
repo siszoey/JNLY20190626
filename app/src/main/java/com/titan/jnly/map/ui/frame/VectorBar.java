@@ -170,13 +170,27 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                                 Geometry polygon = GisUtils.LineToPolygon((Polyline) geometry, arcMap.getMapView());
                                 MultiCompute.newCrowd(polygon, new MultiCompute.IProperty() {
                                     @Override
-                                    public void computeProperty(int count, Map property) {
-                                        if (count == 0) {
+                                    public void computeProperty(List<Feature> features, Map property) {
+                                        if (features == null || features.size() == 0) {
                                             ToastUtil.showLong(context, "未能找到单株古树，因此无法构成古树群");
                                             return;
                                         }
-                                        property.putAll(DataStatus.createAdd());
+                                        Map addProperty = DataStatus.createAdd();
+                                        property.putAll(addProperty);
                                         tools.addLineToLayer(table, (Polyline) geometry, property);
+
+                                        //更新单株古树的所属古树群Id
+                                        LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+                                        if (layerNode != null) {
+                                            FeatureTable table = layerNode.tryGetFeaTable();
+                                            if (table != null) {
+                                                for (Feature feature : features) {
+                                                    feature.getAttributes().put("GROUP_ID", addProperty.get("UUID"));
+                                                }
+                                                tools.updateFeatures(table, features);
+                                            }
+                                        }
+
                                     }
                                 });
 

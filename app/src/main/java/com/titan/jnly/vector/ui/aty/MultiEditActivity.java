@@ -40,6 +40,7 @@ import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
+import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 
@@ -100,22 +101,8 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         propertyView.setListAdapter(new PropertyView.ListAdapter() {
 
             @Override
-            public List<ItemXml> listAdapter(UiXml uiXml) {
-                List<ItemXml> data = null;
-                UiXml city = propertyView.getUiXmlByKey("XIAN");
-                Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
-                if (uiXml.getCode().equals("XIAN")) {
-                    String where = " where length(f_code) = 6";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
-                if (uiXml.getCode().equals("XIANG")) {
-                    Object val = city.getViewCode();
-                    String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
-                    List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
-                    data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
-                }
-                return data;
+            public void listAdapter(UiXml uiXml) {
+                initArea(uiXml);
             }
         });
     }
@@ -211,18 +198,39 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         }
         //替换区划代码
         else {
-            District district;
-            UiXml item;
-            String cityCode = (String) feature.getAttributes().get("XIAN");
-            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", cityCode));
-            item = easyUiXml.getUiXml("XIAN");
-            item.setValue(district.getAreaName());
-
-            String countyCode = (String) feature.getAttributes().get("XIANG");
-            district = (District) DbManager.createDefault().getTByMultiCondition(District.class, new SimpleMap<>().push("f_code", countyCode));
-            item = easyUiXml.getUiXml("XIANG");
-            item.setValue(district.getAreaName());
+            initArea(easyUiXml.getUiXml("XIAN"));
+            initArea(easyUiXml.getUiXml("XIANG"));
         }
+
+        List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
+        UiXml item = easyUiXml.getUiXml("ZYSZ");
+        item.setItemXml(items);
+    }
+
+    private void initArea(UiXml uiXml) {
+        String flag = uiXml.getCode();
+        List<ItemXml> data = null;
+        Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
+        if (flag.equals("XIAN")) {
+            String where = " where length(f_code) = 6";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        if (flag.equals("XIANG")) {
+            UiXml city = easyUiXml.getUiXml("XIAN");
+            Object val = city.getValue();
+            String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        if (flag.equals("CUN")) {
+            UiXml county = easyUiXml.getUiXml("XIANG");
+            Object val = county.getValue();
+            String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
+            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+        }
+        uiXml.setItemXml(data);
     }
 
     /**
@@ -240,11 +248,11 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         WidgetUtil.setViewTextChangeLister(name, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String text) {
-                String[] info = getBiologyInfo(text);
-                if (info == null || info.length < 4) return;
-                zhong.setText(info[0]);
-                ke.setText(info[1]);
-                shu.setText(info[2]);
+                Species species = Constant.getSpecies(text);
+                if (species == null) return;
+                ke.setText(species.getFamily());
+                shu.setText(species.getGenus());
+                zhong.setText(species.getSpecies());
             }
         });
 
@@ -257,20 +265,6 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                 county.setText("");
             }
         });
-    }
-
-    private String[] getBiologyInfo(String name) {
-        String[] biology = getResources().getStringArray(R.array.array_biology_string);
-        if (biology == null) return null;
-        String[] info;
-        for (String flag : biology) {
-            if (flag == null) continue;
-            if (flag.startsWith(name)) {
-                info = flag.split("\\|");
-                return info;
-            }
-        }
-        return null;
     }
 
 }

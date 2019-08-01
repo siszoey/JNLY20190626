@@ -36,7 +36,7 @@ public final class MultiCompute {
         QueryParameters params = new QueryParameters();
         params.setGeometry(geometry);
         ListenableFuture<FeatureQueryResult> future = single.queryFeaturesAsync(params);
-        List<Map> list = new ArrayList<>();
+        List<Feature> list = new ArrayList<>();
         future.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -46,10 +46,10 @@ public final class MultiCompute {
                     Feature feature;
                     while (features.hasNext()) {
                         feature = features.next();
-                        list.add(feature.getAttributes());
+                        list.add(feature);
                     }
                     if (iProperty != null)
-                        iProperty.computeProperty(list.size(), computeBySingle(list));
+                        iProperty.computeProperty(list, computeBySingle(list));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -57,7 +57,7 @@ public final class MultiCompute {
         });
     }
 
-    public static Map<String, Object> computeBySingle(List<Map> list) {
+    public static Map<String, Object> computeBySingle(List<Feature> list) {
         Map<String, Object> property = new HashMap<>();
         int count = list.size();
         double sumHigh = 0;
@@ -66,7 +66,7 @@ public final class MultiCompute {
         double sumAge = 0;
         Map<String, Object> item;
         for (int i = 0; i < list.size(); i++) {
-            item = list.get(i);
+            item = list.get(i).getAttributes();
             sumHigh += NumberUtil.obj2Number(item.get("SG")).doubleValue();
             sumDiam += NumberUtil.obj2Number(item.get("XJ")).doubleValue();
             sumSlope += NumberUtil.obj2Number(item.get("PODU")).doubleValue();
@@ -91,6 +91,6 @@ public final class MultiCompute {
     }
 
     public interface IProperty {
-        public void computeProperty(int count, Map property);
+        public void computeProperty(List<Feature> features, Map property);
     }
 }

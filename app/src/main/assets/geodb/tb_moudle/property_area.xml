@@ -41,335 +41,14 @@
             <alias>调查顺序号</alias>
             <code>DCXH</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
         </UiXml>
 
         <UiXml>
             <alias>主要树种</alias>
             <code>ZYSZ</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0001</code>
-                    <value>板栗</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0002</code>
-                    <value>白皮松</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0003</code>
-                    <value>白玉兰</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0004</code>
-                    <value>臭椿</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0005</code>
-                    <value>侧柏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0006</code>
-                    <value>垂柳</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0007</code>
-                    <value>丁香</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0008</code>
-                    <value>大叶椴</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0009</code>
-                    <value>杜梨</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0010</code>
-                    <value>杜仲</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0011</code>
-                    <value>枫杨</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0012</code>
-                    <value>国槐</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0013</code>
-                    <value>构树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0014</code>
-                    <value>黄连木</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0015</code>
-                    <value>黄金树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0016</code>
-                    <value>海棠</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0017</code>
-                    <value>黄檗</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0018</code>
-                    <value>核桃</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0019</code>
-                    <value>核桃楸</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0020</code>
-                    <value>黑枣</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0021</code>
-                    <value>桧柏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0022</code>
-                    <value>苦楝</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0023</code>
-                    <value>龙柏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0024</code>
-                    <value>梨树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0025</code>
-                    <value>栾树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0026</code>
-                    <value>流苏树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0027</code>
-                    <value>龙爪槐</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0028</code>
-                    <value>龙爪枣</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0029</code>
-                    <value>蒙古栎</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0030</code>
-                    <value>麻栎</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0031</code>
-                    <value>毛梾</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0032</code>
-                    <value>朴树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0033</code>
-                    <value>楸</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0034</code>
-                    <value>青檀</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0035</code>
-                    <value>七叶树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0036</code>
-                    <value>漆树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0037</code>
-                    <value>丝棉木</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0038</code>
-                    <value>桑树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0039</code>
-                    <value>柿树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0040</code>
-                    <value>水曲柳</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0041</code>
-                    <value>水杉</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0042</code>
-                    <value>酸枣</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0043</code>
-                    <value>山楂</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0044</code>
-                    <value>文冠果</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0045</code>
-                    <value>五角枫</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0046</code>
-                    <value>卫矛</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0047</code>
-                    <value>梧桐</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0048</code>
-                    <value>杏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0049</code>
-                    <value>西府海棠</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0050</code>
-                    <value>槲栎</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0051</code>
-                    <value>雪松</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0052</code>
-                    <value>槲树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0053</code>
-                    <value>小叶椴</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0054</code>
-                    <value>小叶朴</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0055</code>
-                    <value>元宝枫</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0056</code>
-                    <value>榆树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0057</code>
-                    <value>油松</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0058</code>
-                    <value>云杉</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0059</code>
-                    <value>银杏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0060</code>
-                    <value>枣</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0061</code>
-                    <value>皂荚</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0062</code>
-                    <value>紫藤</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0063</code>
-                    <value>梓树</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">0064</code>
-                    <value>紫薇</value>
-                </ItemXml>
-            </itemXml>
+            <uiType>dialog</uiType>
             <status>single</status>
             <VerifyXml>
                 <canNull>false</canNull>
@@ -387,7 +66,7 @@
             <alias>古树株数</alias>
             <code>GSZS</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -398,7 +77,7 @@
             <alias>林分平均高度/m</alias>
             <code>LFPJG</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -411,7 +90,7 @@
             </alias>
             <code>LFPJXW</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -422,13 +101,13 @@
             <alias>特征代码</alias>
             <code>TZDM</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
         </UiXml>
         <UiXml>
             <alias>平均树龄</alias>
             <code>PJSL</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>-->
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
@@ -642,7 +321,6 @@
             <code>KE</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
-            <status>single</status>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
