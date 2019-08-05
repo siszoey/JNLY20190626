@@ -194,7 +194,9 @@ public class PropertyView extends ScrollView {
         boolean isNumber = uiXml.isNumber();
         boolean isDate = uiXml.isDate();
         boolean readOnly = uiXml.getReadonly();
-        if (isNumber) WidgetUtil.setViewInputNum(complexTextView);
+        if (isNumber){
+            WidgetUtil.setViewInputNum(complexTextView);
+        }
         if (readOnly) complexTextView.setEditAble(false);
         Object val = uiXml.getDisPlay();
         {
