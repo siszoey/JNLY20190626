@@ -16,6 +16,7 @@ import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.utils.ViewUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
+import com.lib.bandaid.widget.easyui.enums.InputType;
 import com.lib.bandaid.widget.easyui.enums.ItemFrom;
 import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.ui.EventImageView;
@@ -194,23 +195,46 @@ public class PropertyView extends ScrollView {
         boolean isNumber = uiXml.isNumber();
         boolean isDate = uiXml.isDate();
         boolean readOnly = uiXml.getReadonly();
-        if (isNumber){
-            WidgetUtil.setViewInputNum(complexTextView);
+        InputType inputType = uiXml.getInputType();
+        if (inputType == null) {
+            if (isNumber) {
+                WidgetUtil.setViewInputNum(complexTextView);
+            }
+        } else {
+            if (inputType == InputType.english) {
+                complexTextView.inputTypeEnglish();
+            }
+            if (inputType == InputType.text) {
+                complexTextView.inputTypeText();
+            }
+            if (inputType == InputType.number) {
+                complexTextView.inputTypeNumber();
+            }
         }
         if (readOnly) complexTextView.setEditAble(false);
         Object val = uiXml.getDisPlay();
         {
             VerifyXml verifyXml = uiXml.getVerifyXml();
             if (verifyXml != null) {
-                complexTextView.addTextChangedListener(new SimpleTextWatch(new SimpleTextWatch.IAfter() {
-                    @Override
-                    public void after(String s) {
-                        if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
-                        boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
-                        if (verify) complexTextView.setError(null);
-                        else complexTextView.setError(verifyXml.getMsg());
-                    }
-                }));
+                //数据验证
+                complexTextView.addTextChangedListener(
+                        new SimpleTextWatch(
+                                uiXml.getTextBefore() == null ? new SimpleTextWatch.IBefore() {
+                                    @Override
+                                    public void before(CharSequence s, int start, int count, int after) {
+
+                                    }
+                                } : uiXml.getTextBefore(),
+                                uiXml.getOnChange(),
+                                uiXml.getTextAfter() == null ? new SimpleTextWatch.IAfter() {
+                                    @Override
+                                    public void after(String s) {
+                                        if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
+                                        boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
+                                        if (verify) complexTextView.setError(null);
+                                        else complexTextView.setError(verifyXml.getMsg());
+                                    }
+                                } : uiXml.getTextAfter()));
             }
         }
         if (isDate) {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.widget.easyui.enums.InputType;
 import com.lib.bandaid.widget.easyui.enums.ItemFrom;
 import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.enums.UiType;
@@ -70,6 +71,9 @@ public class UiXml implements Serializable {
 
     @XStreamAlias("visible")
     private Boolean visible = true;
+
+    @XStreamAlias("inputType")
+    private InputType inputType;
 
     @XStreamAlias("VerifyXml")
     private VerifyXml verifyXml;
@@ -175,6 +179,14 @@ public class UiXml implements Serializable {
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    public InputType getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(InputType inputType) {
+        this.inputType = inputType;
     }
 
     public VerifyXml getVerifyXml() {
@@ -318,5 +330,33 @@ public class UiXml implements Serializable {
         List<ItemXml> codedValues = getItemXml();
         if (codedValues == null || codedValues.size() == 0) return false;
         return true;
+    }
+
+    private SimpleTextWatch.IBefore iBefore;
+    private SimpleTextWatch.IOnChange iOnChange;
+    private SimpleTextWatch.IAfter iAfter;
+
+    public void setTextBefore(SimpleTextWatch.IBefore iBefore) {
+        this.iBefore = iBefore;
+    }
+
+    public void setTextAfter(SimpleTextWatch.IAfter iAfter) {
+        this.iAfter = iAfter;
+    }
+
+    public SimpleTextWatch.IOnChange getOnChange() {
+        return iOnChange;
+    }
+
+    public void setOnChange(SimpleTextWatch.IOnChange iOnChange) {
+        this.iOnChange = iOnChange;
+    }
+
+    public SimpleTextWatch.IBefore getTextBefore() {
+        return this.iBefore;
+    }
+
+    public SimpleTextWatch.IAfter getTextAfter() {
+        return this.iAfter;
     }
 }

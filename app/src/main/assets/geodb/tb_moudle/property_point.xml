@@ -62,11 +62,13 @@
             <alias>古树编号</alias>
             <code>GSBH</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
         </UiXml>
         <UiXml>
             <alias>电子标签号</alias>
             <code>DZBQH</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -77,6 +79,7 @@
             <alias>调查顺序号</alias>
             <code>DCSXH</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -99,11 +102,6 @@
             <alias>树种俗名</alias>
             <code>SZSM</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>树种拉丁名</alias>
@@ -296,6 +294,29 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
+            <alias>生长场所</alias>
+            <code>SZCS</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <itemXml>
+                <ItemXml>
+                    <code class="string">01</code>
+                    <value>山地丘陵</value>
+                </ItemXml>
+                <ItemXml>
+                    <code class="string">02</code>
+                    <value>平原地区</value>
+                </ItemXml>
+            </itemXml>
+            <readonly>true</readonly>
+            <uiType>dialog</uiType>
+            <status>single</status>
+            <VerifyXml>
+                <canNull>true</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
             <alias>回归模型树龄</alias>
             <code>MODEL_AGE</code>
             <dataType class="java-class">java.lang.Double</dataType>
@@ -458,13 +479,23 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
-            <alias>坡度/℃</alias>
+            <alias>坡度/°</alias>
             <code>PODU</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>坡度等级</alias>
+            <code>PDDJ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
@@ -646,11 +677,11 @@
                 </ItemXml>
             </itemXml>
             <status>single</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
+            <!--  <VerifyXml>
+                  <canNull>false</canNull>
+                  <regex>^(?=.*\S).+$</regex>
+                  <msg>不能为空!</msg>
+              </VerifyXml>-->
         </UiXml>
         <UiXml>
             <alias>古树历史

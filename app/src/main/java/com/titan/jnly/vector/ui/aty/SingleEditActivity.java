@@ -40,6 +40,7 @@ import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
+import com.lib.bandaid.widget.text.SimpleTextWatch;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
@@ -166,10 +167,39 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             initArea(easyUiXml.getUiXml("XIANG"));
             initArea(easyUiXml.getUiXml("CUN"));
         }
-
+        //树种中文名称赋值
         List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
         UiXml item = easyUiXml.getUiXml("SZZWM");
         item.setItemXml(items);
+        //经纬度特殊处理
+        // UiXml LONXml = easyUiXml.getUiXml("LON");
+        // UiXml LATXml = easyUiXml.getUiXml("LAT");
+
+        /*LONXml.setTextAfter(new SimpleTextWatch.IAfter() {
+
+            @Override
+            public void after(String s) {
+                System.out.println(s);
+            }
+        });*/
+
+
+        /*LONXml.setOnChange(new SimpleTextWatch.IOnChange() {
+
+            @Override
+            public void onChange(CharSequence s, int start, int before, int count) {
+                //((ComplexTextView) LONXml.getView()).setText(s + "|");
+            }
+        });
+
+
+        LATXml.setTextBefore(new SimpleTextWatch.IBefore() {
+            @Override
+            public void before(CharSequence s, int start, int count, int after) {
+                System.out.println(s);
+            }
+        });*/
+
     }
 
     private void initArea(UiXml uiXml) {

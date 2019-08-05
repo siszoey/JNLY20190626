@@ -6,10 +6,12 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.lib.bandaid.widget.edittext.ClearEditText;
 
 public class ComplexTextView extends TextInputLayout {
 
@@ -24,7 +26,7 @@ public class ComplexTextView extends TextInputLayout {
     private final String INPUT_TYPE_EMAIL = "english";
 
 
-    private EditText editText;
+    private ClearEditText editText;
 
     private boolean inputAble = true;
     private String inputType;
@@ -45,7 +47,7 @@ public class ComplexTextView extends TextInputLayout {
     }
 
     private void init() {
-        this.editText = new EditText(getContext());
+        this.editText = new ClearEditText(getContext());
         this.editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         this.editText.setBackground(null);
         this.editText.setPadding(0, 0, 0, 0);
@@ -91,5 +93,18 @@ public class ComplexTextView extends TextInputLayout {
 
     public void removeTextChangedListener(TextWatcher watcher) {
         this.editText.removeTextChangedListener(watcher);
+    }
+
+    public void inputTypeNumber() {
+        this.editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+    }
+
+    public void inputTypeText() {
+        this.editText.setInputType(InputType.TYPE_CLASS_TEXT);
+    }
+
+    public void inputTypeEnglish() {
+        this.editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        this.editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
 }

@@ -182,7 +182,11 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                 }).show();
     }
 
-
+    /**
+     * 加载布局前预先处理
+     *
+     * @param easyUiXml
+     */
     private void initDefaultData(EasyUiXml easyUiXml) {
         Location location = Constant.location;
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
@@ -201,7 +205,7 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
             initArea(easyUiXml.getUiXml("XIAN"));
             initArea(easyUiXml.getUiXml("XIANG"));
         }
-
+        //主要树种赋值
         List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
         UiXml item = easyUiXml.getUiXml("ZYSZ");
         item.setItemXml(items);

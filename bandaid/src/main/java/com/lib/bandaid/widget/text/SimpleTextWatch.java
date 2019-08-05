@@ -25,6 +25,11 @@ public class SimpleTextWatch implements TextWatcher {
         this.iAfter = iAfter;
     }
 
+    public SimpleTextWatch(IBefore iBefore, IAfter iAfter) {
+        this.iBefore = iBefore;
+        this.iAfter = iAfter;
+    }
+
     public SimpleTextWatch(IBefore iBefore, IOnChange iOnChange, IAfter iAfter) {
         this.iBefore = iBefore;
         this.iOnChange = iOnChange;
