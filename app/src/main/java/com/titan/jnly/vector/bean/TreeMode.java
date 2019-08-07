@@ -2,6 +2,7 @@ package com.titan.jnly.vector.bean;
 
 import com.lib.bandaid.data.local.sqlite.core.annotation.Column;
 import com.lib.bandaid.data.local.sqlite.core.annotation.Table;
+
 import java.io.Serializable;
 
 /**
@@ -18,8 +19,11 @@ public class TreeMode implements Serializable {
     @Column(name = "f_name", type = "varchar(20)")
     private String name;
 
-    @Column(name = "f_diam")
-    private Double diam;
+    @Column(name = "f_diam_hill")
+    private Double diamHill;
+
+    @Column(name = "f_diam_plain")
+    private Double diamPlain;
 
     @Column(name = "f_year")
     private Integer year;
@@ -40,12 +44,20 @@ public class TreeMode implements Serializable {
         this.name = name;
     }
 
-    public Double getDiam() {
-        return diam;
+    public Double getDiamHill() {
+        return diamHill;
     }
 
-    public void setDiam(Double diam) {
-        this.diam = diam;
+    public void setDiamHill(Double diamHill) {
+        this.diamHill = diamHill;
+    }
+
+    public Double getDiamPlain() {
+        return diamPlain;
+    }
+
+    public void setDiamPlain(Double diamPlain) {
+        this.diamPlain = diamPlain;
     }
 
     public Integer getYear() {
@@ -61,7 +73,8 @@ public class TreeMode implements Serializable {
         return "TreeMode{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", diam=" + diam +
+                ", diamHill=" + diamHill +
+                ", diamPlain=" + diamPlain +
                 ", year=" + year +
                 '}';
     }

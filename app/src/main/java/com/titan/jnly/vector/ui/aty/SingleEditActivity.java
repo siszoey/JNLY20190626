@@ -22,9 +22,11 @@ import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.GsonFactory;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
@@ -51,6 +53,9 @@ import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.util.TreeModeUtil;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,7 +109,14 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                     TimePickerDialogUtil.bindTimePickerFull(_context, v);
                 }
                 if (v instanceof ImageView) {
-                    PhotoActivity.start(_context, false, Config.APP_PHOTO_PATH, true, true, null);
+                    LinkedHashMap waterMark = new LinkedHashMap();
+                    String lat = TransformUtil._10To60_len2("39.6666666");
+                    String lon = TransformUtil._10To60_len2("108.11555");
+                    waterMark.put("村名", "里");
+                    waterMark.put("纬度", lat);
+                    waterMark.put("经度", lon);
+                    waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
+                    PhotoActivity.start(_context, false, Config.APP_PHOTO_PATH, true, true, waterMark);
                 }
             }
         });
@@ -282,14 +294,17 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         ComplexTextView modeAge = propertyView.getViewByAlias("回归模型树龄");
         ComplexTextView cycle = propertyView.getViewByKey("XJ");
         ComplexTextView zhName = propertyView.getViewByAlias("树种中文名");
+        ComplexTextView plantPlace = propertyView.getViewByAlias("生长区域");
 
         WidgetUtil.setViewTextChangeLister(cycle, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String cycleSize) {
                 String name = zhName.getText();
+                String place = plantPlace.getText();
+                if (ObjectUtil.isEmpty(place)) return;
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize));
+                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });
@@ -297,10 +312,25 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         WidgetUtil.setViewTextChangeLister(zhName, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String name) {
-                if (ObjectUtil.isEmpty(name)) return;
                 String cycleSize = cycle.getText();
+                String place = plantPlace.getText();
+                if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize));
+                if (ObjectUtil.isEmpty(place)) return;
+                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                modeAge.setText(age + "");
+            }
+        });
+
+        WidgetUtil.setViewTextChangeLister(plantPlace, new WidgetUtil.IChangeLister() {
+            @Override
+            public void changeLister(String place) {
+                String name = zhName.getText();
+                String cycleSize = cycle.getText();
+                if (ObjectUtil.isEmpty(name)) return;
+                if (ObjectUtil.isEmpty(place)) return;
+                if (!NumberUtil.can2Double(cycleSize)) return;
+                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });

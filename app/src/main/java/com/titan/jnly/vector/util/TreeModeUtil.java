@@ -15,20 +15,42 @@ public final class TreeModeUtil {
      * @param diam 树的胸径
      * @return
      */
-    public static int computeTreeAge(String name, Double diam) {
-        String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam <= " + diam + " order by f_diam desc limit 1 OFFSET 0";
-        TreeMode min = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
-
-        sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam >= " + diam + " order by f_diam asc limit 1 OFFSET 0";
-        TreeMode max = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
-
-        if (min != null && max != null) {
-            Double age = (diam - min.getDiam()) * (max.getYear() - min.getYear()) / (max.getDiam() - min.getDiam()) + min.getYear();
-            return age.intValue();
-        } else if (min != null && max == null) {
-            return 10000;
+    public static int computeTreeAge(String name, Double diam, String flag) {
+        if (flag == null) return -1;
+        TreeMode min, max;
+        if ("01".equals(flag)) {
+            String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_hill <= " + diam + " order by f_diam_hill desc limit 1 OFFSET 0";
+            System.out.println(sql);
+            min = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_hill >= " + diam + " order by f_diam_hill asc limit 1 OFFSET 0";
+            System.out.println(sql);
+            max = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
         } else {
-            return -10000;
+            String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_plain <= " + diam + " order by f_diam_plain desc limit 1 OFFSET 0";
+            System.out.println(sql);
+            min = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_plain >= " + diam + " order by f_diam_plain asc limit 1 OFFSET 0";
+            System.out.println(sql);
+            max = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+        }
+        if (min != null && max != null) {
+            /*Double age = (diam - min.getDiam()) * (max.getYear() - min.getYear()) / (max.getDiam() - min.getDiam()) + min.getYear();
+            return age.intValue();*/
+            //中位值计算
+            double mid;
+            if ("01".equals(flag)) {
+                mid = (max.getDiamHill() + min.getDiamHill()) / 2;
+                if (diam >= mid) return max.getYear();
+                else return min.getYear();
+            } else {
+                mid = (max.getDiamPlain() + min.getDiamPlain()) / 2;
+                if (diam >= mid) return max.getYear();
+                else return min.getYear();
+            }
+        } else if (min != null && max == null) {
+            return min.getYear();
+        } else {
+            return max.getYear();
         }
 
     }
@@ -38,8 +60,8 @@ public final class TreeModeUtil {
      * @param cycle 树的周长
      * @return
      */
-    public static int computeTreeAgeByCycle(String name, Double cycle) {
-        return computeTreeAge(name, cycle / Math.PI);
+    public static int computeTreeAgeByCycle(String name, Double cycle, String flag) {
+        return computeTreeAge(name, cycle / Math.PI, flag);
     }
 
 }

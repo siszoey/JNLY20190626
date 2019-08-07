@@ -39,13 +39,14 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
     private final static String CAMERA_SHOW_ORIENT = "CAMERA_SHOW_ORIENT";
     private final static String CAMERA_WATER_MARK = "CAMERA_WATER_MARK";
 
-    public static void start(Context context, boolean isNormal, String parentPath, boolean showLocal, boolean showOrient, HashMap waterMark) {
+    public static void start(Context context, boolean isNormal, String parentPath, boolean showLocal, boolean showOrient, LinkedHashMap waterMark) {
         Intent intent = new Intent(context, PhotoActivity.class);
         intent.putExtra(CAMERA_IS_NORMAL, isNormal);
         intent.putExtra(CAMERA_PARENT_PATH, parentPath);
         intent.putExtra(CAMERA_SHOW_LOCAL, showLocal);
         intent.putExtra(CAMERA_SHOW_ORIENT, showOrient);
         intent.putExtra(CAMERA_WATER_MARK, waterMark);
+        PhotoActivity.waterMark = waterMark;
         context.startActivity(intent);
     }
 
@@ -55,7 +56,7 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
     private boolean isNormal;
     private boolean showLocal;
     private boolean showOrient;
-    private LinkedHashMap waterMark;
+    private static LinkedHashMap waterMark;
     private DeviceGesture deviceGesture;
 
     @Override
@@ -69,7 +70,6 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
                     parentPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "0";
                 showLocal = getIntent().getBooleanExtra(CAMERA_SHOW_LOCAL, false);
                 showOrient = getIntent().getBooleanExtra(CAMERA_SHOW_ORIENT, true);
-                waterMark = (LinkedHashMap) getIntent().getSerializableExtra(CAMERA_WATER_MARK);
             }
         }
         setContentView(R.layout.demo_ui_photo_aty);
@@ -103,15 +103,17 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
 
     @Override
     protected void initClass() {
-        waterMark = new LinkedHashMap();
-        waterMark.put("村名", "王家村");
-        waterMark.put("纬度", "39.666666");
-        waterMark.put("经度", "108.666666");
-        waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
+        if (waterMark == null) {
+            waterMark = new LinkedHashMap();
+            waterMark.put("村名", "王家村");
+            waterMark.put("纬度", "39.666666");
+            waterMark.put("经度", "108.666666");
+            waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
+        }
 
         jCameraView.setJCameraLisenter(this).isNormal(isNormal);
         //设置既可以拍照又能录视频
-        //jCameraView.setFeatures(JCameraView.BUTTON_STATE_ONLY_CAPTURE);
+        jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
         jCameraView.setSaveVideoPath(parentPath);
         jCameraView.getWaterMarkView().setMarkListener(this);
         getPermissions();
