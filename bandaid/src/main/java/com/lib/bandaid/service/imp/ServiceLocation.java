@@ -7,6 +7,9 @@ import android.location.Location;
  */
 
 public class ServiceLocation {
+
+    public static Location _location;
+
     private ESignal eSignal;
     private Location location;
     private Integer satelliteCount;
@@ -25,6 +28,7 @@ public class ServiceLocation {
     }
 
     public void setLocation(Location location) {
+        _location = location;
         this.location = location;
     }
 

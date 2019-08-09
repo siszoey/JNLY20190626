@@ -20,6 +20,11 @@ public final class FeatureUtil {
 
     }
 
+    public static <T> T getAsT(Feature feature, String item) {
+        if (feature == null) return null;
+        return (T) feature.getAttributes().get(item);
+    }
+
     public static <T> T getExtendFromFeature(Feature feature, Class clazz) {
         Gson gson = GsonFactory.getFactory().getComGson();
         String json = (String) feature.getAttributes().get("EXTEND");
@@ -63,7 +68,7 @@ public final class FeatureUtil {
         return featureTakers;
     }
 
-    public static<T> List<FeatureTaker<T>> convertFeatureTaker(List<Feature> features) {
+    public static <T> List<FeatureTaker<T>> convertFeatureTaker(List<Feature> features) {
         if (features == null) return null;
         List<FeatureTaker<T>> featureTakers = new ArrayList<>();
         FeatureTaker taker;

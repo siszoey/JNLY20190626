@@ -162,6 +162,10 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
             mapView.setMap(gisMap);
         }
 
+        loadOperationLayers();
+    }
+
+    public void loadOperationLayers() {
         //加载网络数据
         {
             if (mapServerUrls == null) return;
@@ -218,15 +222,31 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
                 }
             }
         }*/
-
-
     }
 
     @Override
     public void loadStatusChanged(LoadStatusChangedEvent loadStatusChangedEvent) {
+        Object source = loadStatusChangedEvent.getSource();
+        ArcGISMap arcGISMap = (ArcGISMap) source;
+        if (arcGISMap == null) return;
+        if (LoadStatus.LOADING == loadStatusChangedEvent.getNewLoadStatus()) {
+            System.out.println(">>>>>>>:LOADING");
+        }
+        if (LoadStatus.NOT_LOADED == loadStatusChangedEvent.getNewLoadStatus()) {
+            System.out.println(">>>>>>>:NOT_LOADED");
+        }
         if (LoadStatus.LOADED == loadStatusChangedEvent.getNewLoadStatus()) {
-            ready(mapView.getMap().getOperationalLayers());
+            System.out.println(">>>>>>>:LOADED");
+            List<Layer> layers = arcGISMap.getOperationalLayers();
+            ready(layers);
             if (iMapReady != null) iMapReady.onMapReady();
+        }
+        if (loadStatusChangedEvent.getNewLoadStatus() == LoadStatus.FAILED_TO_LOAD) {
+            System.out.println(">>>>>>>:FAILED_TO_LOAD");
+            mapView.getMap().removeLoadStatusChangedListener(this);
+            mapView.setMap(new ArcGISMap());
+            mapView.getMap().addLoadStatusChangedListener(this);
+            loadOperationLayers();
         }
     }
 

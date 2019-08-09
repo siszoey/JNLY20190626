@@ -50,6 +50,12 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
         context.startActivity(intent);
     }
 
+    public static LinkedHashMap updateMaker() {
+        if (waterMark == null)
+            waterMark = new LinkedHashMap();
+        return waterMark;
+    }
+
     private NotifyArrayList<File> files = new NotifyArrayList<>(this);
 
     private String parentPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "0";

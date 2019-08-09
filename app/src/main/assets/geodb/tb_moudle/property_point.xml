@@ -22,6 +22,31 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
+            <alias>古树名木类型</alias>
+            <code>TREE_TYPE</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
+            <itemXml>
+                <ItemXml>
+                    <code class="string">1</code>
+                    <value>古树</value>
+                </ItemXml>
+                <ItemXml>
+                    <code class="string">2</code>
+                    <value>名木</value>
+                </ItemXml>
+                <ItemXml>
+                    <code class="string">3</code>
+                    <value>古树和名木</value>
+                </ItemXml>
+            </itemXml>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
             <alias>县（市、区）</alias>
             <code>XIAN</code>
             <dataType class="java-class">java.lang.String</dataType>
@@ -145,12 +170,12 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>乡村</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>城区</value>
                 </ItemXml>
             </itemXml>
@@ -168,12 +193,12 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>散生</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>群状</value>
                 </ItemXml>
             </itemXml>
@@ -268,11 +293,11 @@
             <dataType class="java-class">java.lang.String</dataType>
             <itemXml>
                 <ItemXml>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>山地丘陵</value>
                 </ItemXml>
                 <ItemXml>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>平原地区</value>
                 </ItemXml>
             </itemXml>
@@ -315,7 +340,7 @@
             <code>GUESS_AGE</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
-                <canNull>false</canNull>
+                <canNull>true</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
                 <msg>必须为正数!</msg>
             </VerifyXml>
@@ -330,30 +355,6 @@
             <code>ZSSL</code>
             <dataType class="java-class">java.lang.Double</dataType>
             <visible>false</visible>
-            <!--<itemXml>
-                <ItemXml>
-                    <code class="string">01</code>
-                    <value>回归模型树龄</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">02</code>
-                    <value>估测树龄</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">03</code>
-                    <value>文献树龄</value>
-                </ItemXml>
-            </itemXml>
-            <status>single</status>-->
-            <!-- <VerifyXml>
-                 <regex>^(?=.*\S).+$</regex>
-                 <msg>不能为空!</msg>
-             </VerifyXml>-->
-
-            <!--<VerifyXml>
-                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
-                <msg>必须为正数!</msg>
-            </VerifyXml>-->
         </UiXml>
         <UiXml>
             <alias>古树等级</alias>
@@ -362,17 +363,17 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>一级</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>二级</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>三级</value>
                 </ItemXml>
             </itemXml>
@@ -453,46 +454,46 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
-                <msg>必须为正数!</msg>
+                <regex>([0-8]?[0-9]|90*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
+                <msg>坡度必须在0-90内!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>坡度等级</alias>
             <code>PDDJ</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
+           <!-- <itemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">01</code>
-                    <value>平坡</value>
+                    <value>Ⅰ/平坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">02</code>
-                    <value>缓坡</value>
+                    <value>Ⅱ/缓坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">03</code>
-                    <value>斜坡</value>
+                    <value>Ⅲ/斜坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">04</code>
-                    <value>陡坡</value>
+                    <value>Ⅳ/陡坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">05</code>
-                    <value>急坡</value>
+                    <value>Ⅵ/急坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
                     <code class="string">06</code>
-                    <value>险坡</value>
+                    <value>Ⅶ/险坡</value>
                 </ItemXml>
-            </itemXml>
+            </itemXml>-->
             <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
@@ -593,22 +594,22 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>正常</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>衰弱</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>濒危</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>死亡</value>
                 </ItemXml>
             </itemXml>
@@ -626,17 +627,17 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>好</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>中</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>差</value>
                 </ItemXml>
             </itemXml>
@@ -660,26 +661,21 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>树龄增长</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>遗漏树木</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>异地移植</value>
                 </ItemXml>
             </itemXml>
             <status>single</status>
-            <!--  <VerifyXml>
-                  <canNull>false</canNull>
-                  <regex>^(?=.*\S).+$</regex>
-                  <msg>不能为空!</msg>
-              </VerifyXml>-->
         </UiXml>
         <UiXml>
             <alias>古树历史
@@ -696,22 +692,22 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>国有</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>集体</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>个人</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>其他</value>
                 </ItemXml>
             </itemXml>

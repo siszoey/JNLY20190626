@@ -18,6 +18,17 @@
             app:canOffline="true"
             app:canRotate="false" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/content_inset"
+            android:clickable="true"
+            android:src="@drawable/ic_add"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
     </FrameLayout>
 
     <!--右侧菜单布局-->

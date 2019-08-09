@@ -24,6 +24,41 @@ import java.util.Map;
 public final class MultiCompute {
 
     /**
+     * 获取单株调查表里objectid最大的一项
+     *
+     * @param iCallBack
+     * @return
+     */
+    public static void getLastFeature(@NonNull ICallBack iCallBack) {
+        LayerNode layerNode = ArcMap.arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+        if (layerNode == null) return;
+        FeatureTable single = layerNode.tryGetFeaTable();
+        QueryParameters params = new QueryParameters();
+        params.getOrderByFields().add(new QueryParameters.OrderBy("OBJECTID", QueryParameters.SortOrder.DESCENDING));
+        params.setMaxFeatures(1);
+        params.setResultOffset(0);
+        ListenableFuture<FeatureQueryResult> future = single.queryFeaturesAsync(params);
+        future.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FeatureQueryResult result = future.get();
+                    Iterator<Feature> features = result.iterator();
+                    Feature feature = null;
+                    while (features.hasNext()) {
+                        feature = features.next();
+                        break;
+                    }
+                    if (iCallBack != null)
+                        iCallBack.callback(feature);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
      * 新增古树群
      *
      * @param
@@ -92,5 +127,9 @@ public final class MultiCompute {
 
     public interface IProperty {
         public void computeProperty(List<Feature> features, Map property);
+    }
+
+    public interface ICallBack {
+        public void callback(Feature feature);
     }
 }

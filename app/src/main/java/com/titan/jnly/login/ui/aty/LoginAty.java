@@ -167,8 +167,10 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
         boolean flag = AppUtil.isAppFirstInstall(_context);
         //如果app是首次安装，则复制业务库模板到指定文件夹
         if (flag) {
-            FileUtil.copyAssets(_context, Config.GEO_DB_MODULE[0], Config.APP_SDB_PATH.concat(File.separator).concat(Config.GEO_DB_NAME[0]));
-            FileUtil.copyAssets(_context, Config.GEO_DB_MODULE[1], Config.APP_SDB_PATH.concat(File.separator).concat(Config.GEO_DB_NAME[1]));
+            String sdbPath = Config.APP_SDB_PATH.concat(File.separator).concat(Config.GEO_DB_NAME[0]);
+            boolean isExist = FileUtil.isExist(sdbPath);
+            if (isExist) return;
+            FileUtil.copyAssets(_context, Config.GEO_DB_MODULE[0], sdbPath);
         }
     }
 

@@ -50,7 +50,7 @@
         android:orderInCategory="100"
         android:visible="false"
         app:showAsAction="ifRoom">
-        <menu>
+        <!--<menu>
             <group>
                 <item
                     android:id="@+id/menu_right_up_load_group_single"
@@ -59,7 +59,7 @@
                     android:id="@+id/menu_right_up_load_group_multi"
                     android:title="群调查" />
             </group>
-        </menu>
+        </menu>-->
     </item>
 
     <item

@@ -33,9 +33,7 @@ import com.titan.jnly.map.ui.dialog.LayerDialog;
 import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
-import com.titan.jnly.vector.ui.aty.MultiEditActivity;
 import com.titan.jnly.vector.ui.aty.SingleEditActivity;
-import com.titan.jnly.vector.util.GisUtils;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import java.util.ArrayList;
@@ -164,41 +162,8 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                         if (actionModel == ActionModel.ADDFEATURE) {
                             FeatureTable table = layerNode.tryGetFeaTable();
                             if (table == null) return;
-                            if (table.getGeometryType() == GeometryType.POLYLINE || table.getGeometryType() == GeometryType.POLYGON) {
-
-                                //群调查
-                                Geometry polygon = GisUtils.LineToPolygon((Polyline) geometry, arcMap.getMapView());
-                                MultiCompute.newCrowd(polygon, new MultiCompute.IProperty() {
-                                    @Override
-                                    public void computeProperty(List<Feature> features, Map property) {
-                                        if (features == null || features.size() == 0) {
-                                            ToastUtil.showLong(context, "未能找到单株古树，因此无法构成古树群");
-                                            return;
-                                        }
-                                        Map addProperty = DataStatus.createAdd();
-                                        property.putAll(addProperty);
-                                        tools.addLineToLayer(table, (Polyline) geometry, property);
-
-                                        //更新单株古树的所属古树群Id
-                                        LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
-                                        if (layerNode != null) {
-                                            FeatureTable table = layerNode.tryGetFeaTable();
-                                            if (table != null) {
-                                                for (Feature feature : features) {
-                                                    feature.getAttributes().put("GROUP_ID", addProperty.get("UUID"));
-                                                }
-                                                tools.updateFeatures(table, features);
-                                            }
-                                        }
-
-                                    }
-                                });
-
-
-                            } else {
-                                //单株调查
-                                tools.addGeometry(table, geometry, DataStatus.createAdd(), "");
-                            }
+                            //单株调查
+                            tools.addGeometry(table, geometry, DataStatus.createAdd(), "");
                         }
                     }
                 });
@@ -274,11 +239,11 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                         SingleEditActivity.data = data;
                         Intent intent = new Intent(context, SingleEditActivity.class);
                         startActivity(intent);
-                    } else {
+                    } /*else {
                         MultiEditActivity.data = data;
                         Intent intent = new Intent(context, MultiEditActivity.class);
                         startActivity(intent);
-                    }
+                    }*/
                 }
             }).show(context);
         }

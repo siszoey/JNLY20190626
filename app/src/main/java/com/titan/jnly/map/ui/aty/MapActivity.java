@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -15,6 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
@@ -51,6 +53,9 @@ import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAty;
 import com.titan.jnly.vector.bean.TreeMode;
+import com.titan.jnly.vector.ui.aty.SingleEditActivity;
+import com.titan.jnly.vector.ui.aty.SingleEditActivityV1;
+import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,13 +63,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public class MapActivity extends BaseAppCompatActivity implements PositionUtil.ILocStatus {
+public class MapActivity extends BaseAppCompatActivity implements PositionUtil.ILocStatus, View.OnClickListener {
 
 
     CustomDrawerLayout drawerLayout;
     LinearLayout menuRight;
     FrameLayout mainFrame;
     FrameLayer frameLayer;
+    FloatingActionButton fabAdd;
     ArcMap arcMap;
 
 
@@ -94,22 +100,8 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
             toggle();
             return true;
         }
-        if (id == R.id.menu_right_up_load_group_single) {
+        if (id == R.id.menu_right_up_load_group) {
             LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
-            if (layerNode != null) {
-                FeatureTable table = layerNode.tryGetFeaTable();
-                if (table != null) {
-                    EventBus.getDefault().postSticky(table);
-                    startActivity(new Intent(_context, DataSyncAty.class));
-                } else {
-                    ToastUtil.showLong(_context, "未能找到要上传的数据！");
-                }
-            } else {
-                showLongToast("地图尚未加载完成，请稍等！");
-            }
-        }
-        if (id == R.id.menu_right_up_load_group_multi) {
-            LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树群调查表");
             if (layerNode != null) {
                 FeatureTable table = layerNode.tryGetFeaTable();
                 if (table != null) {
@@ -146,6 +138,7 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
     @Override
     protected void initialize() {
         arcMap = $(R.id.arcMap);
+        fabAdd = $(R.id.fabAdd);
         drawerLayout = $(R.id.drawerLayout);
         drawerLayout.setMargin(0.5f);
         menuRight = $(R.id.menuRight);
@@ -158,7 +151,7 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
 
     @Override
     protected void registerEvent() {
-
+        fabAdd.setOnClickListener(this);
     }
 
     @Override
@@ -171,7 +164,7 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
     }
 
     void initMapWidget() {
-        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class,  ToolEdit.class, ToolClear.class);//ToolQuery.class,
+        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolEdit.class, ToolClear.class);//ToolQuery.class,
         ToolContainer.registerTool("辅助", EGravity.LEFT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLoc.class);
         WidgetContainer.registerWidget(FrameQuery.class);
         WidgetContainer.registerWidget(VectorBar.class);
@@ -215,5 +208,21 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void fillData(Feature feature) {
         arcMap.getMapControl().zoomF(feature);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fabAdd) {
+            MultiCompute.getLastFeature(new MultiCompute.ICallBack() {
+                @Override
+                public void callback(Feature feature) {
+                   //Long id = (Long) feature.getAttributes().get("OBJECTID");
+                    // System.out.println(feature);
+                    Intent intent = new Intent(_context, SingleEditActivityV1.class);
+                    startActivity(intent);
+
+                }
+            });
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.lib.bandaid.utils.DecimalFormats;
 
 import org.json.JSONObject;
 
@@ -241,9 +242,10 @@ public class TransformUtil {
         double temp = getdPoint(Math.abs(num)) * 60;
         int fen = (int) Math.floor(temp); //获取整数部分
         double miao = getdPoint(temp * 60);
+        String s = DecimalFormats.getFormat("00.00").format(miao);
         if (num < 0)
-            return "-" + du + "°" + fen + "′" + String.format("%.2f", miao) + "″";
-        return du + "°" + fen + "′" + String.format("%.2f", miao) + "″";
+            return "-" + du + "°" + fen + "′" + s + "″";
+        return du + "°" + fen + "′" + s + "″";
     }
 
     /**

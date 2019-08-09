@@ -489,6 +489,17 @@ public final class FileUtil {
      *
      * @param path
      */
+    public static String usePathSafe(String path) {
+        File f = new File(path);
+        if (!f.exists()) f.mkdirs();
+        return path;
+    }
+
+    /**
+     * 创建指定文件夹
+     *
+     * @param path
+     */
     public static void createFile(String path) {
         File f = new File(path);
         if (!f.exists()) {

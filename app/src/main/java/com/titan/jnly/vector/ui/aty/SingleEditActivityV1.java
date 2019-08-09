@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
-import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
@@ -26,18 +24,14 @@ import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
-import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.imp.ServiceLocation;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.GsonFactory;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
-import com.lib.bandaid.utils.StringUtil;
-import com.lib.bandaid.widget.easyui.convert.Resolution;
-import com.lib.bandaid.widget.easyui.ui.PropertyEditView;
-import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
+import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
@@ -52,7 +46,6 @@ import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
-import com.titan.jnly.vector.util.PropertyUtil;
 import com.titan.jnly.vector.util.TreeModeUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -66,14 +59,13 @@ import java.util.Map;
 /**
  * 单株古树名木调查属性编辑
  */
-public class SingleEditActivity extends BaseAppCompatActivity implements View.OnClickListener {
+public class SingleEditActivityV1 extends BaseAppCompatActivity implements View.OnClickListener {
 
     private String uuid;
 
     private Button btnExit, btnSubmit;
     private FrameLayout flRoot;
 
-    public static GroupItem<Feature> data;
     public static Feature lastFeature;
 
     private PropertyView propertyView;
@@ -88,6 +80,13 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         initTitle(null, "属性编辑", Gravity.CENTER);
         setContentView(R.layout.vector_ui_aty_property_layout);
     }
+
+    //接收消息
+    @Subscribe
+    public void onEventMainThread(Object object) {
+
+    }
+
 
     @Override
     protected void initialize() {
@@ -150,22 +149,12 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     @Override
     protected void initClass() {
 
-        feature = data.getData();
-        uuid = FeatureUtil.getAsT(feature, "UUID");
-        feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
-        //获取布局的模板
-        easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
+       // feature = data.getData();
+      //  uuid = FeatureUtil.getAsT(feature, "UUID");
+      //  feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
 
-        Map<String, Object> property = feature.getAttributes();
-        if (DataStatus.isAdd(feature)) {
-            if (lastFeature != null) {
-                Map lastAttr = lastFeature.getAttributes();
-                PropertyUtil.copyUseFulAttr(lastAttr, property);
-            }
-            easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, property);
-        } else {
-            easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, property);
-        }
+        easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
+        easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, feature.getAttributes());
         propertyView.setListener(new ILifeCycle() {
             @Override
             public void beforeCreate() {
@@ -196,6 +185,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (lat != null) lat.setValue(location.getLatitude());
                 if (alt != null) alt.setValue(location.getAltitude());
             }
+            if (lastFeature == null) return;
+            Map lastAttr = lastFeature.getAttributes();
+
+
         }
         //替换区划代码
         else {
@@ -291,10 +284,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     }
 
     /**
-     * 处理控件内部的逻辑
+     * 处理内部逻辑
      */
     private void dealInnerLogic() {
-        //---------------------------------------科属种关联-----------------------------------------
         //中文名
         ComplexTextView name = propertyView.getViewByAlias("树种中文名");
         //俗名
@@ -316,7 +308,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             }
         });
 
-        //----------------------------------------树龄计算------------------------------------------
         ComplexTextView modeAge = propertyView.getViewByAlias("回归模型树龄");
         ComplexTextView cycle = propertyView.getViewByKey("XJ");
         ComplexTextView zhName = propertyView.getViewByAlias("树种中文名");
@@ -361,7 +352,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             }
         });
 
-        //----------------------------------------区划关联------------------------------------------
         ComplexTextView city = propertyView.getViewByKey("XIAN");
         ComplexTextView county = propertyView.getViewByKey("XIANG");
         ComplexTextView village = propertyView.getViewByKey("CUN");
@@ -376,49 +366,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             @Override
             public void changeLister(String name) {
                 village.setText("");
-            }
-        });
-
-        //----------------------------------------区划关联------------------------------------------
-        ComplexTextView ew = propertyView.getViewByKey("DXGF");
-        ComplexTextView sn = propertyView.getViewByKey("NBGF");
-        ComplexTextView wsen = propertyView.getViewByKey("PJGF");
-        WidgetUtil.setViewTextChangeLister(ew, new WidgetUtil.IChangeLister() {
-            @Override
-            public void changeLister(String text) {
-                String snText = sn.getText();
-                if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(snText)) return;
-                double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(snText)) / 2;
-                wsen.setText(avg + "");
-            }
-        });
-        WidgetUtil.setViewTextChangeLister(sn, new WidgetUtil.IChangeLister() {
-            @Override
-            public void changeLister(String text) {
-                String ewText = ew.getText();
-                if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(ewText)) return;
-                double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(ewText)) / 2;
-                wsen.setText(avg + "");
-            }
-        });
-
-        //--------------------------------------坡度等级关联----------------------------------------
-        ComplexTextView slope = propertyView.getViewByKey("PODU");
-        UiXml slopeLevel = propertyView.getUiXmlByKey("PDDJ");
-        WidgetUtil.setViewTextChangeLister(slope, new WidgetUtil.IChangeLister() {
-            @Override
-            public void changeLister(String text) {
-                if (!NumberUtil.can2Double(text)) {
-                    slopeLevel.setLabel("");
-                    return;
-                }
-                double data = NumberUtil.try2Double(text);
-                if (data < 5) slopeLevel.setLabel("Ⅰ/平坡");
-                if (data >= 5 && data <= 14) slopeLevel.setLabel("Ⅱ/缓坡");
-                if (data >= 15 && data <= 24) slopeLevel.setLabel("Ⅲ/斜坡");
-                if (data >= 25 && data <= 34) slopeLevel.setLabel("Ⅳ/陡坡");
-                if (data >= 35 && data <= 44) slopeLevel.setLabel("Ⅵ/急坡");
-                if (data > 45) slopeLevel.setLabel("Ⅶ/险坡");
             }
         });
     }
