@@ -27,6 +27,7 @@ import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
+import com.lib.bandaid.widget.easyui.xml.UiXml;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.dialog.FeatureDialog;
 import com.titan.jnly.map.ui.dialog.LayerDialog;
@@ -34,6 +35,7 @@ import com.titan.jnly.vector.bean.ActionModel;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.ui.aty.SingleEditActivity;
+import com.titan.jnly.vector.util.DbEasyUtil;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import java.util.ArrayList;
@@ -163,7 +165,14 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                             FeatureTable table = layerNode.tryGetFeaTable();
                             if (table == null) return;
                             //单株调查
-                            tools.addGeometry(table, geometry, DataStatus.createAdd(), "");
+                            String sequence = DbEasyUtil.getWorkSequence();
+                            if (sequence == null) {
+                                ToastUtil.showLong(context, "未能取得调查顺序号！");
+                                return;
+                            }
+                            Map property = DataStatus.createAdd();
+                            property.put("DCSXH", sequence);
+                            tools.addGeometry(table, geometry, property, "");
                         }
                     }
                 });
@@ -236,14 +245,16 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                     Feature feature = data.getData();
                     if (feature == null) return;
                     if (feature.getGeometry().getGeometryType() == GeometryType.POINT) {
-                        SingleEditActivity.data = data;
-                        Intent intent = new Intent(context, SingleEditActivity.class);
-                        startActivity(intent);
-                    } /*else {
-                        MultiEditActivity.data = data;
-                        Intent intent = new Intent(context, MultiEditActivity.class);
-                        startActivity(intent);
-                    }*/
+                        MultiCompute.getLastFeature(data.getData(), new MultiCompute.ICallBack() {
+                            @Override
+                            public void callback(Feature feature) {
+                                SingleEditActivity.data = data;
+                                SingleEditActivity.lastFeature = feature;
+                                Intent intent = new Intent(context, SingleEditActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 }
             }).show(context);
         }

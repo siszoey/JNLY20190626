@@ -209,6 +209,12 @@ public class DateUtil {
         return str;
     }
 
+
+    public static String curTimeFormat(String pattern) {
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        return df.format(new Date());
+    }
+
     /**
      * @param date
      * @return 返回指定格式的日期字符串。

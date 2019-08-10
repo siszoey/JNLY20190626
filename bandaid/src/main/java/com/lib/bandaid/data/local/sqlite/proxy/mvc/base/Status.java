@@ -127,7 +127,8 @@ public abstract class Status<T> implements IStatus<T> {
             cursor = query(sql);
             int i = 0;
             while (cursor.moveToNext()) {
-                i = cursor.getInt(0);
+                //i = cursor.getInt(0);
+                i++;
                 break;
             }
             if (i > 0) {

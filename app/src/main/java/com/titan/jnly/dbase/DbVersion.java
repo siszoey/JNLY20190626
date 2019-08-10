@@ -9,6 +9,7 @@ import com.lib.bandaid.service.bean.Loc;
 import com.titan.jnly.Config;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.vector.bean.TreeMode;
+import com.titan.jnly.vector.bean.WorkSequence;
 
 
 /**
@@ -32,6 +33,8 @@ public class DbVersion extends DbConfig {
             sql = SqlBuilder.getTableBuildingSQL(new Loc());
             db.execSQL(sql);
             sql = SqlBuilder.getTableBuildingSQL(new UserInfo());
+            db.execSQL(sql);
+            sql = SqlBuilder.getTableBuildingSQL(new WorkSequence());
             db.execSQL(sql);
         } else {
 

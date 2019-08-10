@@ -29,6 +29,45 @@ public final class MultiCompute {
      * @param iCallBack
      * @return
      */
+    public static void getLastFeature(@NonNull Feature _feature, @NonNull ICallBack iCallBack) {
+        long _objectId = (long) _feature.getAttributes().get("OBJECTID");
+        LayerNode layerNode = ArcMap.arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+        if (layerNode == null) return;
+        FeatureTable single = layerNode.tryGetFeaTable();
+        QueryParameters params = new QueryParameters();
+        params.getOrderByFields().add(new QueryParameters.OrderBy("OBJECTID", QueryParameters.SortOrder.DESCENDING));
+        params.setMaxFeatures(2);
+        params.setResultOffset(0);
+        ListenableFuture<FeatureQueryResult> future = single.queryFeaturesAsync(params);
+        future.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FeatureQueryResult result = future.get();
+                    Iterator<Feature> features = result.iterator();
+                    Feature feature = null;
+                    long objectId;
+                    while (features.hasNext()) {
+                        feature = features.next();
+                        objectId = (long) _feature.getAttributes().get("OBJECTID");
+                        if (_objectId == objectId) continue;
+                        break;
+                    }
+                    if (iCallBack != null)
+                        iCallBack.callback(feature);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取单株调查表里objectid最大的一项
+     *
+     * @param iCallBack
+     * @return
+     */
     public static void getLastFeature(@NonNull ICallBack iCallBack) {
         LayerNode layerNode = ArcMap.arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
         if (layerNode == null) return;

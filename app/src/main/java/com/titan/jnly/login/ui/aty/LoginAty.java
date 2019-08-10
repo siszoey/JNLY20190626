@@ -22,9 +22,11 @@ import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
 import com.lib.bandaid.utils.AppUtil;
+import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SPfUtil;
 import com.lib.bandaid.utils.SimpleMap;
 import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.utils.ToastUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
@@ -94,6 +96,10 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnLogin) {
+            if (ObjectUtil.isEmpty(cetPhoneNum.getText().toString()) || ObjectUtil.isEmpty(cetPwd.getText().toString())) {
+                ToastUtil.showLong(_context, "请填写用户名和密码！");
+                return;
+            }
             //保存账号信息
             user = new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString());
             if (isRemember) Constant.putUser(user);
@@ -123,7 +129,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     public void LoginSuccess(UserInfo info) {
         //保存用户信息到本地
         if (info != null) {
-            DbManager.createDefault().useSafe(UserInfo.class).saveOrUpdate(info);
+            DbManager.createDefault().saveOrUpdate(info);
             Constant.putUserInfo(info);
         }
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
@@ -159,7 +165,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                 Config.APP_SDB_PATH,
                 Config.APP_MAP_CACHE,
                 Config.APP_PATH_CRASH,
-                Config.APP_PHOTO_DIR
+                Config.APP_PHOTO_DIR,
+                Config.APP_PATH_DIC
         );
         //创建系统字典表
         FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DIC_DB_PATH);

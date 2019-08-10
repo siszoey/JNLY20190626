@@ -40,6 +40,7 @@ public final class FileUtil {
         try {
             File file = new File(newPath);
             if (file.exists()) return flag;
+            file.getParentFile().mkdirs();
             String fileNames[] = context.getAssets().list(oldPath);// 获取assets目录下的所有文件及目录名
             if (fileNames.length > 0) {// 如果是目录
                 file = new File(newPath);

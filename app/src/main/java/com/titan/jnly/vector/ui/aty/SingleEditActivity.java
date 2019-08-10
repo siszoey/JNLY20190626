@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
-import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
@@ -26,16 +24,12 @@ import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
-import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.GsonFactory;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
-import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
-import com.lib.bandaid.widget.easyui.ui.PropertyEditView;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
 import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
@@ -53,7 +47,7 @@ import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.util.PropertyUtil;
-import com.titan.jnly.vector.util.TreeModeUtil;
+import com.titan.jnly.vector.util.DbEasyUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -330,7 +324,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (ObjectUtil.isEmpty(place)) return;
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });
@@ -343,7 +337,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 if (ObjectUtil.isEmpty(place)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });
@@ -356,7 +350,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (ObjectUtil.isEmpty(name)) return;
                 if (ObjectUtil.isEmpty(place)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });

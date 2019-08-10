@@ -1,15 +1,20 @@
 package com.titan.jnly.vector.util;
 
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.utils.DateUtil;
 import com.titan.jnly.Config;
+import com.titan.jnly.login.bean.UserInfo;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.TreeMode;
+import com.titan.jnly.vector.bean.WorkSequence;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * 回归模型计算树龄
  */
-public final class TreeModeUtil {
+public final class DbEasyUtil {
 
     /**
      * @param name 树种名称
@@ -63,6 +68,37 @@ public final class TreeModeUtil {
      */
     public static int computeTreeAgeByCycle(String name, Double cycle, String flag) {
         return computeTreeAge(name, cycle / Math.PI, flag);
+    }
+
+    public static String getWorkSequence() {
+        UserInfo userInfo = Constant.getUserInfo();
+        if (userInfo == null) return null;
+        String userName = userInfo.getUserName();
+        if (userInfo.getUserGroup() == null) return null;
+        String sql = "select * from TB_Work_Sequence where userName = '" + userName + "' and date(dateTime) = date('now') ORDER BY num DESC LIMIT 1 OFFSET 0";
+        System.out.println(">>>>>:   " + sql);
+        WorkSequence workSequence = (WorkSequence) DbManager.createDefault().getTBySql(WorkSequence.class, sql, true);
+        //没有当天数据
+        if (workSequence == null) {
+            workSequence = new WorkSequence();
+            workSequence.setDateTime(new Date());
+            workSequence.setUserName(userName);
+            workSequence.setNum(1);
+            String prefix = DateUtil.curTimeFormat("yyMMdd");
+            String group = userInfo.getUserGroup();
+            String suffix = workSequence.getNumFormat();
+            workSequence.setSequence(prefix + group + suffix);
+        } else {
+            workSequence.setNum(workSequence.getNum() + 1);
+            workSequence.setDateTime(new Date());
+            String prefix = DateUtil.curTimeFormat("yyMMdd");
+            String group = userInfo.getUserGroup();
+            String suffix = workSequence.getNumFormat();
+            workSequence.setSequence(prefix + group + suffix);
+        }
+        boolean flag = DbManager.createDefault().saveOrUpdate(workSequence);
+        if (flag) return workSequence.getSequence();
+        else return null;
     }
 
 }

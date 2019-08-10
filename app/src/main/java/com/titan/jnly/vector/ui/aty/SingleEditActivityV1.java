@@ -43,7 +43,7 @@ import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.Species;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
-import com.titan.jnly.vector.util.TreeModeUtil;
+import com.titan.jnly.vector.util.DbEasyUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -318,7 +318,7 @@ public class SingleEditActivityV1 extends BaseAppCompatActivity implements View.
                 if (ObjectUtil.isEmpty(place)) return;
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });
@@ -331,7 +331,7 @@ public class SingleEditActivityV1 extends BaseAppCompatActivity implements View.
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 if (ObjectUtil.isEmpty(place)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });
@@ -344,7 +344,7 @@ public class SingleEditActivityV1 extends BaseAppCompatActivity implements View.
                 if (ObjectUtil.isEmpty(name)) return;
                 if (ObjectUtil.isEmpty(place)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
-                int age = TreeModeUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
                 modeAge.setText(age + "");
             }
         });

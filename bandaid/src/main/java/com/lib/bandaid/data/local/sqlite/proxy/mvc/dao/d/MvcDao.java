@@ -58,6 +58,7 @@ public class MvcDao<T> extends Status<T> implements IMvcDao<T> {
     public Boolean createIfNecessary(Class t) {
         try {
             String createSql = SqlBuilder.getTableBuildingSQL(t.newInstance());
+            System.out.println(createSql);
             return exec(createSql);
         } catch (Exception e) {
             e.printStackTrace();
