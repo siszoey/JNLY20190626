@@ -2,7 +2,9 @@ package com.lib.bandaid.data.remote.core;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+//import com.lib.bandaid.data.remote.entity.BaseResult;
 import com.lib.bandaid.data.remote.entity.BaseResult;
+import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.data.remote.utils.RetrofitManager;
 
@@ -79,13 +81,22 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                         .subscribe(dataResponse -> {
                             networkMap.remove(observable);
                             if (dataResponse instanceof BaseResult) {
-                                if (((BaseResult) dataResponse).getCode() == 200 ||
-                                        ((BaseResult) dataResponse).getCode() == 0) {
+                                BaseResult result = (BaseResult) dataResponse;
+                                if (result.getCode() == 200 || result.getCode() == 0) {
                                     netWorkResult.onSuccess(dataResponse);
                                 } else {
-                                    ToastUtils.showShort("响应码:" + ((BaseResult) dataResponse).getCode() + " 信息:" + ((BaseResult) dataResponse).getMsg());
-                                    LogUtils.eTag("NetworkError", ((BaseResult) dataResponse).getCode() + "---" + ((BaseResult) dataResponse).getMsg());
-                                    netWorkResult.onError(((BaseResult) dataResponse).getCode(), ((BaseResult) dataResponse).getMsg(), null);
+                                    ToastUtils.showShort("响应码:" + result.getCode() + " 信息:" + result.getMsg());
+                                    LogUtils.eTag("NetworkError", result.getCode() + "---" + result.getMsg());
+                                    netWorkResult.onError(result.getCode(), result.getMsg(), null);
+                                }
+                            } else if (dataResponse instanceof TTResult) {
+                                TTResult result = (TTResult) dataResponse;
+                                if (result.getResult()) {
+                                    netWorkResult.onSuccess(dataResponse);
+                                } else {
+                                    ToastUtils.showShort(" 信息:" + result.getMessage());
+                                    LogUtils.eTag("NetworkError", result.getMessage());
+                                    netWorkResult.onError(result.getCode(), result.getMessage(), null);
                                 }
                             } else if (dataResponse instanceof Response) {
 
@@ -124,8 +135,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                             } else if (throwable instanceof UnknownHostException) {
                                 UnknownHostException unknownHostException = (UnknownHostException) throwable;
                                 ToastUtils.showShort("未知主机:" + unknownHostException.getMessage());
-                                LogUtils.eTag("NetworkError", "未知主机:" +
-                                        unknownHostException.getMessage() + "----" + value);
+                                LogUtils.eTag("NetworkError", "未知主机:" + unknownHostException.getMessage() + "----" + value);
                             } else {
                                 ToastUtils.showShort("加载失败:" + throwable.getMessage());
                                 LogUtils.eTag("NetworkError", throwable.getMessage());

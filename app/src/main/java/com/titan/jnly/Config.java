@@ -27,6 +27,8 @@ public final class Config extends Config_pro {
     public static String APP_PHOTO_PATH = APP_PATH.concat(File.separator).concat(APP_PHOTO_DIR);
     //app数据库所在路径
     public static String APP_DB_PATH = APP_PATH.concat(File.separator).concat(APP_DB_NAME);
+    //app字典数据库路径
+    public static String APP_DIC_DB_PATH = APP_PATH_DIC.concat(File.separator).concat(APP_DIC_DB_NAME);
 
     /**
      * 业务布局模板
@@ -38,7 +40,7 @@ public final class Config extends Config_pro {
     /**
      * 系统字典表
      */
-    public static String DIC_DB_MODULE = "sqlite/jnly.db";
+    public static String DIC_DB_MODULE = "sqlite/dic.db";
 
     private Config() {
     }

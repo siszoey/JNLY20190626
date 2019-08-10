@@ -11,8 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
@@ -23,19 +23,17 @@ import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
 import com.lib.bandaid.utils.AppUtil;
 import com.lib.bandaid.utils.SPfUtil;
+import com.lib.bandaid.utils.SimpleMap;
 import com.lib.bandaid.utils.StringUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
-import com.titan.jnly.main.ui.aty.MainActivity;
+import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.map.ui.aty.MapActivity;
 import com.titan.jnly.system.Constant;
-import com.titan.jnly.vector.bean.Species;
 
 import java.io.File;
-import java.util.List;
-
-import javax.inject.Inject;
+import java.util.Map;
 
 public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements LoginAtyContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -98,11 +96,15 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
         if (v.getId() == R.id.btnLogin) {
             //保存账号信息
             user = new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString());
-            if (isRemember) {
-                Constant.putUser(user);
+            if (isRemember) Constant.putUser(user);
+            //用户验证
+            Map condition = new SimpleMap().push("UserName", user.getName());
+            UserInfo userInfo = (UserInfo) DbManager.createDefault().getTByMultiCondition(UserInfo.class, condition);
+            if (userInfo != null) {
+                LoginSuccess(userInfo);
+                return;
             }
-            // presenter.Login(user);
-            LoginSuccess();
+            presenter.Login(user);
         }
         if (v.getId() == R.id.ivShowPwd) {
             showPwd = !showPwd;
@@ -115,17 +117,23 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         SPfUtil.putT(_context, CONSTANT_IS_REMEMBER, isChecked);
         isRemember = SPfUtil.readT(_context, CONSTANT_IS_REMEMBER);
-        if (!isChecked) {
-            Constant.delUser();
-        }
     }
 
     @Override
-    public void LoginSuccess() {
+    public void LoginSuccess(UserInfo info) {
+        //保存用户信息到本地
+        if (info != null) {
+            DbManager.createDefault().useSafe(UserInfo.class).saveOrUpdate(info);
+            Constant.putUserInfo(info);
+        }
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
+        //清除其他activity
+        BaseApp.baseApp.getAtyLifecycleCallback().removeOtherActivities(this);
         startActivity(new Intent(_context, MapActivity.class));
         finish();
     }
+
+    //---------------------------------------------本地数据-----------------------------------------
 
     private void permissions() {
         RxPermissionFactory
@@ -153,14 +161,15 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
                 Config.APP_PATH_CRASH,
                 Config.APP_PHOTO_DIR
         );
-        //读取数据到内存里
-        Constant.initialize(_context, Config.GEO_TB_MODULE);
         //创建系统字典表
-        FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DB_PATH);
+        FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DIC_DB_PATH);
         //是否为app首次安装
         appFirstInstall();
         //是否为当前版本首次安装
         versionFirstInstall();
+
+        //读取数据到内存里
+        Constant.initialize(_context, Config.GEO_TB_MODULE);
     }
 
     private void appFirstInstall() {
@@ -177,8 +186,9 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements Log
     private void versionFirstInstall() {
         boolean flag = AppUtil.isVersionFirstInstall(_context);
         if (flag) {
-            FileUtil.deleteFile(Config.APP_DB_PATH);
-            FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DB_PATH);
+            //如果版本更新，就更新字典数据库
+            FileUtil.deleteFile(Config.APP_DIC_DB_PATH);
+            FileUtil.copyAssets(_context, Config.DIC_DB_MODULE, Config.APP_DIC_DB_PATH);
         }
     }
 }

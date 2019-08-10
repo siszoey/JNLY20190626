@@ -7,6 +7,7 @@ import com.lib.bandaid.data.local.sqlite.config.DbConfig;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.lib.bandaid.service.bean.Loc;
 import com.titan.jnly.Config;
+import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.vector.bean.TreeMode;
 
 
@@ -30,6 +31,10 @@ public class DbVersion extends DbConfig {
         } else if (db.getPath().equals(defaultDbPath())) {
             sql = SqlBuilder.getTableBuildingSQL(new Loc());
             db.execSQL(sql);
+            sql = SqlBuilder.getTableBuildingSQL(new UserInfo());
+            db.execSQL(sql);
+        } else {
+
         }
     }
 
@@ -38,21 +43,38 @@ public class DbVersion extends DbConfig {
         if (db.getPath().equals(privateDbPath())) {
 
         } else if (db.getPath().equals(defaultDbPath())) {
-            String sql = SqlBuilder.getTableBuildingSQL(Loc.class);
-            db.execSQL(sql);
+           /* String sql = SqlBuilder.getTableBuildingSQL(Loc.class);
+            db.execSQL(sql);*/
+        } else {
+
         }
     }
 
+    /**
+     * root后才能看到的目录
+     *
+     * @return
+     */
     @Override
     public String privateDbName() {
         return "system.db";
     }
 
+    /**
+     * 指定一个目录
+     *
+     * @return
+     */
     @Override
     public String defaultDbPath() {
         return Config.APP_DB_PATH;
     }
 
+    /**
+     * 使用时才会指定的目录
+     *
+     * @return
+     */
     @Override
     public int version() {
         return 1;

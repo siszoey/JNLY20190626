@@ -1,8 +1,12 @@
 package com.titan.jnly.map.ui.frame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
@@ -24,7 +28,10 @@ import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
+import com.titan.jnly.login.bean.UserInfo;
+import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.map.utils.NodeIteration;
+import com.titan.jnly.system.Constant;
 
 import java.io.File;
 import java.util.List;
@@ -34,7 +41,10 @@ import java.util.Map;
  * Created by zy on 2019/5/23.
  */
 
-public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening, TocContainer.ILayerLoaded {
+public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening, TocContainer.ILayerLoaded, View.OnClickListener {
+
+    private TextView tvAccount, tvRealName;
+    private ImageView ivHead;
 
     private LinearLayout llTreeView;
     private TreeView treeView;
@@ -49,17 +59,27 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
 
     @Override
     public void initialize() {
+        tvAccount = $(R.id.tvAccount);
+        tvRealName = $(R.id.tvRealName);
+        ivHead = $(R.id.ivHead);
+
+
         llTreeView = $(R.id.llRoot);
     }
 
     @Override
     public void registerEvent() {
-
+        ivHead.setOnClickListener(this);
     }
 
     @Override
     public void initClass() {
         initLayerTree();
+        UserInfo info = Constant.getUserInfo();
+        if (info != null) {
+            tvAccount.setText(info.getUserName());
+            tvRealName.setText(info.getName());
+        }
     }
 
     @Override
@@ -142,4 +162,11 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         llTreeView.addView(treeView.getView());
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.ivHead) {
+            Intent intent = new Intent(context, LoginAty.class);
+            startActivity(intent);
+        }
+    }
 }

@@ -12,6 +12,7 @@ import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.login.bean.User;
+import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.vector.bean.Species;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
 public final class Constant {
 
     private final static String KEY_USER = "KEY_USER";
+    private final static String KEY_USER_INFO = "KEY_USER_INFO";
 
     private static CacheUtil cacheUtil = CacheUtil.get(BaseApp.baseApp);
 
@@ -43,6 +45,20 @@ public final class Constant {
 
     public static User getUser() {
         return cacheUtil.getAsT(KEY_USER);
+    }
+
+
+    public static void putUserInfo(UserInfo userInfo) {
+        cacheUtil.put(KEY_USER_INFO, userInfo);
+    }
+
+
+    public static void delUserInfo() {
+        cacheUtil.remove(KEY_USER_INFO);
+    }
+
+    public static UserInfo getUserInfo() {
+        return cacheUtil.getAsT(KEY_USER_INFO);
     }
 
     public static void initialize(Context context, String... paths) {
@@ -75,7 +91,7 @@ public final class Constant {
      */
     private static void initSpecies() {
         if (Constant_Species.size() == 0) {
-            List<Species> list = DbManager.createDefault().getListTByWhere(Species.class, " where 1=1");
+            List<Species> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(Species.class, " where 1=1");
             if (list == null) return;
             Constant_Species.addAll(list);
         }

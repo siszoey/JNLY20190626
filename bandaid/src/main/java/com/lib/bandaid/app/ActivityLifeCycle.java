@@ -95,4 +95,13 @@ public class ActivityLifeCycle implements Application.ActivityLifecycleCallbacks
         }
     }
 
+    public void removeOtherActivities(Activity activity) {
+        for (Activity aty : activities) {
+            if (null != aty && aty != activity) {
+                aty.finish();
+                aty.overridePendingTransition(0, sAnimationId);
+            }
+        }
+    }
+
 }

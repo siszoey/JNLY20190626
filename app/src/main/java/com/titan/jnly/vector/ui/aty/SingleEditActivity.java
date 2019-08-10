@@ -244,21 +244,21 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
         if (flag.equals("XIAN")) {
             String where = " where length(f_code) = 6";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         if (flag.equals("XIANG")) {
             UiXml city = easyUiXml.getUiXml("XIAN");
             Object val = city.getValue();
             String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         if (flag.equals("CUN")) {
             UiXml county = easyUiXml.getUiXml("XIANG");
             Object val = county.getValue();
             String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         uiXml.setItemXml(data);

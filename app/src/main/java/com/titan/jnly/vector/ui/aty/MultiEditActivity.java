@@ -16,13 +16,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
-import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.ObjectUtil;
@@ -217,21 +215,21 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
         Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
         if (flag.equals("XIAN")) {
             String where = " where length(f_code) = 6";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         if (flag.equals("XIANG")) {
             UiXml city = easyUiXml.getUiXml("XIAN");
             Object val = city.getValue();
             String where = " where length(f_code) = 9 and substr(f_code,1,6) = '" + val + "'";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         if (flag.equals("CUN")) {
             UiXml county = easyUiXml.getUiXml("XIANG");
             Object val = county.getValue();
             String where = " where length(f_code) = 12 and substr(f_code,1,9) = '" + val + "'";
-            List<District> list = DbManager.createDefault().getListTByWhere(District.class, where);
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
         uiXml.setItemXml(data);

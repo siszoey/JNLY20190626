@@ -24,44 +24,29 @@ import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
-import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.permission.Permission;
-import com.lib.bandaid.permission.RxConsumer;
-import com.lib.bandaid.permission.RxPermissionFactory;
-import com.lib.bandaid.permission.SimplePermission;
-import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
-import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
-import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
 import com.titan.jnly.map.ui.frame.VectorBar;
 import com.titan.jnly.map.ui.tools.ToolClear;
 import com.titan.jnly.map.ui.tools.ToolEdit;
-import com.titan.jnly.map.ui.tools.ToolLocal;
 import com.titan.jnly.map.ui.tools.ToolNavi;
-import com.titan.jnly.map.ui.tools.ToolQuery;
 import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
-import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAty;
-import com.titan.jnly.vector.bean.TreeMode;
-import com.titan.jnly.vector.ui.aty.SingleEditActivity;
 import com.titan.jnly.vector.ui.aty.SingleEditActivityV1;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 public class MapActivity extends BaseAppCompatActivity implements PositionUtil.ILocStatus, View.OnClickListener {
 

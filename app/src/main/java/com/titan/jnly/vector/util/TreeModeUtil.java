@@ -1,6 +1,7 @@
 package com.titan.jnly.vector.util;
 
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.titan.jnly.Config;
 import com.titan.jnly.vector.bean.TreeMode;
 
 import java.util.List;
@@ -18,27 +19,27 @@ public final class TreeModeUtil {
     public static int computeTreeAge(String name, Double diam, String flag) {
         if (flag == null) return -1;
         TreeMode min, max;
-        if ("01".equals(flag)) {
+        if ("1".equals(flag)) {
             String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_hill <= " + diam + " order by f_diam_hill desc limit 1 OFFSET 0";
             System.out.println(sql);
-            min = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            min = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
             sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_hill >= " + diam + " order by f_diam_hill asc limit 1 OFFSET 0";
             System.out.println(sql);
-            max = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            max = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
         } else {
             String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_plain <= " + diam + " order by f_diam_plain desc limit 1 OFFSET 0";
             System.out.println(sql);
-            min = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            min = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
             sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_plain >= " + diam + " order by f_diam_plain asc limit 1 OFFSET 0";
             System.out.println(sql);
-            max = (TreeMode) DbManager.createDefault().getTBySql(TreeMode.class, sql, true);
+            max = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
         }
         if (min != null && max != null) {
             /*Double age = (diam - min.getDiam()) * (max.getYear() - min.getYear()) / (max.getDiam() - min.getDiam()) + min.getYear();
             return age.intValue();*/
             //中位值计算
             double mid;
-            if ("01".equals(flag)) {
+            if ("1".equals(flag)) {
                 mid = (max.getDiamHill() + min.getDiamHill()) / 2;
                 if (diam >= mid) return max.getYear();
                 else return min.getYear();
