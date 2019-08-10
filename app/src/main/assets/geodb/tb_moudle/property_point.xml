@@ -454,7 +454,7 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>([0-8]?[0-9]|90*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
+                <regex>([0-8]?[0-9]|90)(\.\d{1,2})?$</regex>
                 <msg>坡度必须在0-90内!</msg>
             </VerifyXml>
         </UiXml>
@@ -462,38 +462,38 @@
             <alias>坡度等级</alias>
             <code>PDDJ</code>
             <dataType class="java-class">java.lang.String</dataType>
-           <!-- <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">01</code>
-                    <value>Ⅰ/平坡</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">02</code>
-                    <value>Ⅱ/缓坡</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">03</code>
-                    <value>Ⅲ/斜坡</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">04</code>
-                    <value>Ⅳ/陡坡</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">05</code>
-                    <value>Ⅵ/急坡</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">06</code>
-                    <value>Ⅶ/险坡</value>
-                </ItemXml>
-            </itemXml>-->
+            <!-- <itemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">01</code>
+                     <value>Ⅰ/平坡</value>
+                 </ItemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">02</code>
+                     <value>Ⅱ/缓坡</value>
+                 </ItemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">03</code>
+                     <value>Ⅲ/斜坡</value>
+                 </ItemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">04</code>
+                     <value>Ⅳ/陡坡</value>
+                 </ItemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">05</code>
+                     <value>Ⅵ/急坡</value>
+                 </ItemXml>
+                 <ItemXml>
+                     <checked>false</checked>
+                     <code class="string">06</code>
+                     <value>Ⅶ/险坡</value>
+                 </ItemXml>
+             </itemXml>-->
             <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
