@@ -38,7 +38,7 @@ public class LocService extends BaseService implements LocationListener, GpsStat
     /**
      * 定位时间间隔
      */
-    private int interval = 5;
+    private int interval = 50;
     /**
      *
      */
