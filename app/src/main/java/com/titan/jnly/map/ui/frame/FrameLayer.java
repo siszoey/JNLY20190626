@@ -2,20 +2,29 @@ package com.titan.jnly.map.ui.frame;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
 import com.esri.arcgisruntime.mapping.LayerList;
+import com.esri.arcgisruntime.symbology.MarkerSymbol;
+import com.esri.arcgisruntime.symbology.PictureMarkerSymbol;
 import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
 import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
+import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import com.esri.arcgisruntime.symbology.SimpleRenderer;
+import com.esri.arcgisruntime.symbology.Symbol;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
@@ -103,17 +112,25 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
                 for (Layer layer : list) {
                     String name = layer.getName();
                     if (name.equals("古树群调查表")) {
-                        setRender((FeatureLayer) layer);
+                        setRenderArea((FeatureLayer) layer);
+                    }
+                    if (name.equals("古树名木单株调查")) {
+                        setRenderPoint((FeatureLayer) layer);
                     }
                 }
             }
         });
     }
 
-    public static void setRender(FeatureLayer layer) {
+    public void setRenderArea(FeatureLayer layer) {
         SimpleLineSymbol simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.RED, 2);
         SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.TRANSPARENT, simpleLineSymbol);
         layer.setRenderer(new SimpleRenderer(simpleFillSymbol));
+    }
+
+    public void setRenderPoint(FeatureLayer layer) {
+        MarkerSymbol markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.RED, 10);
+        layer.setRenderer(new SimpleRenderer(markerSymbol));
     }
 
     @Override

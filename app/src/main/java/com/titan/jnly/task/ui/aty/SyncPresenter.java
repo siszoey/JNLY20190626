@@ -33,6 +33,7 @@ public class SyncPresenter extends NetRequest<SyncContract.View> implements Sync
 
     @Override
     public void syncData(DataSync data) {
+        String json = MapUtil.entity2Json(new SimpleList<>().push(data));
         request(ApiDataSync.class, new NetWorkListen<TTResult>() {
             @Override
             public void onSuccess(TTResult data) {
@@ -44,7 +45,6 @@ public class SyncPresenter extends NetRequest<SyncContract.View> implements Sync
                 //System.out.println(errMsg);
             }
         }).httpFileSync(new SimpleList<>().push(data));
-        //}).httpFileSync(josn);
     }
 
     @Override

@@ -221,13 +221,14 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     private void syncData(Feature feature) {
         //单个上传
         Map<String, Object> map = TransformUtil.feaConvertMap(feature);
+
+        DataSync dataSync = new DataSync();
+        dataSync.setGSMM(map);
+        dataSync.setUserId(Constant.getUserInfo().getId());
+
         String fileJson = (String) map.get("GSZP");
         List<File> files = CollectImgBean.obtainFiles(fileJson);
 
-        String json = MapUtil.entity2Json(map);
-        DataSync dataSync = new DataSync();
-        dataSync.setGSMM(json);
-        dataSync.setUserId(Constant.getUserInfo().getId());
         presenter.syncSingle(files, dataSync);
     }
 

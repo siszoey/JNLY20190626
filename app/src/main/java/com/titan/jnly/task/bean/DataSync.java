@@ -4,6 +4,7 @@ import com.lib.bandaid.data.remote.entity.TTFileResult;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -12,7 +13,7 @@ public class DataSync implements Serializable {
 
     private String UserId;
 
-    private String GSMM;
+    private Map GSMM;
 
     private List<TTFileResult> images;
 
@@ -24,11 +25,11 @@ public class DataSync implements Serializable {
         UserId = userId;
     }
 
-    public String getGSMM() {
+    public Map getGSMM() {
         return GSMM;
     }
 
-    public void setGSMM(String GSMM) {
+    public void setGSMM(Map GSMM) {
         this.GSMM = GSMM;
     }
 
