@@ -3,6 +3,7 @@ package com.camera.lib.ui.aty;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,37 +28,33 @@ import com.camera.lib.widget.ImagePagerBean;
 import com.camera.lib.widget.ImageViewPager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class PhotoActivity extends BaseCameraAty implements JCameraListener, NotifyArrayList.IListener, WaterMarkView.IWaterMarkListener {
 
+
+    public final static String IMG = "IMG";
     private final static String CAMERA_PARENT_PATH = "CAMERA_PARENT_PATH";
     private final static String CAMERA_IS_NORMAL = "CAMERA_IS_NORMAL";
     private final static String CAMERA_SHOW_LOCAL = "CAMERA_SHOW_LOCAL";
     private final static String CAMERA_SHOW_ORIENT = "CAMERA_SHOW_ORIENT";
     private final static String CAMERA_WATER_MARK = "CAMERA_WATER_MARK";
 
-    public static void start(Context context, boolean isNormal, String parentPath, boolean showLocal, boolean showOrient, LinkedHashMap waterMark) {
-        Intent intent = new Intent(context, PhotoActivity.class);
+    public static void start(Activity activity, int requestCode, boolean isNormal, String parentPath, boolean showLocal, boolean showOrient, LinkedHashMap waterMark) {
+        Intent intent = new Intent(activity, PhotoActivity.class);
         intent.putExtra(CAMERA_IS_NORMAL, isNormal);
         intent.putExtra(CAMERA_PARENT_PATH, parentPath);
         intent.putExtra(CAMERA_SHOW_LOCAL, showLocal);
         intent.putExtra(CAMERA_SHOW_ORIENT, showOrient);
-        intent.putExtra(CAMERA_WATER_MARK, waterMark);
+        //intent.putExtra(CAMERA_WATER_MARK, waterMark);
         PhotoActivity.waterMark = waterMark;
-        context.startActivity(intent);
-    }
-
-    public static LinkedHashMap updateMaker() {
-        if (waterMark == null)
-            waterMark = new LinkedHashMap();
-        return waterMark;
+        activity.startActivityForResult(intent, requestCode);
     }
 
     private NotifyArrayList<File> files = new NotifyArrayList<>(this);
-
     private String parentPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "0";
     private boolean isNormal;
     private boolean showLocal;
@@ -109,17 +106,15 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
 
     @Override
     protected void initClass() {
-        if (waterMark == null) {
-            waterMark = new LinkedHashMap();
-            waterMark.put("村名", "王家村");
-            waterMark.put("纬度", "39.666666");
-            waterMark.put("经度", "108.666666");
-            waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
-        }
+        waterMark = new LinkedHashMap();
+        waterMark.put("村名", "王家村");
+        waterMark.put("纬度", "39.666666");
+        waterMark.put("经度", "108.666666");
+        waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
 
         jCameraView.setJCameraLisenter(this).isNormal(isNormal);
         //设置既可以拍照又能录视频
-        jCameraView.setFeatures(JCameraView.BUTTON_STATE_BOTH);
+        jCameraView.setFeatures(JCameraView.BUTTON_STATE_ONLY_CAPTURE);
         jCameraView.setSaveVideoPath(parentPath);
         jCameraView.getWaterMarkView().setMarkListener(this);
         getPermissions();
@@ -174,6 +169,22 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
         if (showLocal) {
 
         }
+        return waterMark;
+    }
+
+    @Override
+    public void finish() {
+        if (files.size() == 0) super.finish();
+        ArrayList<String> paths = ImagePagerBean.convert2Paths(files);
+        if (paths == null || paths.size() == 0) super.finish();
+        Intent back = new Intent();
+        back.putExtra(IMG, paths);
+        setResult(RESULT_OK, back);
+        super.finish();
+    }
+
+    public static LinkedHashMap updateMaker() {
+        if (waterMark == null) waterMark = new LinkedHashMap();
         return waterMark;
     }
 }

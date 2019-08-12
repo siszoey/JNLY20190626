@@ -32,6 +32,17 @@ import java.util.Map;
 
 public class BitmapUtil {
 
+    public static boolean zipImgQuality(String srcPath, String zipPath) {
+        Bitmap bm = path2Bmp(srcPath);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        byte[] bytes = bos.toByteArray();
+        Bitmap zipBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        boolean res = bitmap2File(zipBitmap, zipPath);
+        if (bm != null && !bm.isRecycled()) bm.isRecycled();
+        return res;
+    }
+
     /**
      * 转换图片转换成圆角.
      *
@@ -301,10 +312,10 @@ public class BitmapUtil {
     }
 
     /* 旋转图片
-    * @param angle
-    * @param bitmap
-    * @return Bitmap
-    */
+     * @param angle
+     * @param bitmap
+     * @return Bitmap
+     */
     public static Bitmap rotatingBitmap(Bitmap bitmap, int angle) {
         //modify by clj 20181115 角度为0，就不旋转
         if (angle == 0) return bitmap;

@@ -176,6 +176,7 @@ public class PropertyView extends ScrollView {
         params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         params.weight = 2;
         imageView.setLayoutParams(params);
+        uiXml.setView(imageView);
         setImg(uiXml, imageView);
         return imageView;
     }

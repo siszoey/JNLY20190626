@@ -21,6 +21,9 @@ import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 
 public class ViewUtil {
 
+    public static final int MATCH_PARENT = -1;
+    public static final int WRAP_CONTENT = -2;
+
     public static <T extends View> T findViewById(Activity activity, int resId) {
         return (T) activity.findViewById(resId);
     }

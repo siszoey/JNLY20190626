@@ -1,5 +1,6 @@
 package com.titan.jnly.vector.ui.aty;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,7 +14,10 @@ import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.camera.lib.ui.aty.PhotoActivity;
+import com.camera.lib.util.BitmapUtil;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
@@ -26,12 +30,18 @@ import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.ImgUtil;
+import com.lib.bandaid.utils.MapUtil;
+import com.lib.bandaid.utils.MathUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.widget.collect.image.CollectImgAty;
+import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
+import com.lib.bandaid.widget.easyui.ui.EventImageView;
 import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
@@ -52,6 +62,7 @@ import com.titan.jnly.vector.util.DbEasyUtil;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,6 +86,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private FeatureTable feaTable;
     private Feature feature;
     private EasyUiXml easyUiXml;
+
+    private String imgFPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +114,14 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
             public String adapter(Object val) {
-                return null;
+
+                UiXml uiXml = easyUiXml.getUiXml("GSZP");
+                EventImageView view = (EventImageView) uiXml.getView();
+                if (view != null) view.setJson((String) val);
+
+                List<CollectImgBean> beans = CollectImgBean.convertFromJson((String) val);
+                if (beans == null || beans.size() == 0) return null;
+                return beans.get(0).getUri();
             }
         });
         propertyView.setInputFace(new PropertyView.InputFace() {
@@ -114,13 +134,15 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                     LinkedHashMap waterMark = new LinkedHashMap();
                     String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
                     String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
-
                     waterMark.put("序号", "001");
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
-                    String imgPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
-                    PhotoActivity.start(_context, false, imgPath, true, true, waterMark);
+
+                    UiXml uiXml = easyUiXml.getUiXml("GSZP");
+                    String json = ((EventImageView) uiXml.getView()).getJson();
+                    ArrayList<CollectImgBean> beans = CollectImgBean.convertFromJson(json);
+                    CollectImgAty.start(_activity, 1000, beans, false, imgFPath, true, true, waterMark);
                 }
             }
         });
@@ -143,13 +165,12 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     protected void initClass() {
-
         feature = data.getData();
         uuid = FeatureUtil.getAsT(feature, "UUID");
+        imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
         feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
         //获取布局的模板
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
-
         Map<String, Object> property = feature.getAttributes();
         if (DataStatus.isAdd(feature)) {
             if (lastFeature != null) {
@@ -190,6 +211,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (lat != null) lat.setValue(location.getLatitude());
                 if (alt != null) alt.setValue(location.getAltitude());
             }
+            initArea(easyUiXml.getUiXml("XIAN"));
+            initArea(easyUiXml.getUiXml("XIANG"));
+            initArea(easyUiXml.getUiXml("CUN"));
         }
         //替换区划代码
         else {
@@ -201,6 +225,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
         UiXml item = easyUiXml.getUiXml("SZZWM");
         item.setItemXml(items);
+
+
         //经纬度特殊处理
         // UiXml LONXml = easyUiXml.getUiXml("LON");
         // UiXml LATXml = easyUiXml.getUiXml("LAT");
@@ -291,8 +317,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         //---------------------------------------科属种关联-----------------------------------------
         //中文名
         ComplexTextView name = propertyView.getViewByAlias("树种中文名");
-        //俗名
-        ComplexTextView petName = propertyView.getViewByAlias("树种俗名");
         //拉丁名称
         ComplexTextView latinName = propertyView.getViewByAlias("树种拉丁名");
         //科
@@ -445,5 +469,22 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
         PhotoActivity.updateMaker().put("纬度", lat);
         PhotoActivity.updateMaker().put("经度", lon);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) return;
+        if (requestCode == 1000) {
+            ArrayList<CollectImgBean> beans = (ArrayList<CollectImgBean>) data.getSerializableExtra(CollectImgAty.IMG);
+            //将选择的图片转移到工作目录
+            CollectImgBean.convertToWorkDir(imgFPath, beans);
+            //转成json存储
+            String json = MapUtil.entity2Json(beans);
+            UiXml uiXml = easyUiXml.getUiXml("GSZP");
+            EventImageView view = (EventImageView) uiXml.getView();
+            if (view != null) view.setJson(json);
+            ImgUtil.simpleLoadImg(view, beans.size() == 0 ? "" : beans.get(0).getUri());
+        }
     }
 }

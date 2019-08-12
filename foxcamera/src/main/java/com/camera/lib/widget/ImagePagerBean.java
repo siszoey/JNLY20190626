@@ -16,6 +16,9 @@ public class ImagePagerBean implements Serializable {
     private String mDesc;
     private String mSmallUrl;
 
+    public ImagePagerBean() {
+    }
+
     public ImagePagerBean(File file) {
         mUrl = file.getPath();
         mDesc = file.getName();
@@ -62,5 +65,14 @@ public class ImagePagerBean implements Serializable {
             mImages.add(bean);
         }
         return mImages;
+    }
+
+    public static ArrayList<String> convert2Paths(List<File> files) {
+        if (files == null || files.size() == 0) return null;
+        ArrayList<String> paths = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            paths.add(files.get(i).getAbsolutePath());
+        }
+        return paths;
     }
 }

@@ -14,12 +14,14 @@ import java.util.List;
  */
 public class EventImageView extends AppCompatImageView {
 
-    private String uuid;
+    private String json;
 
     private List<String> list = new ArrayList<>();
 
     public EventImageView(Context context) {
         super(context);
+        init();
+
     }
 
     public EventImageView(Context context, AttributeSet attrs) {
@@ -30,17 +32,21 @@ public class EventImageView extends AppCompatImageView {
         super(context, attrs, defStyleAttr);
     }
 
+    void init(){
+        //setScaleType(ScaleType.FIT_CENTER);
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getJson() {
+        return json;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setJson(String json) {
+        this.json = json;
     }
 
     public List<String> getList() {

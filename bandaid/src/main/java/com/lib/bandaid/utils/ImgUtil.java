@@ -12,6 +12,7 @@ public final class ImgUtil {
 
 
     public static void simpleLoadImg(ImageView view, String localPath) {
+        if (view == null) return;
         // 在需要重新获取更新的图片时调用
         Context context = view.getContext();
         String updateTime = String.valueOf(System.currentTimeMillis());

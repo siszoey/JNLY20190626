@@ -221,7 +221,7 @@ public class UiXml implements Serializable {
             label = ((ComplexTextView) view).getText();
         }
         if (view instanceof ImageView) {
-            label = ((EventImageView) view).getUuid();
+            label = ((EventImageView) view).getJson();
         }
         label = StringUtil.removeEmpty(label);
         setValue(convertRunTimeObj(label));
@@ -239,8 +239,8 @@ public class UiXml implements Serializable {
         if (view instanceof ComplexTextView) {
             label = ((ComplexTextView) view).getText();
         }
-        if (view instanceof ImageView) {
-            label = ((EventImageView) view).getUuid();
+        if (view instanceof EventImageView) {
+            label = ((EventImageView) view).getJson();
         }
         label = StringUtil.removeEmpty(label);
         if (EasyUtil.canConcat(this)) {

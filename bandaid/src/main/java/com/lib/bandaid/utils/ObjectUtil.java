@@ -25,6 +25,27 @@ import java.util.Map;
 
 public final class ObjectUtil {
 
+    /**
+     * 显示时候使用
+     *
+     * @param obj
+     * @return
+     */
+    public static String removeNull(Object obj) {
+        if (obj == null) return "";
+        else return obj.toString();
+    }
+
+    /**
+     * 保存时候使用
+     *
+     * @param obj
+     * @return
+     */
+    public static String removeEmpty(String obj) {
+        if ("".equals(obj)) return null;
+        else return obj;
+    }
 
     public static Object str2SimpleObj(Type type, String s) {
         Object o = null;

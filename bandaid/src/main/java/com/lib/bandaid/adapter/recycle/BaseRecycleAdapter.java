@@ -1,10 +1,12 @@
 package com.lib.bandaid.adapter.recycle;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -453,9 +455,9 @@ public abstract class BaseRecycleAdapter<M, H extends BaseViewHolder<M>> extends
             if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                 //获取最后一个可见view的位置
-                 lastItemPosition = linearManager.findLastVisibleItemPosition();
+                lastItemPosition = linearManager.findLastVisibleItemPosition();
                 //获取第一个可见view的位置
-                 firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                firstItemPosition = linearManager.findFirstVisibleItemPosition();
             }
         }
     }
@@ -466,6 +468,11 @@ public abstract class BaseRecycleAdapter<M, H extends BaseViewHolder<M>> extends
 
     public List<M> getDataList() {
         return dataList;
+    }
+
+    public ArrayList<M> getDataArrayList() {
+        if (dataList == null) return new ArrayList<>();
+        return new ArrayList<>(dataList);
     }
 
     /**

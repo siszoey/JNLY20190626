@@ -91,7 +91,7 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
                     TimePickerDialogUtil.bindTimePickerFull(_context, v);
                 }
                 if (v instanceof ImageView) {
-                    PhotoActivity.start(_context, false, Config.APP_PHOTO_PATH, true, true, null);
+                   // PhotoActivity.start(_activity, false, Config.APP_PHOTO_PATH, true, true, null);
                 }
             }
         });

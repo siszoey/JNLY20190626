@@ -122,7 +122,7 @@ public class SingleEditActivityV1 extends BaseAppCompatActivity implements View.
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
                     String imgPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
-                    PhotoActivity.start(_context, false, imgPath, true, true, waterMark);
+                    //PhotoActivity.start(_context, false, imgPath, true, true, waterMark);
                 }
             }
         });

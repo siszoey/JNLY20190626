@@ -2,6 +2,11 @@ package com.lib.bandaid.rw.file.utils;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
+import com.camera.lib.ui.aty.PhotoActivity;
+import com.camera.lib.util.BitmapUtil;
+import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
 import com.lib.bandaid.utils.StringEngine;
 
 import java.io.BufferedInputStream;
@@ -28,6 +33,33 @@ import java.util.Map;
  */
 
 public final class FileUtil {
+
+    public static String fileRandomPath(String parentPath, @NonNull String prefix, @NonNull String suffix) {
+        return parentPath.concat(File.separator).concat(fileRandomTimeName(prefix, suffix));
+    }
+
+    public static String fileRandomTimeName(@NonNull String prefix, @NonNull String suffix) {
+        StringBuilder name = new StringBuilder();
+        if (prefix != null) name.append(prefix).append("_");
+        name.append(System.currentTimeMillis());
+        if (suffix != null) {
+            if (suffix.startsWith(".")) name.append(suffix);
+            else name.append(".").append(suffix);
+        }
+        return name.toString();
+    }
+
+    public static String fileRandomUuidName(@NonNull String prefix, @NonNull String suffix) {
+        StringBuilder name = new StringBuilder();
+        if (prefix != null) name.append(prefix).append("_");
+        name.append(UUIDTool.get32UUID());
+        if (suffix != null) {
+            if (suffix.startsWith(".")) name.append(suffix);
+            else name.append(".").append(suffix);
+        }
+        return name.toString();
+    }
+
 
     /**
      * 复制asset文件到指定目录
