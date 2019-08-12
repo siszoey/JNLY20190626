@@ -18,5 +18,6 @@ public interface ApiDataSync {
 
     @POST("api/SDS/GSMM/GSMMUpload")
     Observable<TTResult> httpFileSync(@Body List<DataSync> list);
+    //Observable<TTResult> httpFileSync(@Body String list);
 
 }

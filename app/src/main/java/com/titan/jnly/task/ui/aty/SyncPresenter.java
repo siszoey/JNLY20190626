@@ -5,6 +5,7 @@ import com.lib.bandaid.data.remote.entity.TTFileResult;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.data.remote.utils.OkHttp3Util;
+import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.SimpleList;
 import com.titan.jnly.login.api.ApiLogin;
 import com.titan.jnly.login.bean.User;
@@ -43,6 +44,7 @@ public class SyncPresenter extends NetRequest<SyncContract.View> implements Sync
                 //System.out.println(errMsg);
             }
         }).httpFileSync(new SimpleList<>().push(data));
+        //}).httpFileSync(josn);
     }
 
     @Override
