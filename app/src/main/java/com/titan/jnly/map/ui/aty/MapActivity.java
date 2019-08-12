@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
@@ -41,7 +42,7 @@ import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAty;
-import com.titan.jnly.vector.ui.aty.SingleEditActivityV1;
+import com.titan.jnly.vector.ui.aty.SimpleAddAty;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
@@ -198,14 +199,15 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabAdd) {
+            LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+            if (layerNode == null) return;
+            FeatureTable single = layerNode.tryGetFeaTable();
             MultiCompute.getLastFeature(new MultiCompute.ICallBack() {
                 @Override
                 public void callback(Feature feature) {
-                   //Long id = (Long) feature.getAttributes().get("OBJECTID");
-                    // System.out.println(feature);
-                    Intent intent = new Intent(_context, SingleEditActivityV1.class);
+                    Intent intent = new Intent(_context, SimpleAddAty.class);
                     startActivity(intent);
-
+                    EventBus.getDefault().postSticky(new Object[]{single, feature});
                 }
             });
         }

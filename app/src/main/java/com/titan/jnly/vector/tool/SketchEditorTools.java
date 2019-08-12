@@ -123,6 +123,37 @@ public class SketchEditorTools {
     }
 
 
+    public void addFeature(final FeatureTable feaTable, Geometry geo, Map<String, Object> map, ICallBack iCallBack) {
+        try {
+            Geometry geometry = GeometryEngine.project(geo, feaTable.getSpatialReference());
+            final GeodatabaseFeatureTable table = (GeodatabaseFeatureTable) feaTable;
+            if (map == null) {
+                Feature fe = table.createFeature(table.getFeatureTemplates().get(0));
+                map = fe.getAttributes();
+            }
+            final Feature feature = Objects.requireNonNull(feaTable).createFeature(map, geometry);
+            final ListenableFuture<Void> result = feaTable.addFeatureAsync(feature);
+            result.addDoneListener(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        result.get();
+                        if (result.isDone()) {
+                            if (iCallBack != null) iCallBack.ok();
+                        }
+                    } catch (Exception e) {
+                        ToastUtil.showLong(context, "要素添加错误：" + e);
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            ToastUtil.showLong(context, "要素添加错误：" + e);
+            Log.e("tag", "要素添加错误：" + e);
+        }
+    }
+
+
     /**
      * 面添加  原始数据为面时
      */

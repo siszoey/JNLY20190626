@@ -40,7 +40,7 @@
         <activity android:name="com.titan.jnly.main.ui.aty.MainActivity" />
         <activity android:name="com.titan.jnly.map.ui.aty.MapActivity" />
         <activity android:name=".vector.ui.aty.SingleEditActivity" />
-        <activity android:name=".vector.ui.aty.SingleEditActivityV1" />
+        <activity android:name=".vector.ui.aty.SimpleAddAty"/>
         <activity android:name=".vector.ui.aty.MultiEditActivity" />
         <activity android:name=".task.ui.aty.DataSyncAty" />
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
