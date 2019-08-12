@@ -11,6 +11,8 @@ import com.esri.arcgisruntime.geometry.Geometry;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.utils.NumberUtil;
+import com.titan.jnly.task.bean.DataSync;
+import com.titan.jnly.vector.enums.DataStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,6 +98,40 @@ public final class MultiCompute {
             }
         });
     }
+
+
+    public static void updateSyncFeature(String uuid, @NonNull ICallBack iCallBack) {
+        LayerNode layerNode = ArcMap.arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
+        if (layerNode == null) return;
+        final FeatureTable single = layerNode.tryGetFeaTable();
+        QueryParameters params = new QueryParameters();
+        params.setWhereClause(" UUID = '" + uuid + "'");
+        ListenableFuture<FeatureQueryResult> future = single.queryFeaturesAsync(params);
+        future.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FeatureQueryResult result = future.get();
+                    Iterator<Feature> features = result.iterator();
+                    Feature feature = null;
+                    while (features.hasNext()) {
+                        feature = features.next();
+                        break;
+                    }
+                    feature.getAttributes().putAll(DataStatus.createSync());
+                    ListenableFuture _future = single.updateFeatureAsync(feature);
+                    _future.get();
+                    if (_future.isDone()) {
+                        if (iCallBack != null)
+                            iCallBack.callback(feature);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     /**
      * 新增古树群

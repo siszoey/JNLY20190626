@@ -106,11 +106,13 @@ public class PhotoActivity extends BaseCameraAty implements JCameraListener, Not
 
     @Override
     protected void initClass() {
-        waterMark = new LinkedHashMap();
-        waterMark.put("村名", "王家村");
-        waterMark.put("纬度", "39.666666");
-        waterMark.put("经度", "108.666666");
-        waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
+        if (waterMark == null) {
+            waterMark = new LinkedHashMap();
+            waterMark.put("村名", "王家村");
+            waterMark.put("纬度", "39.666666");
+            waterMark.put("经度", "108.666666");
+            waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
+        }
 
         jCameraView.setJCameraLisenter(this).isNormal(isNormal);
         //设置既可以拍照又能录视频

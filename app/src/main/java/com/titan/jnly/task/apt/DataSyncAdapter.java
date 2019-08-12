@@ -175,6 +175,27 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
 
     }
 
+    public void updateData(Feature... features) {
+    }
+
+    public void updateData(Feature feature) {
+        List<Feature> list = getDataList();
+        if (list == null) return;
+        Feature _feature;
+        String uuid = (String) feature.getAttributes().get("UUID");
+        String _uuid;
+        int index = 0;
+        for (int i = 0; i < list.size(); i++) {
+            _feature = list.get(i);
+            _uuid = (String) _feature.getAttributes().get("UUID");
+            if (uuid.equals(_uuid)) {
+                index = i;
+                break;
+            }
+        }
+        changeItem(index, feature);
+    }
+
     public void clearAllSelV1() {
         Holder holder;
         for (int i = 0; i < records.size(); i++) {

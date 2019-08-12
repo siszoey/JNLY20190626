@@ -24,9 +24,11 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.remote.core.NetRequest;
+import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NotifyArrayList;
+import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleList;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgBean;
@@ -43,6 +45,7 @@ import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.apt.DataSyncAdapter;
 import com.titan.jnly.task.bean.DataSync;
 import com.titan.jnly.vector.enums.DataStatus;
+import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -205,13 +208,13 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
             if (dataStatus == DataStatus.REMOTE_SYNC) {
                 new ATEDialog.Theme_Alert(_context)
                         .title("提示")
-                        .content("该数据已经提交至服务器，确认提交？")
+                        .content("该数据已经提交至服务器，确认继续提交？")
                         .positiveText("提交")
                         .negativeText("取消")
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                                syncData(data);
                             }
                         }).show();
             }
@@ -221,7 +224,6 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     private void syncData(Feature feature) {
         //单个上传
         Map<String, Object> map = TransformUtil.feaConvertMap(feature);
-
         DataSync dataSync = new DataSync();
         dataSync.setGSMM(map);
         dataSync.setUserId(Constant.getUserInfo().getId());
@@ -289,7 +291,25 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     }
 
     @Override
-    public void syncSuccess() {
-        System.out.println("1122");
+    public void syncSuccess(TTResult<Map> result) {
+        if (result.getResult()) {
+            String success = (String) result.getContent().get("success");
+            //String faild = (String) result.getContent().get("faild");
+            if (!ObjectUtil.isEmpty(success.trim())) {
+                String[] items = success.split(",");
+                for (String item : items) {
+                    MultiCompute.updateSyncFeature(item, new MultiCompute.ICallBack() {
+                        @Override
+                        public void callback(Feature feature) {
+                            adapter.updateData(feature);
+                        }
+                    });
+                }
+                showLongToast("数据上传成功");
+            } else {
+                showLongToast("数据上传失败");
+            }
+        }
+
     }
 }
