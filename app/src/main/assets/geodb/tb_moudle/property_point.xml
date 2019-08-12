@@ -397,47 +397,47 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>北坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>东北坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>东坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>东南坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">05</code>
+                    <code class="string">5</code>
                     <value>南坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">06</code>
+                    <code class="string">6</code>
                     <value>西南坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">07</code>
+                    <code class="string">7</code>
                     <value>西坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">08</code>
+                    <code class="string">8</code>
                     <value>西北坡</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">09</code>
+                    <code class="string">9</code>
                     <value>无坡向</value>
                 </ItemXml>
             </itemXml>
@@ -465,32 +465,32 @@
             <!-- <itemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">01</code>
+                     <code class="string">1</code>
                      <value>Ⅰ/平坡</value>
                  </ItemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">02</code>
+                     <code class="string">2</code>
                      <value>Ⅱ/缓坡</value>
                  </ItemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">03</code>
+                     <code class="string">3</code>
                      <value>Ⅲ/斜坡</value>
                  </ItemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">04</code>
+                     <code class="string">4</code>
                      <value>Ⅳ/陡坡</value>
                  </ItemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">05</code>
+                     <code class="string">5</code>
                      <value>Ⅵ/急坡</value>
                  </ItemXml>
                  <ItemXml>
                      <checked>false</checked>
-                     <code class="string">06</code>
+                     <code class="string">6</code>
                      <value>Ⅶ/险坡</value>
                  </ItemXml>
              </itemXml>-->
@@ -508,32 +508,32 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>脊部</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>上部</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>中部</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>下部</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">05</code>
+                    <code class="string">5</code>
                     <value>山谷</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">06</code>
+                    <code class="string">6</code>
                     <value>平地</value>
                 </ItemXml>
             </itemXml>
@@ -551,32 +551,32 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>棕壤</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>褐土</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>潮土</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>砂姜黑土</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">05</code>
+                    <code class="string">5</code>
                     <value>水稻土</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">06</code>
+                    <code class="string">6</code>
                     <value>风沙土</value>
                 </ItemXml>
             </itemXml>
@@ -759,42 +759,42 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>避雷针</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>护栏</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>支撑</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>封堵树洞</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">05</code>
+                    <code class="string">5</code>
                     <value>砌树池</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">06</code>
+                    <code class="string">6</code>
                     <value>包树箍</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">07</code>
+                    <code class="string">7</code>
                     <value>透气铺装</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">08</code>
+                    <code class="string">8</code>
                     <value>其他</value>
                 </ItemXml>
             </itemXml>
@@ -812,37 +812,37 @@
             <itemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">01</code>
+                    <code class="string">1</code>
                     <value>复壮沟</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">02</code>
+                    <code class="string">2</code>
                     <value>渗井</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">03</code>
+                    <code class="string">3</code>
                     <value>通气管</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">04</code>
+                    <code class="string">4</code>
                     <value>幼树靠接</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">05</code>
+                    <code class="string">5</code>
                     <value>土壤改良</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">06</code>
+                    <code class="string">6</code>
                     <value>叶面施肥</value>
                 </ItemXml>
                 <ItemXml>
                     <checked>false</checked>
-                    <code class="string">07</code>
+                    <code class="string">7</code>
                     <value>其他</value>
                 </ItemXml>
             </itemXml>

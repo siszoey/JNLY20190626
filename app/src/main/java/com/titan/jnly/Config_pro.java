@@ -9,7 +9,7 @@ public class Config_pro {
 
     public interface BASE_URL {
         String BaseUrl_1 = "http://119.164.253.207:8091/";
-        String TUE = "Tue";
+        String BaseFileService = "http://119.164.253.207:8092/";
         String WED = "Wed";
         String THU = "Thu";
         String FRI = "Fri";

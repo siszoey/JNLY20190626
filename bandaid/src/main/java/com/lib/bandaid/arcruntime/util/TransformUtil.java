@@ -1,5 +1,7 @@
 package com.lib.bandaid.arcruntime.util;
 
+import androidx.annotation.NonNull;
+
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.Geometry;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,19 @@ import java.util.Map;
  */
 
 public class TransformUtil {
+
+    public static Map<String, Object> feaConvertMap(@NonNull Feature feature) {
+        Map<String, Object> map = new HashMap<>();
+        String wkt = getWkt(feature.getGeometry());
+        map.put("SHAPE", wkt);
+        Map<String, Object> property = feature.getAttributes();
+        Object val;
+        for (String key : property.keySet()) {
+            val = property.get(key);
+            map.put(key, val);
+        }
+        return map;
+    }
 
     public static String getWkt(Geometry geometry) {
         String wkt = null;

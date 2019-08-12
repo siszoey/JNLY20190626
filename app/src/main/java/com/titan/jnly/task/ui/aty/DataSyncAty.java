@@ -22,7 +22,9 @@ import com.esri.arcgisruntime.geometry.GeometryEngine;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
+import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NotifyArrayList;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
@@ -44,6 +46,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class DataSyncAty extends BaseAppCompatActivity
         implements OnRefreshListener,
@@ -187,6 +190,9 @@ public class DataSyncAty extends BaseAppCompatActivity
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 //GeometryEngine.
+                                Map<String, Object> map = TransformUtil.feaConvertMap(data);
+                                String json = MapUtil.entity2Json(map);
+                                System.out.println(json);
                             }
                         }).show();
             }
