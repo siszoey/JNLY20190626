@@ -27,6 +27,7 @@ import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.DecimalFormats;
 import com.lib.bandaid.utils.ImgUtil;
 import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NumberUtil;
@@ -206,55 +207,38 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 UiXml lon = easyUiXml.getUiXml("LON");
                 UiXml lat = easyUiXml.getUiXml("LAT");
                 UiXml alt = easyUiXml.getUiXml("HAIBA");
-                if (lon != null) lon.setValue(location.getLongitude());
-                if (lat != null) lat.setValue(location.getLatitude());
-                if (alt != null) alt.setValue(location.getAltitude());
+                String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
+                //if (lon != null) lon.setValue(location.getLongitude());
+                if (lon != null) lon.setValue(_60Lon);
+                String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
+                //if (lat != null) lat.setValue(location.getLatitude());
+                if (lat != null) lat.setValue(_60Lat);
+                String alts = DecimalFormats.getFormat("#.00").format(location.getAltitude());
+                if (alt != null) alt.setValue(alts);
             }
-            initArea(easyUiXml.getUiXml("XIAN"));
-            initArea(easyUiXml.getUiXml("XIANG"));
-            initArea(easyUiXml.getUiXml("CUN"));
         }
         //替换区划代码
         else {
-            initArea(easyUiXml.getUiXml("XIAN"));
-            initArea(easyUiXml.getUiXml("XIANG"));
-            initArea(easyUiXml.getUiXml("CUN"));
+            UiXml lon = easyUiXml.getUiXml("LON");
+            UiXml lat = easyUiXml.getUiXml("LAT");
+            UiXml alt = easyUiXml.getUiXml("HAIBA");
+            String _60Lon = TransformUtil._10To60_len2(lon.getValue() + "");
+            //if (lon != null) lon.setValue(location.getLongitude());
+            if (lon != null) lon.setValue(_60Lon);
+            String _60Lat = TransformUtil._10To60_len2(lat.getValue() + "");
+            //if (lat != null) lat.setValue(location.getLatitude());
+            if (lat != null) lat.setValue(_60Lat);
+            String alts = DecimalFormats.getFormat("#.00").format(alt.getValue());
+            if (alt != null) alt.setValue(alts);
         }
+        initArea(easyUiXml.getUiXml("XIAN"));
+        initArea(easyUiXml.getUiXml("XIANG"));
+        initArea(easyUiXml.getUiXml("CUN"));
+
         //树种中文名称赋值
         List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
         UiXml item = easyUiXml.getUiXml("SZZWM");
         item.setItemXml(items);
-
-
-        //经纬度特殊处理
-        // UiXml LONXml = easyUiXml.getUiXml("LON");
-        // UiXml LATXml = easyUiXml.getUiXml("LAT");
-
-        /*LONXml.setTextAfter(new SimpleTextWatch.IAfter() {
-
-            @Override
-            public void after(String s) {
-                System.out.println(s);
-            }
-        });*/
-
-
-        /*LONXml.setOnChange(new SimpleTextWatch.IOnChange() {
-
-            @Override
-            public void onChange(CharSequence s, int start, int before, int count) {
-                //((ComplexTextView) LONXml.getView()).setText(s + "|");
-            }
-        });
-
-
-        LATXml.setTextBefore(new SimpleTextWatch.IBefore() {
-            @Override
-            public void before(CharSequence s, int start, int count, int after) {
-                System.out.println(s);
-            }
-        });*/
-
     }
 
     private void initArea(UiXml uiXml) {
@@ -297,6 +281,11 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 return;
             }
             Map map = propertyView.getForm();
+            ComplexTextView lonView = propertyView.getViewByKey("LON");
+            ComplexTextView latView = propertyView.getViewByKey("LAT");
+            map.put("LON", TransformUtil._60To10(lonView.getText()));
+            map.put("LAT", TransformUtil._60To10(latView.getText()));
+
             map.remove("OBJECTID");
             map.putAll(DataStatus.createEdit());
             feature.getAttributes().putAll(map);
@@ -436,6 +425,46 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (data >= 25 && data <= 34) slopeLevel.setLabel("Ⅳ/陡坡");
                 if (data >= 35 && data <= 44) slopeLevel.setLabel("Ⅵ/急坡");
                 if (data > 45) slopeLevel.setLabel("Ⅶ/险坡");
+            }
+        });
+
+
+        //经纬度特殊处理
+        ComplexTextView lonView = propertyView.getViewByKey("LON");
+        lonView.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (!text.contains("°")) {
+                    text = text.replace(" ", "°");
+                }
+                if (text.contains("°") && !text.contains("′")) {
+                    text = text.replace(" ", "′");
+                }
+                if (text.contains("°") && text.contains("′") && !text.contains("″")) {
+                    text = text.replace(" ", "″");
+                }
+                lonView.setText(text, false);
+                lonView.keepCursorLast();
+
+            }
+        });
+
+        //经纬度特殊处理
+        ComplexTextView latView = propertyView.getViewByKey("LAT");
+        latView.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (!text.contains("°")) {
+                    text = text.replace(" ", "°");
+                }
+                if (text.contains("°") && !text.contains("′")) {
+                    text = text.replace(" ", "′");
+                }
+                if (text.contains("°") && text.contains("′") && !text.contains("″")) {
+                    text = text.replace(" ", "″");
+                }
+                latView.setText(text, false);
+                latView.keepCursorLast();
             }
         });
     }

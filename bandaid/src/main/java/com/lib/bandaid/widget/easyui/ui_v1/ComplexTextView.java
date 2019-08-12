@@ -2,7 +2,9 @@ package com.lib.bandaid.widget.easyui.ui_v1;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,7 +15,11 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.widget.easyui.utils.RegexUtil;
+import com.lib.bandaid.widget.easyui.xml.VerifyXml;
 import com.lib.bandaid.widget.edittext.ClearEditText;
+import com.lib.bandaid.widget.text.SimpleTextWatch;
 
 public class ComplexTextView extends TextInputLayout {
 
@@ -31,7 +37,10 @@ public class ComplexTextView extends TextInputLayout {
     private ClearEditText editText;
 
     private boolean inputAble = true;
+
     private String inputType;
+
+    private VerifyXml verifyXml;
 
     public ComplexTextView(Context context) {
         super(context);
@@ -56,6 +65,41 @@ public class ComplexTextView extends TextInputLayout {
         this.addView(editText);
     }
 
+    public VerifyXml getVerifyXml() {
+        return verifyXml;
+    }
+
+    public void setVerifyXml(VerifyXml verifyXml) {
+        this.verifyXml = verifyXml;
+        if (verifyXml != null) {
+            //数据验证
+            editText.addTextChangedListener(
+                    new SimpleTextWatch(
+                            new SimpleTextWatch.IAfter() {
+                                @Override
+                                public void after(String s) {
+                                    if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
+                                    boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
+                                    if (verify) setError(null);
+                                    else setError(verifyXml.getMsg());
+
+                                    if (iListenChange != null && trigger)
+                                        iListenChange.textChange(ComplexTextView.this.getId(), s.toString());
+                                }
+                            }));
+        }
+    }
+
+    public boolean checkVerify() {
+        String text = editText.getText().toString();
+        if (verifyXml == null) return true;
+        if (verifyXml.getCanNull() && StringUtil.isEmpty(text)) return true;
+        boolean verify = RegexUtil.match(verifyXml.getRegex(), text);
+        if (verify) setError(null);
+        else setError(verifyXml.getMsg());
+        return verify;
+    }
+
     public void setText(String text) {
         this.editText.setText(text);
     }
@@ -67,6 +111,11 @@ public class ComplexTextView extends TextInputLayout {
         this.trigger = trigger;
         getEditText().setText(ObjectUtil.removeNull(text));
         this.trigger = true;
+    }
+
+    public void keepCursorLast() {
+        Editable editable = editText.getText();
+        Selection.setSelection(editable, editable.length());
     }
 
     public String getText() {
@@ -121,5 +170,15 @@ public class ComplexTextView extends TextInputLayout {
     public void inputTypeEnglish() {
         this.editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         this.editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+    }
+
+    IListenChange iListenChange;
+
+    public interface IListenChange {
+        public void textChange(int id, String text);
+    }
+
+    public void setListenChange(IListenChange iListenChange) {
+        this.iListenChange = iListenChange;
     }
 }

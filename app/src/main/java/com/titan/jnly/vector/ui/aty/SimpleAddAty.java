@@ -222,16 +222,12 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             UiXml lon = easyUiXml.getUiXml("LON");
             UiXml lat = easyUiXml.getUiXml("LAT");
             UiXml alt = easyUiXml.getUiXml("HAIBA");
-
             String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
             //if (lon != null) lon.setValue(location.getLongitude());
             if (lon != null) lon.setValue(_60Lon);
-
             String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
             //if (lat != null) lat.setValue(location.getLatitude());
             if (lat != null) lat.setValue(_60Lat);
-
-
             String alts = DecimalFormats.getFormat("#.00").format(location.getAltitude());
             if (alt != null) alt.setValue(alts);
         }
@@ -243,36 +239,6 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
         UiXml item = easyUiXml.getUiXml("SZZWM");
         item.setItemXml(items);
-
-
-        //经纬度特殊处理
-        UiXml LONXml = easyUiXml.getUiXml("LON");
-        ComplexTextView lonView = (ComplexTextView) LONXml.getView();
-        LONXml.setTextAfter(new SimpleTextWatch.IAfter() {
-
-            @Override
-            public void after(String s) {
-                //lonView.setText();
-            }
-        });
-
-        // UiXml LATXml = easyUiXml.getUiXml("LAT");
-        /*LONXml.setOnChange(new SimpleTextWatch.IOnChange() {
-
-            @Override
-            public void onChange(CharSequence s, int start, int before, int count) {
-                //((ComplexTextView) LONXml.getView()).setText(s + "|");
-            }
-        });
-
-
-        LATXml.setTextBefore(new SimpleTextWatch.IBefore() {
-            @Override
-            public void before(CharSequence s, int start, int count, int after) {
-                System.out.println(s);
-            }
-        });*/
-
     }
 
     private void initArea(UiXml uiXml) {
@@ -316,10 +282,13 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             }
 
             Map map = propertyView.getForm();
+            ComplexTextView lonView = propertyView.getViewByKey("LON");
+            ComplexTextView latView = propertyView.getViewByKey("LAT");
+            map.put("LON",TransformUtil._60To10(lonView.getText()));
+            map.put("LAT",TransformUtil._60To10(latView.getText()));
             property.putAll(map);
-
-            Double lon = (Double) map.get("LON");
-            Double lat = (Double) map.get("LAT");
+            Double lon = (Double) property.get("LON");
+            Double lat = (Double) property.get("LAT");
             Point _84Point = new Point(lon, lat, SpatialReference.create(4326));
             tools.addFeature(feaTable, _84Point, property, new SketchEditorTools.ICallBack() {
                 @Override
@@ -457,6 +426,46 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (data >= 25 && data <= 34) slopeLevel.setLabel("Ⅳ/陡坡");
                 if (data >= 35 && data <= 44) slopeLevel.setLabel("Ⅵ/急坡");
                 if (data > 45) slopeLevel.setLabel("Ⅶ/险坡");
+            }
+        });
+
+        //------------------------------------------------------------------------------------------
+        //经纬度特殊处理
+        ComplexTextView lonView = propertyView.getViewByKey("LON");
+        lonView.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (!text.contains("°")) {
+                    text = text.replace(" ", "°");
+                }
+                if (text.contains("°") && !text.contains("′")) {
+                    text = text.replace(" ", "′");
+                }
+                if (text.contains("°") && text.contains("′") && !text.contains("″")) {
+                    text = text.replace(" ", "″");
+                }
+                lonView.setText(text, false);
+                lonView.keepCursorLast();
+
+            }
+        });
+
+        //经纬度特殊处理
+        ComplexTextView latView = propertyView.getViewByKey("LAT");
+        latView.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (!text.contains("°")) {
+                    text = text.replace(" ", "°");
+                }
+                if (text.contains("°") && !text.contains("′")) {
+                    text = text.replace(" ", "′");
+                }
+                if (text.contains("°") && text.contains("′") && !text.contains("″")) {
+                    text = text.replace(" ", "″");
+                }
+                latView.setText(text, false);
+                latView.keepCursorLast();
             }
         });
     }

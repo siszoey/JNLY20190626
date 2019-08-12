@@ -216,27 +216,7 @@ public class PropertyView extends ScrollView {
         Object val = uiXml.getDisPlay();
         {
             VerifyXml verifyXml = uiXml.getVerifyXml();
-            if (verifyXml != null) {
-                //数据验证
-                complexTextView.addTextChangedListener(
-                        new SimpleTextWatch(
-                                uiXml.getTextBefore() == null ? new SimpleTextWatch.IBefore() {
-                                    @Override
-                                    public void before(CharSequence s, int start, int count, int after) {
-
-                                    }
-                                } : uiXml.getTextBefore(),
-                                uiXml.getOnChange(),
-                                uiXml.getTextAfter() == null ? new SimpleTextWatch.IAfter() {
-                                    @Override
-                                    public void after(String s) {
-                                        if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
-                                        boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
-                                        if (verify) complexTextView.setError(null);
-                                        else complexTextView.setError(verifyXml.getMsg());
-                                    }
-                                } : uiXml.getTextAfter()));
-            }
+            complexTextView.setVerifyXml(verifyXml);
         }
         if (isDate) {
             if (val != null) {

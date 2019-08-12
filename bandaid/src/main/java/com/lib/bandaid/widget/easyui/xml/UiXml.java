@@ -252,12 +252,17 @@ public class UiXml implements Serializable {
         return getValue();
     }
 
+    public boolean checkVerify() {
+        if (view instanceof ComplexTextView) {
+            return ((ComplexTextView) view).checkVerify();
+        }
+        return true;
+    }
 
     public boolean verify() {
         if (verifyXml == null) return true;
         String regex = verifyXml.getRegex();
         getViewLabel();
-        //String text = value == null ? "" : value.toString();
         String text = StringUtil.removeNull(value);
         if (verifyXml.getCanNull() && StringUtil.isEmpty(text)) return true;
         boolean verify = RegexUtil.match(regex, text);
@@ -330,33 +335,5 @@ public class UiXml implements Serializable {
         List<ItemXml> codedValues = getItemXml();
         if (codedValues == null || codedValues.size() == 0) return false;
         return true;
-    }
-
-    private SimpleTextWatch.IBefore iBefore;
-    private SimpleTextWatch.IOnChange iOnChange;
-    private SimpleTextWatch.IAfter iAfter;
-
-    public void setTextBefore(SimpleTextWatch.IBefore iBefore) {
-        this.iBefore = iBefore;
-    }
-
-    public void setTextAfter(SimpleTextWatch.IAfter iAfter) {
-        this.iAfter = iAfter;
-    }
-
-    public SimpleTextWatch.IOnChange getOnChange() {
-        return iOnChange;
-    }
-
-    public void setOnChange(SimpleTextWatch.IOnChange iOnChange) {
-        this.iOnChange = iOnChange;
-    }
-
-    public SimpleTextWatch.IBefore getTextBefore() {
-        return this.iBefore;
-    }
-
-    public SimpleTextWatch.IAfter getTextAfter() {
-        return this.iAfter;
     }
 }

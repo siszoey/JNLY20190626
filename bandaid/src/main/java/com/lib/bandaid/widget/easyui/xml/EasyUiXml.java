@@ -93,7 +93,8 @@ public class EasyUiXml implements Serializable {
         if (uiXml == null) return false;
         boolean verify = true;
         for (UiXml ui : uiXml) {
-            if (!ui.verify()) verify = false;
+            //if (!ui.verify()) verify = false;
+            if (!ui.checkVerify()) verify = false;
         }
         return verify;
     }
