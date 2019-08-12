@@ -99,7 +99,7 @@ public final class DbEasyUtil {
         String userName = userInfo.getUserName();
         if (userInfo.getUserGroup() == null) return null;
         String sql = "select * from TB_Work_Sequence where userName = '" + userName + "' and date(dateTime) = date('now') ORDER BY num DESC LIMIT 1 OFFSET 0";
-        System.out.println(">>>>>:   " + sql);
+        //System.out.println(">>>>>:   " + sql);
         WorkSequence workSequence = (WorkSequence) DbManager.createDefault().getTBySql(WorkSequence.class, sql, true);
         //没有当天数据
         if (workSequence == null) {

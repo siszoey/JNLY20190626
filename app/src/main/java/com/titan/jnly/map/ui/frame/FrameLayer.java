@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.esri.arcgisruntime.arcgisservices.LabelDefinition;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
@@ -25,18 +26,24 @@ import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import com.esri.arcgisruntime.symbology.SimpleRenderer;
 import com.esri.arcgisruntime.symbology.Symbol;
+import com.esri.arcgisruntime.symbology.TextSymbol;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
 import com.lib.bandaid.arcruntime.layer.info.Extent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.rw.file.utils.FileUtil;
+import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
+import com.titan.jnly.common.uitls.ConverterUtils;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.map.utils.NodeIteration;
@@ -129,9 +136,37 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     }
 
     public void setRenderPoint(FeatureLayer layer) {
-        MarkerSymbol markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.RED, 10);
+        MarkerSymbol markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.RED, 15);
         layer.setRenderer(new SimpleRenderer(markerSymbol));
+        addLabel(layer);
     }
+
+
+    private void addLabel(FeatureLayer featureLayer) {
+        TextSymbol textSymbol = new TextSymbol();
+        textSymbol.setSize(12);
+        textSymbol.setColor(Color.RED);
+        textSymbol.setHaloColor(0xFFFFFF00);
+        textSymbol.setHaloWidth(0);
+        textSymbol.setOffsetY(30);
+
+        // 创建label字符串
+        JsonObject json = new JsonObject();
+        JsonObject expressionInfo = new JsonObject();
+        expressionInfo.add("expression", new JsonPrimitive("$" + "feature.DCSXH"));
+        json.add("labelExpressionInfo", expressionInfo);
+        json.add("labelPlacement", new JsonPrimitive("esriServerPolygonPlacementAlwaysHorizontal"));
+        json.add("where", new JsonPrimitive("DCSXH <> ' '"));
+        json.add("symbol", new JsonParser().parse(textSymbol.toJson()));
+        String labelStr = json.toString();
+        // 构建LabelDefinition
+        LabelDefinition labelDefinition = LabelDefinition.fromJson(labelStr);
+        featureLayer.getLabelDefinitions().clear();
+        featureLayer.getLabelDefinitions().add(labelDefinition);
+        // 启用Label标注
+        featureLayer.setLabelsEnabled(true);
+    }
+
 
     @Override
     public void iLayerLoaded(LayerNode node) {

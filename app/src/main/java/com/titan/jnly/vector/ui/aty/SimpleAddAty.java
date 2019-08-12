@@ -143,7 +143,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                     LinkedHashMap waterMark = new LinkedHashMap();
                     String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
                     String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
-                    waterMark.put("序号", "001");
+                    waterMark.put("序号", sequence);
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -172,6 +172,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         tools = new SketchEditorTools(ArcMap.arcMap);
     }
 
+    String sequence;
+
     @Override
     protected void initClass() {
         uuid = UUIDTool.get32UUID();//新增UUID
@@ -179,7 +181,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
 
         {
-            String sequence = DbEasyUtil.getWorkSequence();
+            sequence = DbEasyUtil.getWorkSequence();
             if (sequence == null) {
                 ToastUtil.showLong(_context, "未能取得调查顺序号！");
                 finish();

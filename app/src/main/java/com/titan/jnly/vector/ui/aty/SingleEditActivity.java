@@ -14,10 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.camera.lib.ui.aty.PhotoActivity;
-import com.camera.lib.util.BitmapUtil;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
@@ -32,7 +29,6 @@ import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.ImgUtil;
 import com.lib.bandaid.utils.MapUtil;
-import com.lib.bandaid.utils.MathUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
@@ -134,7 +130,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                     LinkedHashMap waterMark = new LinkedHashMap();
                     String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
                     String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
-                    waterMark.put("序号", "001");
+                    waterMark.put("序号", sequence);
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -163,10 +159,13 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         tools = new SketchEditorTools(ArcMap.arcMap);
     }
 
+    String sequence;
+
     @Override
     protected void initClass() {
         feature = data.getData();
         uuid = FeatureUtil.getAsT(feature, "UUID");
+        sequence = FeatureUtil.getAsT(feature, "DCSXH");
         imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
         feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
         //获取布局的模板
