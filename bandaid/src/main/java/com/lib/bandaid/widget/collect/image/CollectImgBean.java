@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.utils.MapUtil;
 
+import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -84,6 +85,16 @@ public class CollectImgBean implements Serializable {
         }.getType();
         ArrayList<CollectImgBean> beans = new Gson().fromJson(json, type);
         return beans;
+    }
+
+    public static List<File> obtainFiles(String json) {
+        ArrayList<CollectImgBean> beans = convertFromJson(json);
+        if (beans == null || beans.size() == 0) return null;
+        List<File> files = new ArrayList<>();
+        for (CollectImgBean bean : beans) {
+            files.add(new File(bean.getUri()));
+        }
+        return files;
     }
 
     public static List<CollectImgBean> convertFromList(List<String> paths) {

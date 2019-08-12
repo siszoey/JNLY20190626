@@ -557,17 +557,12 @@ public class DateUtil {
      * @return 获取本周所剩天数
      */
     public static int getDayOfWeek() {
-
         Calendar toDay = Calendar.getInstance();
-
         toDay.setFirstDayOfWeek(Calendar.MONDAY);
-
         int ret = toDay.get(Calendar.DAY_OF_WEEK) - 1;
-
         if (ret == 0) {
             ret = 7;
         }
-
         return ret;
     }
 
@@ -761,6 +756,19 @@ public class DateUtil {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());
         return calendar;
+    }
+
+    public static String convert2DateStr(Object obj) {
+        if (obj instanceof Date) {
+            return dateTimeToStr((Date) obj);
+        } else if (obj instanceof java.sql.Date) {
+            return dateTimeToStr((Date) obj);
+        } else if (obj instanceof Calendar) {
+            return dateTimeToStr(((Calendar) obj).getTime());
+        } else if (obj instanceof GregorianCalendar) {
+            return dateTimeToStr(((GregorianCalendar) obj).getTime());
+        }
+        return null;
     }
 
 }

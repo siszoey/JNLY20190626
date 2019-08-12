@@ -16,12 +16,17 @@ import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.DecimalFormats;
+import com.lib.bandaid.utils.ObjectUtil;
 
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +46,9 @@ public class TransformUtil {
         Object val;
         for (String key : property.keySet()) {
             val = property.get(key);
+            if (ObjectUtil.isDate(val)) {
+                val = DateUtil.convert2DateStr(val);
+            }
             map.put(key, val);
         }
         return map;

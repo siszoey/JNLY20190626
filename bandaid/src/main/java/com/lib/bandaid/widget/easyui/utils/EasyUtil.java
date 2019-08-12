@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class EasyUtil {
 
-    public final static String SPLIT = ";";
+    public final static String SPLIT = ",";
 
     public static String list2Label(List<ItemXml> values) {
         if (values == null) return null;

@@ -40,8 +40,6 @@ public final class DbEasyUtil {
             max = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
         }
         if (min != null && max != null) {
-            /*Double age = (diam - min.getDiam()) * (max.getYear() - min.getYear()) / (max.getDiam() - min.getDiam()) + min.getYear();
-            return age.intValue();*/
             //中位值计算
             double mid;
             if ("1".equals(flag)) {
@@ -54,11 +52,36 @@ public final class DbEasyUtil {
                 else return min.getYear();
             }
         } else if (min != null && max == null) {
-            return min.getYear();
+            //(0,0) (a,b) (x,y)
+            //  a/x = b/y;y=bx/a
+            double year;
+            if ("1".equals(flag)) {
+                year = min.getYear() * diam / min.getDiamHill();
+            } else {
+                year = min.getYear() * diam / min.getDiamPlain();
+            }
+            return ((int) year / 100) * 100;
+            //return min.getYear();
         } else {
+            //(0,0) (a,b) (x,y)
+            //  a/x = b/y;y=bx/a
+            double year;
+            if ("1".equals(flag)) {
+                year = max.getYear() * diam / max.getDiamHill();
+            } else {
+                year = max.getYear() * diam / max.getDiamPlain();
+            }
+            if (year < 30) {
+                return 20;
+            } else if (year >= 30 && year < 50) {
+                return 40;
+            } else if (year >= 50 && year < 70) {
+                return 60;
+            } else if (year >= 70) {
+                return 80;
+            }
             return max.getYear();
         }
-
     }
 
     /**

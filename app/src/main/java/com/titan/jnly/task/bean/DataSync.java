@@ -1,5 +1,7 @@
 package com.titan.jnly.task.bean;
 
+import com.lib.bandaid.data.remote.entity.TTFileResult;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class DataSync implements Serializable {
 
     private String GSMM;
 
-    private List images;
+    private List<TTFileResult> images;
 
     public String getUserId() {
         return UserId;
@@ -30,11 +32,11 @@ public class DataSync implements Serializable {
         this.GSMM = GSMM;
     }
 
-    public List getImages() {
+    public List<TTFileResult> getImages() {
         return images;
     }
 
-    public void setImages(List images) {
+    public void setImages(List<TTFileResult> images) {
         this.images = images;
     }
 }

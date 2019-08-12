@@ -10,7 +10,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import javax.inject.Inject;
 
-public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> extends BaseAppCompatAty implements INetRequest.BaseView {
+public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> extends BaseAppCompatActivity implements INetRequest.BaseView {
 
     @Inject
     protected T presenter;

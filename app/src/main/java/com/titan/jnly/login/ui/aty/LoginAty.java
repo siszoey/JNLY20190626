@@ -37,7 +37,10 @@ import com.titan.jnly.system.Constant;
 import java.io.File;
 import java.util.Map;
 
-public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter> implements LoginAtyContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
+        implements LoginAtyContract.View,
+        View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener {
 
     private final static String CONSTANT_IS_REMEMBER = "CONSTANT_IS_REMEMBER";
 

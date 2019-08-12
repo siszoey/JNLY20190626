@@ -1,6 +1,5 @@
 package com.titan.jnly.task.ui.aty;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -20,13 +19,17 @@ import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
 import com.esri.arcgisruntime.geometry.GeometryEngine;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
+import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
+import com.lib.bandaid.data.remote.core.NetRequest;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NotifyArrayList;
+import com.lib.bandaid.utils.SimpleList;
 import com.lib.bandaid.utils.ToastUtil;
+import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
@@ -35,21 +38,26 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
+import com.titan.jnly.login.ui.aty.LoginAtyPresenter;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.apt.DataSyncAdapter;
+import com.titan.jnly.task.bean.DataSync;
 import com.titan.jnly.vector.enums.DataStatus;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class DataSyncAty extends BaseAppCompatActivity
-        implements OnRefreshListener,
+public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
+        implements
+        SyncContract.View,
+        OnRefreshListener,
         OnLoadMoreListener,
         BaseRecycleAdapter.IViewClickListener<Feature>, View.OnClickListener, NotifyArrayList.IListener {
 
@@ -66,6 +74,7 @@ public class DataSyncAty extends BaseAppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        presenter = new SyncPresenter();
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, title, Gravity.CENTER);
         setContentView(R.layout.task_ui_aty_data_sync);
@@ -78,14 +87,14 @@ public class DataSyncAty extends BaseAppCompatActivity
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_right_up_load) {
             batchUpLoad();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true) //在ui线程执行
     public void getTable(FeatureTable table) {
@@ -189,10 +198,7 @@ public class DataSyncAty extends BaseAppCompatActivity
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                //GeometryEngine.
-                                Map<String, Object> map = TransformUtil.feaConvertMap(data);
-                                String json = MapUtil.entity2Json(map);
-                                System.out.println(json);
+                                syncData(data);
                             }
                         }).show();
             }
@@ -210,6 +216,19 @@ public class DataSyncAty extends BaseAppCompatActivity
                         }).show();
             }
         }
+    }
+
+    private void syncData(Feature feature) {
+        //单个上传
+        Map<String, Object> map = TransformUtil.feaConvertMap(feature);
+        String fileJson = (String) map.get("GSZP");
+        List<File> files = CollectImgBean.obtainFiles(fileJson);
+
+        String json = MapUtil.entity2Json(map);
+        DataSync dataSync = new DataSync();
+        dataSync.setGSMM(json);
+        dataSync.setUserId(Constant.getUserInfo().getId());
+        presenter.syncSingle(files, dataSync);
     }
 
     /**
@@ -266,5 +285,10 @@ public class DataSyncAty extends BaseAppCompatActivity
     @Override
     public void itemChange() {
         tvCount.setText(adapter.getSelCount() + "");
+    }
+
+    @Override
+    public void syncSuccess() {
+        System.out.println("1122");
     }
 }
