@@ -1,6 +1,7 @@
 package com.lib.bandaid.widget.easyui.ui_v1;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.widget.edittext.ClearEditText;
 
 public class ComplexTextView extends TextInputLayout {
@@ -58,6 +60,15 @@ public class ComplexTextView extends TextInputLayout {
         this.editText.setText(text);
     }
 
+    boolean trigger = true;
+
+    public void setText(Object text, boolean trigger) {
+        if (getEditText() == null) return;
+        this.trigger = trigger;
+        getEditText().setText(ObjectUtil.removeNull(text));
+        this.trigger = true;
+    }
+
     public String getText() {
         return this.editText.getText().toString();
     }
@@ -93,6 +104,10 @@ public class ComplexTextView extends TextInputLayout {
 
     public void removeTextChangedListener(TextWatcher watcher) {
         this.editText.removeTextChangedListener(watcher);
+    }
+
+    public void inputTypeNumberPrior() {
+        this.editText.setRawInputType(Configuration.KEYBOARD_QWERTY);
     }
 
     public void inputTypeNumber() {

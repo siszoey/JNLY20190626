@@ -213,9 +213,11 @@
             <alias>经度</alias>
             <code>LON</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <inputType>numPrior</inputType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>^-?((0|1?[0-7]?[0-9]?)(([.][0-9]{1,16})?)|180(([.][0]{1,16})?))$</regex>
+                <!--<regex>^-?((0|1?[0-7]?[0-9]?)(([.][0-9]{1,16})?)|180(([.][0]{1,16})?))$</regex>-->
+                <regex>^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\-,;°度](\d|[0-5]\d)[s\-,;′分](\d|[0-5]\d)(\.\d{1,2})?[s\-,;″秒]?$)</regex>
                 <msg>请输入正确的经度!</msg>
             </VerifyXml>
         </UiXml>
@@ -223,9 +225,11 @@
             <alias>纬度</alias>
             <code>LAT</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <inputType>numPrior</inputType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>^-?((0|[1-8]?[0-9]?)(([.][0-9]{1,16})?)|90(([.][0]{1,16})?))$</regex>
+                <!--<regex>^-?((0|[1-8]?[0-9]?)(([.][0-9]{1,16})?)|90(([.][0]{1,16})?))$</regex>-->
+                <regex>^[EW]?((\d|[1-8]\d)[s\-,;°度](\d|[0-5]\d)[s\-,;′分](\d|[0-5]\d)(\.\d{1,2})?[s\-,;″秒]?$)</regex>
                 <msg>请输入正确的纬度!</msg>
             </VerifyXml>
         </UiXml>
@@ -386,7 +390,7 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>^(([1-9]{1}\d*)|(0{1}))(\.\d{0,14})$</regex>
+                <regex>^(([1-9]{1}\d*)|(0{1}))(\.\d{0,2})$</regex>
                 <msg>必须为保留两位有效数字的正数!</msg>
             </VerifyXml>
         </UiXml>

@@ -1,6 +1,7 @@
 package com.lib.bandaid.widget.easyui.utils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;

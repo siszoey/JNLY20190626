@@ -151,7 +151,6 @@ public class PropertyView extends ScrollView {
                 SimpleDialog.newInstance(list, sel, uiXml.getStatus() == Status.multi, new BaseDialogFrg.ICallBack<List<ItemXml>>() {
                     @Override
                     public void callback(List<ItemXml> values) {
-                        //view.setText(EasyUtil.list2Label(values));
                         uiXml.setLabel(EasyUtil.list2Label(values));
                     }
                 }).show(context);
@@ -198,10 +197,11 @@ public class PropertyView extends ScrollView {
         boolean readOnly = uiXml.getReadonly();
         InputType inputType = uiXml.getInputType();
         if (inputType == null) {
-            if (isNumber) {
-                WidgetUtil.setViewInputNum(complexTextView);
-            }
+            if (isNumber) complexTextView.inputTypeNumber();
         } else {
+            if (inputType == InputType.numPrior) {
+                complexTextView.inputTypeNumberPrior();
+            }
             if (inputType == InputType.english) {
                 complexTextView.inputTypeEnglish();
             }

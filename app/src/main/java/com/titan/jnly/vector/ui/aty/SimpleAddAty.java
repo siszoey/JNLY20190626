@@ -28,6 +28,7 @@ import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.utils.DecimalFormats;
 import com.lib.bandaid.utils.ImgUtil;
 import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NumberUtil;
@@ -46,6 +47,7 @@ import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
+import com.lib.bandaid.widget.text.SimpleTextWatch;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
@@ -220,9 +222,18 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             UiXml lon = easyUiXml.getUiXml("LON");
             UiXml lat = easyUiXml.getUiXml("LAT");
             UiXml alt = easyUiXml.getUiXml("HAIBA");
-            if (lon != null) lon.setValue(location.getLongitude());
-            if (lat != null) lat.setValue(location.getLatitude());
-            if (alt != null) alt.setValue(location.getAltitude());
+
+            String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
+            //if (lon != null) lon.setValue(location.getLongitude());
+            if (lon != null) lon.setValue(_60Lon);
+
+            String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
+            //if (lat != null) lat.setValue(location.getLatitude());
+            if (lat != null) lat.setValue(_60Lat);
+
+
+            String alts = DecimalFormats.getFormat("#.00").format(location.getAltitude());
+            if (alt != null) alt.setValue(alts);
         }
         initArea(easyUiXml.getUiXml("XIAN"));
         initArea(easyUiXml.getUiXml("XIANG"));
@@ -235,18 +246,17 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
 
         //经纬度特殊处理
-        // UiXml LONXml = easyUiXml.getUiXml("LON");
-        // UiXml LATXml = easyUiXml.getUiXml("LAT");
-
-        /*LONXml.setTextAfter(new SimpleTextWatch.IAfter() {
+        UiXml LONXml = easyUiXml.getUiXml("LON");
+        ComplexTextView lonView = (ComplexTextView) LONXml.getView();
+        LONXml.setTextAfter(new SimpleTextWatch.IAfter() {
 
             @Override
             public void after(String s) {
-                System.out.println(s);
+                //lonView.setText();
             }
-        });*/
+        });
 
-
+        // UiXml LATXml = easyUiXml.getUiXml("LAT");
         /*LONXml.setOnChange(new SimpleTextWatch.IOnChange() {
 
             @Override
