@@ -31,9 +31,6 @@ public final class Constant {
     private static List<EasyUiXml> Constant_EasyUiXml = new ArrayList<>();
     private static List<Species> Constant_Species = new ArrayList<>();
 
-    public static Location location;
-
-
     public static void putUser(User user) {
         Loc.USER_ID = user.getName();
         cacheUtil.put(KEY_USER, user);

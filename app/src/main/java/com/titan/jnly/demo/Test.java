@@ -1,5 +1,6 @@
 package com.titan.jnly.demo;
 
+import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.TreeMode;
@@ -21,7 +22,17 @@ public class Test {
         System.out.println(dataStatus);
 
 
+        String lon2 = TransformUtil._10To60_len2("117.228611");
+        String lat2 = TransformUtil._10To60_len2("31.794868");
 
+        String lon = TransformUtil._10To60("117.228611");
+        String lat = TransformUtil._10To60("31.794868");
+        System.out.println(1122);
+
+        double lond = TransformUtil._60To10(lon);
+        double latd = TransformUtil._60To10(lat);
+
+        System.out.println(1122);
     }
 
 

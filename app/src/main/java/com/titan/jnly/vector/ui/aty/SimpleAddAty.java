@@ -47,7 +47,6 @@ import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
-import com.lib.bandaid.widget.text.SimpleTextWatch;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
@@ -212,7 +211,11 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
     //新增预处理
     private void initDefaultData(EasyUiXml easyUiXml) {
-        Location location = Constant.location;
+
+        UiXml eleSign = easyUiXml.getUiXml("DZBQH");
+        eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0, 6));
+
+        Location location = ServiceLocation._location;
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
         UiXml dcr = easyUiXml.getUiXml("DCR");
         dcrq.setValue(DateUtil.getCurrentCalendar());
@@ -228,7 +231,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
             //if (lat != null) lat.setValue(location.getLatitude());
             if (lat != null) lat.setValue(_60Lat);
-            String alts = DecimalFormats.getFormat("#.00").format(location.getAltitude());
+            String alts = DecimalFormats.getFormat("#0.00").format(location.getAltitude());
             if (alt != null) alt.setValue(alts);
         }
         initArea(easyUiXml.getUiXml("XIAN"));
@@ -284,8 +287,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             Map map = propertyView.getForm();
             ComplexTextView lonView = propertyView.getViewByKey("LON");
             ComplexTextView latView = propertyView.getViewByKey("LAT");
-            map.put("LON",TransformUtil._60To10(lonView.getText()));
-            map.put("LAT",TransformUtil._60To10(latView.getText()));
+            map.put("LON", TransformUtil._60To10(lonView.getText()));
+            map.put("LAT", TransformUtil._60To10(latView.getText()));
             property.putAll(map);
             Double lon = (Double) property.get("LON");
             Double lat = (Double) property.get("LAT");
@@ -338,6 +341,9 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });
@@ -351,6 +357,9 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 if (ObjectUtil.isEmpty(place)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });
@@ -364,6 +373,9 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (ObjectUtil.isEmpty(place)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });

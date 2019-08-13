@@ -27,7 +27,8 @@ public class VerifyXml implements Serializable {
 
 
     public String getRegex() {
-        return regex;
+        //return regex;
+        return regex.replaceAll("\n", "").trim();
     }
 
     public void setRegex(String regex) {

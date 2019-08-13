@@ -265,7 +265,7 @@ public class TransformUtil {
         int du = (int) Math.floor(Math.abs(num));    //获取整数部分
         double temp = getdPoint(Math.abs(num)) * 60;
         int fen = (int) Math.floor(temp); //获取整数部分
-        double miao = getdPoint(temp * 60);
+        double miao = getdPoint(temp) * 60;
         String s = DecimalFormats.getFormat("00.00").format(miao);
         if (num < 0)
             return "-" + du + "°" + fen + "′" + s + "″";

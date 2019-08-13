@@ -21,6 +21,7 @@ import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.ObjectUtil;
@@ -186,7 +187,7 @@ public class MultiEditActivity extends BaseAppCompatActivity implements View.OnC
      * @param easyUiXml
      */
     private void initDefaultData(EasyUiXml easyUiXml) {
-        Location location = Constant.location;
+        Location location = ServiceLocation._location;
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
         UiXml dcr = easyUiXml.getUiXml("DCR");
         if (DataStatus.isAdd(feature)) {

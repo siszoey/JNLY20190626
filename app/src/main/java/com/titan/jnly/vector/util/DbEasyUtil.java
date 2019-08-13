@@ -62,7 +62,7 @@ public final class DbEasyUtil {
             }
             return ((int) year / 100) * 100;
             //return min.getYear();
-        } else {
+        } else if (min == null && max != null) {
             //(0,0) (a,b) (x,y)
             //  a/x = b/y;y=bx/a
             double year;
@@ -81,6 +81,8 @@ public final class DbEasyUtil {
                 return 80;
             }
             return max.getYear();
+        } else {
+            return -1;
         }
     }
 

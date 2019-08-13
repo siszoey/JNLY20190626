@@ -21,7 +21,6 @@ public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
-        EventBus.getDefault().register(this);
         BuglySetting.init(this, appId);
         DbManager.dbConfig = new DbVersion(baseApp);
     }
@@ -35,13 +34,5 @@ public class App extends BaseApp {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        EventBus.getDefault().unregister(this);
-    }
-
-    //接收消息
-    @Subscribe
-    public void onEventMainThread(ServiceLocation serviceLocation) {
-        if (serviceLocation == null) return;
-        Constant.location = serviceLocation.getLocation();
     }
 }

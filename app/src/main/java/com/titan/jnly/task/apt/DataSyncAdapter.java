@@ -49,7 +49,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
     class Holder extends BaseViewHolder<Feature> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
         CheckBox cbBox;
-        TextView tvIndex, tvNum, tvName, tvDate, tvAge, tvStatus;
+        TextView tvIndex, tvNum,tvOrder, tvName, tvDate, tvAge, tvStatus;
         ImageView ivSync;
 
         public Holder(ViewGroup parent, int resId) {
@@ -57,6 +57,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
             cbBox = $(R.id.cbBox);
             tvIndex = $(R.id.tvIndex);
             tvNum = $(R.id.tvNum);
+            tvOrder = $(R.id.tvOrder);
             tvName = $(R.id.tvName);
             tvDate = $(R.id.tvDate);
             tvAge = $(R.id.tvAge);
@@ -83,6 +84,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
 
             Map property = data.getAttributes();
             String sign = StringUtil.removeNull(property.get("DZBQH"));
+            String order = StringUtil.removeNull(property.get("DCSXH"));
             String code = StringUtil.removeNull(property.get("SZZWM"));
             String dateStr = StringUtil.removeNull(property.get("DCRQ"));
             GregorianCalendar calendar = (GregorianCalendar) property.get("DCRQ");
@@ -98,6 +100,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
             Species species = Constant.getSpeciesByCode(code);
 
             tvNum.setText(sign);
+            tvOrder.setText(order);
             if (species != null) {
                 tvName.setText(species.getSpecies());
             }

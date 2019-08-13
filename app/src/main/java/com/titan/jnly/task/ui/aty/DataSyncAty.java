@@ -83,12 +83,12 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
         setContentView(R.layout.task_ui_aty_data_sync);
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_right_up_load).setVisible(true);
+        //getMenuInflater().inflate(R.menu.main, menu);
+        //menu.findItem(R.id.menu_right_up_load).setVisible(true);
         return true;
-    }
+    }*/
 
     /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {

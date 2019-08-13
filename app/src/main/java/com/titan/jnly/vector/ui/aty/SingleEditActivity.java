@@ -33,6 +33,7 @@ import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgAty;
 import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
@@ -197,7 +198,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private void initDefaultData(EasyUiXml easyUiXml) {
         //新增预处理
         if (DataStatus.isAdd(feature)) {
-            Location location = Constant.location;
+            UiXml eleSign = easyUiXml.getUiXml("DZBQH");
+            eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0,6));
+
+            Location location = ServiceLocation._location;
             UiXml dcrq = easyUiXml.getUiXml("DCRQ");
             UiXml dcr = easyUiXml.getUiXml("DCR");
             dcrq.setValue(DateUtil.getCurrentCalendar());
@@ -337,6 +341,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });
@@ -350,6 +357,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 if (ObjectUtil.isEmpty(place)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });
@@ -363,6 +373,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (ObjectUtil.isEmpty(place)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
+                if (age == -1) {
+                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
+                }
                 modeAge.setText(age + "");
             }
         });
