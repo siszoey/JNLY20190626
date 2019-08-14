@@ -34,6 +34,7 @@ import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.utils.TimePickerDialogUtil;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgAty;
@@ -52,6 +53,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.Species;
+import com.titan.jnly.vector.bean.WorkSequence;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.tool.SketchEditorTools;
 import com.titan.jnly.vector.util.DbEasyUtil;
@@ -208,12 +210,13 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         }).resolutionData(easyUiXml);
     }
 
+    private String _6ele = Constant.getUserInfo().getUserJurs().substring(0, 6);
 
     //新增预处理
     private void initDefaultData(EasyUiXml easyUiXml) {
 
         UiXml eleSign = easyUiXml.getUiXml("DZBQH");
-        eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0, 6));
+        eleSign.setValue(_6ele);
 
         Location location = ServiceLocation._location;
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
@@ -306,6 +309,23 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
      * 处理控件内部的逻辑
      */
     private void dealInnerLogic() {
+        ComplexTextView selSign = propertyView.getViewByKey("DZBQH");
+        selSign.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (text.trim().length() < 6) {
+                    selSign.setText(_6ele, false);
+                } else {
+                    text = text.substring(6);
+                    text = text.replaceAll("^(0+)", "");
+                    text = StringUtil.completeZero(text, 5);
+                    if (text.endsWith("00000")) text = "";
+                    selSign.setText(_6ele + text, false);
+                }
+                selSign.keepCursorLast();
+            }
+        });
+
         //---------------------------------------科属种关联-----------------------------------------
         //中文名
         ComplexTextView name = propertyView.getViewByAlias("树种中文名");
@@ -341,9 +361,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (ObjectUtil.isEmpty(name)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
-                if (age == -1) {
-                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
-                }
+                if (age == -1) ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
                 modeAge.setText(age + "");
             }
         });
@@ -357,9 +375,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 if (ObjectUtil.isEmpty(place)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
-                if (age == -1) {
-                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
-                }
+                if (age == -1) ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
                 modeAge.setText(age + "");
             }
         });
@@ -373,9 +389,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (ObjectUtil.isEmpty(place)) return;
                 if (!NumberUtil.can2Double(cycleSize)) return;
                 int age = DbEasyUtil.computeTreeAgeByCycle(name, Double.parseDouble(cycleSize), place);
-                if (age == -1) {
-                    ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
-                }
+                if (age == -1) ToastUtil.showLong(_context, "未能找到该树种的计算模型，请联系管理员！");
                 modeAge.setText(age + "");
             }
         });

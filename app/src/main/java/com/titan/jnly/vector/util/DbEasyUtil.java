@@ -24,7 +24,7 @@ public final class DbEasyUtil {
     public static int computeTreeAge(String name, Double diam, String flag) {
         if (flag == null) return -1;
         TreeMode min, max;
-        if ("1".equals(flag)) {
+        if ("山地丘陵".equals(flag)) {
             String sql = "select * from TB_TreeMode where f_name = '" + name + "' and f_diam_hill <= " + diam + " order by f_diam_hill desc limit 1 OFFSET 0";
             System.out.println(sql);
             min = (TreeMode) DbManager.create(Config.APP_DIC_DB_PATH).getTBySql(TreeMode.class, sql, true);
@@ -42,7 +42,7 @@ public final class DbEasyUtil {
         if (min != null && max != null) {
             //中位值计算
             double mid;
-            if ("1".equals(flag)) {
+            if ("山地丘陵".equals(flag)) {
                 mid = (max.getDiamHill() + min.getDiamHill()) / 2;
                 if (diam >= mid) return max.getYear();
                 else return min.getYear();
@@ -55,7 +55,7 @@ public final class DbEasyUtil {
             //(0,0) (a,b) (x,y)
             //  a/x = b/y;y=bx/a
             double year;
-            if ("1".equals(flag)) {
+            if ("山地丘陵".equals(flag)) {
                 year = min.getYear() * diam / min.getDiamHill();
             } else {
                 year = min.getYear() * diam / min.getDiamPlain();
@@ -66,7 +66,7 @@ public final class DbEasyUtil {
             //(0,0) (a,b) (x,y)
             //  a/x = b/y;y=bx/a
             double year;
-            if ("1".equals(flag)) {
+            if ("山地丘陵".equals(flag)) {
                 year = max.getYear() * diam / max.getDiamHill();
             } else {
                 year = max.getYear() * diam / max.getDiamPlain();

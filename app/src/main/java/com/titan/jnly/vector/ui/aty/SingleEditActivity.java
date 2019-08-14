@@ -33,6 +33,7 @@ import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.utils.NumberUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.utils.StringUtil;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgAty;
 import com.lib.bandaid.widget.collect.image.CollectImgBean;
@@ -194,12 +195,12 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             }
         }).resolutionData(easyUiXml);
     }
-
+    private String _6ele = Constant.getUserInfo().getUserJurs().substring(0, 6);
     private void initDefaultData(EasyUiXml easyUiXml) {
         //新增预处理
         if (DataStatus.isAdd(feature)) {
             UiXml eleSign = easyUiXml.getUiXml("DZBQH");
-            eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0, 6));
+            eleSign.setValue(_6ele);
 
             Location location = ServiceLocation._location;
             UiXml dcrq = easyUiXml.getUiXml("DCRQ");
@@ -306,6 +307,22 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
      * 处理控件内部的逻辑
      */
     private void dealInnerLogic() {
+        ComplexTextView selSign = propertyView.getViewByKey("DZBQH");
+        selSign.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (text.trim().length() < 6) {
+                    selSign.setText(_6ele, false);
+                } else {
+                    text = text.substring(6);
+                    text = text.replaceAll("^(0+)", "");
+                    text = StringUtil.completeZero(text, 5);
+                    if (text.endsWith("00000")) text = "";
+                    selSign.setText(_6ele + text, false);
+                }
+                selSign.keepCursorLast();
+            }
+        });
         //---------------------------------------科属种关联-----------------------------------------
         //中文名
         ComplexTextView name = propertyView.getViewByAlias("树种中文名");

@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
 
+import androidx.annotation.NonNull;
 import androidx.collection.LongSparseArray;
 import androidx.collection.SimpleArrayMap;
 
@@ -16,6 +17,19 @@ import java.util.List;
 import java.util.Map;
 
 public class StringUtil {
+
+    public static String completeZero(@NonNull Object obj, int len) {
+        int length = (obj + "").length();
+        StringBuffer sb = new StringBuffer();
+        if (length <= len) {
+            for (int i = 0; i < len - length; i++) {
+                sb.append("0");
+            }
+            sb.append(obj);
+        }
+        return sb.toString();
+    }
+
 
     /**
      * 显示时候使用
