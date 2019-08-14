@@ -27,6 +27,7 @@ import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
+import com.lib.bandaid.utils.ClickUtil;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
@@ -196,9 +197,11 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
         arcMap.getMapControl().zoomF(feature);
     }
 
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabAdd) {
+            if (ClickUtil.isFastDoubleClick(R.id.fabAdd)) return;
             LayerNode layerNode = arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
             if (layerNode == null) return;
             FeatureTable single = layerNode.tryGetFeaTable();
@@ -206,8 +209,8 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
                 @Override
                 public void callback(Feature feature) {
                     Intent intent = new Intent(_context, SimpleAddAty.class);
-                    startActivity(intent);
                     EventBus.getDefault().postSticky(new Object[]{single, feature});
+                    startActivity(intent);
                 }
             });
         }

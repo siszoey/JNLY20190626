@@ -130,7 +130,7 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     private void queryData(int pageNum) {
         QueryParameters params = new QueryParameters();
         params.setReturnGeometry(true);
-        params.getOrderByFields().add(new QueryParameters.OrderBy("OBJECTID", QueryParameters.SortOrder.ASCENDING));
+        params.getOrderByFields().add(new QueryParameters.OrderBy("OBJECTID", QueryParameters.SortOrder.DESCENDING));
         params.setMaxFeatures(pageSize);
         params.setResultOffset((pageNum - 1) * pageSize);
         ListenableFuture<FeatureQueryResult> listen = table.queryFeaturesAsync(params);

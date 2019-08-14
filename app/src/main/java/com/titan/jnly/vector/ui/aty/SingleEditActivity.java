@@ -199,7 +199,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         //新增预处理
         if (DataStatus.isAdd(feature)) {
             UiXml eleSign = easyUiXml.getUiXml("DZBQH");
-            eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0,6));
+            eleSign.setValue(Constant.getUserInfo().getUserJurs().substring(0, 6));
 
             Location location = ServiceLocation._location;
             UiXml dcrq = easyUiXml.getUiXml("DCRQ");
@@ -408,7 +408,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 String snText = sn.getText();
                 if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(snText)) return;
                 double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(snText)) / 2;
-                wsen.setText(avg + "");
+                wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
             }
         });
         WidgetUtil.setViewTextChangeLister(sn, new WidgetUtil.IChangeLister() {
@@ -417,7 +417,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 String ewText = ew.getText();
                 if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(ewText)) return;
                 double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(ewText)) / 2;
-                wsen.setText(avg + "");
+                wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
             }
         });
 

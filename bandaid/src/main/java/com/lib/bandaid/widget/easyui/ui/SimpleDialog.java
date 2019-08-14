@@ -1,25 +1,29 @@
 package com.lib.bandaid.widget.easyui.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lib.bandaid.R;
 import com.lib.bandaid.adapter.com.SimpleRvAdapter;
+import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 
 import java.util.List;
 
-public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener, SimpleRvAdapter.IFillData<ItemXml> {
+public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener, SimpleRvAdapter.IFillData<ItemXml>, BaseRecycleAdapter.IViewClickListener {
 
     private List<ItemXml> values;
     private List<Integer> sel;
     private Boolean isMulti;
 
+    private LinearLayout llFooter;
     private RecyclerView rvList;
     private SimpleRvAdapter simpleAdapter;
     private Button btnExit, btnSubmit;
@@ -49,6 +53,7 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
 
     @Override
     protected void initialize() {
+        llFooter = $(R.id.llFooter);
         rvList = $(R.id.rvList);
         btnExit = $(R.id.btnExit);
         btnSubmit = $(R.id.btnSubmit);
@@ -62,9 +67,12 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
 
     @Override
     protected void initClass() {
+        if (isMulti) llFooter.setVisibility(View.VISIBLE);
+        else llFooter.setVisibility(View.GONE);
         simpleAdapter = new SimpleRvAdapter(rvList, this);
         simpleAdapter.setSelFlags(sel).setMulti(isMulti);
         simpleAdapter.replaceAll(values);
+        simpleAdapter.setIViewClickListener(this);
     }
 
     @Override
@@ -87,4 +95,18 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
         return value.getValue();
     }
 
+    @Override
+    public void onClick(View view, Object data, int position) {
+        if (isMulti) return;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismiss();
+                if (iCallBack != null) {
+                    List<ItemXml> selData = simpleAdapter.getSelData();
+                    iCallBack.callback(selData);
+                }
+            }
+        },200);
+    }
 }
