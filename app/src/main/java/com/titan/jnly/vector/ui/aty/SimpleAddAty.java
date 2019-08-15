@@ -75,7 +75,6 @@ import java.util.Map;
 public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickListener {
 
     private String uuid;
-
     private Button btnExit, btnSubmit;
     private FrameLayout flRoot;
 
@@ -139,8 +138,13 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 }
                 if (v instanceof ImageView) {
                     LinkedHashMap waterMark = new LinkedHashMap();
-                    String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
-                    String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+
+                    String lat = "";
+                    String lon = "";
+                    if (ServiceLocation._location != null) {
+                        lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
+                        lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+                    }
                     waterMark.put("序号", sequence);
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
@@ -225,15 +229,14 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         dcr.setValue(Constant.getUser().getName());
         //设置经度纬度海拔
         if (location != null) {
-            UiXml lon = easyUiXml.getUiXml("LON");
-            UiXml lat = easyUiXml.getUiXml("LAT");
+            //UiXml lon = easyUiXml.getUiXml("LON");
+            //UiXml lat = easyUiXml.getUiXml("LAT");
+            //String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
+            //if (lon != null) lon.setValue(_60Lon);
+            //String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
+            //if (lat != null) lat.setValue(_60Lat);
+
             UiXml alt = easyUiXml.getUiXml("HAIBA");
-            String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
-            //if (lon != null) lon.setValue(location.getLongitude());
-            if (lon != null) lon.setValue(_60Lon);
-            String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
-            //if (lat != null) lat.setValue(location.getLatitude());
-            if (lat != null) lat.setValue(_60Lat);
             String alts = DecimalFormats.getFormat("#0.00").format(location.getAltitude());
             if (alt != null) alt.setValue(alts);
         }

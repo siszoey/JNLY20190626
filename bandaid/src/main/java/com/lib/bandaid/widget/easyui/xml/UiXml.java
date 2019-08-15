@@ -189,6 +189,10 @@ public class UiXml implements Serializable {
         this.inputType = inputType;
     }
 
+    public boolean isVerify() {
+        return verifyXml != null;
+    }
+
     public VerifyXml getVerifyXml() {
         return verifyXml;
     }

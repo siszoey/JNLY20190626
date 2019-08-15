@@ -197,6 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:gravity="center"
                     android:text="北京航天泰坦"
                     android:textColor="@color/hx_yellow"
                     android:textSize="14dp" />

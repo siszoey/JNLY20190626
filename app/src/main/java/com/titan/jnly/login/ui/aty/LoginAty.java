@@ -79,8 +79,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
         btnLogin.setOnClickListener(this);
         ivShowPwd.setOnClickListener(this);
         ckRemember.setOnCheckedChangeListener(this);
-        boolean isDebug = AppUtil.isApkInDebug(this);
-        copyRight.setText("北京航天泰坦:" + AppUtil.getApkVersionName(this));
+        String text = "济南市林木种质资源中心\n" + "技术支持:北京航天泰坦(" + AppUtil.getApkVersionName(this) + ")";
+        copyRight.setText(text);
     }
 
     @Override

@@ -22,13 +22,11 @@ import com.lib.bandaid.widget.easyui.enums.Status;
 import com.lib.bandaid.widget.easyui.ui.EventImageView;
 import com.lib.bandaid.widget.easyui.ui.SimpleDialog;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
-import com.lib.bandaid.widget.easyui.utils.RegexUtil;
 import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
 import com.lib.bandaid.widget.easyui.xml.VerifyXml;
-import com.lib.bandaid.widget.text.SimpleTextWatch;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -97,8 +95,9 @@ public class PropertyView extends ScrollView {
     private View createViewItemWrite(UiXml uiXml) {
         LinearLayout itemLine = WidgetUtil.createLineH(context);
         TextView nameView = createNameView(uiXml);
-        itemLine.addView(nameView);
+        if (uiXml.isVerify()) ViewUtil.setLeftDrawable(nameView, R.drawable.ic_star_red);
 
+        itemLine.addView(nameView);
         View valueView;
         if (uiXml.isDialogSel()) {
             valueView = createComplexTextView(uiXml);
