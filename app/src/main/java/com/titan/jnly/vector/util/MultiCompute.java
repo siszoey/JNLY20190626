@@ -100,7 +100,7 @@ public final class MultiCompute {
     }
 
 
-    public static void updateSyncFeature(String uuid, @NonNull ICallBack iCallBack) {
+    public static void updateFeature(String uuid, Map map, @NonNull ICallBack iCallBack) {
         LayerNode layerNode = ArcMap.arcMap.getTocContainer().getLayerNodeByName("古树名木单株调查");
         if (layerNode == null) return;
         final FeatureTable single = layerNode.tryGetFeaTable();
@@ -118,7 +118,7 @@ public final class MultiCompute {
                         feature = features.next();
                         break;
                     }
-                    feature.getAttributes().putAll(DataStatus.createSync());
+                    if (map != null) feature.getAttributes().putAll(map);
                     ListenableFuture _future = single.updateFeatureAsync(feature);
                     _future.get();
                     if (_future.isDone()) {

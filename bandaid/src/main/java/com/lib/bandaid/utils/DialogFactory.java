@@ -3,6 +3,7 @@ package com.lib.bandaid.utils;
 import android.app.Activity;
 import android.content.Context;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.widget.dialog.WaitingDialog;
 
 import java.lang.ref.SoftReference;
@@ -71,5 +72,23 @@ public final class DialogFactory {
                 dialog.dismiss();
             }
         }
+    }
+
+
+    public static MaterialDialog createDialogUnCancel(Context context) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.progress(true, 0);
+        builder.cancelable(false);
+        builder.canceledOnTouchOutside(false);
+        return builder.build();
+    }
+
+    public static MaterialDialog showLoadProgress(Context context, String msg, boolean isCancel) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.content(msg);
+        builder.progress(true, 0);
+        builder.cancelable(isCancel);
+        builder.canceledOnTouchOutside(isCancel);
+        return builder.build();
     }
 }

@@ -248,7 +248,7 @@ public class VectorBar extends BaseMapWidget implements View.OnClickListener, IA
                         MultiCompute.getLastFeature(data.getData(), new MultiCompute.ICallBack() {
                             @Override
                             public void callback(Feature feature) {
-                                SingleEditActivity.data = data;
+                                SingleEditActivity.data = data.getData();
                                 SingleEditActivity.lastFeature = feature;
                                 Intent intent = new Intent(context, SingleEditActivity.class);
                                 startActivity(intent);

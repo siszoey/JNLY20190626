@@ -30,55 +30,20 @@ public class SyncPresenter extends NetRequest<SyncContract.View> implements Sync
     public SyncPresenter() {
     }
 
-
     @Override
     public void syncData(DataSync data) {
-        String json = MapUtil.entity2Json(new SimpleList<>().push(data));
         request(ApiDataSync.class, new NetWorkListen<TTResult<Map>>() {
             @Override
             public void onSuccess(TTResult<Map> data) {
                 view.syncSuccess(data);
             }
 
-            @Override
-            public void onError(int err, String errMsg, Throwable t) {
-                //System.out.println(errMsg);
-            }
         }).httpFileSync(new SimpleList<>().push(data));
     }
 
     @Override
-    public void syncData(List<DataSync> data) {
-        request(ApiDataSync.class, new NetWorkListen<TTResult>() {
-            @Override
-            public void onSuccess(TTResult data) {
-                //view.LoginSuccess(data.getContent());
-            }
-
-            @Override
-            public void onError(int err, String errMsg, Throwable t) {
-                //System.out.println(errMsg);
-            }
-        }).httpFileSync(data);
-    }
-
-    @Override
-    public void syncFile(List<File> files) {
-        if (files == null || files.size() == 0) return;
-        MultipartBody body;
-        for (File file : files) {
-            body = OkHttp3Util.fileBody(file);
-            request(ApiFileSync.class, new NetWorkListen<Object>() {
-                @Override
-                public void onSuccess(Object data) {
-
-                }
-            }).httpFileSync(body);
-        }
-    }
-
-    @Override
-    public void syncSingle(List<File> files, DataSync dataSync) {
+    public void syncSingle(DataSync dataSync) {
+        List<File> files = dataSync.getFiles();
         if (files == null || files.size() == 0) {
             syncData(dataSync);
             return;
@@ -96,12 +61,22 @@ public class SyncPresenter extends NetRequest<SyncContract.View> implements Sync
                         syncData(dataSync);
                     }
                 }
-
-                @Override
-                public void onError(int err, String errMsg, Throwable t) {
-                    System.err.println(errMsg);
-                }
             }).httpFileSync(body);
         }
+    }
+
+    @Override
+    public void syncMulti(List<DataSync> data) {
+        DataSync dataSync;
+        for (int i = 0; i < data.size(); i++) {
+            dataSync = data.get(i);
+
+        }
+        request(ApiDataSync.class, new NetWorkListen<TTResult>() {
+            @Override
+            public void onSuccess(TTResult data) {
+                //view.LoginSuccess(data.getContent());
+            }
+        }).httpFileSync(data);
     }
 }

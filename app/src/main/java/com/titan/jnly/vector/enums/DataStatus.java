@@ -13,7 +13,7 @@ public enum DataStatus {
 
     LOCAL_ADD("本地新增", (short) 0),
     LOCAL_EDIT("本地编辑", (short) 1),
-    REMOTE_SYNC("远程同步", (short) 2);
+    REMOTE_SYNC("已经上传", (short) 2);
 
     public final static String UUID = "UUID";
     public final static String DATA_STATUS = "DATA_STATUS";

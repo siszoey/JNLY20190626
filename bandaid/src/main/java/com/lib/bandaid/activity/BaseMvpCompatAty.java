@@ -3,8 +3,10 @@ package com.lib.bandaid.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.data.remote.core.INetRequest;
+//import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.utils.DialogFactory;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
@@ -12,12 +14,15 @@ import javax.inject.Inject;
 
 public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> extends BaseAppCompatActivity implements INetRequest.BaseView {
 
+    protected MaterialDialog waitDialog;
+
     @Inject
     protected T presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        waitDialog = DialogFactory.createDialogUnCancel(this);
         attachView();
     }
 
@@ -45,17 +50,20 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
 
     @Override
     public void showLoading() {
-        DialogFactory.getFactory().show(this);
+        waitDialog.show();
+        //DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void showLoading(String msg) {
-        DialogFactory.getFactory().show(this);
+        waitDialog.show();
+        //DialogFactory.getFactory().show(this);
     }
 
     @Override
     public void hideLoading() {
-        DialogFactory.getFactory().dismiss(this);
+        waitDialog.dismiss();
+        //DialogFactory.getFactory().dismiss(this);
     }
 
     @Override

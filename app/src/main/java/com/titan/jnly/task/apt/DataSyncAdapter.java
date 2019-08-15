@@ -46,10 +46,10 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
         return new Holder(parent, R.layout.task_sync_list_item);
     }
 
-    class Holder extends BaseViewHolder<Feature> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    class Holder extends BaseViewHolder<Feature> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
 
         CheckBox cbBox;
-        TextView tvIndex, tvNum,tvOrder, tvName, tvDate, tvAge, tvStatus;
+        TextView tvIndex, tvNum, tvOrder, tvName, tvDate, tvAge, tvStatus;
         ImageView ivSync;
 
         public Holder(ViewGroup parent, int resId) {
@@ -65,6 +65,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
             ivSync = $(R.id.ivSync);
             ivSync.setOnClickListener(this);
             cbBox.setOnCheckedChangeListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -139,6 +140,13 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
                     records.remove((Integer) position);
                 }
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (iLongViewClickListener != null)
+                iLongViewClickListener.onLongViewClick(v, data, position);
+            return false;
         }
     }
 

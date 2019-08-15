@@ -20,11 +20,10 @@ public interface SyncContract {
 
         void syncData(DataSync data);
 
-        void syncData(List<DataSync> data);
+        void syncSingle(DataSync dataSync);
 
-        void syncFile(List<File> files);
+        void syncMulti(List<DataSync> data);
 
-        void syncSingle(List<File> files, DataSync dataSync);
 
     }
 

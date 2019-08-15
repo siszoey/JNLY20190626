@@ -59,6 +59,7 @@ import com.titan.jnly.vector.util.PropertyUtil;
 import com.titan.jnly.vector.util.DbEasyUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private Button btnExit, btnSubmit;
     private FrameLayout flRoot;
 
-    public static GroupItem<Feature> data;
+    public static Feature data;
     public static Feature lastFeature;
 
     private PropertyView propertyView;
@@ -87,6 +88,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private EasyUiXml easyUiXml;
 
     private String imgFPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +140,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                         lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
                         lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
-                    
+
                     ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
-                    waterMark.put("树种", view.getText());
+                    //waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -174,11 +176,15 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     protected void initClass() {
-        feature = data.getData();
+        /*feature = data.getData();
+        feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();*/
+
+        feature = data;
+        feaTable = feature.getFeatureTable();
+
         uuid = FeatureUtil.getAsT(feature, "UUID");
         sequence = FeatureUtil.getAsT(feature, "DCSXH");
         imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
-        feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();
         //获取布局的模板
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
         Map<String, Object> property = feature.getAttributes();

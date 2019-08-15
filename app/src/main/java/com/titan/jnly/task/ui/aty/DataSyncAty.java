@@ -1,5 +1,6 @@
 package com.titan.jnly.task.ui.aty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.remote.core.NetRequest;
 import com.lib.bandaid.data.remote.entity.TTResult;
@@ -45,6 +47,7 @@ import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.apt.DataSyncAdapter;
 import com.titan.jnly.task.bean.DataSync;
 import com.titan.jnly.vector.enums.DataStatus;
+import com.titan.jnly.vector.ui.aty.SingleEditActivity;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,7 +65,10 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
         SyncContract.View,
         OnRefreshListener,
         OnLoadMoreListener,
-        BaseRecycleAdapter.IViewClickListener<Feature>, View.OnClickListener, NotifyArrayList.IListener {
+        BaseRecycleAdapter.IViewClickListener<Feature>,
+        View.OnClickListener,
+        NotifyArrayList.IListener,
+        BaseRecycleAdapter.ILongViewClickListener<Feature> {
 
     private final int pageSize = 30;
     private int pageNum = 1;
@@ -83,21 +89,21 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
         setContentView(R.layout.task_ui_aty_data_sync);
     }
 
-   /* @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.main, menu);
-        //menu.findItem(R.id.menu_right_up_load).setVisible(true);
+        getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.menu_right_up_load).setVisible(true);
         return true;
-    }*/
+    }
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_right_up_load) {
             batchUpLoad();
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true) //在ui线程执行
     public void getTable(FeatureTable table) {
@@ -124,6 +130,7 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     protected void initClass() {
         adapter = new DataSyncAdapter(rvList, this);
         adapter.setIViewClickListener(this);
+        adapter.setILongViewClickListener(this);
         queryData(pageNum);
     }
 
@@ -230,8 +237,8 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
 
         String fileJson = (String) map.get("GSZP");
         List<File> files = CollectImgBean.obtainFiles(fileJson);
-
-        presenter.syncSingle(files, dataSync);
+        dataSync.addFile(files);
+        presenter.syncSingle(dataSync);
     }
 
     /**
@@ -239,18 +246,35 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
      */
     private void batchUpLoad() {
         List<Feature> data = adapter.getSelData();
-        List<Integer> check = verify(data);
-        if (check.size() > 0) {
+        if (data == null || data.size() == 0) {
+            showLongToast("请选择要上传的数据!");
+            return;
+        }
+        List<Integer> checkAdd = verifyAdd(data);
+        //List<Integer> checkSync = verifyAdd(data);
+        if (checkAdd.size() > 0) {
             new ATEDialog.Theme_Alert(_context)
                     .title("提示")
-                    .content("提交的数据中，有" + check.size() + "个尚未完成，请检查!")
+                    .content("提交的数据中，有" + checkAdd.size() + "个尚未完成调查，请检查!")
                     .positiveText("确认").show();
         } else {
-
+            new ATEDialog.Theme_Alert(_context)
+                    .title("提示")
+                    .content("确认上传这" + data.size() + "条数据？")
+                    .positiveText("确认")
+                    .negativeText("取消").onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    //showToast("开始上传");
+                    for(Feature feature:data){
+                        syncData(feature);
+                    }
+                }
+            }).show();
         }
     }
 
-    private List<Integer> verify(List<Feature> data) {
+    private List<Integer> verifyAdd(List<Feature> data) {
         List<Integer> check = new ArrayList<>();
         Short status;
         DataStatus dataStatus;
@@ -260,6 +284,22 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
             status = (Short) feature.getAttributes().get(DataStatus.DATA_STATUS);
             dataStatus = DataStatus.getEnum(status);
             if (dataStatus == DataStatus.LOCAL_ADD) {
+                check.add(i);
+            }
+        }
+        return check;
+    }
+
+    private List<Integer> verifySync(List<Feature> data) {
+        List<Integer> check = new ArrayList<>();
+        Short status;
+        DataStatus dataStatus;
+        Feature feature;
+        for (int i = 0; i < data.size(); i++) {
+            feature = data.get(i);
+            status = (Short) feature.getAttributes().get(DataStatus.DATA_STATUS);
+            dataStatus = DataStatus.getEnum(status);
+            if (dataStatus == DataStatus.REMOTE_SYNC) {
                 check.add(i);
             }
         }
@@ -297,8 +337,8 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
             //String faild = (String) result.getContent().get("faild");
             if (!ObjectUtil.isEmpty(success.trim())) {
                 String[] items = success.split(",");
-                for (String item : items) {
-                    MultiCompute.updateSyncFeature(item, new MultiCompute.ICallBack() {
+                for (String uuid : items) {
+                    MultiCompute.updateFeature(uuid, DataStatus.createSync(), new MultiCompute.ICallBack() {
                         @Override
                         public void callback(Feature feature) {
                             adapter.updateData(feature);
@@ -311,5 +351,38 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
             }
         }
 
+    }
+
+    int longEdit;
+
+    @Override
+    public void onLongViewClick(View view, Feature data, int position) {
+        longEdit = position;
+        new ATEDialog.Theme_Alert(_context)
+                .title("提示")
+                .content("确认编辑该条数据？")
+                .positiveText("确认")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        SingleEditActivity.data = data;
+                        Intent intent = new Intent(_context, SingleEditActivity.class);
+                        startActivityForResult(intent, 1000);
+                    }
+                }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Feature feature = adapter.getItem(longEdit);
+        String uuid = FeatureUtil.getAsT(feature, "UUID");
+        MultiCompute.updateFeature(uuid, null, new MultiCompute.ICallBack() {
+            @Override
+            public void callback(Feature feature) {
+                adapter.updateData(feature);
+            }
+        });
     }
 }

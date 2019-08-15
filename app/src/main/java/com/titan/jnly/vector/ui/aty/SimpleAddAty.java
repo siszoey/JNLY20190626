@@ -147,7 +147,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
                     ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
-                    waterMark.put("树种", view.getText());
+                    //waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
