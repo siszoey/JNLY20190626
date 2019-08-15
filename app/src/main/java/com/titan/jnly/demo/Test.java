@@ -4,6 +4,7 @@ import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.TreeMode;
+import com.titan.jnly.vector.bean.WorkSequence;
 import com.titan.jnly.vector.enums.DataStatus;
 
 public class Test {
@@ -33,6 +34,9 @@ public class Test {
         double latd = TransformUtil._60To10(lat);
 
         System.out.println(1122);
+        WorkSequence workSequence = new WorkSequence();
+        Integer num = workSequence.sequence2Num("1908150101006");
+        System.out.println(num);
     }
 
 

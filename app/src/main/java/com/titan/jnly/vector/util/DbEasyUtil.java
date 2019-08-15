@@ -100,7 +100,6 @@ public final class DbEasyUtil {
         if (userInfo == null) return null;
         String userName = userInfo.getUserName();
         if (userInfo.getUserGroup() == null) return null;
-        //String sql = "select * from TB_Work_Sequence where userName = '" + userName + "' and date(dateTime) = date('now') ORDER BY num DESC LIMIT 1 OFFSET 0";
         String dateTime = DateUtil.getCurrentDate();
         String sql = "select * from TB_Work_Sequence where userName = '" + userName + "' and date(dateTime) = '" + dateTime + "' ORDER BY num DESC LIMIT 1 OFFSET 0";
         //System.out.println(">>>>>:   " + sql);
@@ -126,6 +125,24 @@ public final class DbEasyUtil {
         boolean flag = DbManager.createDefault().saveOrUpdate(workSequence);
         if (flag) return workSequence.getSequence();
         else return null;
+    }
+
+
+    public static boolean saveWorkSequence(String sequence) {
+        UserInfo userInfo = Constant.getUserInfo();
+        if (userInfo == null) return false;
+        if (sequence == null) return false;
+        String userName = userInfo.getUserName();
+        if (userInfo.getUserGroup() == null) return false;
+
+        WorkSequence workSequence = new WorkSequence();
+        workSequence.setDateTime(new Date());
+        workSequence.setUserName(userName);
+        workSequence.setSequence(sequence);
+        Integer num = workSequence.sequence2Num(sequence);
+        workSequence.setNum(num);
+
+        return DbManager.createDefault().saveOrUpdate(workSequence);
     }
 
 }

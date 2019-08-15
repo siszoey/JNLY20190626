@@ -138,7 +138,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                         lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
                         lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
+                    
+                    ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
+                    waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -304,6 +307,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 @Override
                 public void ok() {
                     finish();
+                    DbEasyUtil.saveWorkSequence(sequence);
                 }
             });
         }
@@ -313,6 +317,14 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
      * 处理控件内部的逻辑
      */
     private void dealInnerLogic() {
+        ComplexTextView sqe = propertyView.getViewByKey("DCSXH");
+        sqe.setListenChange(new ComplexTextView.IListenChange() {
+            @Override
+            public void textChange(int id, String text) {
+                if (sqe.checkVerify()) sequence = text;
+            }
+        });
+
         ComplexTextView selSign = propertyView.getViewByKey("DZBQH");
         selSign.setListenChange(new ComplexTextView.IListenChange() {
             @Override

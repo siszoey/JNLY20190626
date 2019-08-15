@@ -17,8 +17,8 @@
             <inputType>number</inputType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
+                <regex>^\d{13}$</regex>
+                <msg>调查顺序号位13位的数字!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>

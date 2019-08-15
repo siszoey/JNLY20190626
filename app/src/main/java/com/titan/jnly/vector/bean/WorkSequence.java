@@ -54,6 +54,11 @@ public class WorkSequence implements Serializable {
         return String.format("%03d", num);
     }
 
+    public Integer sequence2Num(String sequence) {
+        String text = sequence.substring(10);
+        return Integer.parseInt(text);
+    }
+
     public Date getDateTime() {
         return dateTime;
     }

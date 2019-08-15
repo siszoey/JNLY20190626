@@ -190,7 +190,7 @@ public class UiXml implements Serializable {
     }
 
     public boolean isVerify() {
-        return verifyXml != null;
+        return verifyXml != null&&!verifyXml.getCanNull();
     }
 
     public VerifyXml getVerifyXml() {
