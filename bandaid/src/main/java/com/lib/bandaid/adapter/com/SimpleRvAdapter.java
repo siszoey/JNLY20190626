@@ -119,4 +119,11 @@ public class SimpleRvAdapter<T> extends BaseRecycleAdapter<T, BaseViewHolder<T>>
         return this;
     }
 
+    public List<Integer> getSelFlags() {
+        return selFlags;
+    }
+
+    public void clearSel() {
+        selFlags.clear();
+    }
 }

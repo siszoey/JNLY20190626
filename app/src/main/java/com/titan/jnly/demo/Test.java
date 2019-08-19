@@ -2,6 +2,7 @@ package com.titan.jnly.demo;
 
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
+import com.lib.bandaid.utils.PyUtil;
 import com.titan.jnly.vector.bean.District;
 import com.titan.jnly.vector.bean.TreeMode;
 import com.titan.jnly.vector.bean.WorkSequence;
@@ -37,6 +38,10 @@ public class Test {
         WorkSequence workSequence = new WorkSequence();
         Integer num = workSequence.sequence2Num("1908150101006");
         System.out.println(num);
+
+
+       String ss = PyUtil.getInstance().convert2PyHead("测QA试,一下哈。喽qq123你好");
+        System.out.println(ss);
     }
 
 

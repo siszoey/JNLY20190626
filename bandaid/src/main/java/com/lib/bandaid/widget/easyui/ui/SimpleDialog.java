@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lib.bandaid.R;
 import com.lib.bandaid.adapter.com.SimpleRvAdapter;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
+import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.utils.PyUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.edittext.ClearEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleDialog extends BaseDialogFrg
@@ -32,6 +35,7 @@ public class SimpleDialog extends BaseDialogFrg
     private RecyclerView rvList;
     private SimpleRvAdapter simpleAdapter;
     private Button btnExit, btnSubmit;
+    private List<Integer> lastSel = new ArrayList<>();
 
     public static <T> SimpleDialog newInstance(List<ItemXml> values, List<Integer> sel, boolean isMulti, ICallBack<T> iCallBack) {
         SimpleDialog fragment = new SimpleDialog();
@@ -77,6 +81,7 @@ public class SimpleDialog extends BaseDialogFrg
         else llFooter.setVisibility(View.GONE);
         simpleAdapter = new SimpleRvAdapter(rvList, this);
         simpleAdapter.setSelFlags(sel).setMulti(isMulti);
+        lastSel.addAll(sel);
         simpleAdapter.replaceAll(values);
         simpleAdapter.setIViewClickListener(this);
 
@@ -121,6 +126,27 @@ public class SimpleDialog extends BaseDialogFrg
 
     @Override
     public void afterTextChanged(int id, String s) {
-        System.out.println(s);
+        simpleAdapter.replaceAll(pyQuery(s));
+    }
+
+    List<ItemXml> pyQuery(String text) {
+        if (values == null) return null;
+        if (ObjectUtil.isEmpty(text)) {
+            simpleAdapter.setSelFlags(lastSel);
+            return values;
+        }
+
+        lastSel.clear();
+        lastSel.addAll(simpleAdapter.getSelFlags());
+        simpleAdapter.clearSel();
+
+        List<ItemXml> res = new ArrayList<>();
+        for (ItemXml itemXml : values) {
+            if (itemXml == null) continue;
+            if (itemXml.getPy().contains(text.toLowerCase())) {
+                res.add(itemXml);
+            }
+        }
+        return res;
     }
 }

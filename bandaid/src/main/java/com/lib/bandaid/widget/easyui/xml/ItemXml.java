@@ -2,6 +2,7 @@ package com.lib.bandaid.widget.easyui.xml;
 
 import android.view.View;
 
+import com.lib.bandaid.utils.PyUtil;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -13,6 +14,9 @@ import java.lang.reflect.Field;
  */
 @XStreamAlias("ItemXml")
 public class ItemXml implements Serializable {
+
+    @XStreamOmitField
+    private String py;
 
     @XStreamAlias("code")
     private Object code;
@@ -35,6 +39,12 @@ public class ItemXml implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+
+    }
+
+    public String getPy() {
+        if (this.py == null) this.py = PyUtil.getInstance().convert2PyHead(value);
+        return py;
     }
 
     public Boolean getChecked() {
