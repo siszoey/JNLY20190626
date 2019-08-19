@@ -5,9 +5,11 @@ import android.location.Location;
 
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.utils.CacheUtil;
+import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.Config;
@@ -15,6 +17,7 @@ import com.titan.jnly.login.bean.User;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.vector.bean.Species;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,5 +120,17 @@ public final class Constant {
             if (species.getCode().equals(code)) return species;
         }
         return null;
+    }
+
+    public static String createUserFilePath(String uuid) {
+        UserInfo userInfo = getUserInfo();
+        String prefix = DateUtil.curTimeFormat("yyMMdd");
+        return Config.APP_PHOTO_PATH
+                .concat(File.separator)
+                .concat(userInfo.getUserName())
+                .concat(File.separator)
+                .concat(prefix)
+                .concat(File.separator)
+                .concat(uuid);
     }
 }

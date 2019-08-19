@@ -149,6 +149,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                     UiXml uiXml = easyUiXml.getUiXml("GSZP");
                     String json = ((EventImageView) uiXml.getView()).getJson();
                     ArrayList<CollectImgBean> beans = CollectImgBean.convertFromJson(json);
+
+                    imgFPath = FileUtil.usePathSafe(imgFPath);
                     CollectImgAty.start(_activity, 1000, beans, false, imgFPath, true, true, waterMark);
                 }
             }
@@ -180,7 +182,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
 
         uuid = FeatureUtil.getAsT(feature, "UUID");
         sequence = FeatureUtil.getAsT(feature, "DCSXH");
-        imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
+        imgFPath = Constant.createUserFilePath(uuid);
 
         //获取布局的模板
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
@@ -246,10 +248,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             UiXml lat = easyUiXml.getUiXml("LAT");
             UiXml alt = easyUiXml.getUiXml("HAIBA");
             String _60Lon = TransformUtil._10To60_len2(lon.getValue() + "");
-            //if (lon != null) lon.setValue(location.getLongitude());
             if (lon != null) lon.setValue(_60Lon);
             String _60Lat = TransformUtil._10To60_len2(lat.getValue() + "");
-            //if (lat != null) lat.setValue(location.getLatitude());
             if (lat != null) lat.setValue(_60Lat);
             String alts = DecimalFormats.getFormat("#.00").format(alt.getValue());
             if (alt != null) alt.setValue(alts);

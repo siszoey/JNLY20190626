@@ -157,6 +157,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                     UiXml uiXml = easyUiXml.getUiXml("GSZP");
                     String json = ((EventImageView) uiXml.getView()).getJson();
                     ArrayList<CollectImgBean> beans = CollectImgBean.convertFromJson(json);
+                    imgFPath = FileUtil.usePathSafe(imgFPath);
                     CollectImgAty.start(_activity, 1000, beans, false, imgFPath, true, true, waterMark);
                 }
             }
@@ -182,10 +183,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
     @Override
     protected void initClass() {
-
         uuid = UUIDTool.get32UUID();//新增UUID
-        imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
-
+        imgFPath = Constant.createUserFilePath(uuid);
 
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
 
