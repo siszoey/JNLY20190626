@@ -748,8 +748,7 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
-            <alias>树木奇特形状描述
-                性状描述
+            <alias>树木奇特性状描述
             </alias>
             <code>SMQTXZMS</code>
             <dataType class="java-class">java.lang.String</dataType>

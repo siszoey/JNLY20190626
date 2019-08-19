@@ -149,9 +149,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                         lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
 
-                    //ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
-                    //waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -184,8 +182,11 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
     @Override
     protected void initClass() {
+
         uuid = UUIDTool.get32UUID();//新增UUID
         imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
+
+
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
 
         {
@@ -233,15 +234,15 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         UiXml dcrq = easyUiXml.getUiXml("DCRQ");
         UiXml dcr = easyUiXml.getUiXml("DCR");
         dcrq.setValue(DateUtil.getCurrentCalendar());
-        dcr.setValue(Constant.getUser().getName());
+        dcr.setValue(Constant.getUserInfo().getName());
         //设置经度纬度海拔
         if (location != null) {
-            //UiXml lon = easyUiXml.getUiXml("LON");
-            //UiXml lat = easyUiXml.getUiXml("LAT");
-            //String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
-            //if (lon != null) lon.setValue(_60Lon);
-            //String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
-            //if (lat != null) lat.setValue(_60Lat);
+            UiXml lon = easyUiXml.getUiXml("LON");
+            UiXml lat = easyUiXml.getUiXml("LAT");
+            String _60Lon = TransformUtil._10To60_short(location.getLongitude() + "");
+            if (lon != null) lon.setValue(_60Lon);
+            String _60Lat = TransformUtil._10To60_short(location.getLatitude() + "");
+            if (lat != null) lat.setValue(_60Lat);
 
             UiXml alt = easyUiXml.getUiXml("HAIBA");
             String alts = DecimalFormats.getFormat("#0.00").format(location.getAltitude());
@@ -502,7 +503,6 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 }
                 lonView.setText(text, false);
                 lonView.keepCursorLast();
-
             }
         });
 

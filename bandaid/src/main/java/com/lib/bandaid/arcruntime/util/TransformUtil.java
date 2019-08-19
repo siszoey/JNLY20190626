@@ -272,6 +272,16 @@ public class TransformUtil {
         return du + "°" + fen + "′" + s + "″";
     }
 
+    public static String _10To60_short(String latlng) {
+        double num = Double.parseDouble(latlng);
+        int du = (int) Math.floor(Math.abs(num));    //获取整数部分
+        double temp = getdPoint(Math.abs(num)) * 60;
+        int fen = (int) Math.floor(temp); //获取整数部分
+        if (num < 0)
+            return "-" + du + "°" + fen + "′";
+        return du + "°" + fen + "′";
+    }
+
     /**
      * 60进制转10进制
      *

@@ -88,8 +88,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private EasyUiXml easyUiXml;
 
     private String imgFPath;
-
-    //private String _6ele = Constant.getUserInfo().getUserJurs().substring(0, 6);
     private String _6ele;
 
     @Override
@@ -143,9 +141,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                         lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
 
-                    //ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
-                    //waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
                     waterMark.put("经度", lon);
                     waterMark.put("时间", DateUtil.dateTimeToStr(new Date()));
@@ -178,8 +174,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
 
     @Override
     protected void initClass() {
-        /*feature = data.getData();
-        feaTable = ((LayerNode) data.getTag()).tryGetFeaTable();*/
 
         feature = data;
         feaTable = feature.getFeatureTable();
@@ -187,6 +181,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         uuid = FeatureUtil.getAsT(feature, "UUID");
         sequence = FeatureUtil.getAsT(feature, "DCSXH");
         imgFPath = FileUtil.usePathSafe(Config.APP_PHOTO_PATH.concat(File.separator).concat(uuid));
+
         //获取布局的模板
         easyUiXml = Constant.getEasyUiXmlByName(_context, feaTable.getTableName());
         Map<String, Object> property = feature.getAttributes();
@@ -230,15 +225,15 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             UiXml dcrq = easyUiXml.getUiXml("DCRQ");
             UiXml dcr = easyUiXml.getUiXml("DCR");
             dcrq.setValue(DateUtil.getCurrentCalendar());
-            dcr.setValue(Constant.getUser().getName());
+            dcr.setValue(Constant.getUserInfo().getName());
             //设置经度纬度海拔
             if (location != null) {
-                /*UiXml lon = easyUiXml.getUiXml("LON");
+                UiXml lon = easyUiXml.getUiXml("LON");
                 UiXml lat = easyUiXml.getUiXml("LAT");
-                String _60Lon = TransformUtil._10To60_len2(location.getLongitude() + "");
+                String _60Lon = TransformUtil._10To60_short(location.getLongitude() + "");
                 if (lon != null) lon.setValue(_60Lon);
-                String _60Lat = TransformUtil._10To60_len2(location.getLatitude() + "");
-                if (lat != null) lat.setValue(_60Lat);*/
+                String _60Lat = TransformUtil._10To60_short(location.getLatitude() + "");
+                if (lat != null) lat.setValue(_60Lat);
 
                 UiXml alt = easyUiXml.getUiXml("HAIBA");
                 String alts = DecimalFormats.getFormat("#.00").format(location.getAltitude());

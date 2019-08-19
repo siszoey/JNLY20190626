@@ -75,9 +75,13 @@ public class ComplexTextView extends TextInputLayout {
                                 public void after(String s) {
                                     if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
                                     boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
-                                    if (verify) setError(null);
-                                    else setError(verifyXml.getMsg());
-
+                                    if (verify) {
+                                        setErrorEnabled(false);
+                                        //setError("");
+                                    } else {
+                                        setErrorEnabled(true);
+                                        setError(verifyXml.getMsg());
+                                    }
                                     if (iListenChange != null && trigger)
                                         iListenChange.textChange(ComplexTextView.this.getId(), s.toString());
                                 }

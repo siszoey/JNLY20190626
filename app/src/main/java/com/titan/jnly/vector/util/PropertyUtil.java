@@ -24,13 +24,14 @@ public final class PropertyUtil {
             "PDDJ",
             "POWEI",
             "TRLX",
-
             "SZS",
             "SZHJ",
             "XZGSMMYY",
             "QUANSHU",
             "BHXZ",
             "YHFZXZ",
+            "GHDW",
+            "GHR"
     };
 
     public static void copyUseFulAttr(Map<String, Object> last, Map<String, Object> property) {
