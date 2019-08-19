@@ -62,7 +62,6 @@ import com.titan.jnly.vector.util.PropertyUtil;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -262,7 +261,6 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         List<ItemXml> data = null;
         Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
         if (flag.equals("XIAN")) {
-            //String where = " where length(f_code) = 6";
             String codes = Constant.getUserInfo().getUserJurs();
             String where = " where f_code in (" + codes + ")";
             List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);

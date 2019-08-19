@@ -4,7 +4,7 @@ import android.os.Environment;
 
 import java.io.File;
 
-public final class Config extends Config_dev {
+public final class Config extends Config_pro {
 
     public static String APP_SPATIAL_DIR = "spatial";
     public static String APP_CACHE_DIR = "cache";
