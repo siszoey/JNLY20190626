@@ -14,15 +14,20 @@ import com.lib.bandaid.adapter.com.SimpleRvAdapter;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
+import com.lib.bandaid.widget.edittext.ClearEditText;
 
 import java.util.List;
 
-public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener, SimpleRvAdapter.IFillData<ItemXml>, BaseRecycleAdapter.IViewClickListener {
+public class SimpleDialog extends BaseDialogFrg
+        implements View.OnClickListener,
+        SimpleRvAdapter.IFillData<ItemXml>,
+        BaseRecycleAdapter.IViewClickListener, ClearEditText.IAfterTextChangedListen {
 
     private List<ItemXml> values;
     private List<Integer> sel;
     private Boolean isMulti;
 
+    private ClearEditText cetPy;
     private LinearLayout llFooter;
     private RecyclerView rvList;
     private SimpleRvAdapter simpleAdapter;
@@ -53,6 +58,7 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
 
     @Override
     protected void initialize() {
+        cetPy = $(R.id.cetPy);
         llFooter = $(R.id.llFooter);
         rvList = $(R.id.rvList);
         btnExit = $(R.id.btnExit);
@@ -73,6 +79,9 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
         simpleAdapter.setSelFlags(sel).setMulti(isMulti);
         simpleAdapter.replaceAll(values);
         simpleAdapter.setIViewClickListener(this);
+
+        cetPy.inputTypeEnglish();
+        cetPy.setIAfterTextChangedListen(this);
     }
 
     @Override
@@ -107,6 +116,11 @@ public class SimpleDialog extends BaseDialogFrg implements View.OnClickListener,
                     iCallBack.callback(selData);
                 }
             }
-        },200);
+        }, 200);
+    }
+
+    @Override
+    public void afterTextChanged(int id, String s) {
+        System.out.println(s);
     }
 }

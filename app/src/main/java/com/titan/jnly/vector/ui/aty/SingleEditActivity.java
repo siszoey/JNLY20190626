@@ -89,6 +89,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
 
     private String imgFPath;
 
+    //private String _6ele = Constant.getUserInfo().getUserJurs().substring(0, 6);
+    private String _6ele;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +143,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                         lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
 
-                    ComplexTextView view = propertyView.getViewByKey("SZZWM");
+                    //ComplexTextView view = propertyView.getViewByKey("SZZWM");
                     waterMark.put("序号", sequence);
                     //waterMark.put("树种", view.getText());
                     waterMark.put("纬度", lat);
@@ -192,6 +194,13 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             if (lastFeature != null) {
                 Map lastAttr = lastFeature.getAttributes();
                 PropertyUtil.copyUseFulAttr(lastAttr, property);
+
+                UiXml eleSign = easyUiXml.getUiXml("DZBQH");
+                String eleText = FeatureUtil.getAsT(lastFeature, "DZBQH");
+                if (eleText != null) {
+                    _6ele = eleText.substring(0, 6);
+                    eleSign.setValue(_6ele);
+                }
             }
             easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, property);
         } else {
@@ -210,7 +219,6 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         }).resolutionData(easyUiXml);
     }
 
-    private String _6ele = Constant.getUserInfo().getUserJurs().substring(0, 6);
 
     private void initDefaultData(EasyUiXml easyUiXml) {
         //新增预处理
@@ -266,7 +274,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         List<ItemXml> data = null;
         Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
         if (flag.equals("XIAN")) {
-            String where = " where length(f_code) = 6";
+            //String where = " where length(f_code) = 6";
+            String codes = Constant.getUserInfo().getUserJurs();
+            String where = " where f_code in (" + codes + ")";
             List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
         }
@@ -425,10 +435,16 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         ComplexTextView city = propertyView.getViewByKey("XIAN");
         ComplexTextView county = propertyView.getViewByKey("XIANG");
         ComplexTextView village = propertyView.getViewByKey("CUN");
+        UiXml uiXml = easyUiXml.getUiXml("XIAN");
+        ComplexTextView ele = propertyView.getViewByKey("DZBQH");
         WidgetUtil.setViewTextChangeLister(city, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String name) {
                 county.setText("");
+                {
+                    _6ele = (String) uiXml.getViewCode();
+                    ele.setText(_6ele);
+                }
             }
         });
 

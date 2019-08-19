@@ -4,6 +4,7 @@ import com.lib.bandaid.data.local.sqlite.core.annotation.Column;
 import com.lib.bandaid.data.local.sqlite.core.annotation.Table;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Table(name = "TB_UserInfo")
 public class UserInfo implements Serializable {
@@ -18,6 +19,9 @@ public class UserInfo implements Serializable {
     private String Name;
 
     @Column
+    private String Pwd;
+
+    @Column
     private String UserJurs;
 
     @Column
@@ -25,6 +29,13 @@ public class UserInfo implements Serializable {
 
     @Column
     private String UserGroup;
+
+    @Column
+    private Date LastLogin;
+
+    public boolean localCheck(){
+        return LastLogin!=null;
+    }
 
     public String getId() {
         return Id;
@@ -74,15 +85,33 @@ public class UserInfo implements Serializable {
         UserGroup = userGroup;
     }
 
+    public String getPwd() {
+        return Pwd;
+    }
+
+    public void setPwd(String pwd) {
+        Pwd = pwd;
+    }
+
+    public Date getLastLogin() {
+        return LastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        LastLogin = lastLogin;
+    }
+
     @Override
     public String toString() {
         return "UserInfo{" +
                 "Id='" + Id + '\'' +
                 ", UserName='" + UserName + '\'' +
                 ", Name='" + Name + '\'' +
+                ", Pwd='" + Pwd + '\'' +
                 ", UserJurs='" + UserJurs + '\'' +
                 ", UserRoles='" + UserRoles + '\'' +
                 ", UserGroup='" + UserGroup + '\'' +
+                ", LastLogin=" + LastLogin +
                 '}';
     }
 }

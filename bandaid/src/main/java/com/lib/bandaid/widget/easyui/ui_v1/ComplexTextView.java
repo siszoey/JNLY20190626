@@ -23,11 +23,6 @@ import com.lib.bandaid.widget.text.SimpleTextWatch;
 
 public class ComplexTextView extends TextInputLayout {
 
-    private final String CONSTANT_D = "°";
-    private final String CONSTANT_F = "′";
-    private final String CONSTANT_M = "″";
-
-
     //数字键盘
     private final String INPUT_TYPE_NUMBER = "number";
     //英文键盘

@@ -22,6 +22,8 @@ import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.system.theme.views.ATECheckBox;
 import com.lib.bandaid.system.theme.views.ATEEditText;
 import com.lib.bandaid.utils.AppUtil;
+import com.lib.bandaid.utils.CodeUtil;
+import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.SPfUtil;
 import com.lib.bandaid.utils.SimpleMap;
@@ -35,6 +37,7 @@ import com.titan.jnly.map.ui.aty.MapActivity;
 import com.titan.jnly.system.Constant;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Map;
 
 public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
@@ -106,8 +109,10 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
             //保存账号信息
             user = new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString());
             if (isRemember) Constant.putUser(user);
+
             //用户验证
-            Map condition = new SimpleMap().push("UserName", user.getName());
+            String md5 = CodeUtil.convertMd5(user.getPwd());
+            Map condition = new SimpleMap().push("UserName", user.getName()).push("Pwd", md5).push("date(LastLogin)", DateUtil.getCurrentDate());
             UserInfo userInfo = (UserInfo) DbManager.createDefault().getTByMultiCondition(UserInfo.class, condition);
             if (userInfo != null) {
                 LoginSuccess(userInfo);
@@ -132,6 +137,9 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
     public void LoginSuccess(UserInfo info) {
         //保存用户信息到本地
         if (info != null) {
+            if (!info.localCheck()) info.setLastLogin(new Date());
+            String md5 = CodeUtil.convertMd5(user.getPwd());
+            info.setPwd(md5);
             DbManager.createDefault().saveOrUpdate(info);
             Constant.putUserInfo(info);
         }

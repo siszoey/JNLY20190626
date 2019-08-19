@@ -62,6 +62,7 @@ public class FileUtil {
         try {
             FileOutputStream fout = new FileOutputStream(jpegPath);
             BufferedOutputStream bos = new BufferedOutputStream(fout);
+            //bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             bos.flush();
             bos.close();

@@ -1,5 +1,6 @@
 package com.lib.bandaid.activity;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -15,11 +16,12 @@ import org.greenrobot.eventbus.Subscribe;
  * Created by zy on 2018/7/24.
  */
 
-public abstract class BaseAppCompatActivity extends BaseAppCompatAty{
+public abstract class BaseAppCompatActivity extends BaseAppCompatAty {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /**
          * 公交车 注册
          */

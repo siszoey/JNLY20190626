@@ -402,13 +402,11 @@ public class CameraInterface implements Camera.PreviewCallback {
 
                 mParams.setPictureSize(pictureSize.width, pictureSize.height);
 
-                if (CameraParamUtil.getInstance().isSupportedFocusMode(
-                        mParams.getSupportedFocusModes(),
+                if (CameraParamUtil.getInstance().isSupportedFocusMode(mParams.getSupportedFocusModes(),
                         Camera.Parameters.FOCUS_MODE_AUTO)) {
                     mParams.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
                 }
-                if (CameraParamUtil.getInstance().isSupportedPictureFormats(mParams.getSupportedPictureFormats(),
-                        ImageFormat.JPEG)) {
+                if (CameraParamUtil.getInstance().isSupportedPictureFormats(mParams.getSupportedPictureFormats(), ImageFormat.JPEG)) {
                     mParams.setPictureFormat(ImageFormat.JPEG);
                     mParams.setJpegQuality(100);
                 }

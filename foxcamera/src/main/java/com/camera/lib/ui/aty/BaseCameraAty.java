@@ -3,16 +3,15 @@ package com.camera.lib.ui.aty;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-//import android.support.v4.app.ActivityCompat;
-//import android.support.v4.content.ContextCompat;
-//import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.view.View;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.camera.lib.core.JCameraView;
@@ -29,6 +28,15 @@ public abstract class BaseCameraAty extends AppCompatActivity {
     protected JCameraView jCameraView;
     private boolean granted = false;
 
+    /**
+     * 禁止相机横屏
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     @Override
     public void setContentView(int layoutResID) {

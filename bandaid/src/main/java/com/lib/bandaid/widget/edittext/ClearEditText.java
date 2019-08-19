@@ -1,14 +1,17 @@
 package com.lib.bandaid.widget.edittext;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.IdRes;
 import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import com.lib.bandaid.R;
 
@@ -127,5 +130,24 @@ public class ClearEditText extends AppCompatEditText implements TextWatcher, Vie
 
     public interface IAfterTextChangedListen {
         public void afterTextChanged(@IdRes int id, String s);
+    }
+
+
+
+    public void inputTypeNumberPrior() {
+        this.setRawInputType(Configuration.KEYBOARD_QWERTY);
+    }
+
+    public void inputTypeNumber() {
+        this.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+    }
+
+    public void inputTypeText() {
+        this.setInputType(InputType.TYPE_CLASS_TEXT);
+    }
+
+    public void inputTypeEnglish() {
+        this.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        this.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
 }

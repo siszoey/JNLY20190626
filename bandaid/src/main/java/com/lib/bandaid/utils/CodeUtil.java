@@ -2,6 +2,8 @@ package com.lib.bandaid.utils;
 
 import android.util.Base64;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
@@ -125,4 +127,33 @@ public final class CodeUtil {
     public static String fromBase64(String str) {
         return new String(Base64.decode(str.getBytes(), Base64.DEFAULT));
     }
+
+
+    /**
+     * 16进制字符
+     */
+    static String[] chars = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+
+    /**
+     * 将普通字符串用md5加密，并转化为16进制字符串
+     */
+    public static String convertMd5(String context) {
+        MessageDigest md5 = null;
+        try {
+            // 参数代表的是算法名称
+            md5 = MessageDigest.getInstance("md5");
+            byte[] result = md5.digest(context.getBytes());
+            StringBuilder sb = new StringBuilder(32);
+            for (int i = 0; i < result.length; i++) {
+                byte x = result[i];
+                int h = 0x0f & (x >>> 4);
+                int l = 0x0f & x;
+                sb.append(chars[h]).append(chars[l]);
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
