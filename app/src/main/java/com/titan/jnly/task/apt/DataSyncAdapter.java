@@ -130,7 +130,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
             //非代码设置,主动触发
             if (buttonView.isPressed()) {
                 if (isChecked) {
-                    if (records.size() >= 10) {
+                    if (records.size() >= 5) {
                         buttonView.setChecked(false);
                         return;
                     }
