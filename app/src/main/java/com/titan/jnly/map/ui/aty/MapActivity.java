@@ -43,6 +43,7 @@ import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAty;
+import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
 import com.titan.jnly.vector.ui.aty.SimpleAddAty;
 import com.titan.jnly.vector.util.MultiCompute;
 
@@ -93,7 +94,8 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
                 FeatureTable table = layerNode.tryGetFeaTable();
                 if (table != null) {
                     EventBus.getDefault().postSticky(table);
-                    startActivity(new Intent(_context, DataSyncAty.class));
+                    //startActivity(new Intent(_context, DataSyncAty.class));
+                    startActivity(new Intent(_context, DataSyncAtyV1.class));
                 } else {
                     ToastUtil.showLong(_context, "未能找到要上传的数据！");
                 }

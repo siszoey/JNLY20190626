@@ -42,6 +42,7 @@
         <activity android:name=".vector.ui.aty.SingleEditActivity" />
         <activity android:name=".vector.ui.aty.SimpleAddAty"/>
         <activity android:name=".task.ui.aty.DataSyncAty" />
+        <activity android:name=".task.ui.aty.DataSyncAtyV1" />
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
         <activity android:name="com.lib.bandaid.widget.pick.ImgPickActivity" />
         <activity android:name=".demo.DemoActivity">

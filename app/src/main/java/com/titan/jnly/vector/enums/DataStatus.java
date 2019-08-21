@@ -42,13 +42,14 @@ public enum DataStatus {
         DataStatus dbType = null;
 
         for (int i = 0; i < DataStatus.values().length; i++) {
-            if (DataStatus.values()[i].getStatus()==status) {
+            if (DataStatus.values()[i].getStatus() == status) {
                 dbType = DataStatus.values()[i];
                 break;
             }
         }
         return dbType;
     }
+
     /**
      * 根据枚举描名称获取枚举对象
      */
@@ -97,5 +98,29 @@ public enum DataStatus {
         short status = (short) map.get(DATA_STATUS);
         if (status == REMOTE_SYNC.getStatus()) return true;
         return false;
+    }
+
+    public static String LOCAL_ADD_WHERE() {
+        return "DATA_STATUS = 0";
+    }
+
+    public static String LOCAL_EDIT_WHERE() {
+        return "DATA_STATUS = 1";
+    }
+
+    public static String REMOTE_SYNC_WHERE() {
+        return "DATA_STATUS = 2";
+    }
+
+    public static String SYNC_ED() {
+        return "DATA_STATUS = 2";
+    }
+
+    public static String SYNC_UN() {
+        return "DATA_STATUS <> 2 ";
+    }
+
+    public static String SYNC_ALL() {
+        return "1 = 1";
     }
 }

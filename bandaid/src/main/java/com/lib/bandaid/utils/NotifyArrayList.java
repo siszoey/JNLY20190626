@@ -1,5 +1,7 @@
 package com.lib.bandaid.utils;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -50,6 +52,13 @@ public class NotifyArrayList<E> extends ArrayList<E> {
     @Override
     public E remove(int index) {
         E flag = super.remove(index);
+        if (iListener != null) iListener.itemChange();
+        return flag;
+    }
+
+    @Override
+    public boolean remove(@Nullable Object o) {
+        boolean flag = super.remove(o);
         if (iListener != null) iListener.itemChange();
         return flag;
     }

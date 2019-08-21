@@ -51,7 +51,13 @@ public final class ObjectUtil {
     public static Object str2SimpleObj(Type type, String s) {
         Object o = null;
         try {
-            if (null == s) {
+            /*if (null == s) {
+                return null;
+            }*/
+
+            if (null == s && type == String.class) {
+                return "";
+            } else if (null == s && type != String.class) {
                 return null;
             } else if ("".equals(s)) {
                 return null;

@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.camera.lib.ui.aty.PhotoActivity;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
@@ -202,6 +203,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, property);
         } else {
             easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, property);
+            String eleText = FeatureUtil.getAsT(feature, "DZBQH");
+            if (eleText != null) _6ele = eleText.substring(0, 6);
         }
         propertyView.setListener(new ILifeCycle() {
             @Override
@@ -311,8 +314,15 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             map.put("LON", TransformUtil._60To10(lonView.getText()));
             map.put("LAT", TransformUtil._60To10(latView.getText()));
 
+            ComplexTextView smallName = propertyView.getViewByKey("XDM");
+            ComplexTextView customName = propertyView.getViewByKey("SZSM");
+            map.put("XDM", smallName.getText());
+            map.put("SZSM", customName.getText());
+
             map.remove("OBJECTID");
             map.putAll(DataStatus.createEdit());
+
+
             feature.getAttributes().putAll(map);
             tools.updateFeature(feaTable, feature, new SketchEditorTools.ICallBack() {
                 @Override
