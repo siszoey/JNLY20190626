@@ -199,6 +199,12 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
         removeItem(index);
     }
 
+    public void insertUpdate(Feature feature) {
+        int index = featureIndex(feature);
+        if (index == -1) insertItem(0, feature);
+        else changeItem(index, feature);
+    }
+
     public int featureIndex(Feature feature) {
         List<Feature> list = getDataList();
         int index = -1;

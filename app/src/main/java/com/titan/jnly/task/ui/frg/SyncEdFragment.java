@@ -22,9 +22,13 @@ import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.util.FeatureUtil;
+import com.lib.bandaid.arcruntime.util.TransformUtil;
+import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.NotifyArrayList;
+import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -32,15 +36,21 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.common.fragment.BaseMainFragment;
 import com.titan.jnly.common.fragment.BaseMvpFragment;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.apt.DataSyncAdapter;
+import com.titan.jnly.task.bean.DataSync;
 import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
+import com.titan.jnly.task.ui.aty.SyncContract;
+import com.titan.jnly.task.ui.aty.SyncPresenter;
 import com.titan.jnly.vector.enums.DataStatus;
 import com.titan.jnly.vector.ui.aty.SingleEditActivity;
 import com.titan.jnly.vector.util.MultiCompute;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class SyncEdFragment
         extends BaseMvpFragment
@@ -49,7 +59,8 @@ public class SyncEdFragment
         View.OnClickListener,
         BaseRecycleAdapter.IViewClickListener<Feature>,
         BaseRecycleAdapter.ILongViewClickListener<Feature>,
-        NotifyArrayList.IListener {
+        NotifyArrayList.IListener,
+        SyncContract.View {
 
     public static SyncEdFragment newInstance() {
         Bundle args = new Bundle();
@@ -69,6 +80,7 @@ public class SyncEdFragment
     private RecyclerView rvList;
     private FeatureTable table;
     private DataSyncAdapter adapter;
+    private SyncPresenter presenter;
 
     public SyncEdFragment setTable(FeatureTable table) {
         this.table = table;
@@ -96,6 +108,8 @@ public class SyncEdFragment
     }
 
     protected void initialize() {
+        presenter = new SyncPresenter();
+        presenter.attachView(this);
         tvCount = ViewUtil.findViewById(view, R.id.tvCount);
         tvClear = ViewUtil.findViewById(view, R.id.tvClear);
         swipeLayout = ViewUtil.findViewById(view, R.id.swipeLayout);
@@ -128,7 +142,7 @@ public class SyncEdFragment
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            //syncData(data);
+                            syncData(data);
                         }
                     }).show();
         }
@@ -239,5 +253,39 @@ public class SyncEdFragment
 
     public DataSyncAdapter getAdapter() {
         return adapter;
+    }
+
+    //-------------------------------------------数据上传-------------------------------------------
+    private void syncData(Feature feature) {
+        Map<String, Object> map = TransformUtil.feaConvertMap(feature);
+        DataSync dataSync = new DataSync();
+        dataSync.setGSMM(map);
+        dataSync.setUserId(Constant.getUserInfo().getId());
+        String fileJson = (String) map.get("GSZP");
+        List<File> files = CollectImgBean.obtainFiles(fileJson);
+        dataSync.addFile(files);
+        presenter.syncSingle(dataSync);
+    }
+
+
+    @Override
+    public void syncSuccess(TTResult<Map> result) {
+        if (result.getResult()) {
+            String success = (String) result.getContent().get("success");
+            if (!ObjectUtil.isEmpty(success.trim())) {
+                String[] items = success.split(",");
+                for (String uuid : items) {
+                    MultiCompute.updateFeature(uuid, DataStatus.createSync(), new MultiCompute.ICallBack() {
+                        @Override
+                        public void callback(Feature feature) {
+                            ((DataSyncAtyV1) activity).dispatchData(feature);
+                        }
+                    });
+                }
+                showLongToast("数据上传成功");
+            } else {
+                showLongToast("数据上传失败");
+            }
+        }
     }
 }
