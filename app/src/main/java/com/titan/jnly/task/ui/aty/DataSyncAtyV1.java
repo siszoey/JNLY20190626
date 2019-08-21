@@ -4,25 +4,38 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.google.android.material.tabs.TabLayout;
 import com.titan.jnly.R;
 import com.titan.jnly.common.activity.BaseFragmentAty;
+import com.titan.jnly.common.activity.BaseMvpFrgAty;
 import com.titan.jnly.common.fragment.BaseMainFragment;
 import com.titan.jnly.task.apt.SyncFrgAdapter;
+import com.titan.jnly.task.ui.frg.SyncAllFragment;
+import com.titan.jnly.task.ui.frg.SyncEdFragment;
+import com.titan.jnly.task.ui.frg.SyncUnFragment;
+import com.titan.jnly.vector.enums.DataStatus;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class DataSyncAtyV1 extends BaseFragmentAty
+import java.util.List;
+
+public class DataSyncAtyV1 extends BaseMvpFrgAty
         implements
         BaseMainFragment.OnBackToFirstListener {
 
+    private int pageSize = 30;
+    private int pageNum = 1;
     private FeatureTable table;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private SyncFrgAdapter frgAdapter;
+    private Fragment[] fragments;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true) //在ui线程执行
     public void getTable(FeatureTable table) {
@@ -56,18 +69,65 @@ public class DataSyncAtyV1 extends BaseFragmentAty
 
     @Override
     protected void initClass() {
-        viewPager.setAdapter(new SyncFrgAdapter(getSupportFragmentManager(), table, "已上传", "未上传", "全部数据"));
+        fragments = new Fragment[3];
+        fragments[0] = SyncEdFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
+        fragments[1] = SyncUnFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
+        fragments[2] = SyncAllFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
+        frgAdapter = new SyncFrgAdapter(getSupportFragmentManager(), fragments, new String[]{"已上传", "未上传", "全部数据"});
+        viewPager.setAdapter(frgAdapter);
         tabLayout.addTab(tabLayout.newTab().setText("已上传"));
         tabLayout.addTab(tabLayout.newTab().setText("未上传"));
         tabLayout.addTab(tabLayout.newTab().setText("全部数据"));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(1).select();
-
-
     }
 
     @Override
     public void onBackToFirstFragment() {
-
+        finish();
     }
+
+    public void dispatchData(Feature... features) {
+        if (features == null || features.length == 0) return;
+        SyncEdFragment syncEdFragment = (SyncEdFragment) fragments[0];
+        SyncUnFragment syncUnFragment = (SyncUnFragment) fragments[1];
+        SyncAllFragment syncAllFragment = (SyncAllFragment) fragments[2];
+        Feature feature;
+        for (int i = 0; i < features.length; i++) {
+            feature = features[i];
+            if (feature == null) continue;
+            if (DataStatus.isEdit(feature)) {
+                syncEdFragment.getAdapter().removeData(feature);
+                syncUnFragment.getAdapter().insertItem(0, feature);
+            }
+            if (DataStatus.isSync(feature)) {
+                syncEdFragment.getAdapter().insertItem(0, feature);
+                syncUnFragment.getAdapter().removeData(feature);
+            }
+            syncAllFragment.getAdapter().updateData(feature);
+        }
+    }
+
+    public void dispatchData(List<Feature> features) {
+        if (features == null || features.size() == 0) return;
+        SyncEdFragment syncEdFragment = (SyncEdFragment) fragments[0];
+        SyncUnFragment syncUnFragment = (SyncUnFragment) fragments[1];
+        SyncAllFragment syncAllFragment = (SyncAllFragment) fragments[2];
+        Feature feature;
+        for (int i = 0; i < features.size(); i++) {
+            feature = features.get(i);
+            if (feature == null) continue;
+            if (DataStatus.isEdit(feature)) {
+                syncEdFragment.getAdapter().removeData(feature);
+                syncUnFragment.getAdapter().insertItem(0, feature);
+            }
+            if (DataStatus.isSync(feature)) {
+                syncEdFragment.getAdapter().insertItem(0, feature);
+                syncUnFragment.getAdapter().removeData(feature);
+            }
+            syncAllFragment.getAdapter().updateData(feature);
+        }
+    }
+
+
 }

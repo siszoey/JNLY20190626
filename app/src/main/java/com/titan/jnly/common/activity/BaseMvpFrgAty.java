@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.lib.bandaid.activity.BaseAppCompatActivity;
+import com.lib.bandaid.activity.BaseMvpCompatAty;
 
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
@@ -16,7 +17,7 @@ import me.yokeyword.fragmentation.SupportActivityDelegate;
 import me.yokeyword.fragmentation.SupportHelper;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-public abstract class BaseFragmentAty extends BaseAppCompatActivity implements ISupportActivity {
+public abstract class BaseMvpFrgAty extends BaseMvpCompatAty implements ISupportActivity {
 
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
 

@@ -37,15 +37,11 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
      * 分离view
      */
     private void detachView() {
-        if (presenter != null) {
-            presenter.detachView();
-        }
+        if (presenter != null) presenter.detachView();
     }
 
     private void attachView() {
-        if (presenter != null) {
-            presenter.attachView(this);
-        }
+        if (presenter != null) presenter.attachView(this);
     }
 
     @Override

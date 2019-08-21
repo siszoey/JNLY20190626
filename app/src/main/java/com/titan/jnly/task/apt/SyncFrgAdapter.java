@@ -4,34 +4,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.esri.arcgisruntime.data.FeatureTable;
-import com.titan.jnly.task.ui.frg.SyncAllFragment;
-import com.titan.jnly.task.ui.frg.SyncEdFragment;
-import com.titan.jnly.task.ui.frg.SyncUnFragment;
-
 public class SyncFrgAdapter extends FragmentPagerAdapter {
 
-    private int pageSize = 30;
-    private int pageNum = 1;
-
-    private FeatureTable table;
     private String[] titles;
+    private Fragment[] fragments;
 
-    public SyncFrgAdapter(FragmentManager fm, FeatureTable table, String... titles) {
+    public SyncFrgAdapter(FragmentManager fm, Fragment[] fragments, String[] titles) {
         super(fm);
-        this.table = table;
         this.titles = titles;
+        this.fragments = fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return SyncEdFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
-        } else if (position == 1) {
-            return SyncUnFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
-        } else {
-            return SyncAllFragment.newInstance().setTable(table).setPageSize(pageSize, pageNum);
-        }
+        return fragments[position];
     }
 
     @Override
@@ -43,5 +29,4 @@ public class SyncFrgAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return titles[position];
     }
-
 }

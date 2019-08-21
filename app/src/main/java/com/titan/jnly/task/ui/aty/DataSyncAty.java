@@ -323,7 +323,6 @@ public class DataSyncAty extends BaseMvpCompatAty<SyncPresenter>
     public void syncSuccess(TTResult<Map> result) {
         if (result.getResult()) {
             String success = (String) result.getContent().get("success");
-            //String faild = (String) result.getContent().get("faild");
             if (!ObjectUtil.isEmpty(success.trim())) {
                 String[] items = success.split(",");
                 for (String uuid : items) {

@@ -2,6 +2,7 @@ package com.titan.jnly.task.ui.frg;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,34 +13,54 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
+import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
+import com.lib.bandaid.arcruntime.util.FeatureUtil;
+import com.lib.bandaid.arcruntime.util.TransformUtil;
+import com.lib.bandaid.data.remote.entity.TTResult;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.NotifyArrayList;
+import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.common.fragment.BaseMainFragment;
+import com.titan.jnly.common.fragment.BaseMvpFragment;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.apt.DataSyncAdapter;
+import com.titan.jnly.task.bean.DataSync;
+import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
+import com.titan.jnly.task.ui.aty.SyncContract;
+import com.titan.jnly.task.ui.aty.SyncPresenter;
 import com.titan.jnly.vector.enums.DataStatus;
+import com.titan.jnly.vector.ui.aty.SingleEditActivity;
+import com.titan.jnly.vector.util.MultiCompute;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class SyncUnFragment extends BaseMainFragment
+public class SyncUnFragment extends BaseMvpFragment
         implements OnRefreshListener,
         OnLoadMoreListener,
         View.OnClickListener,
         BaseRecycleAdapter.IViewClickListener<Feature>,
         BaseRecycleAdapter.ILongViewClickListener<Feature>,
-        NotifyArrayList.IListener {
+        NotifyArrayList.IListener, SyncContract.View {
 
     public static SyncUnFragment newInstance() {
         Bundle args = new Bundle();
@@ -48,6 +69,8 @@ public class SyncUnFragment extends BaseMainFragment
         return fragment;
     }
 
+    private SyncPresenter presenter;
+    private int longEdit;
     private int pageSize;
     private int pageNum;
     private Context context;
@@ -76,7 +99,7 @@ public class SyncUnFragment extends BaseMainFragment
         if (view == null) {
             context = getContext();
             activity = getActivity();
-            view = inflater.inflate(R.layout.task_ui_frg_sync_all, container, false);
+            view = inflater.inflate(R.layout.task_ui_frg_sync_un, container, false);
             initialize();
             registerEvent();
             initClass();
@@ -85,6 +108,8 @@ public class SyncUnFragment extends BaseMainFragment
     }
 
     protected void initialize() {
+        presenter = new SyncPresenter();
+        presenter.attachView(this);
         tvCount = ViewUtil.findViewById(view, R.id.tvCount);
         tvClear = ViewUtil.findViewById(view, R.id.tvClear);
         swipeLayout = ViewUtil.findViewById(view, R.id.swipeLayout);
@@ -106,12 +131,53 @@ public class SyncUnFragment extends BaseMainFragment
 
     @Override
     public void onClick(View view, Feature data, int position) {
-
+        Short status = (Short) data.getAttributes().get(DataStatus.DATA_STATUS);
+        DataStatus dataStatus = DataStatus.getEnum(status);
+        if (dataStatus == DataStatus.LOCAL_EDIT) {
+            new ATEDialog.Theme_Alert(context)
+                    .title("提示")
+                    .content("确认提交数据？")
+                    .positiveText("提交")
+                    .negativeText("取消")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                             syncData(data);
+                        }
+                    }).show();
+        }
     }
+
 
     @Override
     public void onLongViewClick(View view, Feature data, int position) {
+        longEdit = position;
+        new ATEDialog.Theme_Alert(context)
+                .title("提示")
+                .content("确认编辑该条数据？")
+                .positiveText("确认")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        SingleEditActivity.data = data;
+                        Intent intent = new Intent(context, SingleEditActivity.class);
+                        startActivityForResult(intent, 1000);
+                    }
+                }).show();
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Feature feature = adapter.getItem(longEdit);
+        String uuid = FeatureUtil.getAsT(feature, "UUID");
+        MultiCompute.updateFeature(uuid, null, new MultiCompute.ICallBack() {
+            @Override
+            public void callback(Feature feature) {
+                adapter.updateData(feature);
+            }
+        });
     }
 
     @Override
@@ -142,7 +208,21 @@ public class SyncUnFragment extends BaseMainFragment
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.tvClear) {
+            List<Feature> data = adapter.getSelData();
+            if (data == null || data.size() == 0) return;
+            new ATEDialog.Theme_Alert(context)
+                    .title("提示")
+                    .content("确认清空所选中的" + data.size() + "项?")
+                    .positiveText("清空")
+                    .negativeText("取消")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            adapter.clearAllSel();
+                        }
+                    }).show();
+        }
     }
 
     private void queryData(int pageNum) {
@@ -170,5 +250,44 @@ public class SyncUnFragment extends BaseMainFragment
                 }
             }
         });
+    }
+
+    public DataSyncAdapter getAdapter() {
+        return adapter;
+    }
+
+    //-------------------------------------------数据上传-------------------------------------------
+    private void syncData(Feature feature) {
+        Map<String, Object> map = TransformUtil.feaConvertMap(feature);
+        DataSync dataSync = new DataSync();
+        dataSync.setGSMM(map);
+        dataSync.setUserId(Constant.getUserInfo().getId());
+        String fileJson = (String) map.get("GSZP");
+        List<File> files = CollectImgBean.obtainFiles(fileJson);
+        dataSync.addFile(files);
+        presenter.syncSingle(dataSync);
+    }
+
+
+    @Override
+    public void syncSuccess(TTResult<Map> result) {
+        if (result.getResult()) {
+            String success = (String) result.getContent().get("success");
+            if (!ObjectUtil.isEmpty(success.trim())) {
+                String[] items = success.split(",");
+                for (String uuid : items) {
+                    MultiCompute.updateFeature(uuid, DataStatus.createSync(), new MultiCompute.ICallBack() {
+                        @Override
+                        public void callback(Feature feature) {
+                            //adapter.updateData(feature);
+                            ((DataSyncAtyV1) activity).dispatchData(feature);
+                        }
+                    });
+                }
+                showLongToast("数据上传成功");
+            } else {
+                showLongToast("数据上传失败");
+            }
+        }
     }
 }

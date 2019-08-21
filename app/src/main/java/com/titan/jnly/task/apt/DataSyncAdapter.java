@@ -190,12 +190,22 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
     }
 
     public void updateData(Feature feature) {
+        int index = featureIndex(feature);
+        changeItem(index, feature);
+    }
+
+    public void removeData(Feature feature) {
+        int index = featureIndex(feature);
+        removeItem(index);
+    }
+
+    public int featureIndex(Feature feature) {
         List<Feature> list = getDataList();
-        if (list == null) return;
+        int index = -1;
+        if (list == null) return index;
         Feature _feature;
         String uuid = (String) feature.getAttributes().get("UUID");
         String _uuid;
-        int index = 0;
         for (int i = 0; i < list.size(); i++) {
             _feature = list.get(i);
             _uuid = (String) _feature.getAttributes().get("UUID");
@@ -204,7 +214,7 @@ public class DataSyncAdapter extends BaseRecycleAdapter<Feature, BaseViewHolder<
                 break;
             }
         }
-        changeItem(index, feature);
+        return index;
     }
 
     public void clearAllSelV1() {

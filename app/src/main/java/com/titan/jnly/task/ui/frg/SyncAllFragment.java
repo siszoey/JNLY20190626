@@ -12,12 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.NotifyArrayList;
 import com.lib.bandaid.utils.ViewUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -26,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.common.fragment.BaseMainFragment;
+import com.titan.jnly.common.fragment.BaseMvpFragment;
 import com.titan.jnly.task.apt.DataSyncAdapter;
 import com.titan.jnly.vector.enums.DataStatus;
 
@@ -34,7 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SyncAllFragment
-        extends BaseMainFragment
+        extends BaseMvpFragment
         implements BaseRecycleAdapter.IViewClickListener<Feature>,
         BaseRecycleAdapter.ILongViewClickListener<Feature>,
         NotifyArrayList.IListener, OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
@@ -140,7 +144,21 @@ public class SyncAllFragment
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.tvClear) {
+            List<Feature> data = adapter.getSelData();
+            if (data == null || data.size() == 0) return;
+            new ATEDialog.Theme_Alert(context)
+                    .title("提示")
+                    .content("确认清空所选中的" + data.size() + "项?")
+                    .positiveText("清空")
+                    .negativeText("取消")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            adapter.clearAllSel();
+                        }
+                    }).show();
+        }
     }
 
     private void queryData(int pageNum) {
@@ -170,4 +188,7 @@ public class SyncAllFragment
         });
     }
 
+    public DataSyncAdapter getAdapter() {
+        return adapter;
+    }
 }
