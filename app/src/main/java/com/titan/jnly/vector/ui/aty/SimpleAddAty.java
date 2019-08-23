@@ -92,7 +92,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
     //电子标签号前6位
     private String _6ele;
 
-    private VerifyXml remarkVerify = new VerifyXml();
+    private VerifyXml remarkVerify;
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void receiveData(Object[] objects) {

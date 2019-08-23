@@ -49,6 +49,7 @@ import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.lib.bandaid.widget.easyui.xml.ItemXml;
 import com.lib.bandaid.widget.easyui.xml.UiXml;
+import com.lib.bandaid.widget.easyui.xml.VerifyXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
@@ -91,6 +92,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     private String imgFPath;
     private String _6ele;
 
+    private VerifyXml remarkVerify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +115,10 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         btnExit.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
 
+        remarkVerify = new VerifyXml();
+        remarkVerify.setCanNull(false);
+        remarkVerify.setMsg("树种为名木或其他时必写填写30以上");
+        remarkVerify.setRegex("^[\\S]{30,}$");
 
         propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
@@ -371,6 +378,14 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
         ComplexTextView ke = propertyView.getViewByAlias("树种科");
         //属
         ComplexTextView shu = propertyView.getViewByAlias("树种_属");
+
+        UiXml makeUi = easyUiXml.getUiXml("REMARK");
+        if (name.getText().equals("名木") || name.getText().equals("其他")) {
+            makeUi.setVerifyXml(remarkVerify);
+        } else {
+            makeUi.setVerifyXml(null);
+        }
+
         WidgetUtil.setViewTextChangeLister(name, new WidgetUtil.IChangeLister() {
             @Override
             public void changeLister(String text) {
@@ -379,6 +394,12 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 ke.setText(species.getFamily());
                 shu.setText(species.getGenus());
                 latinName.setText(species.getIatin());
+
+                if (text.equals("名木") || text.equals("其他")) {
+                    makeUi.setVerifyXml(remarkVerify);
+                } else {
+                    makeUi.setVerifyXml(null);
+                }
             }
         });
 
