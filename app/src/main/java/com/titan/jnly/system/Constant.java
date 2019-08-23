@@ -97,6 +97,11 @@ public final class Constant {
         }
     }
 
+    public static void reloadSpecies() {
+        Constant_Species.clear();
+        initSpecies();
+    }
+
     public static List<Species> getSpecies() {
         initSpecies();
         return Constant_Species;

@@ -19,20 +19,30 @@ import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
+import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
+import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.data.remote.core.DownloadManager;
+import com.lib.bandaid.data.remote.entity.DownloadInfo;
+import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.ClickUtil;
+import com.lib.bandaid.utils.CodeUtil;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.utils.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
+import com.titan.jnly.Config;
 import com.titan.jnly.R;
+import com.titan.jnly.login.bean.UserInfo;
+import com.titan.jnly.login.ui.aty.LoginAtyContract;
+import com.titan.jnly.login.ui.aty.LoginAtyPresenter;
 import com.titan.jnly.map.ui.frame.FrameLayer;
 import com.titan.jnly.map.ui.frame.FrameQuery;
 import com.titan.jnly.map.ui.frame.VectorBar;
@@ -41,6 +51,7 @@ import com.titan.jnly.map.ui.tools.ToolEdit;
 import com.titan.jnly.map.ui.tools.ToolNavi;
 import com.titan.jnly.map.ui.tools.ToolTrack;
 import com.titan.jnly.map.ui.tools.ZoomLoc;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAty;
 import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
@@ -51,7 +62,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class MapActivity extends BaseAppCompatActivity implements PositionUtil.ILocStatus, View.OnClickListener {
+import java.io.File;
+import java.util.Date;
+
+public class MapActivity
+        extends BaseMvpCompatAty<MapAtyPresenter>
+        implements MapAtyContract.View,
+        PositionUtil.ILocStatus,
+        View.OnClickListener {
 
 
     CustomDrawerLayout drawerLayout;
@@ -64,6 +82,7 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        presenter = new MapAtyPresenter();
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "济南名木", Gravity.CENTER);
         initMapWidget();
@@ -215,6 +234,49 @@ public class MapActivity extends BaseAppCompatActivity implements PositionUtil.I
                     startActivity(intent);
                 }
             });
+        }
+    }
+
+    public void reqInfo() {
+        presenter.requestInfo(Constant.getUser());
+    }
+
+    @Override
+    public void reqSuccess(UserInfo info) {
+        //更新账户及权限
+        if (info != null) {
+            if (!info.localCheck()) info.setLastLogin(new Date());
+            String md5 = CodeUtil.convertMd5(Constant.getUser().getPwd());
+            info.setPwd(md5);
+            DbManager.createDefault().saveOrUpdate(info);
+            Constant.putUserInfo(info);
+            showLongToast("账号权限更新成功!");
+        }
+        showLoading();
+        //更新字典
+        String path = Config.APP_PATH_DIC.concat(File.separator).concat("dic_new.db");
+        FileUtil.deleteFile(path);
+        DownloadInfo down = new DownloadInfo(Config.BASE_URL.Sync_Dic, path);
+        DownloadManager.getInstance().download(down);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void dic(DownloadInfo info) {
+        if (info.isStart()) {
+            showLoading();
+        }
+        if (info.isComplete()) {
+            String old = Config.APP_DIC_DB_PATH;
+            boolean del = FileUtil.deleteFile(old);
+            if (del) del = FileUtil.rename(info.getFilePath(), old);
+            if (del) showLongToast("字典库更新成功");
+            else showLongToast("字典库更新失败");
+            Constant.reloadSpecies();
+            hideLoading();
+        }
+        if (info.overButUnComplete()) {
+            showLongToast("字典库更新失败");
+            hideLoading();
         }
     }
 }

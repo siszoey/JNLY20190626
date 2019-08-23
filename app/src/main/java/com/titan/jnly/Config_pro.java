@@ -10,6 +10,7 @@ public class Config_pro {
     public interface BASE_URL {
         String BaseUrl_1 = "http://119.164.253.207:8091/";
         String BaseFileService = "http://119.164.253.207:8092/";
+        String Sync_Dic = "http://119.164.253.207:8090/DicData/dic.db";
         String WED = "Wed";
         String THU = "Thu";
         String FRI = "Fri";

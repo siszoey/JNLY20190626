@@ -15,8 +15,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
-
-public class  HttpSimpleUtil {
+public class HttpSimpleUtil {
 
 
     public static void get(final String url, final ICallBack iCallBack) {
@@ -83,11 +82,16 @@ public class  HttpSimpleUtil {
         try {
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
-            URLConnection connection = realUrl.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             // 设置通用的请求属性
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            //connection.setRequestProperty("accept", "*/*");
+            //connection.setRequestProperty("connection", "Keep-Alive");
+            //connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+
+            connection.setRequestMethod("GET"); // 设置请求方式
+            connection.setRequestProperty("Accept", "application/json"); // 设置接收数据的格式
+            connection.setRequestProperty("Content-Type", "application/json"); // 设置发送数据的格式
+
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             // 建立实际的连接

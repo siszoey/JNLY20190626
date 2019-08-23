@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/headView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_header_height"
-        android:orientation="vertical"
         android:background="@color/hx_deep_grey"
+        android:orientation="vertical"
         android:tag="background|accent_color">
 
         <LinearLayout
@@ -46,9 +47,36 @@
         android:id="@+id/llRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/footView"
+        android:layout_below="@+id/headView"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical" />
 
+    <LinearLayout
+        android:id="@+id/footView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="2dp"
+        android:tag="background|accent_color">
+
+        <View style="@style/h_line" />
+
+        <TextView
+            android:id="@+id/tvSync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_cloud_download"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="同步字典库" />
+
+        <View style="@style/h_line" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

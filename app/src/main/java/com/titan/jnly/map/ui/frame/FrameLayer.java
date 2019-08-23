@@ -35,19 +35,30 @@ import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
 import com.lib.bandaid.arcruntime.layer.info.Extent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.data.remote.core.DownloadManager;
+import com.lib.bandaid.data.remote.entity.DownloadInfo;
 import com.lib.bandaid.rw.file.utils.FileUtil;
+import com.lib.bandaid.thread.rx.RxSimpleUtil;
+import com.lib.bandaid.utils.HttpSimpleUtil;
+import com.lib.bandaid.utils.MapUtil;
 import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
 import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
+import com.titan.jnly.Config_dev;
 import com.titan.jnly.R;
 import com.titan.jnly.common.uitls.ConverterUtils;
+import com.titan.jnly.login.bean.User;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
+import com.titan.jnly.map.ui.aty.MapActivity;
 import com.titan.jnly.map.utils.NodeIteration;
 import com.titan.jnly.system.Constant;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.List;
@@ -67,6 +78,8 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     private TreeNode treeRoot;
     private TreeNode nodeProject;
 
+    private TextView tvSync;
+
     public FrameLayer(Context context) {
         super(context);
         layoutGravity = -1;
@@ -78,14 +91,14 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         tvAccount = $(R.id.tvAccount);
         tvRealName = $(R.id.tvRealName);
         ivHead = $(R.id.ivHead);
-
-
         llTreeView = $(R.id.llRoot);
+        tvSync = $(R.id.tvSync);
     }
 
     @Override
     public void registerEvent() {
         ivHead.setOnClickListener(this);
+        tvSync.setOnClickListener(this);
     }
 
     @Override
@@ -106,10 +119,6 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
 
 
     void loadMap() {
-        //Map<String, List<File>> tree = FileUtil.fileTrees(Config.APP_MAP_SPATIAL, "geodatabase");
-        //arcMap.setBaseMapUrl(Config.APP_ARC_MAP_BASE);
-        //arcMap.setMapServerUrl(Config.APP_ARC_MAP_SERVICE, Config.APP_ARC_MAP_SERVICE_2015_SS);
-        //arcMap.setMapServerDesc("图层1", "图层2");
         arcMap.setMapLocalUrl(Config.APP_SDB_PATH);
         arcMap.getTocContainer().addILayerLoaded(this);
         arcMap.mapLoad(new ArcMap.IMapReady() {
@@ -219,6 +228,9 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
         if (v.getId() == R.id.ivHead) {
             Intent intent = new Intent(context, LoginAty.class);
             startActivity(intent);
+        }
+        if (v.getId() == R.id.tvSync) {
+            ((MapActivity) activity).reqInfo();
         }
     }
 }

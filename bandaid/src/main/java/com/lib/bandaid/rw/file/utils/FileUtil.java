@@ -184,6 +184,24 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * 如果存在同名文件，重命名会返回false
+     * @param oldName
+     * @param newName
+     * @return
+     */
+    public static boolean rename(String oldName, String newName){
+        boolean b = false;
+        try {
+            File oldFile = new File(oldName);
+            File newFile = new File(newName);
+            b = oldFile.renameTo(newFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
     public static boolean reNameFileExtend(String path, String extend) {
         if (isExist(path)) {
             String newPath = path.substring(0, path.lastIndexOf(".")) + extend;

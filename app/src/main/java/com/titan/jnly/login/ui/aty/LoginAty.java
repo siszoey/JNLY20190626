@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.data.remote.core.DownloadManager;
+import com.lib.bandaid.data.remote.entity.DownloadInfo;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
 import com.lib.bandaid.permission.RxPermissionFactory;
