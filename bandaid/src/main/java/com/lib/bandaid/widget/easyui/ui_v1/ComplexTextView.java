@@ -64,7 +64,38 @@ public class ComplexTextView extends TextInputLayout {
         return verifyXml;
     }
 
-    public void setVerifyXml(VerifyXml verifyXml) {
+    public void setVerifyXml(VerifyXml _verifyXml) {
+        this.verifyXml = _verifyXml;
+        //数据验证
+        editText.addTextChangedListener(
+                new SimpleTextWatch(
+                        new SimpleTextWatch.IAfter() {
+                            @Override
+                            public void after(String s) {
+                                if (verifyXml != null) {
+                                    if (verifyXml.getCanNull() && StringUtil.isEmpty(s)) return;
+                                    boolean verify = RegexUtil.match(verifyXml.getRegex(), s);
+                                    if (verify) {
+                                        setErrorEnabled(false);
+                                    } else {
+                                        setErrorEnabled(true);
+                                        setError(verifyXml.getMsg());
+                                    }
+                                } else {
+                                    setErrorEnabled(false);
+                                }
+                                if (iListenChange != null && trigger)
+                                    iListenChange.textChange(ComplexTextView.this.getId(), s);
+                            }
+                        }));
+    }
+
+    public void setVerify(VerifyXml verifyXml) {
+        this.verifyXml = verifyXml;
+        if (this.verifyXml == null) setErrorEnabled(false);
+    }
+
+    public void setVerifyXmlV1(VerifyXml verifyXml) {
         this.verifyXml = verifyXml;
         if (verifyXml != null) {
             //数据验证

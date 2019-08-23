@@ -190,7 +190,7 @@ public class UiXml implements Serializable {
     }
 
     public boolean isVerify() {
-        return verifyXml != null&&!verifyXml.getCanNull();
+        return verifyXml != null && !verifyXml.getCanNull();
     }
 
     public VerifyXml getVerifyXml() {
@@ -199,6 +199,9 @@ public class UiXml implements Serializable {
 
     public void setVerifyXml(VerifyXml verifyXml) {
         this.verifyXml = verifyXml;
+        if (view instanceof ComplexTextView) {
+            ((ComplexTextView) view).setVerify(verifyXml);
+        }
     }
 
     @XStreamOmitField
