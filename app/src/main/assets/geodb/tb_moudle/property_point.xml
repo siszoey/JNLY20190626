@@ -805,6 +805,11 @@
                     <code class="string">8</code>
                     <value>其他</value>
                 </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">9</code>
+                    <value>无</value>
+                </ItemXml>
             </itemXml>
             <status>multi</status>
             <VerifyXml>
@@ -852,6 +857,11 @@
                     <checked>false</checked>
                     <code class="string">7</code>
                     <value>其他</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">8</code>
+                    <value>无</value>
                 </ItemXml>
             </itemXml>
             <status>multi</status>
