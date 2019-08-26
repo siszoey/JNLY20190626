@@ -38,9 +38,10 @@
         android:theme="@style/ATEAppTheme">
 
         <activity android:name="com.titan.jnly.main.ui.aty.MainActivity" />
-        <activity android:name="com.titan.jnly.map.ui.aty.MapActivity" />
+        <activity android:name="com.titan.jnly.invest.ui.aty.InvestActivity" />
+        <activity android:name="com.titan.jnly.patrol.ui.aty.PatrolActivity" />
         <activity android:name=".vector.ui.aty.SingleEditActivity" />
-        <activity android:name=".vector.ui.aty.SimpleAddAty"/>
+        <activity android:name=".vector.ui.aty.SimpleAddAty" />
         <activity android:name=".task.ui.aty.DataSyncAty" />
         <activity android:name=".task.ui.aty.DataSyncAtyV1" />
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
@@ -49,12 +50,16 @@
 
         </activity>
 
-        <activity android:name=".login.ui.aty.LoginAty">
+        <activity android:name=".main.ui.aty.MainFaceAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".login.ui.aty.LoginAty">
+
         </activity>
 
         <activity android:name=".hardware.ui.aty.HardWareAty">

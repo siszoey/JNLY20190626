@@ -4,6 +4,7 @@
 package com.lib.bandaid.arcruntime.layer.info;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Auto-generated: 2019-06-04 14:6:24
@@ -16,7 +17,7 @@ public class Field implements Serializable {
     private String name;
     private String type;
     private String alias;
-    private String domain;
+    private Domain domain;
 
     public void setName(String name) {
         this.name = name;
@@ -42,12 +43,11 @@ public class Field implements Serializable {
         return alias;
     }
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public String getDomain() {
+    public Domain getDomain() {
         return domain;
     }
 
+    public void setDomain(Domain domain) {
+        this.domain = domain;
+    }
 }

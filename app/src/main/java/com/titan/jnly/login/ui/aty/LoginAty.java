@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.data.remote.core.DownloadManager;
-import com.lib.bandaid.data.remote.entity.DownloadInfo;
 import com.lib.bandaid.permission.Permission;
 import com.lib.bandaid.permission.RxConsumer;
 import com.lib.bandaid.permission.RxPermissionFactory;
@@ -35,7 +33,7 @@ import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
 import com.titan.jnly.login.bean.UserInfo;
-import com.titan.jnly.map.ui.aty.MapActivity;
+import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.system.Constant;
 
 import java.io.File;
@@ -148,7 +146,7 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
         //清除其他activity
         BaseApp.baseApp.getAtyLifecycleCallback().removeOtherActivities(this);
-        startActivity(new Intent(_context, MapActivity.class));
+        startActivity(new Intent(_context, InvestActivity.class));
         finish();
     }
 

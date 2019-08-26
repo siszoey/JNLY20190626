@@ -115,6 +115,7 @@ public class LayerNode implements Serializable {
 
                 @Override
                 public void success(String s) {
+                    System.out.println(s);
                     info = MapUtil.string2Entity(s, LayerInfo.class);
                 }
             });
