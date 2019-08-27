@@ -14,6 +14,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.frame.FrameQuery;
 import com.titan.jnly.invest.ui.tools.ToolClear;
 import com.titan.jnly.invest.ui.tools.ToolNavi;
+import com.titan.jnly.invest.ui.tools.ToolQuery;
 import com.titan.jnly.invest.ui.tools.ToolTrack;
 import com.titan.jnly.invest.ui.tools.ZoomLoc;
 
@@ -74,7 +75,7 @@ public class PatrolActivity extends BaseMvpCompatAty {
 
 
     void initMapWidget() {
-        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolNavi.class, ToolClear.class);//ToolQuery.class,
+        ToolContainer.registerTool("通用", EGravity.RIGHT_CENTER, ToolTrack.class, ToolQuery.class, ToolNavi.class, ToolClear.class);//ToolQuery.class,
         ToolContainer.registerTool("辅助", EGravity.LEFT_BOTTOM, ZoomIn.class, ZoomOut.class, ZoomLoc.class);
         WidgetContainer.registerWidget(FrameQuery.class);
     }
