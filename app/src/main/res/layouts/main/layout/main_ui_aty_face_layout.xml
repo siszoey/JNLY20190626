@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!--单元格间距0 0-->
-    <com.lib.bandaid.widget.squareview.LineGridView
-        android:id="@+id/iconParent"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <!--单元格间距0 0-->
+        <com.lib.bandaid.widget.squareview.LineGridView
+            android:id="@+id/iconParent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:horizontalSpacing="0dp"
+            android:numColumns="3"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dp" />
+
+        <View style="@style/h_line" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/copyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:numColumns="3"
-        android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp" />
+        android:padding="10dp"
+        android:text="北京航天泰坦"
+        android:textColor="@color/hx_yellow"
+        android:textSize="14dp" />
 
-    <View style="@style/h_line" />
-
-</LinearLayout>
+</RelativeLayout>

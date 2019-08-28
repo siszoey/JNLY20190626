@@ -50,7 +50,7 @@
 
         </activity>
 
-        <activity android:name=".main.ui.aty.MainFaceAty">
+        <activity android:name=".login.ui.aty.LoginAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,9 +58,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".login.ui.aty.LoginAty">
-
-        </activity>
+        <activity android:name=".main.ui.aty.MainFaceAty" />
 
         <activity android:name=".hardware.ui.aty.HardWareAty">
 

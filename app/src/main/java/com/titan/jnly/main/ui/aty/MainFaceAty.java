@@ -5,20 +5,24 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.utils.AppUtil;
 import com.lib.bandaid.widget.squareview.GridItem;
 import com.lib.bandaid.widget.squareview.LineGridView;
 import com.lib.bandaid.widget.squareview.SquareAdapter;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.patrol.ui.aty.PatrolActivity;
+import com.titan.jnly.system.version.bugly.BuglySetting;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemClickListener {
 
+    private TextView copyRight;
     private LineGridView gridView;
     private List<GridItem> items;
     private SquareAdapter squareAdapter;
@@ -28,11 +32,14 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
         super.onCreate(savedInstanceState);
         initTitle(null, "济南古树", Gravity.CENTER);
         setContentView(R.layout.main_ui_aty_face_layout);
+        //检查更新
+        BuglySetting.checkVersion();
     }
 
     @Override
     protected void initialize() {
         gridView = $(R.id.iconParent);
+        copyRight = $(R.id.copyRight);
     }
 
     @Override
@@ -42,10 +49,15 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
 
     @Override
     protected void initClass() {
+        String text = "济南市林木种质资源中心\n" + "技术支持:北京航天泰坦(" + AppUtil.getApkVersionName(this) + ")";
+        copyRight.setText(text);
+
         items = new ArrayList<>();
-        items.add(GridItem.create(R.mipmap.ic_launcher, "古树名木调查"));
-        items.add(GridItem.create(R.mipmap.ic_launcher, "古树名木巡查"));
-        items.add(GridItem.create(R.mipmap.ic_launcher, "古树名木管护"));
+        items.add(GridItem.create(R.mipmap.ic_dc, "调查管理"));
+        items.add(GridItem.create(R.mipmap.ic_xc, "巡查养护"));
+        items.add(GridItem.create(R.mipmap.ic_zs, "综合展示"));
+        items.add(GridItem.create(R.mipmap.ic_fw, "公共服务"));
+        items.add(GridItem.create(R.mipmap.ic_jc, "领导决策"));
         squareAdapter = new SquareAdapter(this, items);
         gridView.setAdapter(squareAdapter);
     }
@@ -54,12 +66,10 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
             startActivity(new Intent(_context, InvestActivity.class));
-        }
-        if (position == 1) {
+        } else if (position == 1) {
             startActivity(new Intent(_context, PatrolActivity.class));
-        }
-        if (position == 2) {
-            showToast("功能尚未完成");
+        } else {
+            showToast("二期功能，暂未开放");
         }
     }
 }

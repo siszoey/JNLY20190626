@@ -41,7 +41,7 @@ public class PatrolActivity extends BaseMvpCompatAty
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTitle(R.drawable.ic_menu, "古树巡查", Gravity.CENTER);
+        initTitle(R.drawable.ic_menu, "巡查养护", Gravity.CENTER);
         initMapWidget();
         setContentView(R.layout.map_ui_aty_patrol);
     }

@@ -1,5 +1,6 @@
 package com.lib.bandaid.data.remote.intercept;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.remote.header.ComHeader;
 import com.lib.bandaid.utils.CacheUtil;
@@ -57,7 +58,7 @@ public class AuthInterceptor implements Interceptor {
          */
         ComHeader comHeader = httpCache.getAsT(ComHeader.HEAD_FLAG);
         boolean flag = interceptor(requestUrl);
-        System.out.println(flag);
+        LogUtils.iTag("请求地址：", requestUrl);
         if (comHeader == null && flag) {
             httpCache.remove(AUTH_INFO);
             token = "unknow_token!";

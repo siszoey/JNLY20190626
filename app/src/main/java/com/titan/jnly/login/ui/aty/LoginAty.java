@@ -34,6 +34,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.login.bean.User;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
+import com.titan.jnly.main.ui.aty.MainFaceAty;
 import com.titan.jnly.system.Constant;
 
 import java.io.File;
@@ -146,7 +147,8 @@ public class LoginAty extends BaseMvpCompatAty<LoginAtyPresenter>
         Constant.putUser(new User(cetPhoneNum.getText().toString(), cetPwd.getText().toString()));
         //清除其他activity
         BaseApp.baseApp.getAtyLifecycleCallback().removeOtherActivities(this);
-        startActivity(new Intent(_context, InvestActivity.class));
+        //startActivity(new Intent(_context, InvestActivity.class));
+        startActivity(new Intent(_context, MainFaceAty.class));
         finish();
     }
 

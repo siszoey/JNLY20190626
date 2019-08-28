@@ -48,7 +48,6 @@ import com.titan.jnly.invest.ui.tools.ToolNavi;
 import com.titan.jnly.invest.ui.tools.ToolTrack;
 import com.titan.jnly.invest.ui.tools.ZoomLoc;
 import com.titan.jnly.system.Constant;
-import com.titan.jnly.system.version.bugly.BuglySetting;
 import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
 import com.titan.jnly.vector.ui.aty.SimpleAddAty;
 import com.titan.jnly.vector.util.MultiCompute;
@@ -79,11 +78,9 @@ public class InvestActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         presenter = new InvestAtyPresenter();
         super.onCreate(savedInstanceState);
-        initTitle(R.drawable.ic_menu, "济南名木", Gravity.CENTER);
+        initTitle(R.drawable.ic_menu, "调查管理", Gravity.CENTER);
         initMapWidget();
         setContentView(R.layout.map_ui_aty_invest);
-        //检查更新
-        BuglySetting.checkVersion();
         //权限
         permissions();
     }
