@@ -1,15 +1,22 @@
 package com.titan.jnly.invest.ui.tools;
 
+import android.graphics.PointF;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.Field;
+import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.Point;
+import com.esri.arcgisruntime.layers.Layer;
+import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.SelectContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
+import com.lib.bandaid.arcruntime.tools.extend.ToolSelExtend;
+import com.lib.bandaid.utils.VibratorUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.dialog.PropertyDialog;
 
@@ -19,12 +26,20 @@ import java.util.Map;
 public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
 
     List<LayerNode> layerNodes;
+    private boolean isLongPress;
+    private ToolSelExtend extend;
 
     public ToolQuery() {
         id = getClass().getSimpleName();
         name = "识别";
         resId = R.mipmap.ic_map_query_normal;
         checkedResId = R.mipmap.ic_map_query_pressed;
+    }
+
+    @Override
+    public void create(ArcMap arcMap) {
+        super.create(arcMap);
+        extend = ToolSelExtend.create(arcMap);
     }
 
     @Override
@@ -56,18 +71,53 @@ public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
         return super.onSingleTapUp(e);
     }
 
+    @Override
+    public boolean onTouchStart(MotionEvent motionEvent) {
+        System.out.println("onTouchStart");
+        isLongPress = false;
+        return super.onTouchStart(motionEvent);
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        System.out.println("onLongPress");
+        VibratorUtil.vibrate(context, 120);
+        isLongPress = true;
+        extend.drawType(ToolSelExtend.Type.rect).startDraw(new PointF(e.getX(), e.getY()));
+        super.onLongPress(e);
+    }
+
+    @Override
+    public boolean onTouchMoving(MotionEvent motionEvent) {
+        System.out.println("onTouchMoving");
+        if (isLongPress) {
+            extend.underDraw(new PointF(motionEvent.getX(), motionEvent.getY()));
+            return true;
+        }
+        return super.onTouchMoving(motionEvent);
+    }
+
+    @Override
+    public boolean onTouchCancel(MotionEvent motionEvent) {
+        System.out.println("onTouchCancel");
+        if (isLongPress) {
+            extend.cancelDraw(new PointF(motionEvent.getX(), motionEvent.getY()));
+            isLongPress = false;
+
+            Geometry geometry = extend.getGeometry();
+            arcMap.getSelectContainer().queryByGeometry(layerNodes, geometry, this);
+        }
+        return super.onTouchCancel(motionEvent);
+    }
 
     @Override
     public void success(Map<LayerNode, List<Feature>> res) {
         if (res == null || res.size() == 0) return;
+        List<Feature> features;
         for (LayerNode node : res.keySet()) {
-            List<Feature> features = res.get(node);
+            features = res.get(node);
             if (features == null || features.size() == 0) continue;
-            FeatureTable feaTable = node.tryGetFeaTable();
-            List<Field> fields = null;
-            if (feaTable != null) {
-                fields = feaTable.getFields();
-            }
+            List<Field> fields = node.tryGetFields();
             PropertyDialog.newInstance(node.getName(), fields, features.get(0).getAttributes()).show(context);
             break;
         }

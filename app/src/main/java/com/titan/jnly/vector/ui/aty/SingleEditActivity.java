@@ -22,6 +22,7 @@ import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
+import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
@@ -145,8 +146,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                     String lat = "";
                     String lon = "";
                     if (ServiceLocation._location != null) {
-                        lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
-                        lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+                        lat = CustomUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
+                        lon = CustomUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
 
                     waterMark.put("序号", sequence);
@@ -242,9 +243,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             if (location != null) {
                 UiXml lon = easyUiXml.getUiXml("LON");
                 UiXml lat = easyUiXml.getUiXml("LAT");
-                String _60Lon = TransformUtil._10To60_short(location.getLongitude() + "");
+                String _60Lon = CustomUtil._10To60_short(location.getLongitude() + "");
                 if (lon != null) lon.setValue(_60Lon);
-                String _60Lat = TransformUtil._10To60_short(location.getLatitude() + "");
+                String _60Lat = CustomUtil._10To60_short(location.getLatitude() + "");
                 if (lat != null) lat.setValue(_60Lat);
 
                 UiXml alt = easyUiXml.getUiXml("HAIBA");
@@ -257,9 +258,9 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             UiXml lon = easyUiXml.getUiXml("LON");
             UiXml lat = easyUiXml.getUiXml("LAT");
             UiXml alt = easyUiXml.getUiXml("HAIBA");
-            String _60Lon = TransformUtil._10To60_len2(lon.getValue() + "");
+            String _60Lon = CustomUtil._10To60_len2(lon.getValue() + "");
             if (lon != null) lon.setValue(_60Lon);
-            String _60Lat = TransformUtil._10To60_len2(lat.getValue() + "");
+            String _60Lat = CustomUtil._10To60_len2(lat.getValue() + "");
             if (lat != null) lat.setValue(_60Lat);
             String alts = DecimalFormats.getFormat("#.00").format(alt.getValue());
             if (alt != null) alt.setValue(alts);
@@ -318,8 +319,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             Map map = propertyView.getForm();
             ComplexTextView lonView = propertyView.getViewByKey("LON");
             ComplexTextView latView = propertyView.getViewByKey("LAT");
-            map.put("LON", TransformUtil._60To10(lonView.getText()));
-            map.put("LAT", TransformUtil._60To10(latView.getText()));
+            map.put("LON", CustomUtil._60To10(lonView.getText()));
+            map.put("LAT", CustomUtil._60To10(latView.getText()));
 
             ComplexTextView smallName = propertyView.getViewByKey("XDM");
             ComplexTextView customName = propertyView.getViewByKey("SZSM");
@@ -520,7 +521,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 if (data >= 15 && data <= 24) slopeLevel.setLabel("Ⅲ/斜坡");
                 if (data >= 25 && data <= 34) slopeLevel.setLabel("Ⅳ/陡坡");
                 if (data >= 35 && data <= 44) slopeLevel.setLabel("Ⅵ/急坡");
-                if (data > 45) slopeLevel.setLabel("Ⅶ/险坡");
+                if (data >= 45) slopeLevel.setLabel("Ⅶ/险坡");
             }
         });
 
@@ -589,8 +590,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
     //接收消息
     @Subscribe
     public void onEventMainThread(ServiceLocation location) {
-        String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
-        String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+        String lat = CustomUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
+        String lon = CustomUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
         PhotoActivity.updateMaker().put("纬度", lat);
         PhotoActivity.updateMaker().put("经度", lon);
     }

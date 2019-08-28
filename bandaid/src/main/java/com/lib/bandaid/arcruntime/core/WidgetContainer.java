@@ -51,7 +51,8 @@ public class WidgetContainer extends BaseContainer {
     @Override
     public void create(ArcMap arcMap) {
         super.create(arcMap);
-        rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.band_aid_core_widget_layout, arcMap);
+        rootView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.band_aid_core_widget_layout, null);
+        arcMap.addView(rootView);
         for (Map map : _registerList) {
             initWidget(map);
         }

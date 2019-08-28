@@ -1,28 +1,15 @@
-package com.titan.jnly.invest.ui.frame;
+package com.titan.jnly.patrol.ui.frame;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.esri.arcgisruntime.arcgisservices.LabelDefinition;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
-import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
-import com.esri.arcgisruntime.mapping.LayerList;
-import com.esri.arcgisruntime.symbology.MarkerSymbol;
-import com.esri.arcgisruntime.symbology.SimpleFillSymbol;
-import com.esri.arcgisruntime.symbology.SimpleLineSymbol;
-import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
-import com.esri.arcgisruntime.symbology.SimpleRenderer;
-import com.esri.arcgisruntime.symbology.TextSymbol;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
@@ -34,10 +21,10 @@ import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.login.bean.UserInfo;
-import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.invest.utils.NodeIteration;
+import com.titan.jnly.login.bean.UserInfo;
+import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.system.Constant;
 
 /**
@@ -95,63 +82,15 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
 
 
     void loadMap() {
-        arcMap.setMapLocalUrl(Config.APP_SDB_PATH);
+        arcMap.setMapServerUrl(Config.BASE_URL.Fea_MapService);
         arcMap.getTocContainer().addILayerLoaded(this);
         arcMap.mapLoad(new ArcMap.IMapReady() {
             @Override
             public void onMapReady() {
-                LayerList list = arcMap.getMapView().getMap().getOperationalLayers();
-                for (Layer layer : list) {
-                    String name = layer.getName();
-                    if (name.equals("古树群调查表")) {
-                        setRenderArea((FeatureLayer) layer);
-                    }
-                    if (name.equals("古树名木单株调查")) {
-                        setRenderPoint((FeatureLayer) layer);
-                    }
-                }
+
             }
         });
     }
-
-    public void setRenderArea(FeatureLayer layer) {
-        SimpleLineSymbol simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbol.Style.SOLID, Color.RED, 2);
-        SimpleFillSymbol simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.Style.SOLID, Color.TRANSPARENT, simpleLineSymbol);
-        layer.setRenderer(new SimpleRenderer(simpleFillSymbol));
-    }
-
-    public void setRenderPoint(FeatureLayer layer) {
-        MarkerSymbol markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.Style.CIRCLE, Color.RED, 15);
-        layer.setRenderer(new SimpleRenderer(markerSymbol));
-        addLabel(layer);
-    }
-
-
-    private void addLabel(FeatureLayer featureLayer) {
-        TextSymbol textSymbol = new TextSymbol();
-        textSymbol.setSize(12);
-        textSymbol.setColor(Color.RED);
-        textSymbol.setHaloColor(0xFFFFFF00);
-        textSymbol.setHaloWidth(0);
-        textSymbol.setOffsetY(30);
-
-        // 创建label字符串
-        JsonObject json = new JsonObject();
-        JsonObject expressionInfo = new JsonObject();
-        expressionInfo.add("expression", new JsonPrimitive("$" + "feature.DCSXH"));
-        json.add("labelExpressionInfo", expressionInfo);
-        json.add("labelPlacement", new JsonPrimitive("esriServerPolygonPlacementAlwaysHorizontal"));
-        json.add("where", new JsonPrimitive("DCSXH <> ' '"));
-        json.add("symbol", new JsonParser().parse(textSymbol.toJson()));
-        String labelStr = json.toString();
-        // 构建LabelDefinition
-        LabelDefinition labelDefinition = LabelDefinition.fromJson(labelStr);
-        featureLayer.getLabelDefinitions().clear();
-        featureLayer.getLabelDefinitions().add(labelDefinition);
-        // 启用Label标注
-        featureLayer.setLabelsEnabled(true);
-    }
-
 
     @Override
     public void iLayerLoaded(LayerNode node) {

@@ -1,5 +1,9 @@
 package com.lib.bandaid.arcruntime.util;
 
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.RectF;
+
 import androidx.annotation.NonNull;
 
 import com.esri.arcgisruntime.data.Feature;
@@ -12,10 +16,14 @@ import com.esri.arcgisruntime.geometry.ImmutablePart;
 import com.esri.arcgisruntime.geometry.ImmutablePartCollection;
 import com.esri.arcgisruntime.geometry.ImmutablePointCollection;
 import com.esri.arcgisruntime.geometry.Multipoint;
+import com.esri.arcgisruntime.geometry.Part;
+import com.esri.arcgisruntime.geometry.PartCollection;
 import com.esri.arcgisruntime.geometry.Point;
+import com.esri.arcgisruntime.geometry.PointCollection;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.geometry.SpatialReference;
+import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.utils.DateUtil;
 import com.lib.bandaid.utils.DecimalFormats;
 import com.lib.bandaid.utils.ObjectUtil;
@@ -215,7 +223,6 @@ public class TransformUtil {
        /* String wkt = getWkt(feature.getGeometry());
         Map<String, Object> attributes = feature.getAttributes();
 
-
         WKBReader wkbReader = new WKBReader();
         GeometryJSON gJson = new GeometryJSON(12);
 
@@ -244,66 +251,48 @@ public class TransformUtil {
 
 
     /**
-     * 将小数度数转换为度分秒格式
-     *
-     * @param latlng
+     * @param arcMap
+     * @param circleX 屏幕坐标
+     * @param circleY 屏幕坐标
+     * @param radius  距离 屏幕坐标
+     * @param steps
      * @return
      */
-    public static String _10To60(String latlng) {
-        double num = Double.parseDouble(latlng);
-        int du = (int) Math.floor(Math.abs(num));    //获取整数部分
-        double temp = getdPoint(Math.abs(num)) * 60;
-        int fen = (int) Math.floor(temp); //获取整数部分
-        int miao = (int) (getdPoint(temp) * 60);
-        if (num < 0)
-            return "-" + du + "°" + fen + "′" + miao + "″";
-        return du + "°" + fen + "′" + miao + "″";
+    public static Geometry circle2Polygon(ArcMap arcMap, float circleX, float circleY, float radius, int steps) {
+        List<Point> coordinates = destination(arcMap, circleX, circleY, radius, steps);
+        PointCollection collection = new PointCollection(coordinates);
+        Polygon polygon = new Polygon(collection, arcMap.getMapView().getSpatialReference());
+        return polygon;
     }
 
-    public static String _10To60_len2(String latlng) {
-        double num = Double.parseDouble(latlng);
-        int du = (int) Math.floor(Math.abs(num));    //获取整数部分
-        double temp = getdPoint(Math.abs(num)) * 60;
-        int fen = (int) Math.floor(temp); //获取整数部分
-        double miao = getdPoint(temp) * 60;
-        String s = DecimalFormats.getFormat("00.00").format(miao);
-        if (num < 0)
-            return "-" + du + "°" + fen + "′" + s + "″";
-        return du + "°" + fen + "′" + s + "″";
+
+    public static Polygon path2Polygon(ArcMap arcMap, Path path) {
+        return null;
     }
 
-    public static String _10To60_short(String latlng) {
-        double num = Double.parseDouble(latlng);
-        int du = (int) Math.floor(Math.abs(num));    //获取整数部分
-        double temp = getdPoint(Math.abs(num)) * 60;
-        int fen = (int) Math.floor(temp); //获取整数部分
-        if (num < 0)
-            return "-" + du + "°" + fen + "′";
-        return du + "°" + fen + "′";
+    public static RectF getPathEnvelope(ArcMap arcMap, Path path) {
+        return null;
     }
+
 
     /**
-     * 60进制转10进制
-     *
-     * @param latlng
+     * @param arcMap
+     * @param circleX
+     * @param circleY
+     * @param radius
+     * @param steps   分割份数
      * @return
      */
-    public static double _60To10(String latlng) {
-        double du = Double.parseDouble(latlng.substring(0, latlng.indexOf("°")));
-        double fen = Double.parseDouble(latlng.substring(latlng.indexOf("°") + 1, latlng.indexOf("′")));
-        double miao = Double.parseDouble(latlng.substring(latlng.indexOf("′") + 1, latlng.indexOf("″")));
-        if (du < 0)
-            return -(Math.abs(du) + (fen + (miao / 60)) / 60);
-        return du + (fen + (miao / 60)) / 60;
-    }
-
-    //获取小数部分
-    private static double getdPoint(double num) {
-        double d = num;
-        int fInt = (int) d;
-        BigDecimal b1 = new BigDecimal(Double.toString(d));
-        BigDecimal b2 = new BigDecimal(Integer.toString(fInt));
-        double dPoint = b1.subtract(b2).floatValue();
-        return dPoint;
+    public static List<Point> destination(ArcMap arcMap, float circleX, float circleY, float radius, int steps) {
+        List<Point> positions = new ArrayList<>();
+        Point temp;
+        for (int i = 0; i < steps; i++) {
+            double x = circleX + Math.cos(360 * i / steps) * radius;
+            double y = circleY + Math.sin(360 * i / steps) * radius;
+            temp = arcMap.screenToLocation((int) x, (int) y);
+            positions.add(temp);
+        }
+        positions.add(positions.get(0));
+        return positions;
     }
 }

@@ -3,9 +3,12 @@ package com.lib.bandaid.arcruntime.core;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
+import com.esri.arcgisruntime.data.FeatureTable;
 import com.esri.arcgisruntime.data.QueryParameters;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.geometry.Geometry;
+import com.esri.arcgisruntime.layers.ArcGISMapImageLayer;
+import com.esri.arcgisruntime.layers.ArcGISMapImageSublayer;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.LayerContent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
@@ -103,24 +106,60 @@ public class SelectContainer extends BaseContainer {
     public void queryByGeometry(final LayerNode node, Geometry geometry, final ICallBack iCallBack) {
         try {
             if (node == null) return;
-            queryFeaLayerByGeometry(node, geometry, iCallBack);
+            queryFeaByGeometry(node, geometry, iCallBack);
         } catch (Exception e) {
             if (iCallBack != null) iCallBack.fail(e);
         }
     }
 
-    private void queryFeaLayerByGeometry(LayerNode node, Geometry geometry, ICallBack iCallBack) {
+    private void queryFeaByGeometry(LayerNode node, Geometry geometry, ICallBack iCallBack) {
         LayerContent layerContent = node.getLayerContent();
-        FeatureLayer featureLayer = null;
         if (layerContent instanceof FeatureLayer) {
-            featureLayer = (FeatureLayer) layerContent;
+            queryFeaLayerByGeometry(node, (FeatureLayer) layerContent, geometry, iCallBack);
         }
+        if (layerContent instanceof ArcGISMapImageSublayer) {
+            queryFeaLayerByGeometry(node, (ArcGISMapImageSublayer) layerContent, geometry, iCallBack);
+        }
+    }
+
+    private void queryFeaLayerByGeometry(LayerNode node, FeatureLayer layer, Geometry geometry, ICallBack iCallBack) {
         Map res = new HashMap();
         QueryParameters params = new QueryParameters();
         params.setGeometry(geometry);
         params.setReturnGeometry(true);
         if (mode == null) mode = FeatureLayer.SelectionMode.NEW;
-        final ListenableFuture<FeatureQueryResult> future = featureLayer.selectFeaturesAsync(params, mode);
+        final ListenableFuture<FeatureQueryResult> future = layer.selectFeaturesAsync(params, mode);
+        future.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FeatureQueryResult result = future.get();
+                    Iterator<Feature> iterator = result.iterator();
+                    Feature feature;
+                    List<Feature> features = new ArrayList<>();
+                    while (iterator.hasNext()) {
+                        feature = iterator.next();
+                        features.add(feature);
+                    }
+                    res.put(node, features);
+                    selResult.put(node, features);
+                    if (iCallBack != null) iCallBack.success(res);
+                } catch (Exception e) {
+                    if (iCallBack != null) iCallBack.fail(e);
+                }
+            }
+        });
+    }
+
+
+    private void queryFeaLayerByGeometry(LayerNode node, ArcGISMapImageSublayer layer, Geometry geometry, ICallBack iCallBack) {
+        ServiceFeatureTable featureTable = layer.getTable();
+        if (featureTable == null) featureTable = new ServiceFeatureTable(node.getUri());
+        Map res = new HashMap();
+        QueryParameters params = new QueryParameters();
+        params.setGeometry(geometry);
+        params.setReturnGeometry(true);
+        final ListenableFuture<FeatureQueryResult> future = featureTable.queryFeaturesAsync(params);
         future.addDoneListener(new Runnable() {
             @Override
             public void run() {

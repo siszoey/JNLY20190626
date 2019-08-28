@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.esri.arcgisruntime.ArcGISRuntimeEnvironment;
@@ -41,7 +42,7 @@ import java.util.Map;
  * Created by zy on 2019/5/9.
  */
 
-public class ArcMap extends RelativeLayout implements LoadStatusChangedListener, IContainer {
+public class ArcMap extends FrameLayout implements LoadStatusChangedListener, IContainer {
 
     public static ArcMap arcMap;
 
@@ -398,6 +399,10 @@ public class ArcMap extends RelativeLayout implements LoadStatusChangedListener,
 
     public Point screenToLocation(MotionEvent e) {
         return mapView.screenToLocation(new android.graphics.Point((int) e.getX(), (int) e.getY()));
+    }
+
+    public Point screenToLocation(int x, int y) {
+        return mapView.screenToLocation(new android.graphics.Point(x, y));
     }
 
     /**

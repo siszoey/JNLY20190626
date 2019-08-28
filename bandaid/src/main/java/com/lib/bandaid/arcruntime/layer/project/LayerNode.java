@@ -3,7 +3,10 @@ package com.lib.bandaid.arcruntime.layer.project;
 import androidx.annotation.NonNull;
 
 import com.esri.arcgisruntime.data.FeatureTable;
+import com.esri.arcgisruntime.data.Field;
+import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.geometry.GeometryType;
+import com.esri.arcgisruntime.layers.ArcGISMapImageSublayer;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
@@ -76,8 +79,14 @@ public class LayerNode implements Serializable {
     }
 
     public FeatureTable tryGetFeaTable() {
-        FeatureLayer featureLayer = tryGetFeaLayer();
-        if (featureLayer != null) return featureLayer.getFeatureTable();
+        if (layerContent == null) return null;
+        if (layerContent instanceof FeatureLayer)
+            return ((FeatureLayer) layerContent).getFeatureTable();
+        if (layerContent instanceof ArcGISMapImageSublayer) {
+            ServiceFeatureTable table = ((ArcGISMapImageSublayer) layerContent).getTable();
+            if (table == null) table = new ServiceFeatureTable(getUri());
+            return table;
+        }
         return null;
     }
 
@@ -85,6 +94,21 @@ public class LayerNode implements Serializable {
         FeatureTable table = tryGetFeaTable();
         if (table != null) return table.getGeometryType();
         return null;
+    }
+
+    public List<Field> tryGetFields() {
+        List<com.lib.bandaid.arcruntime.layer.info.Field> _fields = info.getFields();
+        List<Field> fields = new ArrayList<>();
+        Field field;
+        String json;
+        com.lib.bandaid.arcruntime.layer.info.Field _field;
+        for (int i = 0, len = _fields.size(); i < len; i++) {
+            _field = _fields.get(i);
+            json = MapUtil.entity2Json(_field);
+            field = Field.fromJson(json);
+            fields.add(field);
+        }
+        return fields;
     }
 
     public List<LayerNode> getNodes() {

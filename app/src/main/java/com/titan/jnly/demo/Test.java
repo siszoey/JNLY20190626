@@ -1,5 +1,6 @@
 package com.titan.jnly.demo;
 
+import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
 import com.lib.bandaid.utils.PyUtil;
@@ -24,15 +25,14 @@ public class Test {
         System.out.println(dataStatus);
 
 
-        String lon2 = TransformUtil._10To60_len2("117.228611");
-        String lat2 = TransformUtil._10To60_len2("31.794868");
+        String lon2 = CustomUtil._10To60_len2("117.228611");
+        String lat2 = CustomUtil._10To60_len2("31.794868");
 
-        String lon = TransformUtil._10To60("117.228611");
-        String lat = TransformUtil._10To60("31.794868");
-        System.out.println(1122);
+        String lon = CustomUtil._10To60("117.228611");
+        String lat = CustomUtil._10To60("31.794868");
 
-        double lond = TransformUtil._60To10(lon);
-        double latd = TransformUtil._60To10(lat);
+        double lond = CustomUtil._60To10(lon);
+        double latd = CustomUtil._60To10(lat);
 
         System.out.println(1122);
         WorkSequence workSequence = new WorkSequence();

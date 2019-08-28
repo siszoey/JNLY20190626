@@ -19,7 +19,7 @@ public class VibratorUtil {
      */
 
     @SuppressLint("MissingPermission")
-    public static void Vibrate(final Context context, long milliseconds) {
+    public static void vibrate(final Context context, long milliseconds) {
         Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(milliseconds);
     }
@@ -32,7 +32,7 @@ public class VibratorUtil {
      */
 
     @SuppressLint("MissingPermission")
-    public static void Vibrate(final Context context, long[] pattern, boolean isRepeat) {
+    public static void vibrate(final Context context, long[] pattern, boolean isRepeat) {
         Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(pattern, isRepeat ? 1 : -1);
     }

@@ -21,6 +21,7 @@ import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.core.ArcMap;
+import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
@@ -150,8 +151,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                     String lat = "";
                     String lon = "";
                     if (ServiceLocation._location != null) {
-                        lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
-                        lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+                        lat = CustomUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
+                        lon = CustomUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
                     }
 
                     waterMark.put("序号", sequence);
@@ -243,9 +244,9 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         if (location != null) {
             UiXml lon = easyUiXml.getUiXml("LON");
             UiXml lat = easyUiXml.getUiXml("LAT");
-            String _60Lon = TransformUtil._10To60_short(location.getLongitude() + "");
+            String _60Lon = CustomUtil._10To60_short(location.getLongitude() + "");
             if (lon != null) lon.setValue(_60Lon);
-            String _60Lat = TransformUtil._10To60_short(location.getLatitude() + "");
+            String _60Lat = CustomUtil._10To60_short(location.getLatitude() + "");
             if (lat != null) lat.setValue(_60Lat);
 
             UiXml alt = easyUiXml.getUiXml("HAIBA");
@@ -306,8 +307,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             Map map = propertyView.getForm();
             ComplexTextView lonView = propertyView.getViewByKey("LON");
             ComplexTextView latView = propertyView.getViewByKey("LAT");
-            map.put("LON", TransformUtil._60To10(lonView.getText()));
-            map.put("LAT", TransformUtil._60To10(latView.getText()));
+            map.put("LON", CustomUtil._60To10(lonView.getText()));
+            map.put("LAT", CustomUtil._60To10(latView.getText()));
             property.putAll(map);
             Double lon = (Double) property.get("LON");
             Double lat = (Double) property.get("LAT");
@@ -499,7 +500,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 if (data >= 15 && data <= 24) slopeLevel.setLabel("Ⅲ/斜坡");
                 if (data >= 25 && data <= 34) slopeLevel.setLabel("Ⅳ/陡坡");
                 if (data >= 35 && data <= 44) slopeLevel.setLabel("Ⅵ/急坡");
-                if (data > 45) slopeLevel.setLabel("Ⅶ/险坡");
+                if (data >= 45) slopeLevel.setLabel("Ⅶ/险坡");
             }
         });
 
@@ -567,8 +568,8 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
     //接收消息
     @Subscribe
     public void onEventMainThread(ServiceLocation location) {
-        String lat = TransformUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
-        String lon = TransformUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
+        String lat = CustomUtil._10To60_len2(ServiceLocation._location.getLatitude() + "");
+        String lon = CustomUtil._10To60_len2(ServiceLocation._location.getLongitude() + "");
         PhotoActivity.updateMaker().put("纬度", lat);
         PhotoActivity.updateMaker().put("经度", lon);
     }
