@@ -24,7 +24,6 @@ import com.titan.jnly.main.ui.frg.decision.DecisionFragment;
 import com.titan.jnly.main.ui.frg.manage.ManagerFragment;
 import com.titan.jnly.main.ui.frg.my.MyFragment;
 import com.titan.jnly.main.ui.frg.watch.WatchFragment;
-import com.titan.jnly.system.version.bugly.BuglySetting;
 
 import me.yokeyword.fragmentation.common.SupportFragment;
 
@@ -44,8 +43,6 @@ public class MainActivity extends BaseFragmentAty
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "济南名木", Gravity.CENTER);
         setContentView(R.layout.main_ui_aty_main_layout);
-        //检查更新
-        BuglySetting.checkVersion();
         //权限
         permissions();
     }

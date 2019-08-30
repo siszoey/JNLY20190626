@@ -68,6 +68,8 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
             startActivity(new Intent(_context, InvestActivity.class));
         } else if (position == 1) {
             startActivity(new Intent(_context, PatrolActivity.class));
+        } else if (position == 3) {
+            showToast("开发中");
         } else {
             showToast("二期功能，暂未开放");
         }

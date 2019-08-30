@@ -118,7 +118,8 @@ public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
             features = res.get(node);
             if (features == null || features.size() == 0) continue;
             List<Field> fields = node.tryGetFields();
-            PropertyDialog.newInstance(node.getName(), fields, features.get(0).getAttributes()).show(context);
+            Map map = features.get(0).getAttributes();
+            PropertyDialog.newInstance(node.getName(), fields, map).show(context);
             break;
         }
     }

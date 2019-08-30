@@ -159,7 +159,8 @@ public class SelectContainer extends BaseContainer {
         QueryParameters params = new QueryParameters();
         params.setGeometry(geometry);
         params.setReturnGeometry(true);
-        final ListenableFuture<FeatureQueryResult> future = featureTable.queryFeaturesAsync(params);
+        params.setSpatialRelationship(QueryParameters.SpatialRelationship.INTERSECTS);
+        final ListenableFuture<FeatureQueryResult> future = featureTable.queryFeaturesAsync(params, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
         future.addDoneListener(new Runnable() {
             @Override
             public void run() {
