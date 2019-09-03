@@ -28,7 +28,9 @@ import com.titan.jnly.main.ui.frg.watch.WatchFragment;
 import me.yokeyword.fragmentation.common.SupportFragment;
 
 public class MainActivity extends BaseFragmentAty
-        implements BottomNavigationView.OnNavigationItemSelectedListener, BaseMainFragment.OnBackToFirstListener, PositionUtil.ILocStatus {
+        implements BottomNavigationView.OnNavigationItemSelectedListener,
+        BaseMainFragment.OnBackToFirstListener,
+        PositionUtil.ILocStatus {
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;

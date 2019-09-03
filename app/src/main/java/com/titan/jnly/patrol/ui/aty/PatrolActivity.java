@@ -1,5 +1,6 @@
 package com.titan.jnly.patrol.ui.aty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
+import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
@@ -22,10 +24,10 @@ import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.frame.FrameQuery;
 import com.titan.jnly.invest.ui.tools.ToolClear;
 import com.titan.jnly.invest.ui.tools.ToolNavi;
-import com.titan.jnly.invest.ui.tools.ToolQuery;
 import com.titan.jnly.invest.ui.tools.ToolTrack;
 import com.titan.jnly.invest.ui.tools.ZoomLoc;
 import com.titan.jnly.patrol.ui.frame.FrameLayer;
+import com.titan.jnly.patrol.ui.tools.ToolQuery;
 
 public class PatrolActivity extends BaseMvpCompatAty
         implements PositionUtil.ILocStatus, View.OnClickListener {
@@ -44,6 +46,7 @@ public class PatrolActivity extends BaseMvpCompatAty
         initTitle(R.drawable.ic_menu, "巡查养护", Gravity.CENTER);
         initMapWidget();
         setContentView(R.layout.map_ui_aty_patrol);
+        permissions();
     }
 
     @Override
@@ -109,6 +112,16 @@ public class PatrolActivity extends BaseMvpCompatAty
     @Override
     public void onClick(View v) {
 
+    }
+
+    void permissions() {
+        PositionUtil.reqGps(_context, LocService.class, this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PositionUtil.CODE) permissions();
     }
 
     @Override
