@@ -492,7 +492,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 String snText = sn.getText();
                 if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(snText)) return;
                 double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(snText)) / 2;
-                wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
+                //wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
+                wsen.setText((int) avg + "");
             }
         });
         WidgetUtil.setViewTextChangeLister(sn, new WidgetUtil.IChangeLister() {
@@ -501,7 +502,8 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
                 String ewText = ew.getText();
                 if (!NumberUtil.can2Double(text) || !NumberUtil.can2Double(ewText)) return;
                 double avg = (NumberUtil.try2Double(text) + NumberUtil.try2Double(ewText)) / 2;
-                wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
+                //wsen.setText(DecimalFormats.getFormat("#0.00").format(avg));
+                wsen.setText((int) avg + "");
             }
         });
 

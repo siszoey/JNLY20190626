@@ -251,8 +251,8 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
-                <msg>必须为正数,且小数点后不超过2位!</msg>
+                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,1})</regex>
+                <msg>必须为正数,且小数点后不超过1位!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
@@ -261,8 +261,8 @@
             <dataType class="java-class">java.lang.Double</dataType>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
-                <msg>必须为正数,且小数点后不超过2位!</msg>
+                <regex>^[1-9]\d*$</regex>
+                <msg>必须为正整数!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>
