@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.tools;
+package com.titan.jnly.common.tools;
 
 import android.view.View;
 

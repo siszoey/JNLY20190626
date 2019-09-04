@@ -1,4 +1,4 @@
-package com.titan.jnly.patrol.ui.tools;
+package com.titan.jnly.common.tools;
 
 import android.graphics.PointF;
 import android.view.MotionEvent;
@@ -8,28 +8,25 @@ import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.Field;
 import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.Point;
-import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.SelectContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.lib.bandaid.arcruntime.tools.extend.ToolSelExtend;
-import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.utils.VibratorUtil;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.ui.dialog.FeatureDialog;
 import com.titan.jnly.invest.ui.dialog.PropertyDialog;
 
 import java.util.List;
 import java.util.Map;
 
-public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
+public class ToolQuery_Back extends BaseTool implements SelectContainer.ICallBack {
 
     List<LayerNode> layerNodes;
     private boolean isLongPress;
     private ToolSelExtend extend;
 
-    public ToolQuery() {
+    public ToolQuery_Back() {
         id = getClass().getSimpleName();
         name = "识别";
         resId = R.mipmap.ic_map_query_normal;
@@ -113,26 +110,14 @@ public class ToolQuery extends BaseTool implements SelectContainer.ICallBack {
     @Override
     public void success(Map<LayerNode, List<Feature>> res) {
         if (res == null || res.size() == 0) return;
-        List<Feature> features = FeatureUtil.mapConvertList(res);
-        if (features.size() == 0) return;
-        if (features.size() == 1) {
-            for (LayerNode node : res.keySet()) {
-                features = res.get(node);
-                if (features == null || features.size() == 0) continue;
-                List<Field> fields = node.tryGetFields();
-                Map map = features.get(0).getAttributes();
-                PropertyDialog.newInstance(node.getName(), fields, map).show(context);
-                break;
-            }
-        } else {
-            FeatureDialog.newInstance().initData("选择古树", res, new FeatureDialog.ICallBack() {
-                @Override
-                public void callBack(GroupItem<Feature> data) {
-                    LayerNode node = (LayerNode) data.getTag();
-                    List<Field> fields = node.tryGetFields();
-                    PropertyDialog.newInstance(node.getName(), fields, data.getData().getAttributes()).show(context);
-                }
-            }).show(context);
+        List<Feature> features;
+        for (LayerNode node : res.keySet()) {
+            features = res.get(node);
+            if (features == null || features.size() == 0) continue;
+            List<Field> fields = node.tryGetFields();
+            Map map = features.get(0).getAttributes();
+            PropertyDialog.newInstance(node.getName(), fields, map).show(context);
+            break;
         }
     }
 

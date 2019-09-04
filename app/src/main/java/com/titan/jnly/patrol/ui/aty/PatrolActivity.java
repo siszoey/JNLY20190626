@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.arcruntime.core.ArcMap;
@@ -17,21 +21,21 @@ import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.service.imp.LocService;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.utils.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.frame.FrameQuery;
-import com.titan.jnly.invest.ui.tools.ToolClear;
-import com.titan.jnly.invest.ui.tools.ToolNavi;
-import com.titan.jnly.invest.ui.tools.ToolTrack;
-import com.titan.jnly.invest.ui.tools.ZoomLoc;
+import com.titan.jnly.common.tools.ToolClear;
+import com.titan.jnly.common.tools.ToolNavi;
+import com.titan.jnly.common.tools.ToolTrack;
+import com.titan.jnly.common.tools.ZoomLoc;
 import com.titan.jnly.patrol.ui.frame.FrameLayer;
-import com.titan.jnly.patrol.ui.tools.ToolQuery;
+import com.titan.jnly.common.tools.ToolQuery;
 
 public class PatrolActivity extends BaseMvpCompatAty
         implements PositionUtil.ILocStatus, View.OnClickListener {
-
 
     CustomDrawerLayout drawerLayout;
     LinearLayout menuRight;
@@ -108,6 +112,20 @@ public class PatrolActivity extends BaseMvpCompatAty
         arcMap.destroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        new ATEDialog.Theme_Alert(_context)
+                .title("提示")
+                .content("确认离开当前模块？")
+                .positiveText("退出")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        finish();
+                    }
+                }).show();
+    }
 
     @Override
     public void onClick(View v) {
@@ -131,7 +149,7 @@ public class PatrolActivity extends BaseMvpCompatAty
 
     @Override
     public void refuse() {
-
+        finish();
     }
 
     void initMapWidget() {

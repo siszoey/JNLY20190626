@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.tools;
+package com.titan.jnly.common.tools;
 
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.titan.jnly.R;

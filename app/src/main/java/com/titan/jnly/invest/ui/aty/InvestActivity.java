@@ -42,11 +42,11 @@ import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.invest.ui.frame.FrameLayer;
 import com.titan.jnly.invest.ui.frame.FrameQuery;
 import com.titan.jnly.invest.ui.frame.VectorBar;
-import com.titan.jnly.invest.ui.tools.ToolClear;
-import com.titan.jnly.invest.ui.tools.ToolEdit;
-import com.titan.jnly.invest.ui.tools.ToolNavi;
-import com.titan.jnly.invest.ui.tools.ToolTrack;
-import com.titan.jnly.invest.ui.tools.ZoomLoc;
+import com.titan.jnly.common.tools.ToolClear;
+import com.titan.jnly.common.tools.ToolEdit;
+import com.titan.jnly.common.tools.ToolNavi;
+import com.titan.jnly.common.tools.ToolTrack;
+import com.titan.jnly.common.tools.ZoomLoc;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
 import com.titan.jnly.vector.ui.aty.SimpleAddAty;
@@ -188,7 +188,7 @@ public class InvestActivity
     public void onBackPressed() {
         new ATEDialog.Theme_Alert(_context)
                 .title("提示")
-                .content("确认退出？")
+                .content("确认离开当前模块？")
                 .positiveText("退出")
                 .negativeText("取消")
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
