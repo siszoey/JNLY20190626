@@ -49,7 +49,7 @@ public class PatrolActivity extends BaseMvpCompatAty
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "巡查养护", Gravity.CENTER);
         initMapWidget();
-        setContentView(R.layout.map_ui_aty_patrol);
+        setContentView(R.layout.patrol_ui_aty_patrol_layout);
         permissions();
     }
 

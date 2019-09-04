@@ -1,4 +1,4 @@
-package com.titan.jnly.common.uitls;
+package com.titan.jnly.common.uitl;
 
 import java.util.ArrayList;
 import java.util.HashMap;

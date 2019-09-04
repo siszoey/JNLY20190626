@@ -80,7 +80,7 @@ public class InvestActivity
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "调查管理", Gravity.CENTER);
         initMapWidget();
-        setContentView(R.layout.map_ui_aty_invest);
+        setContentView(R.layout.invest_ui_aty_invest_layout);
         //权限
         permissions();
     }

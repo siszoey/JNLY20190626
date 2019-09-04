@@ -1,9 +1,8 @@
-package com.titan.jnly.common.uitls;
+package com.titan.jnly.common.uitl;
 
 import android.annotation.SuppressLint;
 
 import com.esri.arcgisruntime.geometry.SpatialReference;
-import com.esri.arcgisruntime.geometry.SpatialReferences;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;

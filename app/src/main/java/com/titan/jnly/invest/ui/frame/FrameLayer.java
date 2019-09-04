@@ -37,7 +37,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
-import com.titan.jnly.invest.utils.NodeIteration;
+import com.titan.jnly.common.uitl.NodeIteration;
 import com.titan.jnly.system.Constant;
 
 /**
@@ -59,7 +59,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     public FrameLayer(Context context) {
         super(context);
         layoutGravity = ViewUtil.MATCH_PARENT;
-        setContentView(R.layout.map_ui_frame_layer);
+        setContentView(R.layout.invest_ui_frame_layer_layout);
     }
 
     @Override

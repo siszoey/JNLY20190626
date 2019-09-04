@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.utils;
+package com.titan.jnly.common.uitl;
 
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.widget.treeview.action.TreeView;

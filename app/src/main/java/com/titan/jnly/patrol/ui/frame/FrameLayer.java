@@ -21,8 +21,7 @@ import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.ui.aty.InvestActivity;
-import com.titan.jnly.invest.utils.NodeIteration;
+import com.titan.jnly.common.uitl.NodeIteration;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.system.Constant;
@@ -31,7 +30,10 @@ import com.titan.jnly.system.Constant;
  * Created by zy on 2019/5/23.
  */
 
-public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening, TocContainer.ILayerLoaded, View.OnClickListener {
+public class FrameLayer extends BaseMapWidget
+        implements ITreeViewNodeListening,
+        TocContainer.ILayerLoaded,
+        View.OnClickListener {
 
     private TextView tvAccount, tvRealName;
     private ImageView ivHead;
@@ -46,7 +48,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
     public FrameLayer(Context context) {
         super(context);
         layoutGravity = ViewUtil.MATCH_PARENT;
-        setContentView(R.layout.map_ui_frame_layer);
+        setContentView(R.layout.patrol_ui_frame_layer_layout);
     }
 
     @Override
@@ -145,7 +147,7 @@ public class FrameLayer extends BaseMapWidget implements ITreeViewNodeListening,
             startActivity(intent);
         }
         if (v.getId() == R.id.tvSync) {
-            ((InvestActivity) activity).reqInfo();
+            //((InvestActivity) activity).reqInfo();
         }
     }
 }
