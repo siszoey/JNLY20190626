@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.widget.easyui.ui.MapLayoutView;
-import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 
 import java.util.HashMap;

@@ -1,16 +1,13 @@
 package com.titan.jnly.system;
 
 import android.content.Context;
-import android.location.Location;
 
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.bean.Loc;
-import com.lib.bandaid.utils.CacheUtil;
-import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.widget.easyui.convert.Resolution;
+import com.lib.bandaid.util.CacheUtil;
+import com.lib.bandaid.util.DateUtil;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.Config;
 import com.titan.jnly.login.bean.User;

@@ -1,13 +1,10 @@
 package com.lib.bandaid.widget.easyui.xml;
 
-import android.view.View;
-
-import com.lib.bandaid.utils.PyUtil;
+import com.lib.bandaid.util.PyUtil;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
 /**
  * Created by zy on 2019/7/21.

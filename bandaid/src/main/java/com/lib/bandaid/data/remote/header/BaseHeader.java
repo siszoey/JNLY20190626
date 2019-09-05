@@ -2,9 +2,9 @@ package com.lib.bandaid.data.remote.header;
 
 import com.google.gson.Gson;
 import com.lib.bandaid.app.BaseApp;
-import com.lib.bandaid.utils.AppUtil;
-import com.lib.bandaid.utils.GsonFactory;
-import com.lib.bandaid.utils.SystemUtil;
+import com.lib.bandaid.util.AppUtil;
+import com.lib.bandaid.util.GsonFactory;
+import com.lib.bandaid.util.SystemUtil;
 
 import java.io.Serializable;
 import java.net.URLDecoder;

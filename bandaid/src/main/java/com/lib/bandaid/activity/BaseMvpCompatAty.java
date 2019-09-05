@@ -7,7 +7,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.data.remote.core.INetRequest;
 //import com.lib.bandaid.utils.DialogFactory;
-import com.lib.bandaid.utils.DialogFactory;
+import com.lib.bandaid.util.DialogFactory;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import javax.inject.Inject;

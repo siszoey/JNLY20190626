@@ -22,7 +22,7 @@ import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
-import com.lib.bandaid.utils.PositionUtil;
+import com.lib.bandaid.util.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
 import com.titan.jnly.R;
@@ -50,7 +50,7 @@ public class ExamineAty extends BaseMvpCompatAty
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "调查审核", Gravity.CENTER);
         initMapWidget();
-        setContentView(R.layout.patrol_ui_aty_patrol_layout);
+        setContentView(R.layout.exam_ui_aty_main_layout);
         permissions();
     }
 

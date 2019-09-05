@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 import com.lib.bandaid.R;
 import com.lib.bandaid.activity.BaseActivity;
 import com.lib.bandaid.activity.IOnActivityResult;
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 import com.lib.bandaid.widget.snackbar.Snackbar;
 import com.lib.bandaid.widget.snackbar.SnackbarManager;
-
-import java.util.zip.Inflater;
 
 
 /**

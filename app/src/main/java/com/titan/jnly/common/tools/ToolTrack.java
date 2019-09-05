@@ -8,8 +8,8 @@ import com.esri.arcgisruntime.geometry.PointCollection;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.lib.bandaid.service.bean.Loc;
-import com.lib.bandaid.utils.MathUtil;
-import com.lib.bandaid.utils.ToastUtil;
+import com.lib.bandaid.util.MathUtil;
+import com.lib.bandaid.util.ToastUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.dialog.TrackDialog;
 

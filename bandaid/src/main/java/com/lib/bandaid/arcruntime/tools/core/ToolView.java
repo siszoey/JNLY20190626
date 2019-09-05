@@ -3,13 +3,12 @@ package com.lib.bandaid.arcruntime.tools.core;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 
 /**
  * Created by zy on 2018/12/17.

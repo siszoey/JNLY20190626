@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.lib.bandaid.utils.ObjectUtil;
-import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.util.ObjectUtil;
+import com.lib.bandaid.util.StringUtil;
 import com.lib.bandaid.widget.easyui.utils.RegexUtil;
 import com.lib.bandaid.widget.easyui.xml.VerifyXml;
 import com.lib.bandaid.widget.edittext.ClearEditText;

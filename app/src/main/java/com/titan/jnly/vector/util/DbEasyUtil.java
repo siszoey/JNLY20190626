@@ -1,7 +1,7 @@
 package com.titan.jnly.vector.util;
 
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.utils.DateUtil;
+import com.lib.bandaid.util.DateUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.system.Constant;
@@ -9,7 +9,6 @@ import com.titan.jnly.vector.bean.TreeMode;
 import com.titan.jnly.vector.bean.WorkSequence;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 回归模型计算树龄

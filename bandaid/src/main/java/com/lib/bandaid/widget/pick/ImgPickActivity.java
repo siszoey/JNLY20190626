@@ -29,14 +29,13 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.thread.rx.RxSimpleObserver;
 import com.lib.bandaid.thread.rx.RxSimpleSubscribe;
-import com.lib.bandaid.utils.ObjectUtil;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.ObjectUtil;
+import com.lib.bandaid.util.ViewUtil;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;

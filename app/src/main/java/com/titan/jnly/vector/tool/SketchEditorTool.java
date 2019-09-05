@@ -19,7 +19,7 @@ import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.layers.FeatureLayer;
-import com.lib.bandaid.utils.ToastUtil;
+import com.lib.bandaid.util.ToastUtil;
 import com.titan.jnly.common.uitl.Constant;
 import com.titan.jnly.common.uitl.ConverterUtils;
 import com.titan.jnly.vector.bean.MyLayer;

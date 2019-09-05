@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 import androidx.customview.widget.ViewDragHelper;
 
-import com.lib.bandaid.utils.ViewTreeUtil;
+import com.lib.bandaid.util.ViewTreeUtil;
 
 import java.util.ArrayList;
 import java.util.List;

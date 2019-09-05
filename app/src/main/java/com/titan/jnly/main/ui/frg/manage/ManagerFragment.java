@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.lib.bandaid.arcruntime.core.ArcMap;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.common.fragment.BaseMainFragment;
 

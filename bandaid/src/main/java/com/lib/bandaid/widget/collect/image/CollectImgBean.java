@@ -4,7 +4,6 @@ import com.camera.lib.widget.ImagePagerBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lib.bandaid.rw.file.utils.FileUtil;
-import com.lib.bandaid.utils.MapUtil;
 
 import java.io.File;
 import java.io.Serializable;

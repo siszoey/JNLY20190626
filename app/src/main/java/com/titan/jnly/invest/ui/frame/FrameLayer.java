@@ -27,7 +27,7 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;

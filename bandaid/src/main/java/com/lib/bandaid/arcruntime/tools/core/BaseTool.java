@@ -1,7 +1,6 @@
 package com.lib.bandaid.arcruntime.tools.core;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -13,7 +12,7 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.IP;
 import com.lib.bandaid.arcruntime.core.select.ISelectChange;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 
 import java.util.List;
 

@@ -8,11 +8,12 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
-import com.lib.bandaid.utils.AppUtil;
+import com.lib.bandaid.util.AppUtil;
 import com.lib.bandaid.widget.squareview.GridItem;
 import com.lib.bandaid.widget.squareview.LineGridView;
 import com.lib.bandaid.widget.squareview.SquareAdapter;
 import com.titan.jnly.R;
+import com.titan.jnly.examine.ui.aty.ExamineAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.patrol.ui.aty.PatrolActivity;
 import com.titan.jnly.system.version.bugly.BuglySetting;
@@ -70,6 +71,8 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
             startActivity(new Intent(_context, PatrolActivity.class));
         } else if (position == 3) {
             showToast("开发中");
+        } else if (position == 4) {
+            startActivity(new Intent(_context, ExamineAty.class));
         } else {
             showToast("二期功能，暂未开放");
         }

@@ -1,10 +1,8 @@
 package com.titan.jnly.demo;
 
 import com.lib.bandaid.arcruntime.util.CustomUtil;
-import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.local.sqlite.core.builder.SqlBuilder;
-import com.lib.bandaid.utils.PyUtil;
-import com.titan.jnly.vector.bean.District;
+import com.lib.bandaid.util.PyUtil;
 import com.titan.jnly.vector.bean.TreeMode;
 import com.titan.jnly.vector.bean.WorkSequence;
 import com.titan.jnly.vector.enums.DataStatus;

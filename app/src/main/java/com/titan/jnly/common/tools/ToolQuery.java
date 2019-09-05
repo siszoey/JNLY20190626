@@ -15,7 +15,7 @@ import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.lib.bandaid.arcruntime.tools.extend.ToolSelExtend;
 import com.lib.bandaid.arcruntime.util.FeatureUtil;
-import com.lib.bandaid.utils.VibratorUtil;
+import com.lib.bandaid.util.VibratorUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.dialog.FeatureDialog;
 import com.titan.jnly.invest.ui.dialog.PropertyDialog;

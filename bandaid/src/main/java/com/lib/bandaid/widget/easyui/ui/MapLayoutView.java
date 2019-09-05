@@ -18,12 +18,12 @@ import com.esri.arcgisruntime.data.Domain;
 import com.esri.arcgisruntime.data.Field;
 import com.lib.bandaid.R;
 import com.lib.bandaid.adapter.com.CollectAdapter;
-import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.ImgUtil;
-import com.lib.bandaid.utils.MeasureScreen;
-import com.lib.bandaid.utils.NumberUtil;
-import com.lib.bandaid.utils.StringUtil;
-import com.lib.bandaid.utils.ViewTreeUtil;
+import com.lib.bandaid.util.DateUtil;
+import com.lib.bandaid.util.ImgUtil;
+import com.lib.bandaid.util.MeasureScreen;
+import com.lib.bandaid.util.NumberUtil;
+import com.lib.bandaid.util.StringUtil;
+import com.lib.bandaid.util.ViewTreeUtil;
 
 import java.util.Date;
 import java.util.GregorianCalendar;

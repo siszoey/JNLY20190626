@@ -20,12 +20,10 @@ import com.lib.bandaid.R;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.rw.file.utils.FileUtil;
-import com.lib.bandaid.utils.ObjectUtil;
 import com.lib.bandaid.widget.pick.ImgPickActivity;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 

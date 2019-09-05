@@ -12,10 +12,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lib.bandaid.R;
-import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.MeasureScreen;
-import com.lib.bandaid.utils.ObjectUtil;
-import com.lib.bandaid.utils.ReflectUtil;
+import com.lib.bandaid.util.DateUtil;
+import com.lib.bandaid.util.MeasureScreen;
+import com.lib.bandaid.util.ObjectUtil;
+import com.lib.bandaid.util.ReflectUtil;
 
 import java.util.Date;
 import java.util.Map;

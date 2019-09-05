@@ -18,14 +18,12 @@ import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
 import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.service.com.baseservices.v2.BaseService;
-import com.lib.bandaid.utils.AppCompatNotify;
+import com.lib.bandaid.util.AppCompatNotify;
 import com.lib.bandaid.R;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
 
 /**
  * Created by zy on 2018/3/30.

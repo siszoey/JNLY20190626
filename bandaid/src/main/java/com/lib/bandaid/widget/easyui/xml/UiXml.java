@@ -1,13 +1,11 @@
 package com.lib.bandaid.widget.easyui.xml;
 
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.lib.bandaid.utils.NumberUtil;
-import com.lib.bandaid.utils.ObjectUtil;
-import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.util.NumberUtil;
+import com.lib.bandaid.util.ObjectUtil;
+import com.lib.bandaid.util.StringUtil;
 import com.lib.bandaid.widget.easyui.enums.InputType;
 import com.lib.bandaid.widget.easyui.enums.ItemFrom;
 import com.lib.bandaid.widget.easyui.enums.Status;
@@ -16,8 +14,6 @@ import com.lib.bandaid.widget.easyui.ui.EventImageView;
 import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 import com.lib.bandaid.widget.easyui.utils.EasyUtil;
 import com.lib.bandaid.widget.easyui.utils.RegexUtil;
-import com.lib.bandaid.widget.easyui.utils.WidgetUtil;
-import com.lib.bandaid.widget.text.SimpleTextWatch;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 

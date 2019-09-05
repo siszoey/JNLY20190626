@@ -14,7 +14,7 @@ import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.core.BaseMapWidget;
 import com.lib.bandaid.arcruntime.core.TocContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.treeview.action.TreeView;
 import com.lib.bandaid.widget.treeview.adapter.i.ITreeViewNodeListening;
 import com.lib.bandaid.widget.treeview.bean.TreeNode;
@@ -22,6 +22,7 @@ import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.common.uitl.NodeIteration;
+import com.titan.jnly.examine.ui.aty.DataListAty;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.system.Constant;
@@ -38,6 +39,8 @@ public class FrameLayer extends BaseMapWidget
     private TextView tvAccount, tvRealName;
     private ImageView ivHead;
 
+    private TextView tvData;
+
     private LinearLayout llTreeView;
     private TreeView treeView;
     private TreeNode treeRoot;
@@ -48,7 +51,7 @@ public class FrameLayer extends BaseMapWidget
     public FrameLayer(Context context) {
         super(context);
         layoutGravity = ViewUtil.MATCH_PARENT;
-        setContentView(R.layout.patrol_ui_frame_layer_layout);
+        setContentView(R.layout.exam_ui_menu_layout);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class FrameLayer extends BaseMapWidget
         tvAccount = $(R.id.tvAccount);
         tvRealName = $(R.id.tvRealName);
         ivHead = $(R.id.ivHead);
+        tvData = $(R.id.tvData);
         llTreeView = $(R.id.llRoot);
         tvSync = $(R.id.tvSync);
     }
@@ -64,6 +68,7 @@ public class FrameLayer extends BaseMapWidget
     public void registerEvent() {
         ivHead.setOnClickListener(this);
         tvSync.setOnClickListener(this);
+        tvData.setOnClickListener(this);
     }
 
     @Override
@@ -143,11 +148,13 @@ public class FrameLayer extends BaseMapWidget
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.ivHead) {
-            Intent intent = new Intent(context, LoginAty.class);
-            startActivity(intent);
+            startActivity(new Intent(context, LoginAty.class));
         }
         if (v.getId() == R.id.tvSync) {
             //((InvestActivity) activity).reqInfo();
+        }
+        if (v.getId() == R.id.tvData) {
+            startActivity(new Intent(context, DataListAty.class));
         }
     }
 }

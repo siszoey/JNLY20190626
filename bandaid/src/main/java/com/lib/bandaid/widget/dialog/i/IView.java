@@ -1,7 +1,5 @@
 package com.lib.bandaid.widget.dialog.i;
 
-import com.lib.bandaid.utils.DialogFactory;
-
 public interface IView {
 
     public void showContent();

@@ -10,9 +10,7 @@ import com.esri.arcgisruntime.data.QueryParameters;
 import com.esri.arcgisruntime.geometry.Geometry;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
-import com.lib.bandaid.utils.NumberUtil;
-import com.titan.jnly.task.bean.DataSync;
-import com.titan.jnly.vector.enums.DataStatus;
+import com.lib.bandaid.util.NumberUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

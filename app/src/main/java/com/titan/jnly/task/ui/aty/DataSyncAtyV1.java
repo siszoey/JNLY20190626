@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.lib.bandaid.arcruntime.util.TransformUtil;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
-import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.titan.jnly.R;
 import com.titan.jnly.common.activity.BaseMvpFrgAty;

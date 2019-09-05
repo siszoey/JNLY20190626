@@ -1,7 +1,6 @@
 package com.lib.bandaid.arcruntime.util;
 
 import android.graphics.Path;
-import android.graphics.PointF;
 import android.graphics.RectF;
 
 import androidx.annotation.NonNull;
@@ -9,32 +8,21 @@ import androidx.annotation.NonNull;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.geometry.Geometry;
-import com.esri.arcgisruntime.geometry.GeometryBuilder;
-import com.esri.arcgisruntime.geometry.GeometryEngine;
 import com.esri.arcgisruntime.geometry.GeometryType;
 import com.esri.arcgisruntime.geometry.ImmutablePart;
 import com.esri.arcgisruntime.geometry.ImmutablePartCollection;
 import com.esri.arcgisruntime.geometry.ImmutablePointCollection;
 import com.esri.arcgisruntime.geometry.Multipoint;
-import com.esri.arcgisruntime.geometry.Part;
-import com.esri.arcgisruntime.geometry.PartCollection;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.PointCollection;
 import com.esri.arcgisruntime.geometry.Polygon;
 import com.esri.arcgisruntime.geometry.Polyline;
 import com.esri.arcgisruntime.geometry.SpatialReference;
 import com.lib.bandaid.arcruntime.core.ArcMap;
-import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.DecimalFormats;
-import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.util.DateUtil;
+import com.lib.bandaid.util.ObjectUtil;
 
-import org.json.JSONObject;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

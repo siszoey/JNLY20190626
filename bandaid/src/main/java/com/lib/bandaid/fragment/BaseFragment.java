@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lib.bandaid.R;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.snackbar.Snackbar;
 import com.lib.bandaid.widget.snackbar.SnackbarManager;
 

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.esri.arcgisruntime.data.Feature;
 import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
-import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.util.SimpleMap;
 
 import java.util.Map;
 

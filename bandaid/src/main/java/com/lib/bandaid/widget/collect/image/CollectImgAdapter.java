@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lib.bandaid.R;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.adapter.recycle.BaseViewHolder;
-import com.lib.bandaid.utils.ObjectUtil;
+import com.lib.bandaid.util.ObjectUtil;
 
 public class CollectImgAdapter extends BaseRecycleAdapter<CollectImgBean, BaseViewHolder<CollectImgBean>> {
 

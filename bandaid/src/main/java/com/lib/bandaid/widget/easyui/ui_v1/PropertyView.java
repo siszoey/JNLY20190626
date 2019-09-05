@@ -10,11 +10,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lib.bandaid.R;
-import com.lib.bandaid.utils.DateUtil;
-import com.lib.bandaid.utils.ImgUtil;
-import com.lib.bandaid.utils.MeasureScreen;
-import com.lib.bandaid.utils.StringUtil;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.DateUtil;
+import com.lib.bandaid.util.ImgUtil;
+import com.lib.bandaid.util.MeasureScreen;
+import com.lib.bandaid.util.StringUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.lib.bandaid.widget.easyui.enums.InputType;
 import com.lib.bandaid.widget.easyui.enums.ItemFrom;
@@ -219,8 +219,13 @@ public class PropertyView extends ScrollView {
         }
         if (isDate) {
             if (val != null) {
-                Date date = ((GregorianCalendar) val).getTime();
-                complexTextView.setText(DateUtil.dateTimeToStr(date));
+                if(val instanceof GregorianCalendar) {
+                    Date date = ((GregorianCalendar) val).getTime();
+                    complexTextView.setText(DateUtil.dateTimeToStr(date));
+                }
+                if(val instanceof String){
+                    complexTextView.setText((String) val);
+                }
             }
             if (readOnly) return;
             complexTextView.setOnClickListener(new OnClickListener() {

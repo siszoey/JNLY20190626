@@ -11,7 +11,7 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.thread.rx.RxSimpleUtil;
-import com.lib.bandaid.utils.SimpleMap;
+import com.lib.bandaid.util.SimpleMap;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.apt.TrackAdapter;

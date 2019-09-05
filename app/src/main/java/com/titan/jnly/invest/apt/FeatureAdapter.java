@@ -12,7 +12,7 @@ import com.esri.arcgisruntime.data.Feature;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.adapter.recycle.BaseViewHolder;
 import com.lib.bandaid.adapter.recycle.decoration.GroupItem;
-import com.lib.bandaid.utils.StringUtil;
+import com.lib.bandaid.util.StringUtil;
 import com.titan.jnly.R;
 
 import java.util.Map;

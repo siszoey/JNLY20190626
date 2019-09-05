@@ -3,9 +3,9 @@ package com.lib.bandaid.arcruntime.util;
 import com.esri.arcgisruntime.data.Feature;
 import com.google.gson.Gson;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
-import com.lib.bandaid.utils.GsonFactory;
-import com.lib.bandaid.utils.ObjectUtil;
-import com.lib.bandaid.utils.ReflectUtil;
+import com.lib.bandaid.util.GsonFactory;
+import com.lib.bandaid.util.ObjectUtil;
+import com.lib.bandaid.util.ReflectUtil;
 
 import java.util.ArrayList;
 import java.util.List;

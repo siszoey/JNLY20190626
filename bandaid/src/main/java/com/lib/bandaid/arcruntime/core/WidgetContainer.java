@@ -7,10 +7,10 @@ import android.widget.RelativeLayout;
 
 import com.esri.arcgisruntime.layers.Layer;
 import com.lib.bandaid.arcruntime.tools.core.ToolGroup;
-import com.lib.bandaid.utils.CollectUtil;
-import com.lib.bandaid.utils.MeasureScreen;
-import com.lib.bandaid.utils.ReflectUtil;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.CollectUtil;
+import com.lib.bandaid.util.MeasureScreen;
+import com.lib.bandaid.util.ReflectUtil;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.R;
 import com.lib.bandaid.widget.base.BaseWidget;
 import com.lib.bandaid.widget.base.EGravity;

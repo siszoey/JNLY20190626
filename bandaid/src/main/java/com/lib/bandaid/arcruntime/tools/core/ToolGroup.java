@@ -8,7 +8,7 @@ import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.lib.bandaid.R;
 import com.lib.bandaid.arcruntime.core.ArcMap;
-import com.lib.bandaid.utils.ReflectUtil;
+import com.lib.bandaid.util.ReflectUtil;
 import java.util.ArrayList;
 import java.util.List;
 

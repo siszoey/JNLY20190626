@@ -10,11 +10,10 @@ import com.esri.arcgisruntime.layers.ArcGISMapImageSublayer;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.layers.LayerContent;
-import com.esri.arcgisruntime.layers.SublayerList;
 import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
 import com.lib.bandaid.thread.rx.RxSimpleUtil;
-import com.lib.bandaid.utils.HttpSimpleUtil;
-import com.lib.bandaid.utils.MapUtil;
+import com.lib.bandaid.util.HttpSimpleUtil;
+import com.lib.bandaid.util.MapUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;

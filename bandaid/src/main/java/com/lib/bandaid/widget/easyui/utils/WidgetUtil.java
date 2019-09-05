@@ -1,7 +1,6 @@
 package com.lib.bandaid.widget.easyui.utils;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
@@ -9,17 +8,13 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.lib.bandaid.R;
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 import com.lib.bandaid.widget.easyui.ui_v1.ComplexTextView;
 
 import static android.widget.LinearLayout.HORIZONTAL;

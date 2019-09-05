@@ -1,13 +1,9 @@
 package com.lib.bandaid.arcruntime.core;
 
 import android.content.Context;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.esri.arcgisruntime.layers.Layer;
-import com.lib.bandaid.utils.MeasureScreen;
 import com.lib.bandaid.widget.base.BaseWidget;
-import com.lib.bandaid.widget.base.EGravity;
 
 import java.util.List;
 

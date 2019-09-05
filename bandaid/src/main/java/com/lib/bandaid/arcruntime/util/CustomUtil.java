@@ -1,6 +1,6 @@
 package com.lib.bandaid.arcruntime.util;
 
-import com.lib.bandaid.utils.DecimalFormats;
+import com.lib.bandaid.util.DecimalFormats;
 
 import java.math.BigDecimal;
 

@@ -9,7 +9,7 @@ import android.view.View;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 
 import java.lang.reflect.Field;
 

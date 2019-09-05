@@ -25,7 +25,7 @@ import com.lib.bandaid.arcruntime.core.draw.ValueCallback;
 import com.lib.bandaid.arcruntime.event.IArcMapEvent;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
-import com.lib.bandaid.utils.ToastUtil;
+import com.lib.bandaid.util.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.titan.jnly.R;
 import com.titan.jnly.invest.ui.dialog.FeatureDialog;

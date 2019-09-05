@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lib.bandaid.R;
 import com.lib.bandaid.activity.BaseAppCompatAty;
 import com.lib.bandaid.system.crash.CrashHandler;
-import com.lib.bandaid.system.crash.api.IHttpCrash;
 import com.lib.bandaid.system.crash.bean.CrashInfo;
-import com.lib.bandaid.utils.AppUtil;
-import com.lib.bandaid.utils.DialogFactory;
-import com.lib.bandaid.utils.ProgressDialogCUtil;
+import com.lib.bandaid.util.AppUtil;
+import com.lib.bandaid.util.DialogFactory;
 
 
 /**

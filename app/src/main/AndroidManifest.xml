@@ -37,9 +37,12 @@
         android:supportsRtl="true"
         android:theme="@style/ATEAppTheme">
 
-        <activity android:name="com.titan.jnly.main.ui.aty.MainActivity" />
-        <activity android:name="com.titan.jnly.invest.ui.aty.InvestActivity" />
-        <activity android:name="com.titan.jnly.patrol.ui.aty.PatrolActivity" />
+        <activity android:name=".main.ui.aty.MainActivity" />
+        <activity android:name=".invest.ui.aty.InvestActivity" />
+        <activity android:name=".patrol.ui.aty.PatrolActivity" />
+        <activity android:name=".examine.ui.aty.ExamineAty" />
+        <activity android:name=".examine.ui.aty.DataListAty" />
+        <activity android:name=".examine.ui.aty.DataScanAty" />
         <activity android:name=".vector.ui.aty.SingleEditActivity" />
         <activity android:name=".vector.ui.aty.SimpleAddAty" />
         <activity android:name=".task.ui.aty.DataSyncAty" />
@@ -60,9 +63,8 @@
 
         <activity android:name=".main.ui.aty.MainFaceAty" />
 
-        <activity android:name=".hardware.ui.aty.HardWareAty">
+        <activity android:name=".hardware.ui.aty.HardWareAty" />
 
-        </activity>
 
         <!--zy: 服务注册-->
         <service android:name="com.lib.bandaid.service.imp.LocService" />

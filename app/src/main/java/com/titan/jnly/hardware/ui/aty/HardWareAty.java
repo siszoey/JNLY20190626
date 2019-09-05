@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 
-import com.lib.bandaid.utils.SPfUtil;
+import com.lib.bandaid.util.SPfUtil;
 import com.supoin.rfidservice.sdk.DataUtils;
 import com.supoin.rfidservice.sdk.ModuleController;
 import com.titan.jnly.R;
-import com.titan.jnly.hardware.utils.CodeUtil;
+import com.titan.jnly.hardware.util.CodeUtil;
 
 import java.util.ArrayList;
 import java.util.List;

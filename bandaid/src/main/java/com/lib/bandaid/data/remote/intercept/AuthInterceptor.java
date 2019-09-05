@@ -3,9 +3,9 @@ package com.lib.bandaid.data.remote.intercept;
 import com.blankj.utilcode.util.LogUtils;
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.remote.header.ComHeader;
-import com.lib.bandaid.utils.CacheUtil;
-import com.lib.bandaid.utils.SimpleMap;
-import com.lib.bandaid.utils.SystemUtil;
+import com.lib.bandaid.util.CacheUtil;
+import com.lib.bandaid.util.SimpleMap;
+import com.lib.bandaid.util.SystemUtil;
 
 import java.io.IOException;
 

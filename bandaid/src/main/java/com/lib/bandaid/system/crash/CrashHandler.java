@@ -18,8 +18,8 @@ import com.lib.bandaid.system.crash.bean.CrashInfo;
 import com.lib.bandaid.system.crash.ui.CrashActivity;
 import com.lib.bandaid.system.crash.utils.DateUtil;
 import com.lib.bandaid.system.crash.utils.FileUtil;
-import com.lib.bandaid.utils.AppUtil;
-import com.lib.bandaid.utils.SPfUtil;
+import com.lib.bandaid.util.AppUtil;
+import com.lib.bandaid.util.SPfUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;

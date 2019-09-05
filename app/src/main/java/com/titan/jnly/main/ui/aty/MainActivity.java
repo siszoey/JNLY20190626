@@ -15,7 +15,7 @@ import com.lib.bandaid.permission.RxPermissionFactory;
 import com.lib.bandaid.permission.SimplePermission;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
-import com.lib.bandaid.utils.PositionUtil;
+import com.lib.bandaid.util.PositionUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
 import com.titan.jnly.common.activity.BaseFragmentAty;

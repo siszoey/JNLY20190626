@@ -12,7 +12,7 @@ import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReferences;
 import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.LocationDisplay;
-import com.lib.bandaid.utils.CollectUtil;
+import com.lib.bandaid.util.CollectUtil;
 
 import java.util.ArrayList;
 import java.util.List;

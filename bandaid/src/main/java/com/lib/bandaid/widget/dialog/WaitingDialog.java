@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.lib.bandaid.system.theme.views.ATEProgressBar;
-import com.lib.bandaid.utils.MeasureScreen;
+import com.lib.bandaid.util.MeasureScreen;
 
 /**
  * Created by zy on 2019/4/24.

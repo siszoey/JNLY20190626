@@ -25,9 +25,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.R;
-import com.lib.bandaid.utils.DialogFactory;
-import com.lib.bandaid.utils.MeasureScreen;
-import com.lib.bandaid.utils.ViewUtil;
+import com.lib.bandaid.util.DialogFactory;
+import com.lib.bandaid.util.MeasureScreen;
+import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.dialog.i.IView;
 import com.lib.bandaid.widget.layout.RootStatusView;
 
