@@ -16,15 +16,7 @@ public interface Contract {
 
     interface DataListPresenter extends INetRequest.BasePresenter<DataListView> {
         void getDataList(Integer num, Integer size, String userId);
-    }
 
-
-    interface ExamMapView extends INetRequest.BaseView {
-
-    }
-
-    interface ExamMapPresenter extends INetRequest.BasePresenter<ExamMapView> {
         void postDataList(Map map);
     }
-
 }

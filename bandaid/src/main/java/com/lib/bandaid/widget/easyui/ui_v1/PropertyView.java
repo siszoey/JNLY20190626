@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.lib.bandaid.R;
 import com.lib.bandaid.util.DateUtil;
+import com.lib.bandaid.util.DecimalFormats;
 import com.lib.bandaid.util.ImgUtil;
 import com.lib.bandaid.util.MeasureScreen;
 import com.lib.bandaid.util.StringUtil;
@@ -219,11 +220,11 @@ public class PropertyView extends ScrollView {
         }
         if (isDate) {
             if (val != null) {
-                if(val instanceof GregorianCalendar) {
+                if (val instanceof GregorianCalendar) {
                     Date date = ((GregorianCalendar) val).getTime();
                     complexTextView.setText(DateUtil.dateTimeToStr(date));
                 }
-                if(val instanceof String){
+                if (val instanceof String) {
                     complexTextView.setText((String) val);
                 }
             }
@@ -238,7 +239,13 @@ public class PropertyView extends ScrollView {
             });
         } else {
             if (StringUtil.isEmpty(val)) return;
-            complexTextView.setText(val.toString());
+            String disPlayFormat = uiXml.getDisplayFormat();
+            if (disPlayFormat == null) {
+                complexTextView.setText(val.toString());
+            } else {
+                String formatVal = DecimalFormats.getFormat(disPlayFormat).format(val);
+                complexTextView.setText(formatVal);
+            }
         }
     }
 

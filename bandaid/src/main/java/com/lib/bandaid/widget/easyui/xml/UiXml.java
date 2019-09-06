@@ -51,6 +51,9 @@ public class UiXml implements Serializable {
     @XStreamAlias("dataType")
     private Type dataType;
 
+    @XStreamAlias("displayFormat")
+    private String displayFormat;
+
     @XStreamAlias("itemXml")
     private List<ItemXml> itemXml;
 
@@ -125,6 +128,14 @@ public class UiXml implements Serializable {
 
     public void setDataType(Type dataType) {
         this.dataType = dataType;
+    }
+
+    public String getDisplayFormat() {
+        return displayFormat;
+    }
+
+    public void setDisplayFormat(String displayFormat) {
+        this.displayFormat = displayFormat;
     }
 
     public List<ItemXml> getItemXml() {

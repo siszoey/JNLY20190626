@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amap.api.maps.model.Poi;
@@ -19,6 +19,8 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.PageParam;
+import com.lib.bandaid.util.SimpleMap;
+import com.lib.bandaid.widget.edittext.ClearEditText;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -38,13 +40,16 @@ public class DataListAty extends BaseMvpCompatAty<DataListPresenter>
         Contract.DataListView,
         OnRefreshListener,
         OnLoadMoreListener,
-        BaseRecycleAdapter.IViewClickListener<Map> {
+        BaseRecycleAdapter.IViewClickListener<Map>, View.OnClickListener, ClearEditText.IClearListen {
 
     private String userId = Constant.getUserInfo().getId();
     private SmartRefreshLayout swipeLayout;
     private DataListApt dataListApt;
     private RecyclerView rvList;
     private PageParam page = PageParam.create();
+
+    private ClearEditText editText;
+    private Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +63,16 @@ public class DataListAty extends BaseMvpCompatAty<DataListPresenter>
     protected void initialize() {
         rvList = $(R.id.rvList);
         swipeLayout = $(R.id.swipeLayout);
+        editText = $(R.id.editText);
+        btnSearch = $(R.id.btnSearch);
     }
 
     @Override
     protected void registerEvent() {
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setOnLoadMoreListener(this);
+        btnSearch.setOnClickListener(this);
+        editText.setClearListen(this);
     }
 
     @Override
@@ -126,7 +135,33 @@ public class DataListAty extends BaseMvpCompatAty<DataListPresenter>
         }
     }
 
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnSearch) {
+            requestDataByCondition();
+        }
+    }
+
+    /**
+     * @param userId
+     */
     void requestData(String userId) {
         presenter.getDataList(page.getNum(), page.getSize(), userId);
+    }
+
+    /**
+     *
+     */
+    void requestDataByCondition() {
+        Map map = new SimpleMap().push("DZBQH", editText.getText().toString()).push("UserId", userId);
+        page.New();
+        presenter.postDataList(map);
+    }
+
+    @Override
+    public void clearListen() {
+        page.New();
+        requestData(userId);
     }
 }

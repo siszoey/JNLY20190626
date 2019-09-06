@@ -249,6 +249,7 @@
             <alias>树高/m</alias>
             <code>SG</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <displayFormat>#.0</displayFormat>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,1})</regex>
@@ -259,6 +260,7 @@
             <alias>胸(地)围/cm</alias>
             <code>XJ</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <displayFormat>#</displayFormat>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^[1-9]\d*$</regex>
@@ -269,6 +271,7 @@
             <alias>东西冠幅/m</alias>
             <code>DXGF</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <displayFormat>#</displayFormat>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^[1-9]\d*$</regex>
@@ -279,6 +282,7 @@
             <alias>南北冠幅/m</alias>
             <code>NBGF</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <displayFormat>#</displayFormat>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^[1-9]\d*$</regex>
@@ -289,11 +293,12 @@
             <alias>平均冠幅/m</alias>
             <code>PJGF</code>
             <dataType class="java-class">java.lang.Double</dataType>
+            <displayFormat>#</displayFormat>
             <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
-                <regex>([1-9][0-9]*(\.\d{1,2})?)|(0\.\d{1,2})</regex>
-                <msg>必须为正数,且小数点后不超过2位!</msg>
+                <regex>^[1-9]\d*$</regex>
+                <msg>必须为正整数!</msg>
             </VerifyXml>
         </UiXml>
         <UiXml>

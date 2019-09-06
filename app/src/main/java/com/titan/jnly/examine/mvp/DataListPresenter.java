@@ -33,4 +33,21 @@ public class DataListPresenter extends NetRequest<Contract.DataListView> impleme
             }
         }).httpGetList(num, size, userId);
     }
+
+    @Override
+    public void postDataList(Map map) {
+        request(ExamineApi.class, new NetWorkListen<TTResult<Map>>() {
+
+            @Override
+            public void onSuccess(TTResult<Map> data) {
+                List<Map> list = ObjectUtil.convert(data.getContent().get("rows"), Map.class);
+                view.getListSuccess(list);
+            }
+
+            @Override
+            public void onError(int err, String errMsg, Throwable t) {
+                view.getListFail(errMsg);
+            }
+        }).httpPostList(map);
+    }
 }

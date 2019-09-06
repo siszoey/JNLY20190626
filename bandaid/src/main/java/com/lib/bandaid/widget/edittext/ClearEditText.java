@@ -3,8 +3,10 @@ package com.lib.bandaid.widget.edittext;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.IdRes;
 import androidx.appcompat.widget.AppCompatEditText;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -72,6 +74,7 @@ public class ClearEditText extends AppCompatEditText implements TextWatcher, Vie
                 boolean touchable = event.getX() > (getWidth() - getTotalPaddingRight()) && (event.getX() < ((getWidth() - getPaddingRight())));
                 if (touchable) {
                     this.setText("");
+                    if (iClearListen != null) iClearListen.clearListen();
                 }
             }
         }
@@ -133,7 +136,6 @@ public class ClearEditText extends AppCompatEditText implements TextWatcher, Vie
     }
 
 
-
     public void inputTypeNumberPrior() {
         this.setRawInputType(Configuration.KEYBOARD_QWERTY);
     }
@@ -149,5 +151,15 @@ public class ClearEditText extends AppCompatEditText implements TextWatcher, Vie
     public void inputTypeEnglish() {
         this.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         this.setImeOptions(EditorInfo.IME_ACTION_DONE);
+    }
+
+    private IClearListen iClearListen;
+
+    public interface IClearListen {
+        public void clearListen();
+    }
+
+    public void setClearListen(IClearListen iClearListen) {
+        this.iClearListen = iClearListen;
     }
 }
