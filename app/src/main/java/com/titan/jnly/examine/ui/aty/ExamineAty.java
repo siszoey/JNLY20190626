@@ -20,12 +20,19 @@ import com.lib.bandaid.arcruntime.core.ToolContainer;
 import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
+import com.lib.bandaid.data.remote.core.NetRequest;
+import com.lib.bandaid.data.remote.core_v1.NetReqEasy;
+import com.lib.bandaid.data.remote.entity.TTResult;
+import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
+import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
 import com.titan.jnly.R;
+import com.titan.jnly.examine.api.ExamineApi;
+import com.titan.jnly.examine.ui.dialog.NviDialog;
 import com.titan.jnly.examine.ui.frame.FrameLayer;
 import com.titan.jnly.invest.ui.frame.FrameQuery;
 import com.titan.jnly.common.tools.ToolClear;
@@ -33,6 +40,8 @@ import com.titan.jnly.common.tools.ToolNavi;
 import com.titan.jnly.common.tools.ToolTrack;
 import com.titan.jnly.common.tools.ZoomLoc;
 import com.titan.jnly.common.tools.ToolQuery;
+
+import java.util.Map;
 
 public class ExamineAty extends BaseMvpCompatAty
         implements PositionUtil.ILocStatus,
@@ -57,7 +66,7 @@ public class ExamineAty extends BaseMvpCompatAty
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_right_search).setVisible(true);
+        menu.findItem(R.id.menu_cloud).setVisible(true);
         return true;
     }
 
@@ -66,7 +75,9 @@ public class ExamineAty extends BaseMvpCompatAty
         int id = item.getItemId();
         if (id == android.R.id.home) {
             drawerLayout.toggle();
-            return true;
+        }
+        if (id == R.id.menu_cloud) {
+            startActivity(new Intent(_context, DataListAty.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -87,7 +98,7 @@ public class ExamineAty extends BaseMvpCompatAty
 
     @Override
     protected void registerEvent() {
-
+        fabAdd.setOnClickListener(this);
     }
 
     @Override
@@ -131,7 +142,7 @@ public class ExamineAty extends BaseMvpCompatAty
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabAdd) {
-            //presenter.
+            NviDialog.newInstance().show(_context);
         }
     }
 

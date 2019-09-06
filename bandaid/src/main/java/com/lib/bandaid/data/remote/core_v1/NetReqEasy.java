@@ -1,7 +1,10 @@
 package com.lib.bandaid.data.remote.core_v1;
 
+import android.content.Context;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.data.remote.core.INetRequest;
 import com.lib.bandaid.data.remote.core.NetRequest;
 import com.lib.bandaid.data.remote.entity.BaseResult;
@@ -27,18 +30,32 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public class NetReqEasy<T extends ITipView> implements INetReqEasy<T> {
+public class NetReqEasy<T extends INetRequest.BaseView> implements INetReqEasy<T> {
 
     protected T view;
     private ConcurrentHashMap<Observable, Disposable> networkMap;
 
-    public NetReqEasy() {
+    public static NetReqEasy create(INetRequest.BaseView view) {
+        return new NetReqEasy().attachView(view);
+    }
+
+    public static NetReqEasy create(Context context) {
+        if (context instanceof BaseMvpCompatAty) {
+            return new NetReqEasy().attachView((BaseMvpCompatAty) context);
+        } else {
+            new Throwable("context not instanceof BaseMvpCompatAty!");
+            return null;
+        }
+    }
+
+
+    private NetReqEasy() {
         networkMap = new ConcurrentHashMap<>();
     }
 
-    @Override
-    public void attachView(T view) {
+    private NetReqEasy attachView(T view) {
         this.view = view;
+        return this;
     }
 
     @Override

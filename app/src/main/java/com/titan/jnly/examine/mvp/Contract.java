@@ -20,9 +20,7 @@ public interface Contract {
 
 
     interface ExamMapView extends INetRequest.BaseView {
-        void getListSuccess(List<Map> list);
 
-        void getListFail(String msg);
     }
 
     interface ExamMapPresenter extends INetRequest.BasePresenter<ExamMapView> {
