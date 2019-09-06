@@ -130,7 +130,9 @@ public class ExamineAty extends BaseMvpCompatAty
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.fabAdd) {
+            //presenter.
+        }
     }
 
     void permissions() {

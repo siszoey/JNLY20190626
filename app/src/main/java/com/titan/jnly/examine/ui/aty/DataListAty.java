@@ -25,7 +25,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.examine.apt.DataListApt;
-import com.titan.jnly.examine.mvp.DataListContract;
+import com.titan.jnly.examine.mvp.Contract;
 import com.titan.jnly.examine.mvp.DataListPresenter;
 import com.titan.jnly.examine.util.ExamineUtil;
 import com.titan.jnly.system.Constant;
@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class DataListAty extends BaseMvpCompatAty<DataListPresenter>
         implements
-        DataListContract.View,
+        Contract.DataListView,
         OnRefreshListener,
         OnLoadMoreListener,
         BaseRecycleAdapter.IViewClickListener<Map> {

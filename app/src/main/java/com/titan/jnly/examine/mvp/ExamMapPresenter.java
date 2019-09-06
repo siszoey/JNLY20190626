@@ -11,26 +11,25 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-public class DataListPresenter extends NetRequest<Contract.DataListView> implements Contract.DataListPresenter {
+public class ExamMapPresenter extends NetRequest<Contract.ExamMapView> implements Contract.ExamMapPresenter {
 
     @Inject
-    public DataListPresenter() {
+    public ExamMapPresenter() {
     }
 
     @Override
-    public void getDataList(Integer num, Integer size, String userId) {
+    public void postDataList(Map map) {
         request(ExamineApi.class, new NetWorkListen<TTResult<Map>>() {
 
             @Override
             public void onSuccess(TTResult<Map> data) {
-                List<Map> list = ObjectUtil.convert(data.getContent().get("rows"), Map.class);
-                view.getListSuccess(list);
+                System.out.println(data);
             }
 
             @Override
             public void onError(int err, String errMsg, Throwable t) {
-                view.getListFail(errMsg);
+                System.out.println(errMsg);
             }
-        }).httpGetList(num, size, userId);
+        }).httpPostList(map);
     }
 }
