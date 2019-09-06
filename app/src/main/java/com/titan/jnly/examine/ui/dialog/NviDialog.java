@@ -86,7 +86,6 @@ public class NviDialog extends BaseDialogFrg
     }
 
     public void queryData() {
-        //String json = "{\"DZBQH\":\"37019101109\", \"UserId\" : \"583cf42d-a31e-4148-aa1f-d1cd24b07e4a\"}";
         Map map = new SimpleMap().push("DZBQH", editText.getText().toString()).push("UserId", userId);
         ((ExamineApi) netReqEasy.request(ExamineApi.class, new NetWorkListen<TTResult<Map>>() {
             @Override

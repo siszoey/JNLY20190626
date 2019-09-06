@@ -1,5 +1,6 @@
 package com.lib.bandaid.data.remote.entity;
 
+import com.lib.bandaid.data.remote.listen.DownWorkListen;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 
 import java.io.File;
@@ -23,6 +24,8 @@ public class DownloadInfo {
     private String downloadStatus;
     private long total;
     private long progress;
+
+    private DownWorkListen listen;
 
     public DownloadInfo(String url) {
         this.url = url;
@@ -117,6 +120,14 @@ public class DownloadInfo {
     public boolean isError() {
         if (DOWNLOAD_ERROR.equals(downloadStatus)) return true;
         return false;
+    }
+
+    public void setListen(DownWorkListen listen) {
+        this.listen = listen;
+    }
+
+    public DownWorkListen getListen() {
+        return this.listen;
     }
 
     @Override

@@ -27,6 +27,7 @@ import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.data.remote.core.DownloadManager;
 import com.lib.bandaid.data.remote.entity.DownloadInfo;
+import com.lib.bandaid.data.remote.listen.DownWorkListen;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
@@ -60,9 +61,8 @@ import java.io.File;
 import java.util.Date;
 
 public class InvestActivity
-        extends BaseMvpCompatAty<InvestAtyPresenter>
-        implements InvestAtyContract.View,
-        PositionUtil.ILocStatus,
+        extends BaseMvpCompatAty
+        implements PositionUtil.ILocStatus,
         View.OnClickListener {
 
 
@@ -76,7 +76,6 @@ public class InvestActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        presenter = new InvestAtyPresenter();
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_menu, "调查管理", Gravity.CENTER);
         initMapWidget();
@@ -226,49 +225,6 @@ public class InvestActivity
                     startActivity(intent);
                 }
             });
-        }
-    }
-
-    public void reqInfo() {
-        presenter.requestInfo(Constant.getUser());
-    }
-
-    @Override
-    public void reqSuccess(UserInfo info) {
-        //更新账户及权限
-        if (info != null) {
-            if (!info.localCheck()) info.setLastLogin(new Date());
-            String md5 = CodeUtil.convertMd5(Constant.getUser().getPwd());
-            info.setPwd(md5);
-            DbManager.createDefault().saveOrUpdate(info);
-            Constant.putUserInfo(info);
-            showLongToast("账号权限更新成功!");
-        }
-        showLoading();
-        //更新字典
-        String path = Config.APP_PATH_DIC.concat(File.separator).concat("dic_new.db");
-        FileUtil.deleteFile(path);
-        DownloadInfo down = new DownloadInfo(Config.BASE_URL.Sync_Dic, path);
-        DownloadManager.getInstance().download(down);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void dic(DownloadInfo info) {
-        if (info.isStart()) {
-            showLoading();
-        }
-        if (info.isComplete()) {
-            String old = Config.APP_DIC_DB_PATH;
-            boolean del = FileUtil.deleteFile(old);
-            if (del) del = FileUtil.rename(info.getFilePath(), old);
-            if (del) showLongToast("字典库更新成功");
-            else showLongToast("字典库更新失败");
-            Constant.reloadSpecies();
-            hideLoading();
-        }
-        if (info.overButUnComplete()) {
-            showLongToast("字典库更新失败");
-            hideLoading();
         }
     }
 }

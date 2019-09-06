@@ -21,8 +21,10 @@ import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
+import com.titan.jnly.common.mvp.DicHandle;
 import com.titan.jnly.common.uitl.NodeIteration;
 import com.titan.jnly.examine.ui.aty.DataListAty;
+import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.system.Constant;
@@ -151,7 +153,7 @@ public class FrameLayer extends BaseMapWidget
             startActivity(new Intent(context, LoginAty.class));
         }
         if (v.getId() == R.id.tvSync) {
-            //((InvestActivity) activity).reqInfo();
+            DicHandle.create(context).reqDic(Constant.getUser());
         }
         if (v.getId() == R.id.tvData) {
             startActivity(new Intent(context, DataListAty.class));
