@@ -25,6 +25,10 @@ public class ImagePagerBean implements Serializable {
         this.mSmallUrl = mUrl;
     }
 
+    public ImagePagerBean(String url) {
+        mUrl = url;
+    }
+
     public ImagePagerBean(String url, String desc, String smallUrl) {
         mUrl = url;
         mDesc = desc;
@@ -62,6 +66,17 @@ public class ImagePagerBean implements Serializable {
         ImagePagerBean bean;
         for (int i = 0; i < files.size(); i++) {
             bean = new ImagePagerBean(files.get(i));
+            mImages.add(bean);
+        }
+        return mImages;
+    }
+
+    public static ArrayList<ImagePagerBean> convert2Uris(List<String> uris) {
+        if (uris == null || uris.size() == 0) return null;
+        ArrayList<ImagePagerBean> mImages = new ArrayList<>();
+        ImagePagerBean bean;
+        for (int i = 0; i < uris.size(); i++) {
+            bean = new ImagePagerBean(uris.get(i));
             mImages.add(bean);
         }
         return mImages;

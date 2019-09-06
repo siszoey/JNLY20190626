@@ -67,9 +67,9 @@ public class ImageViewPager extends AppCompatActivity {
         mImages = (ArrayList<ImagePagerBean>) getIntent().getSerializableExtra(IMAGES_LIST_EXTRA);
         int position = getIntent().getIntExtra(IMAGES_LIST_POSITION_EXTRA, 0);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolBar);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mTvDesc = (TextView) findViewById(R.id.tv_desc);
+        mToolbar =  findViewById(R.id.toolBar);
+        mViewPager =  findViewById(R.id.viewPager);
+        mTvDesc =  findViewById(R.id.tv_desc);
 
         //沉浸式全屏模式
         SystemBarHelper.immersiveStatusBar(this, 0);

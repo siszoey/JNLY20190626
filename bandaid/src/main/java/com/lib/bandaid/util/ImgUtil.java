@@ -11,12 +11,12 @@ import com.lib.bandaid.R;
 public final class ImgUtil {
 
 
-    public static void simpleLoadImg(ImageView view, String localPath) {
+    public static void simpleLoadImg(ImageView view, String uri) {
         if (view == null) return;
         // 在需要重新获取更新的图片时调用
         Context context = view.getContext();
         String updateTime = String.valueOf(System.currentTimeMillis());
-        Glide.with(context).load(localPath).signature(new StringSignature(updateTime)).skipMemoryCache(true).diskCacheStrategy
+        Glide.with(context).load(uri).signature(new StringSignature(updateTime)).skipMemoryCache(true).diskCacheStrategy
                 (DiskCacheStrategy.NONE).error(context.getResources().getDrawable(R.mipmap.ic_pic_dir)).into(view);
     }
 }

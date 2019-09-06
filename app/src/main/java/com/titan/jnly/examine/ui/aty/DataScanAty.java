@@ -2,7 +2,11 @@ package com.titan.jnly.examine.ui.aty;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.camera.lib.widget.ImagePagerBean;
+import com.camera.lib.widget.ImageViewPager;
 import com.lib.bandaid.activity.BaseAppCompatActivity;
 import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
@@ -10,7 +14,10 @@ import com.lib.bandaid.util.DecimalFormats;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.SimpleMap;
+import com.lib.bandaid.widget.collect.image.CollectImgAty;
+import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.lib.bandaid.widget.easyui.convert.Resolution;
+import com.lib.bandaid.widget.easyui.ui.EventImageView;
 import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
@@ -21,6 +28,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +59,32 @@ public class DataScanAty extends BaseAppCompatActivity {
 
     @Override
     protected void registerEvent() {
+        propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
+            @Override
+            public String adapter(Object val) {
 
+                UiXml uiXml = easyUiXml.getUiXml("GSZP");
+                EventImageView view = (EventImageView) uiXml.getView();
+                if (view != null) view.setJson((String) val);
+                List<CollectImgBean> beans = CollectImgBean.convertFromListBean((String) val);
+                if (beans == null || beans.size() == 0) return null;
+                return beans.get(0).getUri();
+            }
+        });
+
+
+        propertyView.setInputFace(new PropertyView.InputFace() {
+            @Override
+            public void input(View v) {
+                if (v instanceof ImageView) {
+                    UiXml uiXml = easyUiXml.getUiXml("GSZP");
+                    String json = ((EventImageView) uiXml.getView()).getJson();
+                    ArrayList<String> uris = CollectImgBean.convertFromListUrl(json);
+                    ArrayList<ImagePagerBean> beans = ImagePagerBean.convert2Uris(uris);
+                    ImageViewPager.start(_activity, beans, 0);
+                }
+            }
+        });
     }
 
     @Override
@@ -83,9 +116,9 @@ public class DataScanAty extends BaseAppCompatActivity {
         initArea(easyUiXml.getUiXml("CUN"));
 
         //树种中文名称赋值
-       // List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
-      //  UiXml item = easyUiXml.getUiXml("SZZWM");
-      //  item.setItemXml(items);
+        // List<ItemXml> items = ObjectUtil.createListTFromList(Constant.getSpecies(), ItemXml.class, new SimpleMap<>().push("code", "code").push("species", "value").toMap());
+        //  UiXml item = easyUiXml.getUiXml("SZZWM");
+        //  item.setItemXml(items);
     }
 
     private void initArea(UiXml uiXml) {

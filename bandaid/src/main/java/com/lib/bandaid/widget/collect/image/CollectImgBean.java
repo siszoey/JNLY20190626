@@ -4,12 +4,14 @@ import com.camera.lib.widget.ImagePagerBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lib.bandaid.rw.file.utils.FileUtil;
+import com.lib.bandaid.util.ObjectUtil;
 
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CollectImgBean implements Serializable {
 
@@ -78,6 +80,38 @@ public class CollectImgBean implements Serializable {
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
+
+    public static ArrayList<String> convertFromListUrl(String json) {
+        List<Map> list = ObjectUtil.convert(json, Map.class);
+        if (list == null || list.size() == 0) return null;
+        String url;
+        Map<String, String> map;
+        ArrayList<String> urls = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            map = list.get(i);
+            if (!map.containsKey("path")) continue;
+            url = map.get("path");
+            urls.add(url);
+        }
+        return urls;
+    }
+
+    public static ArrayList<CollectImgBean> convertFromListBean(String json) {
+        List<Map> list = ObjectUtil.convert(json, Map.class);
+        if (list == null || list.size() == 0) return null;
+        String url;
+        Map<String, String> map;
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            map = list.get(i);
+            if (!map.containsKey("path")) continue;
+            url = map.get("path");
+            urls.add(url);
+        }
+        List temp = CollectImgBean.convertFromList(urls);
+        return new ArrayList<>(temp);
+    }
+
 
     public static ArrayList<CollectImgBean> convertFromJson(String json) {
         Type type = new TypeToken<ArrayList<CollectImgBean>>() {

@@ -81,7 +81,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         ImagePagerBean bean = mImages.get(position);
         final View view = LayoutInflater.from(mContext).inflate(R.layout.text_image_view_pager_item, container, false);
-        PhotoView photoView = (PhotoView) view.findViewById(R.id.pv_image);
+        PhotoView photoView = view.findViewById(R.id.pv_image);
         photoView.enable();
 
         DrawableRequestBuilder<String> thumbnailRequest = Glide
