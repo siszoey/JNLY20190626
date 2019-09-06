@@ -15,7 +15,10 @@ import com.lib.bandaid.widget.squareview.SquareAdapter;
 import com.titan.jnly.R;
 import com.titan.jnly.examine.ui.aty.ExamineAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
+import com.titan.jnly.login.bean.UserInfo;
+import com.titan.jnly.login.ui.dialog.DialogMould;
 import com.titan.jnly.patrol.ui.aty.PatrolActivity;
+import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 
 import java.util.ArrayList;
@@ -65,14 +68,21 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        UserInfo info = Constant.getUserInfo();
         if (position == 0) {
-            startActivity(new Intent(_context, InvestActivity.class));
+            if (info.getUserRoles().trim().equals("调查员")) {
+                startActivity(new Intent(_context, InvestActivity.class));
+            } else if (info.getUserRoles().trim().equals("单位审核员")) {
+                startActivity(new Intent(_context, ExamineAty.class));
+            } else {
+                DialogMould.newInstance().show(_context);
+            }
         } else if (position == 1) {
             startActivity(new Intent(_context, PatrolActivity.class));
         } else if (position == 3) {
             showToast("开发中");
         } else if (position == 4) {
-            startActivity(new Intent(_context, ExamineAty.class));
+            //startActivity(new Intent(_context, ExamineAty.class));
         } else {
             showToast("二期功能，暂未开放");
         }

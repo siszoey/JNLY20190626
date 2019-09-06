@@ -176,8 +176,17 @@ public abstract class BaseDialogFrg extends DialogFragment implements IView {
         if (dialog == null) return;
         Window window = dialog.getWindow();
         WindowManager.LayoutParams lp = getDialog().getWindow().getAttributes();
-        lp.width = (int) (MeasureScreen.getScreenWidth(context) * w);
-        lp.height = (int) (MeasureScreen.getScreenHeight(context) * h);
+
+        if (w < 0) {
+            lp.width = (int) w;
+        } else {
+            lp.width = (int) (MeasureScreen.getScreenWidth(context) * w);
+        }
+        if (h < 0) {
+            lp.height = (int) h;
+        } else {
+            lp.height = (int) (MeasureScreen.getScreenHeight(context) * h);
+        }
         if (window != null) window.setLayout(lp.width, lp.height);
     }
 
