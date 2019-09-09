@@ -3,6 +3,8 @@ package com.titan.jnly.main.ui.aty;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.lib.bandaid.widget.squareview.GridItem;
 import com.lib.bandaid.widget.squareview.LineGridView;
 import com.lib.bandaid.widget.squareview.SquareAdapter;
 import com.titan.jnly.R;
+import com.titan.jnly.common.mvp.DicHandle;
 import com.titan.jnly.examine.ui.aty.ExamineAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
@@ -38,6 +41,22 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
         setContentView(R.layout.main_ui_aty_face_layout);
         //检查更新
         BuglySetting.checkVersion();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.menu_sync_dic).setVisible(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_sync_dic) {
+            DicHandle.create(_context).reqDic(Constant.getUser());
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -69,20 +88,35 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         UserInfo info = Constant.getUserInfo();
+
         if (position == 0) {
-            if (info.getUserRoles().trim().equals("调查员")) {
+           /* if (info.getUserRoles().trim().equals("调查员")) {
                 startActivity(new Intent(_context, InvestActivity.class));
             } else if (info.getUserRoles().trim().equals("单位审核员")) {
                 startActivity(new Intent(_context, ExamineAty.class));
             } else {
                 DialogMould.newInstance().show(_context);
+            }*/
+
+            if (info.getUserRoles().trim().equals("调查员")) {
+                startActivity(new Intent(_context, InvestActivity.class));
+            } else if (info.getUserRoles().trim().contains("调查员")
+                    || info.getUserRoles().trim().contains("审核员")) {
+                DialogMould.newInstance().show(_context);
+            } else if (!info.getUserRoles().trim().contains("调查员")
+                    && info.getUserRoles().trim().contains("审核员")) {
+                startActivity(new Intent(_context, ExamineAty.class));
+            } else {
+                showToast("权限有问题！");
             }
+
         } else if (position == 1) {
             startActivity(new Intent(_context, PatrolActivity.class));
         } else if (position == 3) {
             showToast("开发中");
         } else if (position == 4) {
             //startActivity(new Intent(_context, ExamineAty.class));
+            showToast("二期功能，暂未开放");
         } else {
             showToast("二期功能，暂未开放");
         }

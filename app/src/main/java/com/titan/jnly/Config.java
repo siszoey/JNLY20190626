@@ -4,6 +4,9 @@ import android.os.Environment;
 
 import java.io.File;
 
+/**
+ * 正式环境
+ */
 public final class Config extends Config_pro {
 
     public static String APP_SPATIAL_DIR = "spatial";
