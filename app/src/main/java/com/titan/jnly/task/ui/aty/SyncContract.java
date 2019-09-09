@@ -1,5 +1,6 @@
 package com.titan.jnly.task.ui.aty;
 
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.core.INetRequest;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.titan.jnly.login.bean.User;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public interface SyncContract {
 
-    interface View extends INetRequest.BaseView {
+    interface View extends ITipView {
         void syncSuccess(TTResult<Map> result);
     }
 

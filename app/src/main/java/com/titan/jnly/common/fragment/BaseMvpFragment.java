@@ -4,10 +4,11 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.core.INetRequest;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
-public class BaseMvpFragment<T extends INetRequest.BasePresenter> extends BaseMainFragment implements INetRequest.BaseView {
+public class BaseMvpFragment<T extends INetRequest.BasePresenter> extends BaseMainFragment implements ITipView {
 
     BaseMvpCompatAty attachActivity;
 
@@ -21,39 +22,45 @@ public class BaseMvpFragment<T extends INetRequest.BasePresenter> extends BaseMa
         }
     }
 
+
+    @Override
+    public void showContent() {
+        attachActivity.showContent();
+    }
+
+    @Override
+    public void showNoNetwork() {
+        attachActivity.showNoNetwork();
+    }
+
+    @Override
+    public void showEmpty() {
+        attachActivity.showEmpty();
+    }
+
     @Override
     public void showLoading() {
         attachActivity.showLoading();
     }
 
     @Override
-    public void showLoading(String msg) {
-        attachActivity.showLoading(msg);
+    public void showError() {
+        attachActivity.showError();
     }
 
     @Override
-    public void hideLoading() {
-        attachActivity.hideLoading();
+    public void dialogLoading() {
+        attachActivity.dialogLoading();
     }
 
     @Override
-    public void showSuccess(String message) {
-        attachActivity.showSuccess(message);
+    public void dialogHiding() {
+        attachActivity.dialogHiding();
     }
 
     @Override
-    public void showFail(String message) {
-        attachActivity.showFail(message);
-    }
-
-    @Override
-    public void showNoNet() {
-        attachActivity.showNoNet();
-    }
-
-    @Override
-    public void onRetry() {
-        attachActivity.onRetry();
+    public void showToast(Object o) {
+        attachActivity.showToast(o);
     }
 
     @Override

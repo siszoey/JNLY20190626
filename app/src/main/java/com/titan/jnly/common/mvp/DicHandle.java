@@ -4,8 +4,9 @@ import android.content.Context;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.data.remote.com.NetEasyFactory;
+import com.lib.bandaid.data.remote.com.NetEasyReq;
 import com.lib.bandaid.data.remote.core.DownloadManager;
-import com.lib.bandaid.data.remote.core_v1.NetReqEasy;
 import com.lib.bandaid.data.remote.entity.DownloadInfo;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.DownWorkListen;
@@ -18,9 +19,6 @@ import com.titan.jnly.login.bean.User;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.system.Constant;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.File;
 import java.util.Date;
 
@@ -31,17 +29,17 @@ public class DicHandle {
     }
 
     private BaseMvpCompatAty aty;
-    private NetReqEasy netReqEasy;
+    private NetEasyReq netEasyReq;
 
     private DicHandle(Context context) {
-        netReqEasy = NetReqEasy.create(context);
+        netEasyReq = NetEasyFactory.createEasy(context);
         if (context instanceof BaseMvpCompatAty) {
             aty = (BaseMvpCompatAty) context;
         }
     }
 
     public void reqDic(User user) {
-        ((ApiLogin) netReqEasy.request(ApiLogin.class, new NetWorkListen<TTResult<UserInfo>>() {
+        netEasyReq.request(ApiLogin.class, new NetWorkListen<TTResult<UserInfo>>() {
             @Override
             public void onSuccess(TTResult<UserInfo> data) {
                 UserInfo info = data.getContent();
@@ -54,7 +52,7 @@ public class DicHandle {
                     Constant.putUserInfo(info);
                     aty.showLongToast("账号权限更新成功!");
                 }
-                aty.showLoading();
+                aty.dialogLoading();
                 //更新字典
                 String path = Config.APP_PATH_DIC.concat(File.separator).concat("dic_new.db");
                 FileUtil.deleteFile(path);
@@ -63,7 +61,7 @@ public class DicHandle {
                     @Override
                     public void progress(DownloadInfo info) {
                         if (info.isStart()) {
-                            aty.showLoading();
+                            aty.dialogLoading();
                         }
                         if (info.isComplete()) {
                             String old = Config.APP_DIC_DB_PATH;
@@ -72,11 +70,11 @@ public class DicHandle {
                             if (del) aty.showLongToast("字典库更新成功");
                             else aty.showLongToast("字典库更新失败");
                             Constant.reloadSpecies();
-                            aty.hideLoading();
+                            aty.dialogHiding();
                         }
                         if (info.overButUnComplete()) {
                             aty.showLongToast("字典库更新失败");
-                            aty.hideLoading();
+                            aty.dialogHiding();
                         }
                     }
                 });
@@ -87,6 +85,6 @@ public class DicHandle {
             public void onError(int err, String errMsg, Throwable t) {
                 System.out.println(errMsg);
             }
-        })).httpLogin(user.getName(), user.getPwd());
+        }).httpLogin(user.getName(), user.getPwd());
     }
 }

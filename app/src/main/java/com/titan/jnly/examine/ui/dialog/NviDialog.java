@@ -16,7 +16,8 @@ import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
-import com.lib.bandaid.data.remote.core_v1.NetReqEasy;
+import com.lib.bandaid.data.remote.com.NetEasyFactory;
+import com.lib.bandaid.data.remote.com.NetEasyReq;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
@@ -39,7 +40,7 @@ public class NviDialog extends BaseDialogFrg
         implements View.OnClickListener,
         BaseRecycleAdapter.IViewClickListener<Map> {
 
-    private NetReqEasy netReqEasy;
+    private NetEasyReq netEasyReq;
     private ClearEditText editText;
     private Button btnSearch;
     private RecyclerView rvList;
@@ -73,7 +74,7 @@ public class NviDialog extends BaseDialogFrg
 
     @Override
     protected void initClass() {
-        netReqEasy = NetReqEasy.create(getContext());
+        netEasyReq = NetEasyFactory.createEasy(getContext());
         adapter = new DataListApt(rvList);
         adapter.setIViewClickListener(this);
     }
@@ -87,13 +88,13 @@ public class NviDialog extends BaseDialogFrg
 
     public void queryData() {
         Map map = new SimpleMap().push("DZBQH", editText.getText().toString()).push("UserId", userId);
-        ((ExamineApi) netReqEasy.request(ExamineApi.class, new NetWorkListen<TTResult<Map>>() {
+        netEasyReq.request(ExamineApi.class, new NetWorkListen<TTResult<Map>>() {
             @Override
             public void onSuccess(TTResult<Map> data) {
                 List<Map> list = ObjectUtil.convert(data.getContent().get("rows"), Map.class);
                 adapter.replaceAll(list);
             }
-        })).httpPostList(map);
+        }).httpPostList(map);
     }
 
     @Override

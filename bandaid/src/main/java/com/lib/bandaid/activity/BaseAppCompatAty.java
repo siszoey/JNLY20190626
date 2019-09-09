@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lib.bandaid.R;
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.system.theme.aty.ATEActivity;
 import com.lib.bandaid.system.theme.utils.ATE;
 import com.lib.bandaid.util.DialogFactory;
@@ -27,6 +29,7 @@ import com.lib.bandaid.util.MeasureScreen;
 import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.dialog.i.IView;
 import com.lib.bandaid.widget.layout.RootStatusView;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +39,14 @@ import java.util.List;
  * 精简版
  */
 
-public abstract class BaseAppCompatAty extends ATEActivity implements IView {
+public abstract class BaseAppCompatAty extends ATEActivity implements ITipView {
     protected Context _context;
     protected Activity _activity;
     protected String _titleName;
     protected AppBarLayout _appBarLayout;
     protected Toolbar _toolbar;
     protected TextView _tvToolbarName;
-    protected RootStatusView _frameLayout;
+    protected RootStatusView rootStatusView;
     protected View _contentView;
     protected Button _btnRight;
 
@@ -109,7 +112,7 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
         _appBarLayout = findViewById(R.id._appBarLayout);
         _toolbar = findViewById(R.id._toolbar);
         _tvToolbarName = findViewById(R.id._tvToolbarName);
-        _frameLayout = findViewById(R.id._frameLayout);
+        rootStatusView = findViewById(R.id._frameLayout);
         _btnRight = findViewById(R.id.btnRight);
         initTitle();
     }
@@ -145,9 +148,9 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
     }
 
     public void setContentView(int layoutResID) {
-        _frameLayout.removeAllViews();
+        rootStatusView.removeAllViews();
         _contentView = View.inflate(this, layoutResID, null);
-        _frameLayout.addView(_contentView);
+        rootStatusView.addView(_contentView);
         onContentChanged();
 
         initialize();
@@ -156,9 +159,9 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
     }
 
     public void setContentView(View view) {
-        _frameLayout.removeAllViews();
+        rootStatusView.removeAllViews();
         _contentView = view;
-        _frameLayout.addView(_contentView);
+        rootStatusView.addView(_contentView);
         onContentChanged();
 
         initialize();
@@ -184,36 +187,36 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
 
     //----------------------------------------------------------------------------------------------
     protected void setOnRetryClickListener(View.OnClickListener listener) {
-        _frameLayout.setOnRetryClickListener(listener);
+        rootStatusView.setOnRetryClickListener(listener);
     }
 
     protected void setOnViewStatusChangeListener(RootStatusView.OnViewStatusChangeListener listener) {
-        _frameLayout.setOnViewStatusChangeListener(listener);
+        rootStatusView.setOnViewStatusChangeListener(listener);
     }
 
     @Override
     public void showContent() {
-        _frameLayout.showContent();
+        rootStatusView.showContent();
     }
 
     @Override
     public void showNoNetwork() {
-        _frameLayout.showNoNetwork();
+        rootStatusView.showNoNetwork();
     }
 
     @Override
     public void showEmpty() {
-        _frameLayout.showEmpty();
+        rootStatusView.showEmpty();
     }
 
     @Override
     public void showLoading() {
-        _frameLayout.showLoading();
+        rootStatusView.showLoading();
     }
 
     @Override
     public void showError() {
-        _frameLayout.showError();
+        rootStatusView.showError();
     }
 
     @Override
@@ -226,6 +229,21 @@ public abstract class BaseAppCompatAty extends ATEActivity implements IView {
         DialogFactory.getFactory().dismiss(this);
     }
 
+    @Override
+    public void showToast(Object o) {
+        String msg = o == null ? "" : o.toString();
+        Toast.makeText(_context, msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.bindToLifecycle();
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
     //----------------------------------------------------------------------------------------------
 
     /**

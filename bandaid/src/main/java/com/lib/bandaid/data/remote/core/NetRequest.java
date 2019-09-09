@@ -3,6 +3,7 @@ package com.lib.bandaid.data.remote.core;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 //import com.lib.bandaid.data.remote.entity.BaseResult;
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.entity.BaseResult;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
@@ -28,7 +29,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.BasePresenter<T> {
+public class NetRequest<T extends ITipView> implements INetRequest.BasePresenter<T> {
 
     protected T view;
     private ConcurrentHashMap<Observable, Disposable> networkMap;
@@ -50,12 +51,12 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
 
     @Override
     public <C, R> C request(Class<C> c, NetWorkListen<R> r) {
-        return request(c, r, true);
+        return request(c, true,r);
     }
 
     @Override
-    public <C, R> C request(Class<C> c, NetWorkListen<R> r, boolean isShowLoading) {
-        if (isShowLoading && view != null) view.showLoading();
+    public <C, R> C request(Class<C> c, boolean showLoading, NetWorkListen<R> r) {
+        if (showLoading && view != null) view.dialogLoading();
         C IApi = RetrofitManager.create(c);
         Object o = Proxy.newProxyInstance(c.getClassLoader(), new Class[]{c}, new InvokeRequestHandler<R>(IApi, r));
         return (C) o;
@@ -104,7 +105,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                                 netWorkResult.onSuccess(dataResponse);
                             }
                             if (networkMap.size() == 0) {
-                                if (view != null) view.hideLoading();
+                                if (view != null) view.dialogHiding();
                             }
                         }, throwable -> {
                             networkMap.remove(observable);
@@ -145,7 +146,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                             }
                             throwable.printStackTrace();
                             if (networkMap.size() == 0) {
-                                if (view != null) view.hideLoading();
+                                if (view != null) view.dialogHiding();
                             }
                         });
                 networkMap.put(observable, disposable);
@@ -168,7 +169,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                                 System.out.println(dataResponse);
                             }
                             if (networkMap.size() == 0) {
-                                if (view != null) view.hideLoading();
+                                if (view != null) view.dialogHiding();
                             }
                         }, throwable -> {
                             networkMap.remove(observable);
@@ -210,7 +211,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
                             }
                             throwable.printStackTrace();
                             if (networkMap.size() == 0) {
-                                if (view != null) view.hideLoading();
+                                if (view != null) view.dialogHiding();
                             }
                         });
                 networkMap.put(observable, disposable);
@@ -220,7 +221,7 @@ public class NetRequest<T extends INetRequest.BaseView> implements INetRequest.B
         }
 
         private void loadError(Throwable throwable) {
-            if (view != null) view.hideLoading();
+            if (view != null) view.dialogHiding();
             ToastUtils.showShort("加载失败");
             if (netWorkResult != null) {
                 netWorkResult.onError(-1, throwable.getMessage(), throwable);

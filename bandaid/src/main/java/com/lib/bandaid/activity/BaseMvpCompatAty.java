@@ -2,17 +2,22 @@ package com.lib.bandaid.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.core.INetRequest;
 //import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.util.DialogFactory;
+import com.lib.bandaid.widget.layout.RootStatusView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import javax.inject.Inject;
 
-public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> extends BaseAppCompatActivity implements INetRequest.BaseView {
+public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter>
+        extends BaseAppCompatActivity{
 
     protected MaterialDialog waitDialog;
 
@@ -44,51 +49,51 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter> exte
         if (presenter != null) presenter.detachView();
     }
 
+
+
+    //**********************************************************************************************
+    protected void setOnRetryClickListener(View.OnClickListener listener) {
+        rootStatusView.setOnRetryClickListener(listener);
+    }
+
+    protected void setOnViewStatusChangeListener(RootStatusView.OnViewStatusChangeListener listener) {
+        rootStatusView.setOnViewStatusChangeListener(listener);
+    }
+
+    @Override
+    public void showContent() {
+        rootStatusView.showContent();
+    }
+
+    @Override
+    public void showNoNetwork() {
+        rootStatusView.showNoNetwork();
+    }
+
+    @Override
+    public void showEmpty() {
+        rootStatusView.showEmpty();
+    }
+
     @Override
     public void showLoading() {
-        waitDialog.show();
-        //DialogFactory.getFactory().show(this);
+        rootStatusView.showLoading();
     }
 
     @Override
-    public void showLoading(String msg) {
-        waitDialog.show();
-        //DialogFactory.getFactory().show(this);
+    public void showError() {
+        rootStatusView.showError();
     }
 
     @Override
-    public void hideLoading() {
+    public void dialogLoading() {
+        waitDialog.show();
+    }
+
+    @Override
+    public void dialogHiding() {
         waitDialog.dismiss();
-        //DialogFactory.getFactory().dismiss(this);
     }
+    //**********************************************************************************************
 
-    @Override
-    public void showSuccess(String message) {
-        ToastUtils.showShort(message);
-    }
-
-    @Override
-    public void showFail(String message) {
-        ToastUtils.showShort(message);
-    }
-
-    @Override
-    public void showNoNet() {
-        ToastUtils.showShort("无网络!");
-    }
-
-    @Override
-    public void onRetry() {
-
-    }
-
-    @Override
-    public <T> LifecycleTransformer<T> bindToLife() {
-        return this.bindToLifecycle();
-    }
-
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
 }

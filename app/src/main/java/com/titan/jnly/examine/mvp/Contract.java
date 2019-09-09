@@ -1,5 +1,6 @@
 package com.titan.jnly.examine.mvp;
 
+import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.core.INetRequest;
 import com.titan.jnly.login.bean.UserInfo;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface Contract {
 
-    interface DataListView extends INetRequest.BaseView {
+    interface DataListView extends ITipView {
         void getListSuccess(List<Map> list);
 
         void getListFail(String msg);
