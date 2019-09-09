@@ -54,6 +54,7 @@ android {
                     'src/main/res',
                     'src/main/res/layouts',
                     'src/main/res/layouts/example',
+                    'src/main/res/layouts/common',
                     'src/main/res/layouts/login',
                     'src/main/res/layouts/main',
                     'src/main/res/layouts/invest',

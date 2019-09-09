@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.apt;
+package com.titan.jnly.common.apt;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +25,7 @@ public class FeatureAdapter extends BaseRecycleAdapter<GroupItem<Feature>, BaseV
 
     @Override
     public BaseViewHolder<GroupItem<Feature>> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(parent, R.layout.map_ui_dialog_feature_item);
+        return new Holder(parent, R.layout.com_ui_dialog_feature_item);
     }
 
     class Holder extends BaseViewHolder<GroupItem<Feature>> implements View.OnClickListener {
@@ -51,7 +51,7 @@ public class FeatureAdapter extends BaseRecycleAdapter<GroupItem<Feature>, BaseV
     }
 
     public View initGroupView(int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.map_ui_dialog_feature_head, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.com_ui_dialog_feature_head, null, false);
         TextView name = view.findViewById(R.id.tvName);
         String val = getItem(position).getName();
         name.setText(val);

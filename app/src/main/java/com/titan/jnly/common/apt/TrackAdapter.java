@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.apt;
+package com.titan.jnly.common.apt;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ public class TrackAdapter extends BaseRecycleAdapter<Map, BaseViewHolder<Map>> {
 
     @Override
     public BaseViewHolder<Map> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(parent, R.layout.map_apt_track_layout);
+        return new Holder(parent, R.layout.com_apt_track_layout);
     }
 
     class Holder extends BaseViewHolder<Map> implements View.OnClickListener {

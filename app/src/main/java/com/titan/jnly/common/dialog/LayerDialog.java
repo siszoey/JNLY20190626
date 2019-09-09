@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,7 +11,7 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.apt.LayerAdapter;
+import com.titan.jnly.common.apt.LayerAdapter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,7 +37,7 @@ public class LayerDialog extends BaseDialogFrg
         super.onCreate(savedInstanceState);
         initTitle(null, "选择图层", Gravity.CENTER);
         h = 0.5f;
-        setContentView(R.layout.map_ui_dialog_layer_sel);
+        setContentView(R.layout.com_ui_dialog_layer_sel);
     }
 
     public LayerDialog setCallBack(List<LayerNode> layerNodes,ICallBack iCallBack) {

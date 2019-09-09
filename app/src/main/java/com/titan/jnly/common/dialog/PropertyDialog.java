@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;

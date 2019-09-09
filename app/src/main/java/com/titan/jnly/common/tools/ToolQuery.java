@@ -17,8 +17,8 @@ import com.lib.bandaid.arcruntime.tools.extend.ToolSelExtend;
 import com.lib.bandaid.arcruntime.util.FeatureUtil;
 import com.lib.bandaid.util.VibratorUtil;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.ui.dialog.FeatureDialog;
-import com.titan.jnly.invest.ui.dialog.PropertyDialog;
+import com.titan.jnly.common.dialog.FeatureDialog;
+import com.titan.jnly.common.dialog.PropertyDialog;
 
 import java.util.List;
 import java.util.Map;

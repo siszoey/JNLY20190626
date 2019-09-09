@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.apt;
+package com.titan.jnly.common.apt;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,7 @@ public class LayerAdapter extends BaseRecycleAdapter<LayerNode, BaseViewHolder<L
 
     @Override
     public BaseViewHolder<LayerNode> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(parent, R.layout.map_ui_dialog_layer_item);
+        return new Holder(parent, R.layout.com_ui_dialog_layer_item);
     }
 
     class Holder extends BaseViewHolder<LayerNode> implements View.OnClickListener {

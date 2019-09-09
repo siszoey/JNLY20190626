@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -36,7 +36,7 @@ public class DrawDialog extends BaseDialogFrg implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         iCallBack = (ICallBack) getArguments().getSerializable("callback");
         initTitle(R.drawable.ic_close, "绘制类型", Gravity.CENTER);
-        setContentView(R.layout.map_ui_dialog_draw);
+        setContentView(R.layout.com_ui_dialog_draw);
     }
 
     @Override

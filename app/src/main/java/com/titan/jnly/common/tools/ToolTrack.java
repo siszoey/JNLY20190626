@@ -11,7 +11,7 @@ import com.lib.bandaid.service.bean.Loc;
 import com.lib.bandaid.util.MathUtil;
 import com.lib.bandaid.util.ToastUtil;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.ui.dialog.TrackDialog;
+import com.titan.jnly.common.dialog.TrackDialog;
 
 import java.util.ArrayList;
 import java.util.List;

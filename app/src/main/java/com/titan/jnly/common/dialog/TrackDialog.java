@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,7 +14,7 @@ import com.lib.bandaid.thread.rx.RxSimpleUtil;
 import com.lib.bandaid.util.SimpleMap;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.apt.TrackAdapter;
+import com.titan.jnly.common.apt.TrackAdapter;
 import com.titan.jnly.system.Constant;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class TrackDialog extends BaseDialogFrg implements BaseRecycleAdapter.IVi
         super.onCreate(savedInstanceState);
         initTitle(null, "历史轨迹", Gravity.CENTER);
         //iCallBack = (ICallBack) getArguments().getSerializable("data");
-        setContentView(R.layout.map_dialog_history_track);
+        setContentView(R.layout.com_dialog_history_track);
         w = 0.9f;
     }
 

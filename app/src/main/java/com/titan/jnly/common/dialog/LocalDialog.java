@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -36,7 +36,7 @@ public class LocalDialog extends BaseDialogFrg implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         iCallBack = (ICallBack) getArguments().getSerializable("data");
         initTitle(null, "坐标定位", Gravity.CENTER);
-        setContentView(R.layout.map_ui_dialog_loc);
+        setContentView(R.layout.com_ui_dialog_loc);
         w = 0.85f;
         h = 0.5f;
     }

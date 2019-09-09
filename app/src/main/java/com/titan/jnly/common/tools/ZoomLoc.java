@@ -9,7 +9,7 @@ import com.lib.bandaid.R;
 import com.lib.bandaid.arcruntime.core.ArcMap;
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.lib.bandaid.arcruntime.tools.core.ToolView;
-import com.titan.jnly.invest.ui.dialog.LocalDialog;
+import com.titan.jnly.common.dialog.LocalDialog;
 
 public class ZoomLoc extends BaseTool implements ToolView.ILongClick {
 

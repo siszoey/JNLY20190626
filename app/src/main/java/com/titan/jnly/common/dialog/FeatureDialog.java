@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.ui.dialog;
+package com.titan.jnly.common.dialog;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,7 +15,7 @@ import com.lib.bandaid.adapter.recycle.decoration.SectionDecoration;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.widget.dialog.BaseDialogFrg;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.apt.FeatureAdapter;
+import com.titan.jnly.common.apt.FeatureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class FeatureDialog extends BaseDialogFrg implements BaseRecycleAdapter.I
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(null, title, Gravity.CENTER);
-        setContentView(R.layout.map_ui_dialog_feature_sel);
+        setContentView(R.layout.com_ui_dialog_feature_sel);
     }
 
     public FeatureDialog initData(String title, Map<LayerNode, List<Feature>> data, ICallBack iCallBack) {

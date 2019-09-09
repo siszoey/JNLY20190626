@@ -1,4 +1,4 @@
-package com.titan.jnly.invest.apt;
+package com.titan.jnly.common.apt;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +26,7 @@ public class SelFeatureApt extends BaseRecycleAdapter<FeatureTaker<LayerNode>, B
 
     @Override
     public BaseViewHolder<FeatureTaker<LayerNode>> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(parent, R.layout.map_apt_sel_feature);
+        return new Holder(parent, R.layout.com_apt_sel_feature);
     }
 
     class Holder extends BaseViewHolder<FeatureTaker<LayerNode>> implements View.OnClickListener {

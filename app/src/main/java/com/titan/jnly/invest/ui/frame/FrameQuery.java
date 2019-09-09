@@ -15,8 +15,8 @@ import com.lib.bandaid.arcruntime.util.FeatureTaker;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.layout.RootStatusView;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.apt.SelFeatureApt;
-import com.titan.jnly.invest.ui.dialog.PropertyDialog;
+import com.titan.jnly.common.apt.SelFeatureApt;
+import com.titan.jnly.common.dialog.PropertyDialog;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class FrameQuery extends BaseMapWidget implements View.OnClickListener, B
         w = 0.2f;
         h = 1;
         layoutGravity = EGravity.LEFT_CENTER.getValue();
-        setContentView(R.layout.map_ui_frame_query);
+        setContentView(R.layout.com_ui_frame_query);
     }
 
     @Override
