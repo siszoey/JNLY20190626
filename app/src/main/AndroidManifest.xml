@@ -39,19 +39,22 @@
 
         <activity android:name=".main.ui.aty.MainActivity" />
         <activity android:name=".invest.ui.aty.InvestActivity" />
-        <activity android:name=".patrol.ui.aty.PatrolActivity" />
+        <activity android:name=".patrol.ui.aty.PatrolCureActivity" />
         <activity android:name=".examine.ui.aty.ExamineAty" />
         <activity android:name=".examine.ui.aty.DataListAty" />
         <activity android:name=".examine.ui.aty.DataScanAty" />
         <activity android:name=".vector.ui.aty.SingleEditActivity" />
         <activity android:name=".vector.ui.aty.SimpleAddAty" />
-        <activity android:name=".task.ui.aty.DataSyncAty" />
-        <activity android:name=".task.ui.aty.DataSyncAtyV1" />
+        <activity android:name=".invest.ui.aty.DataSyncAty" />
+        <activity android:name=".invest.ui.aty.DataSyncAtyV1" />
+
+        <activity android:name=".patrol.ui.aty.PatrolListAty" />
+        <activity android:name=".patrol.ui.aty.CureListAty" />
+
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
         <activity android:name="com.lib.bandaid.widget.pick.ImgPickActivity" />
-        <activity android:name=".demo.DemoActivity">
+        <activity android:name=".demo.DemoActivity" />
 
-        </activity>
 
         <activity android:name=".login.ui.aty.LoginAty">
             <intent-filter>

@@ -24,41 +24,28 @@ import com.lib.bandaid.arcruntime.core.WidgetContainer;
 import com.lib.bandaid.arcruntime.layer.project.LayerNode;
 import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
-import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
-import com.lib.bandaid.data.remote.core.DownloadManager;
-import com.lib.bandaid.data.remote.entity.DownloadInfo;
-import com.lib.bandaid.data.remote.listen.DownWorkListen;
-import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.ClickUtil;
-import com.lib.bandaid.util.CodeUtil;
 import com.lib.bandaid.util.PositionUtil;
 import com.lib.bandaid.util.ToastUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
-import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.invest.ui.frame.FrameLayer;
-import com.titan.jnly.invest.ui.frame.FrameQuery;
-import com.titan.jnly.invest.ui.frame.VectorBar;
+import com.titan.jnly.common.frame.FrameQuery;
+import com.titan.jnly.common.frame.VectorBar;
 import com.titan.jnly.common.tools.ToolClear;
 import com.titan.jnly.common.tools.ToolEdit;
 import com.titan.jnly.common.tools.ToolNavi;
 import com.titan.jnly.common.tools.ToolTrack;
 import com.titan.jnly.common.tools.ZoomLoc;
-import com.titan.jnly.system.Constant;
-import com.titan.jnly.task.ui.aty.DataSyncAtyV1;
 import com.titan.jnly.vector.ui.aty.SimpleAddAty;
 import com.titan.jnly.vector.util.MultiCompute;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.File;
-import java.util.Date;
 
 public class InvestActivity
         extends BaseMvpCompatAty

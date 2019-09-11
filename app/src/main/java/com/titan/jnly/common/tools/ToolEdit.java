@@ -2,7 +2,7 @@ package com.titan.jnly.common.tools;
 
 import com.lib.bandaid.arcruntime.tools.core.BaseTool;
 import com.titan.jnly.R;
-import com.titan.jnly.invest.ui.frame.VectorBar;
+import com.titan.jnly.common.frame.VectorBar;
 
 public class ToolEdit extends BaseTool {
 

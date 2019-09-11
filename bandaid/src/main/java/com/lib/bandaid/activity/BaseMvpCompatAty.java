@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
 import com.lib.bandaid.activity.i.ITipView;
+import com.lib.bandaid.data.remote.com.NetEasyFactory;
+import com.lib.bandaid.data.remote.com.NetEasyReq;
 import com.lib.bandaid.data.remote.core.INetRequest;
 //import com.lib.bandaid.utils.DialogFactory;
 import com.lib.bandaid.util.DialogFactory;
@@ -17,17 +19,20 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import javax.inject.Inject;
 
 public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter>
-        extends BaseAppCompatActivity{
+        extends BaseAppCompatActivity {
 
     protected MaterialDialog waitDialog;
 
     @Inject
     protected T presenter;
 
+    protected NetEasyReq netEasyReq;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         waitDialog = DialogFactory.createDialogUnCancel(this);
+        netEasyReq = NetEasyFactory.createEasy(this);
         attachView();
     }
 
@@ -36,6 +41,7 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter>
     protected void onDestroy() {
         super.onDestroy();
         detachView();
+        if (netEasyReq != null) netEasyReq.detachView();
     }
 
     private void attachView() {
@@ -48,7 +54,6 @@ public abstract class BaseMvpCompatAty<T extends INetRequest.BasePresenter>
     private void detachView() {
         if (presenter != null) presenter.detachView();
     }
-
 
 
     //**********************************************************************************************

@@ -15,6 +15,10 @@ import java.util.Map;
 
 public class SimpleMap<K, V> extends LinkedHashMap<K, V> implements Serializable {
 
+    public static SimpleMap create() {
+        return new SimpleMap();
+    }
+
 
     @Override
     public V put(K key, V value) {

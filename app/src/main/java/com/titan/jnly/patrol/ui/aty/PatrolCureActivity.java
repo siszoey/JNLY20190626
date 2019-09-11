@@ -1,4 +1,4 @@
-package com.titan.jnly.examine.ui.aty;
+package com.titan.jnly.patrol.ui.aty;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,22 +22,22 @@ import com.lib.bandaid.arcruntime.tools.ZoomIn;
 import com.lib.bandaid.arcruntime.tools.ZoomOut;
 import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
+import com.lib.bandaid.util.ClickUtil;
 import com.lib.bandaid.util.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
 import com.titan.jnly.R;
-import com.titan.jnly.examine.ui.dialog.NviDialog;
-import com.titan.jnly.examine.ui.frame.FrameLayer;
 import com.titan.jnly.common.frame.FrameQuery;
 import com.titan.jnly.common.tools.ToolClear;
 import com.titan.jnly.common.tools.ToolNavi;
 import com.titan.jnly.common.tools.ToolTrack;
 import com.titan.jnly.common.tools.ZoomLoc;
+import com.titan.jnly.patrol.ui.dialog.SearchDialog;
+import com.titan.jnly.patrol.ui.frame.FrameLayer;
 import com.titan.jnly.common.tools.ToolQuery;
 
-public class ExamineAty extends BaseMvpCompatAty
-        implements PositionUtil.ILocStatus,
-        View.OnClickListener {
+public class PatrolCureActivity extends BaseMvpCompatAty
+        implements PositionUtil.ILocStatus, View.OnClickListener {
 
     CustomDrawerLayout drawerLayout;
     LinearLayout menuRight;
@@ -49,16 +49,16 @@ public class ExamineAty extends BaseMvpCompatAty
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTitle(R.drawable.ic_menu, "调查审核", Gravity.CENTER);
+        initTitle(R.drawable.ic_menu, "巡查养护", Gravity.CENTER);
         initMapWidget();
-        setContentView(R.layout.exam_ui_aty_main_layout);
+        setContentView(R.layout.patrol_ui_aty_patrol_layout);
         permissions();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_cloud).setVisible(true);
+        menu.findItem(R.id.menu_right_search).setVisible(true);
         return true;
     }
 
@@ -67,9 +67,7 @@ public class ExamineAty extends BaseMvpCompatAty
         int id = item.getItemId();
         if (id == android.R.id.home) {
             drawerLayout.toggle();
-        }
-        if (id == R.id.menu_cloud) {
-            startActivity(new Intent(_context, DataListAty.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -134,7 +132,8 @@ public class ExamineAty extends BaseMvpCompatAty
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fabAdd) {
-            NviDialog.newInstance().show(_context);
+            if (ClickUtil.isFastDoubleClick(R.id.fabAdd)) return;
+            SearchDialog.newInstance().show(_context);
         }
     }
 
