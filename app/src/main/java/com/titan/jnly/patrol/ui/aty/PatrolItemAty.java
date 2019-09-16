@@ -2,6 +2,8 @@ package com.titan.jnly.patrol.ui.aty;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.rw.file.xml.IoXml;
@@ -10,10 +12,11 @@ import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.R;
 
-public class PatrolItemAty extends BaseMvpCompatAty {
+public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListener {
 
-    PropertyView propertyView;
-    EasyUiXml easyUiXml;
+    private PropertyView propertyView;
+    private EasyUiXml easyUiXml;
+    private Button btnExit, btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +28,14 @@ public class PatrolItemAty extends BaseMvpCompatAty {
     @Override
     protected void initialize() {
         propertyView = $(R.id.propertyView);
+        btnExit = $(R.id.btnExit);
+        btnSubmit = $(R.id.btnSubmit);
     }
 
     @Override
     protected void registerEvent() {
-
+        btnExit.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -46,5 +52,15 @@ public class PatrolItemAty extends BaseMvpCompatAty {
 
             }
         }).resolutionData(easyUiXml);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btnExit){
+
+        }
+        if(v.getId()==R.id.btnSubmit){
+            propertyView.verifyForm();
+        }
     }
 }

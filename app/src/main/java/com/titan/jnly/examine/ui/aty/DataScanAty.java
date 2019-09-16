@@ -42,9 +42,7 @@ public class DataScanAty extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "古树信息", Gravity.CENTER);
-        if (getIntent() != null) {
-            property = OSerial.getData(getIntent(), Map.class);
-        }
+        if (getIntent() != null) property = OSerial.getData(getIntent(), Map.class);
         propertyView = new PropertyView(_context);
         setContentView(propertyView);
     }

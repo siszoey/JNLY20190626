@@ -140,7 +140,7 @@ public class SearchDialog extends BaseDialogFrg
                     }).show();*/
         } else {
             Intent intent = new Intent(context, DataScanAty.class);
-            intent.putExtra("data", new OSerial<>(data));
+            OSerial.putSerial(intent, data);
             startActivity(intent);
         }
     }
