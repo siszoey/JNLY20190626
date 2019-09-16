@@ -6,6 +6,7 @@ public class PageParam {
     private int pageNum = 1;
     private Type type = Type.NEW;
 
+
     public static PageParam create() {
         return new PageParam();
     }
@@ -77,5 +78,18 @@ public class PageParam {
     public enum Type {
         NEW,
         MORE
+    }
+
+
+    //----------------------------------------------------------------------------------------------
+    private SimpleMap condition = SimpleMap.create();
+
+    public PageParam pushOtherParam(String key, Object val) {
+        condition.push(key, val);
+        return this;
+    }
+
+    public <T> T getOtherParam(String key) {
+        return (T) condition.get(key);
     }
 }

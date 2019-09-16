@@ -31,6 +31,7 @@ import com.titan.jnly.examine.api.ExamineApi;
 import com.titan.jnly.examine.ui.aty.DataScanAty;
 import com.titan.jnly.examine.util.ExamineUtil;
 import com.titan.jnly.patrol.apt.DataListApt;
+import com.titan.jnly.patrol.ui.aty.CureListAty;
 import com.titan.jnly.patrol.ui.aty.PatrolListAty;
 import com.titan.jnly.system.Constant;
 
@@ -100,10 +101,14 @@ public class SearchDialog extends BaseDialogFrg
 
     @Override
     public void onClick(View view, final Map data, int position) {
-        if (view.getId() == R.id.ivAdd) {
-            new ATEDialog.Theme_Alert(context)
+        //巡查
+        if (view.getId() == R.id.ivPatrol) {
+            Intent intent = new Intent(context, PatrolListAty.class);
+            OSerial.putSerial(intent, data);
+            startActivity(intent);
+            /*new ATEDialog.Theme_Alert(context)
                     .title("提示")
-                    .content("确认添加养护巡查信息？")
+                    .content("确认添加巡查信息？")
                     .positiveText("添加")
                     .negativeText("取消")
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -113,7 +118,26 @@ public class SearchDialog extends BaseDialogFrg
                             OSerial.putSerial(intent, data);
                             startActivity(intent);
                         }
-                    }).show();
+                    }).show();*/
+        }
+        //养护
+        else if (view.getId() == R.id.ivCure) {
+            Intent intent = new Intent(context, CureListAty.class);
+            OSerial.putSerial(intent, data);
+            startActivity(intent);
+           /* new ATEDialog.Theme_Alert(context)
+                    .title("提示")
+                    .content("确认添加养护信息？")
+                    .positiveText("添加")
+                    .negativeText("取消")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Intent intent = new Intent(context, CureListAty.class);
+                            OSerial.putSerial(intent, data);
+                            startActivity(intent);
+                        }
+                    }).show();*/
         } else {
             Intent intent = new Intent(context, DataScanAty.class);
             intent.putExtra("data", new OSerial<>(data));

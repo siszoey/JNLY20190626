@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EasyUiXml>
+    <name>养护信息</name>
+    <alias>养护信息</alias>
+    <uiXml>
+        <UiXml>
+            <alias>电子标签号</alias>
+            <code>DZBQH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^\d{11}$</regex>
+                <msg>电子标签号必须为11位!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>古树编号</alias>
+            <code>GSBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <inputType>number</inputType>
+        </UiXml>
+        <UiXml>
+            <alias>树种中文名称</alias>
+            <code>SZZWM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
+            <status>single</status>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>县（市、区）</alias>
+            <code>XIAN</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
+            <status>single</status>
+            <itemFrom>other</itemFrom>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>乡镇(街道)</alias>
+            <code>XIANG</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
+            <status>single</status>
+            <itemFrom>other</itemFrom>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>村（居委会）</alias>
+            <code>CUN</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>dialog</uiType>
+            <status>single</status>
+            <itemFrom>other</itemFrom>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>真实树龄</alias>
+            <code>ZSSL</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <visible>false</visible>
+        </UiXml>
+        <UiXml>
+            <alias>生长势</alias>
+            <code>SZS</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <itemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">1</code>
+                    <value>正常</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">2</code>
+                    <value>衰弱</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">3</code>
+                    <value>濒危</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">4</code>
+                    <value>死亡</value>
+                </ItemXml>
+            </itemXml>
+            <status>single</status>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>生长环境</alias>
+            <code>SZHJ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <itemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">1</code>
+                    <value>好</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">2</code>
+                    <value>中</value>
+                </ItemXml>
+                <ItemXml>
+                    <checked>false</checked>
+                    <code class="string">3</code>
+                    <value>差</value>
+                </ItemXml>
+            </itemXml>
+            <status>single</status>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>补水与排水(限200字)</alias>
+            <code>BSPS</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>有害生物防治(限200字)</alias>
+            <code>YHSWFZ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>土壤管理(限200字)</alias>
+            <code>TRGL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>树体保护(限200字)</alias>
+            <code>STBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>环境改良(限200字)</alias>
+            <code>HJGL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>施肥(限200字)</alias>
+            <code>SHIFEI</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>养护照片</alias>
+            <code>MaintainImgs</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>img</uiType>
+        </UiXml>
+        <UiXml>
+            <alias>养护单位</alias>
+            <code>MaintainDep</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>养护员</alias>
+            <code>MaintainUser</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>养护时间</alias>
+            <code>MaintainDate</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+    </uiXml>
+</EasyUiXml>

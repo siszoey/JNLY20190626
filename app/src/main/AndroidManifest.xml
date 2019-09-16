@@ -49,7 +49,9 @@
         <activity android:name=".invest.ui.aty.DataSyncAtyV1" />
 
         <activity android:name=".patrol.ui.aty.PatrolListAty" />
+        <activity android:name=".patrol.ui.aty.PatrolItemAty" />
         <activity android:name=".patrol.ui.aty.CureListAty" />
+        <activity android:name=".patrol.ui.aty.CureItemAty" />
 
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
         <activity android:name="com.lib.bandaid.widget.pick.ImgPickActivity" />

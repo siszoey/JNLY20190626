@@ -1,6 +1,7 @@
 package com.lib.bandaid.widget.easyui.ui_v1;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,12 @@ public class PropertyView extends ScrollView {
 
     public PropertyView(Context context) {
         super(context);
+        this.context = context;
+        init();
+    }
+
+    public PropertyView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         this.context = context;
         init();
     }

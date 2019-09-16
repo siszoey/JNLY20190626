@@ -108,16 +108,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:text="详情" />
+            android:text="古树详情" />
 
     </LinearLayout>
 
     <View style="@style/h_line" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvList"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="1">
+
+        <com.titan.jnly.common.widget.ComRefreshHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

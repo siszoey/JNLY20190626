@@ -29,7 +29,7 @@ public class DataListApt extends BaseRecycleAdapter<Map, BaseViewHolder<Map>> {
     class Holder extends BaseViewHolder<Map> implements View.OnClickListener {
 
         TextView tvIndex, tvNum, tvOrder, tvName, tvDate, tvAge;
-        ImageView ivAdd;
+        ImageView ivPatrol,ivCure;
 
         public Holder(ViewGroup parent, int resId) {
             super(parent, resId);
@@ -40,11 +40,13 @@ public class DataListApt extends BaseRecycleAdapter<Map, BaseViewHolder<Map>> {
             tvName = $(R.id.tvName);
             tvDate = $(R.id.tvDate);
             tvAge = $(R.id.tvAge);
-            ivAdd = $(R.id.ivAdd);
+            ivPatrol = $(R.id.ivPatrol);
+            ivCure = $(R.id.ivCure);
 
 
             itemView.setOnClickListener(this);
-            ivAdd.setOnClickListener(this);
+            ivPatrol.setOnClickListener(this);
+            ivCure.setOnClickListener(this);
         }
 
         @Override

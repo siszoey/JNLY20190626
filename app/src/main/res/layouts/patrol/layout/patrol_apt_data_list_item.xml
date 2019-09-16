@@ -112,11 +112,18 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/ivAdd"
+            android:id="@+id/ivCure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_flower_gray" />
+            android:src="@drawable/ic_cure_add" />
+
+        <ImageView
+            android:id="@+id/ivPatrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_patrol_add" />
 
     </LinearLayout>
 

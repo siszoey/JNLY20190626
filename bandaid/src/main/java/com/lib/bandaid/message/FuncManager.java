@@ -2,7 +2,7 @@ package com.lib.bandaid.message;
 
 import android.text.TextUtils;
 
-import com.zy.foxgis.common.util.SoftHashMap;
+import com.lib.bandaid.util.SoftHashMap;
 
 
 public class FuncManager {
