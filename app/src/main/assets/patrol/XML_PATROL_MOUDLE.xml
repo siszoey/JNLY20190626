@@ -263,8 +263,6 @@
             <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
-                <!--<regex>^-?((0|1?[0-7]?[0-9]?)(([.][0-9]{1,16})?)|180(([.][0]{1,16})?))$</regex>-->
-                <!--<regex>^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\-,;°度](\d|[0-5]\d)[s\-,;′分](\d|[0-5]\d)(\.\d{1,2})?[s\-,;″秒]?$)</regex>-->
                 <regex>
                     ^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
                 </regex>
@@ -279,8 +277,6 @@
             <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
-                <!--<regex>^-?((0|[1-8]?[0-9]?)(([.][0-9]{1,16})?)|90(([.][0]{1,16})?))$</regex>-->
-                <!--<regex>^[EW]?((\d|[1-8]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{1,2})?[s\″]?$)</regex>-->
                 <regex>^[EW]?((\d|[1-8]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
                 </regex>
                 <msg>请输入正确的纬度!</msg>
@@ -290,6 +286,11 @@
             <alias>巡查问题(限500字)</alias>
             <code>PatrolContent</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>巡查信息级别</alias>
