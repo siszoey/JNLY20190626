@@ -8,6 +8,7 @@
             <code>DZBQH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <inputType>number</inputType>
+            <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^\d{11}$</regex>
@@ -19,6 +20,7 @@
             <code>GSBH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <inputType>number</inputType>
+            <readonly>true</readonly>
         </UiXml>
         <UiXml>
             <alias>树种中文名称</alias>
@@ -26,6 +28,7 @@
             <dataType class="java-class">java.lang.String</dataType>
             <uiType>dialog</uiType>
             <status>single</status>
+            <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -33,12 +36,13 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
-            <alias>县（市、区）</alias>
+            <alias>县(市、区)</alias>
             <code>XIAN</code>
             <dataType class="java-class">java.lang.String</dataType>
             <uiType>dialog</uiType>
             <status>single</status>
             <itemFrom>other</itemFrom>
+            <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -52,6 +56,7 @@
             <uiType>dialog</uiType>
             <status>single</status>
             <itemFrom>other</itemFrom>
+            <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -59,12 +64,13 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
-            <alias>村（居委会）</alias>
+            <alias>村(居委会)</alias>
             <code>CUN</code>
             <dataType class="java-class">java.lang.String</dataType>
             <uiType>dialog</uiType>
             <status>single</status>
             <itemFrom>other</itemFrom>
+            <readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
@@ -75,7 +81,7 @@
             <alias>真实树龄</alias>
             <code>ZSSL</code>
             <dataType class="java-class">java.lang.Double</dataType>
-            <visible>false</visible>
+            <readonly>true</readonly>
         </UiXml>
         <UiXml>
             <alias>生长势</alias>
@@ -139,34 +145,95 @@
             </VerifyXml>
         </UiXml>
         <UiXml>
+            <alias>经度</alias>
+            <code>LON</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <inputType>numPrior</inputType>
+            <readonly>true</readonly>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <!--<regex>^-?((0|1?[0-7]?[0-9]?)(([.][0-9]{1,16})?)|180(([.][0]{1,16})?))$</regex>-->
+                <!--<regex>^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\-,;°度](\d|[0-5]\d)[s\-,;′分](\d|[0-5]\d)(\.\d{1,2})?[s\-,;″秒]?$)</regex>-->
+                <regex>
+                    ^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
+                </regex>
+                <msg>请输入正确的经度!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
+            <alias>纬度</alias>
+            <code>LAT</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <inputType>numPrior</inputType>
+            <readonly>true</readonly>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <!--<regex>^-?((0|[1-8]?[0-9]?)(([.][0-9]{1,16})?)|90(([.][0]{1,16})?))$</regex>-->
+                <!--<regex>^[EW]?((\d|[1-8]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{1,2})?[s\″]?$)</regex>-->
+                <regex>^[EW]?((\d|[1-8]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
+                </regex>
+                <msg>请输入正确的纬度!</msg>
+            </VerifyXml>
+        </UiXml>
+        <UiXml>
             <alias>补水与排水(限200字)</alias>
             <code>BSPS</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>有害生物防治(限200字)</alias>
             <code>YHSWFZ</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>土壤管理(限200字)</alias>
             <code>TRGL</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>树体保护(限200字)</alias>
             <code>STBH</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>环境改良(限200字)</alias>
             <code>HJGL</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>施肥(限200字)</alias>
             <code>SHIFEI</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>养护照片</alias>
@@ -178,16 +245,34 @@
             <alias>养护单位</alias>
             <code>MaintainDep</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>养护员</alias>
             <code>MaintainUser</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>养护时间</alias>
             <code>MaintainDate</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+            <VerifyXml>
+                <canNull>false</canNull>
+                <regex>^(?=.*\S).+$</regex>
+                <msg>不能为空!</msg>
+            </VerifyXml>
         </UiXml>
     </uiXml>
 </EasyUiXml>

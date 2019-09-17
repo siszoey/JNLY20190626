@@ -82,7 +82,9 @@ public final class JsonUtil {
     }
 
     public static <T> T convertO(Object obj, Class clazz) {
+        if (obj instanceof String && clazz == String.class) return (T) obj;
         String json = obj2String(obj);
+        if (clazz == String.class) return (T) json;
         boolean isBadJson = isBadJson(json);
         if (isBadJson) return null;
         Boolean isJsonObj = isJsonObj(json);

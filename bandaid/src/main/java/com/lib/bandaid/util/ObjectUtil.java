@@ -90,7 +90,7 @@ public final class ObjectUtil {
             }
         } catch (Exception e) {
             o = null;
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return o;
     }

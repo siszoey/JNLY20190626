@@ -3,7 +3,10 @@ package com.titan.jnly.patrol.api;
 import com.lib.bandaid.data.remote.api.annotation.BaseUrl;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.titan.jnly.Config;
+import com.titan.jnly.patrol.bean.CureModel;
+import com.titan.jnly.patrol.bean.PatrolModel;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -26,5 +29,11 @@ public interface IPatrolCure {
                                               @Query("pageNumber") Integer number,
                                               @Query("pageSize") Integer size);
 
+    @POST("api/XHGL/PatrolRecord/Upload")
+    Observable<TTResult<Map>> httpPostPatrolItem(@Body List<PatrolModel> model);
+
+
+    @POST("api/XHGL/MaintainRecord/Upload")
+    Observable<TTResult<Map>> httpPostCureItem(@Body List<CureModel> model);
 
 }

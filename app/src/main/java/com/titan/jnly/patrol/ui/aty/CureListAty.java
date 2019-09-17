@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
@@ -18,6 +19,9 @@ import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.PageParam;
 import com.lib.bandaid.util.StringUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.examine.ui.aty.DataScanAty;
 import com.titan.jnly.patrol.api.IPatrolCure;
@@ -25,7 +29,7 @@ import com.titan.jnly.patrol.api.IPatrolCure;
 import java.util.List;
 import java.util.Map;
 
-public class CureListAty extends BaseMvpCompatAty implements View.OnClickListener {
+public class CureListAty extends BaseMvpCompatAty implements View.OnClickListener, OnRefreshListener, OnLoadMoreListener {
 
     protected Map treeData;
     private TextView tvNum, tvOrder, tvName, tvDate, tvAge, tvDetail;
@@ -53,6 +57,7 @@ public class CureListAty extends BaseMvpCompatAty implements View.OnClickListene
         int id = item.getItemId();
         if (id == R.id.menu_right_add) {
             Intent intent = new Intent(_context, CureItemAty.class);
+            OSerial.putSerial(intent, treeData);
             startActivity(intent);
             return true;
         }
@@ -75,6 +80,9 @@ public class CureListAty extends BaseMvpCompatAty implements View.OnClickListene
     @Override
     protected void registerEvent() {
         tvDetail.setOnClickListener(this);
+
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -118,5 +126,17 @@ public class CureListAty extends BaseMvpCompatAty implements View.OnClickListene
                 System.out.println(list);
             }
         }).httpGetCureList(eleCode, pageParam.getNum(), pageParam.getSize());
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        pageParam.New();
+        queryData();
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        pageParam.next();
+        queryData();
     }
 }

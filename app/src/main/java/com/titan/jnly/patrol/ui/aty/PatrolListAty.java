@@ -61,6 +61,7 @@ public class PatrolListAty extends BaseMvpCompatAty implements View.OnClickListe
         int id = item.getItemId();
         if (id == R.id.menu_right_add) {
             Intent intent = new Intent(_context, PatrolItemAty.class);
+            OSerial.putSerial(intent, treeData);
             startActivity(intent);
             return true;
         }

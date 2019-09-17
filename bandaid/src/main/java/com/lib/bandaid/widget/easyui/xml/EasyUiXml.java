@@ -60,6 +60,15 @@ public class EasyUiXml implements Serializable {
         return null;
     }
 
+    public UiXml getUiXmlByAlias(String alias) {
+        if (uiXml == null) return null;
+        for (UiXml ui : uiXml) {
+            if (ui == null) continue;
+            if (ui.getAlias() != null && ui.getAlias().equals(alias)) return ui;
+        }
+        return null;
+    }
+
     public void setUiXml(List<UiXml> uiXml) {
         this.uiXml = uiXml;
     }
