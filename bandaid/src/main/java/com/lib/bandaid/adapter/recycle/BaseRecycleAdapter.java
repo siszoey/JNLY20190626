@@ -423,7 +423,8 @@ public abstract class BaseRecycleAdapter<M, H extends BaseViewHolder<M>> extends
      * @param data 要前置的数据
      */
     public void preposeItem(M data) {
-        dataList.add(0, data);
+        //dataList.add(0, data);
+        insertItem(0,data);
     }
 
     /**

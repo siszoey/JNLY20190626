@@ -16,8 +16,10 @@ import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
 import com.lib.bandaid.data.remote.entity.TTFileResult;
+import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.data.remote.utils.OkHttp3Util;
+import com.lib.bandaid.message.FuncManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.imp.ServiceLocation;
@@ -63,14 +65,20 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
     private EasyUiXml easyUiXml;
     private PropertyView propertyView;
     private Button btnExit, btnSubmit;
-    private String uuid = UUIDTool.get32UUID();
     private String userId = Constant.getUserInfo().getId();
+    private String uuid;
+    private boolean isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "养护信息", Gravity.CENTER);
-        if (getIntent() != null) treeData = OSerial.getData(getIntent(), Map.class);
+        if (getIntent() != null) {
+            treeData = OSerial.getData(getIntent(), Map.class);
+            isEdit = treeData.get("IS_EDIT") == null ? false : true;
+            if (isEdit) uuid = (String) treeData.get("Id");
+            else uuid = UUIDTool.get36UUID();
+        }
         setContentView(R.layout.patrol_ui_aty_cure_add_layout);
     }
 
@@ -89,7 +97,12 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
         propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
             public String adapter(Object val) {
-                return null;
+                UiXml uiXml = easyUiXml.getUiXmlByAlias("养护照片");
+                EventImageView view = (EventImageView) uiXml.getView();
+                if (view != null) view.setJson((String) val);
+                List<CollectImgBean> beans = CollectImgBean.convertFromJson((String) val);
+                if (beans == null || beans.size() == 0) return null;
+                return beans.get(0).getUri();
             }
         });
         propertyView.setInputFace(new PropertyView.InputFace() {
@@ -162,7 +175,7 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
         UiXml user = easyUiXml.getUiXmlByAlias("养护员");
         date.setValue(DateUtil.getCurrentDateTime());
         user.setValue(Constant.getUserInfo().getName());
-        dep.setValue(Constant.getUserInfo().getUserJurs());
+        //dep.setValue(Constant.getUserInfo().getUserJurs());
         //------------------------------------------------------------------------------------------
         UiXml lon = easyUiXml.getUiXml("LON");
         UiXml lat = easyUiXml.getUiXml("LAT");
@@ -216,24 +229,31 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
      */
     void syncFile(Map map) {
         String fileJson = (String) map.get("MaintainImgs");
-        List<File> files = CollectImgBean.obtainFiles(fileJson);
-        if (ObjectUtil.isEmpty(files)) {
+        List<CollectImgBean> beans = ObjectUtil.convert(fileJson, CollectImgBean.class);
+        if (ObjectUtil.isEmpty(beans)) {
             showLongToast("请上传图片！");
             return;
         }
-        MultipartBody body;
+
         List<TTFileResult> results = new ArrayList<>();
-        for (File file : files) {
-            body = OkHttp3Util.fileBody(file);
-            netEasyReq.request(ApiFileSync.class, new NetWorkListen<TTFileResult>() {
-                @Override
-                public void onSuccess(TTFileResult data) {
-                    results.add(data);
-                    if (results.size() == files.size()) {
-                        syncData(results);
+        for (CollectImgBean bean : beans) {
+            if (bean.isLocal()) {
+                netEasyReq.request(ApiFileSync.class, new NetWorkListen<TTFileResult>() {
+                    @Override
+                    public void onSuccess(TTFileResult data) {
+                        results.add(data);
+                        if (results.size() == beans.size()) {
+                            syncData(results);
+                        }
                     }
+                }).httpFileSync(bean.getMultipartBody());
+            }else {
+                TTFileResult data = ObjectUtil.convert(bean.getTag(), TTFileResult.class);
+                results.add(data);
+                if (results.size() == beans.size()) {
+                    syncData(results);
                 }
-            }).httpFileSync(body);
+            }
         }
     }
 
@@ -241,7 +261,7 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
         CureModel model = new CureModel();
         model.setUserId(userId);
         Map map = easyUiXml.getFormMap();
-
+        map.put("Id", uuid);
         ComplexTextView lonView = propertyView.getViewByKey("LON");
         ComplexTextView latView = propertyView.getViewByKey("LAT");
         map.put("LON", CustomUtil._60To10(lonView.getText()));
@@ -251,13 +271,19 @@ public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListene
         model.setMaintainImgs(fileResult);
 
         List<CureModel> param = new SimpleList<>().push(model);
-        String json = ObjectUtil.convert(param,String.class);
+        String json = ObjectUtil.convert(param, String.class);
         System.out.println(json);
 
-        netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTFileResult>() {
+        netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTResult>() {
             @Override
-            public void onSuccess(TTFileResult data) {
-                System.out.println(data);
+            public void onSuccess(TTResult data) {
+                showLongToast("提交成功！");
+                finish();
+                if(isEdit) {
+                    FuncManager.getInstance().invokeFunc(CureListAty.FUNC_CURE_EDIT, model);
+                }else {
+                    FuncManager.getInstance().invokeFunc(CureListAty.FUNC_CURE_ADD, model);
+                }
             }
         }).httpPostCureItem(param);
     }

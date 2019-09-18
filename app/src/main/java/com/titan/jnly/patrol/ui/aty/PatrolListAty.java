@@ -11,9 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
+import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
+import com.lib.bandaid.message.FuncManager;
+import com.lib.bandaid.message.FuncWithParamNoResult;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.PageParam;
@@ -26,6 +32,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.titan.jnly.R;
 import com.titan.jnly.examine.ui.aty.DataScanAty;
 import com.titan.jnly.patrol.api.IPatrolCure;
+import com.titan.jnly.patrol.apt.PatrolListApt;
+import com.titan.jnly.patrol.bean.PatrolModel;
+import com.titan.jnly.patrol.util.DataConvertUtil;
+import com.titan.jnly.system.Constant;
 
 import java.util.List;
 import java.util.Map;
@@ -33,11 +43,16 @@ import java.util.Map;
 /**
  * 养护巡查业务列表
  */
-public class PatrolListAty extends BaseMvpCompatAty implements View.OnClickListener, OnRefreshListener, OnLoadMoreListener {
+public class PatrolListAty extends BaseMvpCompatAty
+        implements View.OnClickListener,
+        OnRefreshListener,
+        OnLoadMoreListener,
+        BaseRecycleAdapter.IViewClickListener<PatrolModel> {
 
     protected Map treeData;
     private TextView tvNum, tvOrder, tvName, tvDate, tvAge, tvDetail;
     private RecyclerView rvList;
+    private PatrolListApt patrolListApt;
     private SmartRefreshLayout swipeLayout;
     private PageParam pageParam = PageParam.create();
 
@@ -87,10 +102,14 @@ public class PatrolListAty extends BaseMvpCompatAty implements View.OnClickListe
 
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setOnLoadMoreListener(this);
+
+        dispatchFunc();
     }
 
     @Override
     protected void initClass() {
+        patrolListApt = new PatrolListApt(rvList);
+        patrolListApt.setIViewClickListener(this);
         treeInfo();
         queryData();
     }
@@ -138,24 +157,92 @@ public class PatrolListAty extends BaseMvpCompatAty implements View.OnClickListe
         netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTResult<Map>>() {
             @Override
             public void onSuccess(TTResult<Map> data) {
-                List<Map> list = ObjectUtil.convert(data.getContent().get("rows"), Map.class);
+                List<PatrolModel> list = ObjectUtil.convert(data.getContent().get("rows"), PatrolModel.class);
                 if (pageParam.isNew()) {
-
+                    swipeLayout.finishRefresh();
+                    patrolListApt.replaceAll(list);
                 }
                 if (pageParam.isMore()) {
-
+                    swipeLayout.finishLoadMore();
+                    patrolListApt.appendList(list);
                 }
             }
 
             @Override
             public void onError(int err, String errMsg, Throwable t) {
                 if (pageParam.isNew()) {
-
+                    swipeLayout.finishRefresh();
+                    patrolListApt.removeAll();
                 }
                 if (pageParam.isMore()) {
-
+                    swipeLayout.finishLoadMore();
                 }
             }
         }).httpGetPatrolList(eleCode, pageParam.getNum(), pageParam.getSize());
+    }
+
+
+    public final static String FUNC_PATROL_ADD = "FUNC_PATROL_ADD";
+    public final static String FUNC_PATROL_EDIT = "FUNC_PATROL_EDIT";
+
+    private void dispatchFunc() {
+        FuncManager.getInstance().addFunc(new FuncWithParamNoResult<PatrolModel>(FUNC_PATROL_ADD) {
+            @Override
+            public void function(PatrolModel data) {
+                patrolListApt.preposeItem(data);
+            }
+        });
+
+        FuncManager.getInstance().addFunc(new FuncWithParamNoResult<PatrolModel>(FUNC_PATROL_EDIT) {
+            @Override
+            public void function(PatrolModel data) {
+                patrolListApt.updateItem(data);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FuncManager.getInstance().removeFunc(FUNC_PATROL_ADD, FUNC_PATROL_EDIT);
+    }
+
+    @Override
+    public void onClick(View view, PatrolModel data, int position) {
+        int id = view.getId();
+        if (id == R.id.ivEdit) {
+            editItem(data);
+        }
+        if (id == R.id.ivDel) {
+            delItem(data, position);
+        }
+    }
+
+    void editItem(PatrolModel data) {
+        Map map = DataConvertUtil.convertPatrolSer2Local(data);
+        Intent intent = new Intent(_context, PatrolItemAty.class);
+        OSerial.putSerial(intent, map);
+        startActivity(intent);
+    }
+
+    void delItem(PatrolModel data, int position) {
+        new ATEDialog.Theme_Alert(_context)
+                .title("提示")
+                .content("确认删除当前信息？")
+                .positiveText("删除")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String userId = Constant.getUserInfo().getId();
+                        String itemId = (String) data.getPatrolRecord().get("Id");
+                        netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTResult<Map>>() {
+                            @Override
+                            public void onSuccess(TTResult<Map> data) {
+                                patrolListApt.removeItem(position);
+                            }
+                        }).httpDelPatrolItem(userId, itemId);
+                    }
+                }).show();
     }
 }

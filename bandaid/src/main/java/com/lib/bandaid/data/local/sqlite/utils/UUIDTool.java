@@ -19,5 +19,9 @@ public final class UUIDTool {
         return UUID.randomUUID().toString().replace("-", "").toUpperCase();
     }
 
+    public static String get36UUID() {
+        return UUID.randomUUID().toString();
+    }
+
 }
 

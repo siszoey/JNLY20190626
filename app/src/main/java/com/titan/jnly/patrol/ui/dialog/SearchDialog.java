@@ -5,22 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.amap.api.maps.model.Poi;
-import com.amap.api.navi.AmapNaviPage;
-import com.amap.api.navi.AmapNaviParams;
-import com.amap.api.navi.AmapNaviType;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.com.NetEasyFactory;
 import com.lib.bandaid.data.remote.com.NetEasyReq;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
-import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.SimpleMap;
@@ -29,8 +21,7 @@ import com.lib.bandaid.widget.edittext.ClearEditText;
 import com.titan.jnly.R;
 import com.titan.jnly.examine.api.ExamineApi;
 import com.titan.jnly.examine.ui.aty.DataScanAty;
-import com.titan.jnly.examine.util.ExamineUtil;
-import com.titan.jnly.patrol.apt.DataListApt;
+import com.titan.jnly.patrol.apt.TreeListApt;
 import com.titan.jnly.patrol.ui.aty.CureListAty;
 import com.titan.jnly.patrol.ui.aty.PatrolListAty;
 import com.titan.jnly.system.Constant;
@@ -46,7 +37,7 @@ public class SearchDialog extends BaseDialogFrg
     private ClearEditText editText;
     private Button btnSearch;
     private RecyclerView rvList;
-    private DataListApt adapter;
+    private TreeListApt adapter;
     private String userId = Constant.getUserInfo().getId();
 
     public static SearchDialog newInstance() {
@@ -77,7 +68,7 @@ public class SearchDialog extends BaseDialogFrg
     @Override
     protected void initClass() {
         netEasyReq = NetEasyFactory.createEasy(getContext());
-        adapter = new DataListApt(rvList);
+        adapter = new TreeListApt(rvList);
         adapter.setIViewClickListener(this);
     }
 

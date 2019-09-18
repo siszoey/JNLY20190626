@@ -36,4 +36,12 @@ public interface IPatrolCure {
     @POST("api/XHGL/MaintainRecord/Upload")
     Observable<TTResult<Map>> httpPostCureItem(@Body List<CureModel> model);
 
+
+    //巡查信息删除
+    @GET("api/XHGL/PatrolRecord/Remove")
+    Observable<TTResult<Map>> httpDelPatrolItem(@Query("UserId") String userId, @Query("Id") String id);
+
+    //养护信息删除
+    @GET("api/XHGL/MaintainRecord/Remove")
+    Observable<TTResult<Map>> httpDelCureItem(@Query("UserId") String userId, @Query("Id") String id);
 }

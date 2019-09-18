@@ -10,6 +10,7 @@ import java.util.Map;
  * 巡查信息上传
  */
 public class PatrolModel implements Serializable {
+
     private String UserId;
 
     private Map PatrolRecord;

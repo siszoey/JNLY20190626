@@ -102,6 +102,22 @@ public final class FileUtil {
         return flag;
     }
 
+    public static boolean isRemoteFile(File file) {
+        return isRemoteFile(file.getPath());
+    }
+
+    public static boolean isLocalFile(File file) {
+        return isLocalFile(file.getPath());
+    }
+
+    public static boolean isRemoteFile(String uri) {
+        if (uri.startsWith("http://")) return true;
+        return false;
+    }
+
+    public static boolean isLocalFile(String uri) {
+        return !isRemoteFile(uri);
+    }
 
     public static Boolean copyFile(String oldPath, String newPath) {
         Boolean flag = true;
@@ -184,11 +200,12 @@ public final class FileUtil {
 
     /**
      * 如果存在同名文件，重命名会返回false
+     *
      * @param oldName
      * @param newName
      * @return
      */
-    public static boolean rename(String oldName, String newName){
+    public static boolean rename(String oldName, String newName) {
         boolean b = false;
         try {
             File oldFile = new File(oldName);

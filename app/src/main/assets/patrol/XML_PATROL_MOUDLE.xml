@@ -303,15 +303,15 @@
                 </ItemXml>
                 <ItemXml>
                     <code class="string">2</code>
-                    <value>紧急</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">3</code>
                     <value>较重</value>
                 </ItemXml>
                 <ItemXml>
-                    <code class="string">4</code>
+                    <code class="string">3</code>
                     <value>严重</value>
+                </ItemXml>
+                <ItemXml>
+                    <code class="string">4</code>
+                    <value>紧急</value>
                 </ItemXml>
             </itemXml>
             <VerifyXml>

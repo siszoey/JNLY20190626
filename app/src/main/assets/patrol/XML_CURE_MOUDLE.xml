@@ -245,12 +245,12 @@
             <alias>养护单位</alias>
             <code>MaintainDep</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <readonly>true</readonly>
+            <!--<readonly>true</readonly>
             <VerifyXml>
                 <canNull>false</canNull>
                 <regex>^(?=.*\S).+$</regex>
                 <msg>不能为空!</msg>
-            </VerifyXml>
+            </VerifyXml>-->
         </UiXml>
         <UiXml>
             <alias>养护员</alias>

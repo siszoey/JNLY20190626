@@ -16,14 +16,17 @@ import com.lib.bandaid.arcruntime.util.CustomUtil;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
 import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
 import com.lib.bandaid.data.remote.entity.TTFileResult;
+import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.data.remote.utils.OkHttp3Util;
+import com.lib.bandaid.message.FuncManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.DateUtil;
 import com.lib.bandaid.util.ImgUtil;
+import com.lib.bandaid.util.JsonUtil;
 import com.lib.bandaid.util.MapUtil;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.ObjectUtil;
@@ -47,14 +50,12 @@ import com.titan.jnly.patrol.bean.PatrolModel;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 
 public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListener {
 
@@ -62,14 +63,20 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
     private PropertyView propertyView;
     private EasyUiXml easyUiXml;
     private Button btnExit, btnSubmit;
-    private String uuid = UUIDTool.get32UUID();
+    private String uuid;
     private String userId = Constant.getUserInfo().getId();
+    private boolean isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "巡查信息", Gravity.CENTER);
-        if (getIntent() != null) treeData = OSerial.getData(getIntent(), Map.class);
+        if (getIntent() != null) {
+            treeData = OSerial.getData(getIntent(), Map.class);
+            isEdit = treeData.get("IS_EDIT") == null ? false : true;
+            if (isEdit) uuid = (String) treeData.get("Id");
+            else uuid = UUIDTool.get36UUID();
+        }
         setContentView(R.layout.patrol_ui_aty_patrol_add_layout);
     }
 
@@ -88,7 +95,12 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
         propertyView.setImgAdapter(new PropertyView.ImgAdapter() {
             @Override
             public String adapter(Object val) {
-                return null;
+                UiXml uiXml = easyUiXml.getUiXmlByAlias("现场照片");
+                EventImageView view = (EventImageView) uiXml.getView();
+                if (view != null) view.setJson((String) val);
+                List<CollectImgBean> beans = CollectImgBean.convertFromJson((String) val);
+                if (beans == null || beans.size() == 0) return null;
+                return beans.get(0).getUri();
             }
         });
         propertyView.setInputFace(new PropertyView.InputFace() {
@@ -161,7 +173,7 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
         UiXml user = easyUiXml.getUiXmlByAlias("巡查员");
         date.setValue(DateUtil.getCurrentDateTime());
         user.setValue(Constant.getUserInfo().getName());
-        dep.setValue(Constant.getUserInfo().getUserJurs());
+        //dep.setValue(Constant.getUserInfo().getUserJurs());
         //------------------------------------------------------------------------------------------
         UiXml lon = easyUiXml.getUiXml("LON");
         UiXml lat = easyUiXml.getUiXml("LAT");
@@ -201,7 +213,7 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
         if (requestCode == 1000) {
             ArrayList<CollectImgBean> beans = (ArrayList<CollectImgBean>) data.getSerializableExtra(CollectImgAty.IMG);
             CollectImgBean.convertToWorkDir(Constant.createUserFilePath(uuid), beans);
-            String json = MapUtil.entity2Json(beans);
+            String json = JsonUtil.obj2Json(beans);
             UiXml uiXml = easyUiXml.getUiXmlByAlias("现场照片");
             EventImageView view = (EventImageView) uiXml.getView();
             if (view != null) view.setJson(json);
@@ -214,24 +226,30 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
      */
     void syncFile(Map map) {
         String fileJson = (String) map.get("PatrolImgs");
-        List<File> files = CollectImgBean.obtainFiles(fileJson);
-        if (ObjectUtil.isEmpty(files)) {
+        List<CollectImgBean> beans = ObjectUtil.convert(fileJson, CollectImgBean.class);
+        if (ObjectUtil.isEmpty(beans)) {
             showLongToast("请上传图片！");
             return;
         }
-        MultipartBody body;
         List<TTFileResult> results = new ArrayList<>();
-        for (File file : files) {
-            body = OkHttp3Util.fileBody(file);
-            netEasyReq.request(ApiFileSync.class, new NetWorkListen<TTFileResult>() {
-                @Override
-                public void onSuccess(TTFileResult data) {
-                    results.add(data);
-                    if (results.size() == files.size()) {
-                        syncData(results);
+        for (CollectImgBean bean : beans) {
+            if (bean.isLocal()) {
+                netEasyReq.request(ApiFileSync.class, new NetWorkListen<TTFileResult>() {
+                    @Override
+                    public void onSuccess(TTFileResult data) {
+                        results.add(data);
+                        if (results.size() == beans.size()) {
+                            syncData(results);
+                        }
                     }
+                }).httpFileSync(bean.getMultipartBody());
+            } else {
+                TTFileResult data = ObjectUtil.convert(bean.getTag(), TTFileResult.class);
+                results.add(data);
+                if (results.size() == beans.size()) {
+                    syncData(results);
                 }
-            }).httpFileSync(body);
+            }
         }
     }
 
@@ -240,6 +258,8 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
         model.setUserId(userId);
 
         Map map = easyUiXml.getFormMap();
+        map.put("Id", uuid);
+
         ComplexTextView lonView = propertyView.getViewByKey("LON");
         ComplexTextView latView = propertyView.getViewByKey("LAT");
         map.put("LON", CustomUtil._60To10(lonView.getText()));
@@ -249,13 +269,19 @@ public class PatrolItemAty extends BaseMvpCompatAty implements View.OnClickListe
         model.setPatrolImgs(fileResult);
 
         List<PatrolModel> param = new SimpleList<>().push(model);
-        String json = ObjectUtil.convert(param,String.class);
+        String json = ObjectUtil.convert(param, String.class);
         System.out.println(json);
 
-        netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTFileResult>() {
+        netEasyReq.request(IPatrolCure.class, new NetWorkListen<TTResult>() {
             @Override
-            public void onSuccess(TTFileResult data) {
-                System.out.println(data);
+            public void onSuccess(TTResult data) {
+                showLongToast("提交成功！");
+                finish();
+                if(isEdit){
+                    FuncManager.getInstance().invokeFunc(PatrolListAty.FUNC_PATROL_EDIT, model);
+                }else {
+                    FuncManager.getInstance().invokeFunc(PatrolListAty.FUNC_PATROL_ADD, model);
+                }
             }
         }).httpPostPatrolItem(param);
     }

@@ -13,7 +13,9 @@ import com.esri.arcgisruntime.layers.LayerContent;
 import com.lib.bandaid.arcruntime.layer.info.LayerInfo;
 import com.lib.bandaid.thread.rx.RxSimpleUtil;
 import com.lib.bandaid.util.HttpSimpleUtil;
+import com.lib.bandaid.util.JsonUtil;
 import com.lib.bandaid.util.MapUtil;
+import com.lib.bandaid.util.ObjectUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,7 +105,7 @@ public class LayerNode implements Serializable {
         com.lib.bandaid.arcruntime.layer.info.Field _field;
         for (int i = 0, len = _fields.size(); i < len; i++) {
             _field = _fields.get(i);
-            json = MapUtil.entity2Json(_field);
+            json = JsonUtil.obj2Json(_field);
             field = Field.fromJson(json);
             fields.add(field);
         }
@@ -139,7 +141,7 @@ public class LayerNode implements Serializable {
                 @Override
                 public void success(String s) {
                     System.out.println(s);
-                    info = MapUtil.string2Entity(s, LayerInfo.class);
+                    info = ObjectUtil.convert(s, LayerInfo.class);
                 }
             });
         }

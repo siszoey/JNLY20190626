@@ -38,20 +38,16 @@ public class JsonAdapter extends TypeAdapter<Object> {
             case STRING:
                 return in.nextString();
             case NUMBER:
-                /**
-                 * 改写数字的处理逻辑，将数字值分为整型与浮点型。
-                 */
-                double dbNum = in.nextDouble();
-                // 数字超过long的最大值，返回浮点类型
-                if (dbNum > Long.MAX_VALUE) {
+                String num = in.nextString();
+                double dbNum = Double.parseDouble(num);
+                if (num.contains(".")) {
                     return dbNum;
-                }
-                // 判断数字是否为整数值
-                long lngNum = (long) dbNum;
-                if (dbNum == lngNum) {
-                    return lngNum;
                 } else {
-                    return dbNum;
+                    if (dbNum > Long.MAX_VALUE) {
+                        return dbNum;
+                    } else {
+                        return (long) dbNum;
+                    }
                 }
             case BOOLEAN:
                 return in.nextBoolean();

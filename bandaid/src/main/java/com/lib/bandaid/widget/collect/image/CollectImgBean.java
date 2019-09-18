@@ -3,7 +3,10 @@ package com.lib.bandaid.widget.collect.image;
 import com.camera.lib.widget.ImagePagerBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lib.bandaid.data.remote.entity.TTFileResult;
+import com.lib.bandaid.data.remote.utils.OkHttp3Util;
 import com.lib.bandaid.rw.file.utils.FileUtil;
+import com.lib.bandaid.util.JsonUtil;
 import com.lib.bandaid.util.ObjectUtil;
 
 import java.io.File;
@@ -13,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CollectImgBean implements Serializable {
+import okhttp3.MultipartBody;
+
+public class CollectImgBean<T> implements Serializable {
 
     private String name;
 
@@ -23,12 +28,17 @@ public class CollectImgBean implements Serializable {
 
     private String date;
 
+    private boolean isRemote;
+
+    private T tag;
+
     public CollectImgBean() {
     }
 
     public CollectImgBean(String name, String uri, String desc, String date) {
         this.name = name;
         this.uri = uri;
+        this.isRemote = FileUtil.isRemoteFile(uri);
         this.desc = desc;
         this.date = date;
     }
@@ -48,6 +58,7 @@ public class CollectImgBean implements Serializable {
 
     public void setUri(String uri) {
         this.uri = uri;
+        this.isRemote = FileUtil.isRemoteFile(uri);
     }
 
     public String getDesc() {
@@ -67,6 +78,30 @@ public class CollectImgBean implements Serializable {
         this.date = date;
     }
 
+    public boolean isRemote() {
+        return isRemote;
+    }
+
+    public boolean isLocal() {
+        return !isRemote;
+    }
+
+    public File getFile() {
+        return new File(uri);
+    }
+
+    public MultipartBody getMultipartBody() {
+        return OkHttp3Util.fileBody(getFile());
+    }
+
+    public T getTag() {
+        return tag;
+    }
+
+    public void setTag(T tag) {
+        this.tag = tag;
+    }
+
     @Override
     public String toString() {
         return "CollectImgBean{" +
@@ -80,7 +115,6 @@ public class CollectImgBean implements Serializable {
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
-
     public static ArrayList<String> convertFromListUrl(String json) {
         List<Map> list = ObjectUtil.convert(json, Map.class);
         if (list == null || list.size() == 0) return null;
@@ -108,6 +142,13 @@ public class CollectImgBean implements Serializable {
             url = map.get("path");
             urls.add(url);
         }
+        List temp = CollectImgBean.convertFromList(urls);
+        return new ArrayList<>(temp);
+    }
+
+    public static ArrayList<CollectImgBean> convertFromList(String json) {
+        List<String> urls = JsonUtil.convertL(json, String.class);
+        if (urls == null || urls.size() == 0) return null;
         List temp = CollectImgBean.convertFromList(urls);
         return new ArrayList<>(temp);
     }
@@ -165,7 +206,7 @@ public class CollectImgBean implements Serializable {
             if (!oldPath.startsWith(workDir)) {//复制图片到采集目录
                 suffix = FileUtil.getFileExtendNameByPath(oldPath);
                 newPath = FileUtil.fileRandomPath(workDir, "copy", suffix);
-                //boolean res = BitmapUtil.zipImgQuality(oldPath, newPath);
+                if (FileUtil.isRemoteFile(oldPath)) continue;
                 boolean res = FileUtil.copyFile(oldPath, newPath);
                 if (res) bean.setUri(newPath);
             }

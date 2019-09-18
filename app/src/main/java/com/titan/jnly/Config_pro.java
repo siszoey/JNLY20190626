@@ -9,7 +9,13 @@ public class Config_pro {
 
     public interface BASE_URL {
         String BaseUrl_1 = "http://119.164.253.207:8091/";
+        //图片上传根路径
         String BaseFileService = "http://119.164.253.207:8092/";
+        //图片浏览更路径
+        String ImgScanService = "http://119.164.253.207:8092/api/FileServer/download/";
+
+
+
         String Sync_Dic = "http://119.164.253.207:8090/DicData/dic.db";
         String[] Fea_MapService = new String[]{
                 "http://119.164.253.207:6080/arcgis/rest/services/JNGSMM/JNGSMM_2019/MapServer",

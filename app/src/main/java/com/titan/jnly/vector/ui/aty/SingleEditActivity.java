@@ -27,6 +27,7 @@ import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.util.DateUtil;
 import com.lib.bandaid.util.DecimalFormats;
 import com.lib.bandaid.util.ImgUtil;
+import com.lib.bandaid.util.JsonUtil;
 import com.lib.bandaid.util.MapUtil;
 import com.lib.bandaid.util.NumberUtil;
 import com.lib.bandaid.util.ObjectUtil;
@@ -601,7 +602,7 @@ public class SingleEditActivity extends BaseAppCompatActivity implements View.On
             //将选择的图片转移到工作目录
             CollectImgBean.convertToWorkDir(imgFPath, beans);
             //转成json存储
-            String json = MapUtil.entity2Json(beans);
+            String json = JsonUtil.obj2Json(beans);
             UiXml uiXml = easyUiXml.getUiXml("GSZP");
             EventImageView view = (EventImageView) uiXml.getView();
             if (view != null) view.setJson(json);

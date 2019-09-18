@@ -31,6 +31,7 @@ import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.DateUtil;
 import com.lib.bandaid.util.DecimalFormats;
 import com.lib.bandaid.util.ImgUtil;
+import com.lib.bandaid.util.JsonUtil;
 import com.lib.bandaid.util.MapUtil;
 import com.lib.bandaid.util.NumberUtil;
 import com.lib.bandaid.util.ObjectUtil;
@@ -132,7 +133,6 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
                 UiXml uiXml = easyUiXml.getUiXml("GSZP");
                 EventImageView view = (EventImageView) uiXml.getView();
                 if (view != null) view.setJson((String) val);
-
                 List<CollectImgBean> beans = CollectImgBean.convertFromJson((String) val);
                 if (beans == null || beans.size() == 0) return null;
                 return beans.get(0).getUri();
@@ -584,7 +584,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
             //将选择的图片转移到工作目录
             CollectImgBean.convertToWorkDir(imgFPath, beans);
             //转成json存储
-            String json = MapUtil.entity2Json(beans);
+            String json = JsonUtil.obj2Json(beans);
             UiXml uiXml = easyUiXml.getUiXml("GSZP");
             EventImageView view = (EventImageView) uiXml.getView();
             if (view != null) view.setJson(json);

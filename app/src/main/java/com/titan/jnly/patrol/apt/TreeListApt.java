@@ -15,9 +15,9 @@ import com.titan.jnly.R;
 
 import java.util.Map;
 
-public class DataListApt extends BaseRecycleAdapter<Map, BaseViewHolder<Map>> {
+public class TreeListApt extends BaseRecycleAdapter<Map, BaseViewHolder<Map>> {
 
-    public DataListApt(@Nullable RecyclerView recyclerView) {
+    public TreeListApt(@Nullable RecyclerView recyclerView) {
         super(recyclerView);
     }
 
