@@ -58,7 +58,7 @@ public class PatrolCureActivity extends BaseMvpCompatAty
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        menu.findItem(R.id.menu_right_search).setVisible(true);
+        //menu.findItem(R.id.menu_right_search).setVisible(true);
         return true;
     }
 

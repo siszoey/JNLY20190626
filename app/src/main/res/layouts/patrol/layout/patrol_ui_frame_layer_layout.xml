@@ -53,22 +53,28 @@
         android:orientation="vertical">
 
         <View
+            android:visibility="gone"
             style="@style/h_line"
             android:layout_marginTop="10dp" />
 
         <TextView
+            android:visibility="gone"
             style="@style/menu_item_style"
             android:drawableLeft="@drawable/ic_cloud_download"
             android:text="古树巡查" />
 
-        <View style="@style/h_line" />
+        <View
+            android:visibility="gone"
+            style="@style/h_line" />
 
         <TextView
+            android:visibility="gone"
             style="@style/menu_item_style"
             android:drawableLeft="@drawable/ic_cloud_download"
             android:text="古树养护" />
 
         <View
+            android:visibility="gone"
             style="@style/h_line"
             android:layout_marginBottom="10dp" />
 
