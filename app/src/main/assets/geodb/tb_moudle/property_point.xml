@@ -878,7 +878,7 @@
         </UiXml>
         <UiXml>
             <alias>养护复壮建议</alias>
-            <code>YHFZJY</code>
+            <code>RESERVE_FIELD_4</code><!--  YHFZJY-->
             <dataType class="java-class">java.lang.String</dataType>
         </UiXml>
         <UiXml>
