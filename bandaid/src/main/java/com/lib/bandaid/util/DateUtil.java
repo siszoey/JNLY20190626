@@ -767,6 +767,8 @@ public class DateUtil {
             return dateTimeToStr(((Calendar) obj).getTime());
         } else if (obj instanceof GregorianCalendar) {
             return dateTimeToStr(((GregorianCalendar) obj).getTime());
+        }else if(obj instanceof String){
+            return (String)obj;
         }
         return null;
     }
