@@ -21,6 +21,7 @@ import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.dialog.DialogMould;
 import com.titan.jnly.patrol.ui.aty.PatrolCureActivity;
+import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 
@@ -115,7 +116,7 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
         } else if (position == 3) {
             showToast("开发中");
         } else if (position == 4) {
-            //startActivity(new Intent(_context, ExamineAty.class));
+            startActivity(new Intent(_context, PatrolLogAty.class));
             showToast("二期功能，暂未开放");
         } else {
             showToast("二期功能，暂未开放");
