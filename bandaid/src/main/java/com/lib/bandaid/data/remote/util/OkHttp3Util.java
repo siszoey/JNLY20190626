@@ -1,6 +1,7 @@
 package com.lib.bandaid.data.remote.util;
 
 import com.lib.bandaid.data.remote.intercept.AuthInterceptor;
+import com.lib.bandaid.data.remote.intercept.DispatchProxyIpt;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +27,7 @@ public final class OkHttp3Util {
         builder.readTimeout(connectTime, TimeUnit.SECONDS);
         builder.writeTimeout(connectTime * 2, TimeUnit.SECONDS);
         builder.addInterceptor(AuthInterceptor.createAuthInterceptor());
+        builder.addInterceptor(DispatchProxyIpt.getInstance());
         return builder;
     }
 
