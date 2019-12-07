@@ -5,7 +5,7 @@ import com.lib.bandaid.data.local.sqlite.core.annotation.Table;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/*巡查任务表*/
 @Table(name = "TB_PatrolTask")
 public class PatrolTask implements Serializable {
 
