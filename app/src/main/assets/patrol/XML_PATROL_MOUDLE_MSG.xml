@@ -94,5 +94,21 @@
                 <msg>不能为空!</msg>
             </VerifyXml>
         </UiXml>
+        <UiXml>
+            <alias>填写时间</alias>
+            <code>PatrolDate</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>数据状态</alias>
+            <code>VALID</code>
+            <dataType class="java-class">java.lang.Integer</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>现场照片</alias>
+            <code>GSZP</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <uiType>img</uiType>
+        </UiXml>
     </uiXml>
 </EasyUiXml>

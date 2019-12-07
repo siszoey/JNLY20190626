@@ -1,0 +1,167 @@
+<xmlUiEasy>
+    <name>FillLayer</name>
+    <alias>FillLayer</alias>
+    <uiXml>
+        <xmlUItem>
+            <alias>filter</alias>
+            <name>filter</name>
+            <type>java.lang.String</type>
+            <uiType>img</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>filter</alias>
+            <name>filter</name>
+            <type>java.lang.String</type>
+            <uiType>dialog_edit</uiType>
+            <dataVerify>
+                <auto>true</auto>
+                <canNull>false</canNull>
+                <msg>请输入正确手机号!</msg>
+                <regex>^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$
+                </regex>
+            </dataVerify>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>调查日期</alias>
+            <name>dcrq</name>
+            <type>java.lang.String</type>
+            <readonly>true</readonly>
+            <uiType>dialog_date</uiType>
+            <dataVerify>
+                <auto>true</auto>
+                <canNull>false</canNull>
+                <msg>请输入正确的日期格式!</msg>
+                <regex>
+                    ^((\d{2}(([02468][048])|([13579][26]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|([1-2][0-9])))))|(\d{2}(([02468][1235679])|([13579][01345789]))[\-\/\s]?((((0?[13578])|(1[02]))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\-\/\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\-\/\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\s((([0-1][0-9])|(2?[0-3]))\:([0-5]?[0-9])((\s)|(\:([0-5]?[0-9])))))?$
+                </regex>
+            </dataVerify>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>绘制类型</alias>
+            <name>drawType</name>
+            <type>java.lang.Integer</type>
+            <uiType>dialog_single</uiType>
+            <dataInput>
+                <dataItems>
+                    <DataItem>
+                        <code class="int">1</code>
+                        <value>点</value>
+                        <checked>true</checked>
+                    </DataItem>
+                    <DataItem>
+                        <code class="int">2</code>
+                        <value>线</value>
+                    </DataItem>
+                    <DataItem>
+                        <code class="int">3</code>
+                        <value>面</value>
+                    </DataItem>
+                </dataItems>
+                <itemFrom>xml</itemFrom>
+                <status>single</status>
+            </dataInput>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>计算实时面积和长度</alias>
+            <name>runtimeCompute</name>
+            <type>java.lang.Boolean</type>
+            <value class="boolean">true</value>
+            <uiType>switchBar</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>开启触摸加点模式</alias>
+            <name>touchAdd</name>
+            <type>java.lang.Boolean</type>
+            <value class="boolean">true</value>
+            <uiType>switchBar</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>开启顶点拖拽</alias>
+            <name>vDrag</name>
+            <type>java.lang.Boolean</type>
+            <value class="boolean">true</value>
+            <uiType>switchBar</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>开启中点拖拽</alias>
+            <name>mDrag</name>
+            <type>java.lang.Boolean</type>
+            <value class="boolean">true</value>
+            <uiType>switchBar</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>开启面拖拽</alias>
+            <name>pDrag</name>
+            <type>java.lang.Boolean</type>
+            <value class="boolean">true</value>
+            <uiType>switchBar</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>十字丝颜色</alias>
+            <name>frontSightColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFFFF0000</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>当前点颜色</alias>
+            <name>cPointColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFF000000</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>顶点颜色</alias>
+            <name>vPointColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFF00FF00</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>中点颜色</alias>
+            <name>mPointColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFF0000FF</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>边线颜色</alias>
+            <name>lineColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFFFFFF00</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>填充颜色</alias>
+            <name>fillColor</name>
+            <type>java.lang.Integer</type>
+            <value class="int">0xFFFF0000</value>
+            <uiType>dialog_color</uiType>
+        </xmlUItem>
+        <xmlUItem>
+            <alias>数据单位</alias>
+            <name>dataUnit</name>
+            <type>java.lang.String</type>
+            <uiType>dialog_single</uiType>
+            <dataInput>
+                <dataItems>
+                    <DataItem>
+                        <code class="string">MODE1</code>
+                        <value>米、平方米</value>
+                        <checked>true</checked>
+                    </DataItem>
+                    <DataItem>
+                        <code class="string">MODE2</code>
+                        <value>米、公顷</value>
+                    </DataItem>
+                    <DataItem>
+                        <code class="string">MODE3</code>
+                        <value>米、亩</value>
+                    </DataItem>
+                </dataItems>
+                <itemFrom>xml</itemFrom>
+                <status>single</status>
+            </dataInput>
+        </xmlUItem>
+    </uiXml>
+</xmlUiEasy>
