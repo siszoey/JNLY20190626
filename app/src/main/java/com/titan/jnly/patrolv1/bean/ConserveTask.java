@@ -6,6 +6,7 @@ import com.lib.bandaid.data.local.sqlite.core.annotation.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+/*养护任务表*/
 @Table(name = "TB_ConserveTask")
 public class ConserveTask implements Serializable {
 
