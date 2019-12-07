@@ -6,6 +6,7 @@ import android.location.Location;
 
 import com.lib.bandaid.app.BaseApp;
 import com.lib.bandaid.data.local.sqlite.proxy.transaction.DbManager;
+import com.lib.bandaid.data.remote.util.MappingMethod;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.tencent.bugly.beta.Beta;
 import com.titan.jnly.dbase.DbVersion;
@@ -23,6 +24,8 @@ public class App extends BaseApp {
         super.onCreate();
         BuglySetting.init(this, appId);
         DbManager.dbConfig = new DbVersion(baseApp);
+
+        MappingMethod.getInstance(this);
     }
 
     @Override

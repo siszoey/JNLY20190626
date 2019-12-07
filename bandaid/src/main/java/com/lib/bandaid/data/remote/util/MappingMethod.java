@@ -41,6 +41,7 @@ public class MappingMethod {
     }
 
     public static MappingMethod getInstance() {
+        if (ourInstance == null) new Throwable("请在Application中初始化Mapping扫描！");
         return ourInstance;
     }
 
@@ -51,7 +52,7 @@ public class MappingMethod {
 
     private void scanPackage(Context context) {
         String packagePath = context.getPackageName();
-        Scanner.scan(context,packagePath, new Scanner.IWhat() {
+        Scanner.scan(context, packagePath, new Scanner.IWhat() {
 
             @Override
             public void execute(Class clazz) {
