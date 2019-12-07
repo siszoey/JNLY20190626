@@ -4,6 +4,18 @@ import java.io.Serializable;
 
 public class TTResult<T> implements Serializable {
 
+    public static TTResult Ok(Object data) {
+        return new TTResult(200, "请求成功！", data, true);
+    }
+
+    public static TTResult Ok(String msg, Object data) {
+        return new TTResult(200, msg, data, true);
+    }
+
+    public static TTResult Fail(String msg) {
+        return new TTResult(0, msg, null, false);
+    }
+
     private int Code = 1000;
 
     private Boolean Result;
@@ -11,6 +23,17 @@ public class TTResult<T> implements Serializable {
     private String Message;
 
     private T Content;
+
+    public TTResult() {
+
+    }
+
+    public TTResult(int code, String msg, T data, Boolean Result) {
+        this.Code = code;
+        this.Message = msg;
+        this.Content = data;
+        this.Result = Result;
+    }
 
     public int getCode() {
         return Code;

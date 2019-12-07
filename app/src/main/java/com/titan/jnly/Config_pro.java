@@ -8,12 +8,13 @@ public class Config_pro {
 
 
     public interface BASE_URL {
+        String BaseUrl_Mock = "http://127.0.0.1:8080/";
+
         String BaseUrl_1 = "http://119.164.253.207:8091/";
         //图片上传根路径
         String BaseFileService = "http://119.164.253.207:8092/";
         //图片浏览更路径
         String ImgScanService = "http://119.164.253.207:8092/api/FileServer/download/";
-
 
 
         String Sync_Dic = "http://119.164.253.207:8090/DicData/dic.db";
