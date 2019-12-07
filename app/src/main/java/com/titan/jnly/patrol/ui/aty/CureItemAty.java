@@ -18,16 +18,13 @@ import com.lib.bandaid.data.local.sqlite.utils.UUIDTool;
 import com.lib.bandaid.data.remote.entity.TTFileResult;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
-import com.lib.bandaid.data.remote.utils.OkHttp3Util;
 import com.lib.bandaid.message.FuncManager;
 import com.lib.bandaid.rw.file.utils.FileUtil;
 import com.lib.bandaid.rw.file.xml.IoXml;
 import com.lib.bandaid.service.imp.ServiceLocation;
 import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.DateUtil;
-import com.lib.bandaid.util.DecimalFormats;
 import com.lib.bandaid.util.ImgUtil;
-import com.lib.bandaid.util.MapUtil;
 import com.lib.bandaid.util.OSerial;
 import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.util.SimpleList;
@@ -50,14 +47,11 @@ import com.titan.jnly.patrol.bean.CureModel;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.vector.bean.District;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.MultipartBody;
 
 public class CureItemAty extends BaseMvpCompatAty implements View.OnClickListener {
 

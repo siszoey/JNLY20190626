@@ -7,7 +7,7 @@ import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.entity.BaseResult;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
-import com.lib.bandaid.data.remote.utils.RetrofitManager;
+import com.lib.bandaid.data.remote.util.RetrofitManager;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

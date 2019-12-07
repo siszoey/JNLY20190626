@@ -6,7 +6,7 @@ import com.lib.bandaid.activity.i.ITipView;
 import com.lib.bandaid.data.remote.core.INetRequest;
 import com.lib.bandaid.data.remote.entity.BaseResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
-import com.lib.bandaid.data.remote.utils.RetrofitManager;
+import com.lib.bandaid.data.remote.util.RetrofitManager;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

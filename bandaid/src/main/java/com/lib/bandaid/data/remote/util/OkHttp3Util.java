@@ -1,4 +1,4 @@
-package com.lib.bandaid.data.remote.utils;
+package com.lib.bandaid.data.remote.util;
 
 import com.lib.bandaid.data.remote.intercept.AuthInterceptor;
 

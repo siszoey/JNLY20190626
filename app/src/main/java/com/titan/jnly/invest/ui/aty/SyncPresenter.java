@@ -4,7 +4,7 @@ import com.lib.bandaid.data.remote.core.NetRequest;
 import com.lib.bandaid.data.remote.entity.TTFileResult;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
-import com.lib.bandaid.data.remote.utils.OkHttp3Util;
+import com.lib.bandaid.data.remote.util.OkHttp3Util;
 import com.lib.bandaid.util.SimpleList;
 import com.titan.jnly.invest.api.ApiDataSync;
 import com.titan.jnly.invest.api.ApiFileSync;
