@@ -28,6 +28,9 @@ public final class ObjectUtil {
         return JsonUtil.convertO(val, clazz);
     }
 
+    public static String convert(Object val) {
+        return JsonUtil.obj2Json(val);
+    }
 
     /**
      * 显示时候使用

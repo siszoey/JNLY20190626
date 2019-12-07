@@ -1,11 +1,11 @@
 package com.lib.bandaid.data.remote.util;
 
-import com.fox.foxdata.remote.http.mock.annotation.DeleteMapping;
-import com.fox.foxdata.remote.http.mock.annotation.GetMapping;
-import com.fox.foxdata.remote.http.mock.annotation.PatchMapping;
-import com.fox.foxdata.remote.http.mock.annotation.PostMapping;
-import com.fox.foxdata.remote.http.mock.annotation.PutMapping;
-import com.fox.foxdata.util.ObjectUtil;
+import com.lib.bandaid.data.remote.mock.annotation.DeleteMapping;
+import com.lib.bandaid.data.remote.mock.annotation.GetMapping;
+import com.lib.bandaid.data.remote.mock.annotation.PatchMapping;
+import com.lib.bandaid.data.remote.mock.annotation.PostMapping;
+import com.lib.bandaid.data.remote.mock.annotation.PutMapping;
+import com.lib.bandaid.util.ObjectUtil;
 
 import java.io.IOException;
 
