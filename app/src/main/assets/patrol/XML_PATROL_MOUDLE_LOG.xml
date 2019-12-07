@@ -4,7 +4,7 @@
     <alias>巡查日志</alias>
     <uiXml>
         <UiXml>
-            <alias>Id</alias>
+            <alias>日志Id</alias>
             <code>Id</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
@@ -34,12 +34,6 @@
         <UiXml>
             <alias>树种</alias>
             <code>SZK</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <readonly>true</readonly>
-        </UiXml>
-        <UiXml>
-            <alias>古树编号</alias>
-            <code>GSBH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
         </UiXml>
