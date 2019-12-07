@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "TB_ConserveTask")
 public class ConserveTask implements Serializable {
 
-    @Column(isPKey = true, alias = "UUID主键")
+    @Column(isPKey = true, type = "varchar(32)", alias = "UUID主键")
     private String Id;
 
     @Column(alias = "古树编号")

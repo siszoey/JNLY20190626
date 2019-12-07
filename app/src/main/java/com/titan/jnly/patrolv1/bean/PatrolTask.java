@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "TB_PatrolTask")
 public class PatrolTask implements Serializable {
 
-    @Column(isPKey = true, alias = "主键")
+    @Column(isPKey = true,type = "varchar(32)", alias = "主键")
     private String Id;
 
     @Column(alias = "古树编号")
