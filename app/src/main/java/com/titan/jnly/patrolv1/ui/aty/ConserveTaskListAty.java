@@ -34,8 +34,8 @@ public class ConserveTaskListAty extends BaseMvpCompatAty implements BaseRecycle
 
     @Override
     protected void initialize() {
-        rvList = $(R.id.conserve_task_recyclerview);
-        swipeLayout = $(R.id.refreshLayout);
+        rvList = $(R.id.rvList);
+        swipeLayout = $(R.id.swipeLayout);
     }
 
     @Override

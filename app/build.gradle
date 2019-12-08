@@ -59,6 +59,7 @@ android {
                     'src/main/res/layouts/main',
                     'src/main/res/layouts/invest',
                     'src/main/res/layouts/patrol',
+                    'src/main/res/layouts/patrolv1',
                     'src/main/res/layouts/examine',
                     'src/main/res/layouts/vector',
                     'src/main/res/layouts/hardware'

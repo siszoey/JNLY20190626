@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".patrolv1.ui.aty.PatrolTaskAty">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/toolbar_style"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-        app:title="养护任务详情"
-        app:titleTextColor="@color/white"/>
 
 
 </LinearLayout>

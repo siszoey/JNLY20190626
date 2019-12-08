@@ -8,14 +8,5 @@
     android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/toolbar_style"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-        app:title="施工日志详情"
-        app:titleTextColor="@color/white">
-
-    </androidx.appcompat.widget.Toolbar>
 
 </LinearLayout>
