@@ -21,8 +21,6 @@ import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.dialog.DialogMould;
 import com.titan.jnly.patrol.ui.aty.PatrolCureActivity;
-import com.titan.jnly.patrolv1.ui.aty.FieldInquireAty;
-import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
 import com.titan.jnly.patrolv1.ui.aty.PatrolMsgAty;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patrolv1.ui.PatrolTaskDetailsActivity">
+    tools:context=".patrolv1.ui.aty.PatrolTaskAty">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

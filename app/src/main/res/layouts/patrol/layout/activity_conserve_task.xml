@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".patrolv1.ui.ConserveTaskActivity">
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/toolbar_style"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-        app:title="养护任务"
-        app:titleTextColor="@color/white"/>
-
-
-    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-        android:id="@+id/refreshLayout"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
+        android:layout_weight="1">
+
+        <com.titan.jnly.common.widget.ComRefreshHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/conserve_task_recyclerview"
+            android:id="@+id/rvList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="MissingConstraints" />
-    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+            android:layout_height="match_parent" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

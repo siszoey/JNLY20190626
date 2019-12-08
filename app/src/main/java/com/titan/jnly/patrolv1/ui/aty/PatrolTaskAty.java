@@ -1,14 +1,14 @@
 package com.titan.jnly.patrolv1.ui.aty;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.titan.jnly.R;
 
-import androidx.appcompat.app.AppCompatActivity;
+/*巡查任务详情页*/
 
-/*巡查日志详情页*/
-
-public class PatrolLogAty extends AppCompatActivity {
+public class PatrolTaskAty extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class PatrolLogAty extends AppCompatActivity {
         initData();
     }
 
-    private void initData() {
-        // PatrolTask patrolTask = FunctionManager.getInstance().invokeFunction(Constant.FUN_PTASK_LOG,PatrolTask.class);
+    private void initData(){
+        //PatrolTask patrolTask = FunctionManager.getInstance().invokeFunction(Constant.FUN_GET_PTASK,PatrolTask.class);
     }
 }

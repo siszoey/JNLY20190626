@@ -5,7 +5,7 @@ import com.lib.bandaid.data.local.sqlite.core.annotation.Column;
 import java.io.Serializable;
 import java.util.Date;
 
-public class PatrolMessage implements Serializable {
+public class PatrolMsg implements Serializable {
 
     @Column(isPKey = true, type = "varchar(32)", alias = "UUID主键")
     private String Id;

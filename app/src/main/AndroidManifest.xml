@@ -54,9 +54,8 @@
         <activity android:name=".patrol.ui.aty.CureItemAty" />
 
         <!--新版本-->
-        <activity android:name=".patrolv1.ui.aty.PatrolLogAty"/>
+        <activity android:name=".patrolv1.ui.aty.PatrolLogListAty"/>
         <activity android:name=".patrolv1.ui.aty.PatrolMsgAty"/>
-        <activity android:name=".patrolv1.ui.aty.FieldInquireAty"/>
 
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
         <activity android:name="com.lib.bandaid.widget.pick.ImgPickActivity" />
