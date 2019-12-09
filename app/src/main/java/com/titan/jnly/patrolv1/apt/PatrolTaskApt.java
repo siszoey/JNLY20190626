@@ -1,5 +1,6 @@
 package com.titan.jnly.patrolv1.apt;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,18 +22,18 @@ public class PatrolTaskApt extends BaseRecycleAdapter<PatrolTask, BaseViewHolder
 
     @Override
     public BaseViewHolder<PatrolTask> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(parent, R.layout.patrolv1_apt_patro_task_item);
+        return new Holder(context, R.layout.patrolv1_apt_patro_task_item);
     }
 
     class Holder extends BaseViewHolder<PatrolTask> implements View.OnClickListener {
 
-        private TextView dzbqh_view;
-        private TextView quxian_view;
+        TextView tvNum;
+        TextView tvOrder;
 
-        public Holder(ViewGroup parent, int resId) {
-            super(parent, resId);
-            dzbqh_view = itemView.findViewById(R.id.view_dzbqh);
-            quxian_view = itemView.findViewById(R.id.view_quxian);
+        public Holder(Context context, int resId) {
+            super(context, resId);
+            tvNum = $(R.id.tvNum);
+            tvOrder = $(R.id.tvOrder);
             itemView.setOnClickListener(this);
         }
 

@@ -27,19 +27,19 @@ public class ConserveTaskApt extends BaseRecycleAdapter<ConserveTask, BaseViewHo
 
     class Holder extends BaseViewHolder<ConserveTask> implements View.OnClickListener {
 
-        private TextView dzbqh_view;
-        private TextView quxian_view;
+        TextView tvNum;
+        TextView tvOrder;
 
         public Holder(Context context, int resId) {
             super(context, resId);
-            dzbqh_view = $(R.id.view_dzbqh);
-            quxian_view = $(R.id.view_quxian);
+            tvNum = $(R.id.tvNum);
+            tvOrder = $(R.id.tvOrder);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void setData(ConserveTask data, int position) {
-            dzbqh_view.setText(data.getDZBQH());
+            //dzbqh_view.setText(data.getDZBQH());
         }
 
         @Override
