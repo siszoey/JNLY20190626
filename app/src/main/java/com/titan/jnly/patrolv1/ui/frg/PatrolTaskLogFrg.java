@@ -1,5 +1,6 @@
 package com.titan.jnly.patrolv1.ui.frg;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,6 +24,7 @@ import com.titan.jnly.patrolv1.apt.PatrolLogApt;
 import com.titan.jnly.patrolv1.apt.PatrolTaskApt;
 import com.titan.jnly.patrolv1.bean.PatrolLog;
 import com.titan.jnly.patrolv1.bean.PatrolTask;
+import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
 
 import java.util.List;
 
@@ -104,13 +106,13 @@ public class PatrolTaskLogFrg extends BaseFragment
         FuncManager.getInstance().addFunc(new FuncNoParamNoResult(FUN_ADD) {
             @Override
             public void function() {
-                System.out.println(11);
+                startActivity(new Intent(getContext(), PatrolLogAty.class));
             }
         });
     }
 
     @Override
     public void onClick(View view, PatrolLog data, int position) {
-
+        startActivity(new Intent(getContext(), PatrolLogAty.class));
     }
 }

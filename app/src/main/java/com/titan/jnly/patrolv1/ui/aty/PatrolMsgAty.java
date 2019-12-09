@@ -21,8 +21,8 @@ public class PatrolMsgAty extends BaseMvpCompatAty implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTitle(R.drawable.ic_back, "巡查日志信息", Gravity.CENTER);
-        setContentView(R.layout.patrol_ui_aty_patrol_add_layout);
+        initTitle(R.drawable.ic_back, "巡查消息", Gravity.CENTER);
+        setContentView(R.layout.patrolv1_ui_com_form_layout);
     }
 
     @Override
