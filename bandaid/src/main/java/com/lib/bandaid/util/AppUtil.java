@@ -11,7 +11,10 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.File;
 import java.io.Serializable;
@@ -25,6 +28,32 @@ import java.util.Map;
 public final class AppUtil {
 
     private AppUtil() {
+    }
+
+    public static FragmentManager getFragmentManagerX(Context context) {
+        if (context instanceof AppCompatActivity) {
+            return ((AppCompatActivity) context).getSupportFragmentManager();
+        }
+        return null;
+    }
+
+    public static FragmentTransaction getFrgTransactionX(Context context) {
+        FragmentManager manager = getFragmentManagerX(context);
+        if (manager != null) return manager.beginTransaction();
+        return null;
+    }
+
+    public static android.app.FragmentManager getFragmentManager(Context context) {
+        if (context instanceof Activity) {
+            return ((Activity) context).getFragmentManager();
+        }
+        return null;
+    }
+
+    public static android.app.FragmentTransaction getFrgTransaction(Context context) {
+        android.app.FragmentManager manager = getFragmentManager(context);
+        if (manager != null) return manager.beginTransaction();
+        return null;
     }
 
     /**

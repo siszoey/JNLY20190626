@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.lib.bandaid.R;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.lib.bandaid.data.remote.com.NetEasyFactory;
+import com.lib.bandaid.data.remote.com.NetEasyReq;
 import com.lib.bandaid.util.ViewUtil;
 import com.lib.bandaid.widget.snackbar.Snackbar;
 import com.lib.bandaid.widget.snackbar.SnackbarManager;
@@ -25,14 +26,28 @@ import com.lib.bandaid.widget.snackbar.SnackbarManager;
 
 public abstract class BaseFragment extends Fragment {
 
+    protected String name = "BaseFragment";
     private Context context;
     private Activity activity;
     private int layoutId;
     private View layoutView;
+    protected NetEasyReq netEasyReq;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        netEasyReq = NetEasyFactory.createEasy(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (netEasyReq != null) netEasyReq.detachView();
     }
 
     protected void setContentView(@LayoutRes int id) {
@@ -134,7 +149,7 @@ public abstract class BaseFragment extends Fragment {
                 Snackbar.with(context).
                         position(Snackbar.SnackbarPosition.TOP)
                         .text(info + "")
-                        .leftIcon(R.mipmap.widget_snackbar_common_error)
+                        .leftIcon(com.lib.bandaid.R.mipmap.widget_snackbar_common_error)
                         .duration(2000)
                         //.color(Color.argb(150, 255, 0, 0))
                         .textColor(Color.WHITE)
@@ -146,7 +161,7 @@ public abstract class BaseFragment extends Fragment {
                 Snackbar.with(context).
                         position(Snackbar.SnackbarPosition.TOP)
                         .text(info + "")
-                        .leftIcon(R.mipmap.widget_snackbar_common_success)
+                        .leftIcon(com.lib.bandaid.R.mipmap.widget_snackbar_common_success)
                         .duration(2000)
                         //.color(Color.argb(150, 0, 255, 0))
                         .textColor(Color.WHITE)
@@ -158,7 +173,7 @@ public abstract class BaseFragment extends Fragment {
                 Snackbar.with(context).
                         position(Snackbar.SnackbarPosition.TOP)
                         .text(info + "")
-                        .leftIcon(R.mipmap.widget_snackbar_common_msg)
+                        .leftIcon(com.lib.bandaid.R.mipmap.widget_snackbar_common_msg)
                         .duration(2000)
                         //.color(Color.argb(150, 0, 0, 255))
                         .textColor(Color.WHITE)
@@ -170,10 +185,14 @@ public abstract class BaseFragment extends Fragment {
                 Snackbar.with(context)
                         .position(Snackbar.SnackbarPosition.TOP)
                         .text(info + "")
-                        .leftIcon(R.mipmap.widget_snackbar_common_warn)
+                        .leftIcon(com.lib.bandaid.R.mipmap.widget_snackbar_common_warn)
                         .duration(2000)
                         //.color(Color.argb(150, 255, 128, 0))
                         .textColor(Color.WHITE)
         );
+    }
+
+    public String getName() {
+        return name;
     }
 }
