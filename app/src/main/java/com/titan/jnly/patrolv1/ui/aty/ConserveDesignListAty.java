@@ -28,7 +28,7 @@ public class ConserveDesignListAty extends BaseMvpCompatAty implements BaseRecyc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "施工设计", Gravity.CENTER);
-        setContentView(R.layout.activity_conserve_log);
+        setContentView(R.layout.patrolv1_ui_aty_conserve_log);
 
     }
 

@@ -10,7 +10,7 @@ public class ConserveTaskAty extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conserve_task_details);
+        setContentView(R.layout.patrolv1_ui_aty_conserve_task_details);
 
         initData();
     }

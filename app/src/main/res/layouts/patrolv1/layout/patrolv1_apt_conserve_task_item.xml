@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:background="@color/hx_cyan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

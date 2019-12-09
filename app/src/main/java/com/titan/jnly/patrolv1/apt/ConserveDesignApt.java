@@ -21,7 +21,7 @@ public class ConserveDesignApt extends BaseRecycleAdapter<ConserveTask, BaseView
 
     @Override
     public BaseViewHolder<ConserveTask> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(context, R.layout.item_conserve_log);
+        return new Holder(context, R.layout.patrolv1_apt_conserve_log_item);
     }
 
     class Holder extends BaseViewHolder<ConserveTask> implements View.OnClickListener {

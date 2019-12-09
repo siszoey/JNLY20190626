@@ -1,12 +1,10 @@
 package com.titan.jnly.patrolv1.apt;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +22,7 @@ public class ConserveTaskApt extends BaseRecycleAdapter<ConserveTask, BaseViewHo
 
     @Override
     public BaseViewHolder<ConserveTask> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(context, R.layout.item_conserve_task);
+        return new Holder(context, R.layout.patrolv1_apt_conserve_task_item);
     }
 
     class Holder extends BaseViewHolder<ConserveTask> implements View.OnClickListener {

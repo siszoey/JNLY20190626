@@ -13,7 +13,7 @@ public class PatrolTaskAty extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patrol_task_details);
+        setContentView(R.layout.patrolv1_ui_aty_patrol_task_details);
 
         initData();
     }

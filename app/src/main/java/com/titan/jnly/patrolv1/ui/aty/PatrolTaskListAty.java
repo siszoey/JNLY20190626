@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
@@ -36,7 +37,8 @@ public class PatrolTaskListAty extends BaseMvpCompatAty
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patrol_task);
+        initTitle(R.drawable.ic_back, "巡查任务", Gravity.CENTER);
+        setContentView(R.layout.patrolv1_ui_aty_patrol_task);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class PatrolTaskListAty extends BaseMvpCompatAty
                 List list = data.getContent();
                 finishReq(flag, list);
             }
-        }).httpGetPatrolList(page.getNum(), page.getSize());
+        }).httpGetPatrolTaskList(page.getNum(), page.getSize());
     }
 
     private void finishReq(boolean flag, List data) {
