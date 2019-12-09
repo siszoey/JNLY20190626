@@ -61,7 +61,7 @@ public class PatrolTaskListAty extends BaseMvpCompatAty
 
     @Override
     public void onClick(View view, PatrolTask data, int position) {
-        startActivity(new Intent(PatrolTaskListAty.this, PatrolTaskAty.class));
+        startActivity(new Intent(_context, PatrolTaskAty.class));
     }
 
     @Override
