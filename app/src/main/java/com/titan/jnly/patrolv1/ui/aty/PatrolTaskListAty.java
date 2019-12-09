@@ -31,7 +31,6 @@ public class PatrolTaskListAty extends BaseMvpCompatAty
     private RecyclerView rvList;
     private SmartRefreshLayout swipeLayout;
     private PatrolTaskApt patrolTaskApt;
-
     private PageParam page = PageParam.create();
 
     @Override

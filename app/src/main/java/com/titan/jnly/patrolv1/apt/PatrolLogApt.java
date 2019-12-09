@@ -22,7 +22,7 @@ public class PatrolLogApt extends BaseRecycleAdapter<PatrolLog, BaseViewHolder<P
 
     @Override
     public BaseViewHolder<PatrolLog> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(context,R.layout.patrolv1_apt_patro_log_item);
+        return new Holder(context,R.layout.patrolv1_apt_patrol_log_item);
     }
 
     class Holder extends BaseViewHolder<PatrolLog> implements View.OnClickListener {

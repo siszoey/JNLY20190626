@@ -22,7 +22,7 @@ public class PatrolTaskApt extends BaseRecycleAdapter<PatrolTask, BaseViewHolder
 
     @Override
     public BaseViewHolder<PatrolTask> onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(context, R.layout.patrolv1_apt_patro_task_item);
+        return new Holder(context, R.layout.patrolv1_apt_patrol_task_item);
     }
 
     class Holder extends BaseViewHolder<PatrolTask> implements View.OnClickListener {

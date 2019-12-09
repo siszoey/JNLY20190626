@@ -27,7 +27,7 @@ public class PatrolMsgListAty extends BaseMvpCompatAty
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTitle(R.drawable.ic_back, "巡查消息", Gravity.CENTER);
-        setContentView(R.layout.patrolv1_ui_aty_patrol_notice);
+        setContentView(R.layout.patrolv1_ui_aty_patrol_msg);
     }
 
     @Override
