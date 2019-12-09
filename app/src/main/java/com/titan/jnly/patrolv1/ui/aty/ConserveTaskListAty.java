@@ -17,7 +17,8 @@ import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.apt.ConserveTaskApt;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 
-public class ConserveTaskListAty extends BaseMvpCompatAty implements BaseRecycleAdapter.IViewClickListener<ConserveTask>, OnRefreshLoadMoreListener {
+public class ConserveTaskListAty extends BaseMvpCompatAty
+        implements BaseRecycleAdapter.IViewClickListener<ConserveTask>, OnRefreshLoadMoreListener {
 
 
     private RecyclerView rvList;
