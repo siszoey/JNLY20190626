@@ -275,7 +275,7 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
 
             String codes = Constant.getUserInfo().getUserJurs();
             String where = "";
-            if(codes.equals("370100") || Constant.getUserInfo().getUserRoles().contains("调查员")){
+            if(codes.equals("370100") && Constant.getUserInfo().getUserRoles().contains("调查员")){
                 where = " where LENGTH(f_code)=6 and LENGTH(f_name)< 6 ";
             }else{
                 where = " where f_code in (" + codes + ")";
