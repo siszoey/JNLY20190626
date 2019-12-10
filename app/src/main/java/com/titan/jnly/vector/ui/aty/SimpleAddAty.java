@@ -267,10 +267,23 @@ public class SimpleAddAty extends BaseAppCompatActivity implements View.OnClickL
         List<ItemXml> data = null;
         Map fields = new SimpleMap<>().push("areaCode", "code").push("areaName", "value");
         if (flag.equals("XIAN")) {
-            String codes = Constant.getUserInfo().getUserJurs();
+            /*String codes = Constant.getUserInfo().getUserJurs();
             String where = " where f_code in (" + codes + ")";
             List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
+            data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);*/
+
+
+            String codes = Constant.getUserInfo().getUserJurs();
+            String where = "";
+            if(codes.equals("370100") || Constant.getUserInfo().getUserRoles().contains("调查员")){
+                where = " where LENGTH(f_code)=6 and LENGTH(f_name)< 6 ";
+            }else{
+                where = " where f_code in (" + codes + ")";
+            }
+            List<District> list = DbManager.create(Config.APP_DIC_DB_PATH).getListTByWhere(District.class, where);
             data = ObjectUtil.createListTFromList(list, ItemXml.class, fields);
+
+
         }
         if (flag.equals("XIANG")) {
             UiXml city = easyUiXml.getUiXml("XIAN");

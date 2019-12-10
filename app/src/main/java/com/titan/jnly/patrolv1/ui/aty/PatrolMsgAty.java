@@ -40,7 +40,7 @@ public class PatrolMsgAty extends BaseMvpCompatAty implements View.OnClickListen
 
     @Override
     protected void initClass() {
-        easyUiXml = IoXml.readXmlFromAssets(_context, EasyUiXml.class, "patrol/XML_PATROL_MOUDLE_MSG.xml");
+        easyUiXml = IoXml.readXmlFromAssets(_context, EasyUiXml.class, "patrolv1/XML_PATROL_MOUDLE_MSG.xml");
         propertyView.setListener(new ILifeCycle() {
             @Override
             public void beforeCreate() {
