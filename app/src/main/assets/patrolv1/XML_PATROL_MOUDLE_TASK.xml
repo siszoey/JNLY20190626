@@ -8,32 +8,22 @@
             <code>Id</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^\d{32}$</regex>
-                <msg>巡查任务主键必须32位字符串!</msg>
-            </VerifyXml>
         </UiXml>
         <UiXml>
             <alias>古树编号</alias>
             <code>GSBH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^\d{32}$</regex>
-                <msg>古树编号必须是32位!</msg>
-            </VerifyXml>
         </UiXml>
         <UiXml>
-            <alias>古树电子编号</alias>
-            <code>DZBQH</code>
+            <alias>巡查日志号</alias>
+            <code>XCRZH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
         </UiXml>
         <UiXml>
-            <alias>树种</alias>
-            <code>SZK</code>
+            <alias>任务号</alias>
+            <code>RWH</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
         </UiXml>
@@ -51,337 +41,123 @@
         </UiXml>
         <UiXml>
             <alias>县（市、区）</alias>
-            <code>XIAN</code>
+            <code>XIAN_N</code>
             <dataType class="java-class">java.lang.String</dataType>
             <readonly>true</readonly>
         </UiXml>
-        <!--生长势-->
         <UiXml>
-            <alias>生长势</alias>
+            <alias>村（居委会）</alias>
+            <code>CUN_N</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>小地名</alias>
+            <code>XDM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种中文名</alias>
+            <code>SZZWM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种拉丁名</alias>
+            <code>SZLDM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种俗名</alias>
+            <code>SZSM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种科</alias>
+            <code>SZK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种属</alias>
             <code>SZS</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">1</code>
-                    <value>正常</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">2</code>
-                    <value>衰弱</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">3</code>
-                    <value>濒危</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">4</code>
-                    <value>死亡</value>
-                </ItemXml>
-            </itemXml>
-            <status>single</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-        <!--生长环境-->
-        <UiXml>
-            <alias>生长环境</alias>
-            <code>SZHJ</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">1</code>
-                    <value>好</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">2</code>
-                    <value>中</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">3</code>
-                    <value>差</value>
-                </ItemXml>
-            </itemXml>
-            <status>single</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-        <!--保护现状-->
-        <UiXml>
-            <alias>保护现状</alias>
-            <code>BHXZ</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">1</code>
-                    <value>避雷针</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">2</code>
-                    <value>护栏</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">3</code>
-                    <value>支撑</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">4</code>
-                    <value>封堵树洞</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">5</code>
-                    <value>砌树池</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">6</code>
-                    <value>包树箍</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">7</code>
-                    <value>透气铺装</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">8</code>
-                    <value>其他</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">9</code>
-                    <value>无</value>
-                </ItemXml>
-            </itemXml>
-            <status>multi</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-        <!--养护现状-->
-        <UiXml>
-            <alias>养护现状</alias>
-            <code>YHXZ</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">1</code>
-                    <value>复壮沟</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">2</code>
-                    <value>渗井</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">3</code>
-                    <value>通气管</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">4</code>
-                    <value>幼树靠接</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">5</code>
-                    <value>土壤改良</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">6</code>
-                    <value>叶面施肥</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">7</code>
-                    <value>其他</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">8</code>
-                    <value>无</value>
-                </ItemXml>
-            </itemXml>
-            <status>multi</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
+            <readonly>true</readonly>
         </UiXml>
         <UiXml>
-            <alias>养护现状</alias>
-            <code>YHXZ</code>
+            <alias>经度</alias>
+            <code>LON</code>
             <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">1</code>
-                    <value>复壮沟</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">2</code>
-                    <value>渗井</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">3</code>
-                    <value>通气管</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">4</code>
-                    <value>幼树靠接</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">5</code>
-                    <value>土壤改良</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">6</code>
-                    <value>叶面施肥</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">7</code>
-                    <value>其他</value>
-                </ItemXml>
-                <ItemXml>
-                    <checked>false</checked>
-                    <code class="string">8</code>
-                    <value>无</value>
-                </ItemXml>
-            </itemXml>
-            <status>multi</status>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-        <!--巡查问题-->
-        <UiXml>
-            <alias>巡查问题(限500字)</alias>
-            <code>PatrolContent</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
-        </UiXml>
-        <!--巡查信息级别-->
-        <UiXml>
-            <alias>巡查信息级别</alias>
-            <code>PatrolLevel</code>
-            <dataType class="java-class">java.lang.String</dataType>
-            <itemXml>
-                <ItemXml>
-                    <code class="string">1</code>
-                    <value>正常</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">2</code>
-                    <value>较重</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">3</code>
-                    <value>严重</value>
-                </ItemXml>
-                <ItemXml>
-                    <code class="string">4</code>
-                    <value>紧急</value>
-                </ItemXml>
-            </itemXml>
-            <VerifyXml>
-                <canNull>false</canNull>
-                <regex>^(?=.*\S).+$</regex>
-                <msg>不能为空!</msg>
-            </VerifyXml>
+            <readonly>true</readonly>
         </UiXml>
         <UiXml>
-            <alias>巡查单位</alias>
-            <code>PatrolDep</code>
+            <alias>纬度</alias>
+            <code>LAT</code>
             <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>建设单位</alias>
+            <code>JSDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>设计单位</alias>
+            <code>SJDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>监理单位</alias>
+            <code>JLDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护单位</alias>
+            <code>YHDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>开工日期</alias>
+            <code>KGRQ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>概况</alias>
+            <code>GK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写人</alias>
+            <code>TXR</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写人ID</alias>
+            <code>TXRID</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写时间</alias>
+            <code>TXSJ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
         </UiXml>
         <UiXml>
             <alias>巡查员</alias>
-            <code>PatrolUser</code>
+            <code>XCYID</code>
             <dataType class="java-class">java.lang.String</dataType>
-        </UiXml>
-        <UiXml>
-            <alias>巡查时间</alias>
-            <code>PatrolDate</code>
-            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
         </UiXml>
     </uiXml>
-
-
-    <!--UiXml>
-        <alias>树种中文名称</alias>
-        <code>SZZWM</code>
-        <dataType class="java-class">java.lang.String</dataType>
-        <uiType>dialog</uiType>
-        <status>single</status>
-        <readonly>true</readonly>
-        <VerifyXml>
-            <canNull>false</canNull>
-            <regex>^(?=.*\S).+$</regex>
-            <msg>不能为空!</msg>
-        </VerifyXml>
-    </UiXml-->
-
-    <!--UiXml>
-        <alias>经度</alias>
-        <code>LON</code>
-        <dataType class="java-class">java.lang.Double</dataType>
-        <inputType>numPrior</inputType>
-        <readonly>true</readonly>
-        <VerifyXml>
-            <canNull>false</canNull>
-            <regex>
-                ^[EW]?((\d|[1-9]\d|1[0-7]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
-            </regex>
-            <msg>请输入正确的经度!</msg>
-        </VerifyXml>
-    </UiXml>
-    <UiXml>
-        <alias>纬度</alias>
-        <code>LAT</code>
-        <dataType class="java-class">java.lang.Double</dataType>
-        <inputType>numPrior</inputType>
-        <readonly>true</readonly>
-        <VerifyXml>
-            <canNull>false</canNull>
-            <regex>^[EW]?((\d|[1-8]\d)[s\°](\d|[0-5]\d)[s\′](\d|[0-5]\d)(\.\d{2,2})[s\″]$)
-            </regex>
-            <msg>请输入正确的纬度!</msg>
-        </VerifyXml>
-    </UiXml-->
-
 </EasyUiXml>

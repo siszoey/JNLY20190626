@@ -16,6 +16,14 @@ public final class CollectUtil {
 
     }
 
+    public static List addRepeat(List list, Object o, int repeat) {
+        if (list == null) list = new ArrayList();
+        for (int i = 0; i < repeat; i++) {
+            list.add(o);
+        }
+        return list;
+    }
+
     /**
      * @param objects
      * @param obj

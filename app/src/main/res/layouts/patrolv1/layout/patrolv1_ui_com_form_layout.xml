@@ -11,6 +11,7 @@
         android:layout_weight="1"></com.lib.bandaid.widget.easyui.ui_v1.PropertyView>
 
     <LinearLayout
+        android:id="@+id/llBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

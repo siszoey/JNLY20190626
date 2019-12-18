@@ -14,6 +14,7 @@ import com.lib.bandaid.adapter.BaseFragmentAdapter;
 import com.lib.bandaid.message.FuncManager;
 import com.titan.jnly.R;
 import com.lib.bandaid.fragment.BaseFragment;
+import com.titan.jnly.patrolv1.bean.PatrolTask;
 import com.titan.jnly.patrolv1.ui.frg.PatrolTaskDetailFrg;
 import com.titan.jnly.patrolv1.ui.frg.PatrolTaskLogFrg;
 import com.titan.jnly.patrolv1.ui.frg.PatrolTaskMsgFrg;
@@ -27,10 +28,12 @@ public class PatrolTaskAty extends BaseMvpCompatAty {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private List<BaseFragment> fragments;
+    private PatrolTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getIntent() != null) task = (PatrolTask) getIntent().getSerializableExtra("task");
         initTitle(R.drawable.ic_back, "巡查任务", Gravity.CENTER);
         setContentView(R.layout.patrolv1_ui_aty_patrol_task_details);
     }
@@ -71,7 +74,7 @@ public class PatrolTaskAty extends BaseMvpCompatAty {
     @Override
     protected void initClass() {
         fragments = new ArrayList<>();
-        fragments.add(PatrolTaskDetailFrg.newInstance());
+        fragments.add(PatrolTaskDetailFrg.newInstance(task));
         fragments.add(PatrolTaskLogFrg.newInstance());
         fragments.add(PatrolTaskMsgFrg.newInstance());
         BaseFragmentAdapter.create(viewPager, fragments);

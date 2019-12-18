@@ -65,7 +65,9 @@ public class PatrolTaskListFrg extends BaseFragment
 
     @Override
     public void onClick(View view, PatrolTask data, int position) {
-        startActivity(new Intent(context, PatrolTaskAty.class));
+        Intent intent = new Intent(context, PatrolTaskAty.class);
+        intent.putExtra("task", data);
+        startActivity(intent);
     }
 
     @Override

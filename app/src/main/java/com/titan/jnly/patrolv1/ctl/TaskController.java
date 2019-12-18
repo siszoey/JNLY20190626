@@ -6,6 +6,7 @@ import com.lib.bandaid.data.remote.mock.annotation.GetMapping;
 import com.lib.bandaid.data.remote.mock.annotation.RequestMapping;
 import com.lib.bandaid.data.remote.mock.annotation.RequestParam;
 import com.lib.bandaid.data.remote.mock.annotation.RestController;
+import com.lib.bandaid.util.CollectUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 import com.titan.jnly.patrolv1.bean.PatrolLog;
@@ -40,13 +41,7 @@ public class TaskController {
         task.setDZBQH("1122");
         task.setGSBH("1122");
         task.setJLDW("1122");
-
-        List<PatrolTask> list = new ArrayList<>();
-        list.add(task);
-        list.add(task);
-        list.add(task);
-        list.add(task);
-        list.add(task);
+        List<PatrolTask> list = CollectUtil.addRepeat(null, task, 30);
         return TTResult.Ok(list);
     }
 
@@ -56,12 +51,7 @@ public class TaskController {
             @RequestParam("pageNumber") Integer pageNumber,
             @RequestParam("pageNumber") Integer size) {
         PatrolLog log = new PatrolLog();
-        List<PatrolLog> list = new ArrayList<>();
-        list.add(log);
-        list.add(log);
-        list.add(log);
-        list.add(log);
-        list.add(log);
+        List<PatrolLog> list = CollectUtil.addRepeat(null, log, 30);
         return TTResult.Ok(list);
     }
 
@@ -70,12 +60,7 @@ public class TaskController {
             @RequestParam("pageNumber") Integer pageNumber,
             @RequestParam("pageNumber") Integer size) {
         PatrolMsg msg = new PatrolMsg();
-        List<PatrolMsg> list = new ArrayList<>();
-        list.add(msg);
-        list.add(msg);
-        list.add(msg);
-        list.add(msg);
-        list.add(msg);
+        List<PatrolMsg> list = CollectUtil.addRepeat(null, msg, 30);
         return TTResult.Ok(list);
     }
 
@@ -97,13 +82,7 @@ public class TaskController {
         task.setDZBQH("1122");
         task.setGSBH("1122");
         task.setJLDW("1122");
-
-        List<ConserveTask> list = new ArrayList<>();
-        list.add(task);
-        list.add(task);
-        list.add(task);
-        list.add(task);
-        list.add(task);
+        List<ConserveTask> list = CollectUtil.addRepeat(null, task, 30);
         return TTResult.Ok(list);
     }
 
