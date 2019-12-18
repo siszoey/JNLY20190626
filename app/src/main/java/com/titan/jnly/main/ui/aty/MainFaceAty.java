@@ -21,6 +21,7 @@ import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.dialog.DialogMould;
 import com.titan.jnly.patrolv1.ui.aty.ConserveTaskListAty;
+import com.titan.jnly.patrolv1.ui.aty.PCMainAty;
 import com.titan.jnly.patrolv1.ui.aty.PatrolTaskListAty;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
@@ -113,7 +114,8 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
 
         } else if (position == 1) {
             //startActivity(new Intent(_context, PatrolCureActivity.class));
-            startActivity(new Intent(_context, PatrolTaskListAty.class));
+            //startActivity(new Intent(_context, PatrolTaskListAty.class));
+            startActivity(new Intent(_context, PCMainAty.class));
         } else if (position == 2) {
             startActivity(new Intent(_context, ConserveTaskListAty.class));
             //showToast("开发中");

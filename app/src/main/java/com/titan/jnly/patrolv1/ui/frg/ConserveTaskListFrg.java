@@ -1,17 +1,17 @@
-package com.titan.jnly.patrolv1.ui.aty;
+package com.titan.jnly.patrolv1.ui.frg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
+import com.lib.bandaid.fragment.BaseFragment;
 import com.lib.bandaid.util.PageParam;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -20,12 +20,18 @@ import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.api.IPatrolApi;
 import com.titan.jnly.patrolv1.apt.ConserveTaskApt;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
+import com.titan.jnly.patrolv1.ui.aty.ConserveTaskAty;
 
 import java.util.List;
 
-public class ConserveTaskListAty extends BaseMvpCompatAty
-        implements BaseRecycleAdapter.IViewClickListener<ConserveTask>, OnRefreshLoadMoreListener {
+public class ConserveTaskListFrg extends BaseFragment
+        implements OnRefreshLoadMoreListener, BaseRecycleAdapter.IViewClickListener<ConserveTask> {
 
+    public static ConserveTaskListFrg newInstance() {
+        ConserveTaskListFrg fragment = new ConserveTaskListFrg();
+        fragment.name = "施工任务列表";
+        return fragment;
+    }
 
     private RecyclerView rvList;
     private SmartRefreshLayout swipeLayout;
@@ -33,9 +39,8 @@ public class ConserveTaskListAty extends BaseMvpCompatAty
     private PageParam page = PageParam.create();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTitle(R.drawable.ic_back, "施工任务", Gravity.CENTER);
         setContentView(R.layout.patrolv1_ui_aty_conserve_task);
     }
 
@@ -59,7 +64,7 @@ public class ConserveTaskListAty extends BaseMvpCompatAty
 
     @Override
     public void onClick(View view, ConserveTask data, int position) {
-        startActivity(new Intent(_context, ConserveTaskAty.class));
+        startActivity(new Intent(context, ConserveTaskAty.class));
     }
 
     @Override

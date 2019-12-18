@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navi_decision"
+        android:icon="@drawable/ic_navi_decision_24dp"
+        android:title="古树巡查" />
+
+    <item
+        android:id="@+id/navi_manage"
+        android:icon="@drawable/ic_navi_manage_24dp"
+        android:title="古树养护" />
+
+</menu>

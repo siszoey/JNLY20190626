@@ -27,8 +27,8 @@ import com.lib.bandaid.widget.snackbar.SnackbarManager;
 public abstract class BaseFragment extends Fragment {
 
     protected String name = "BaseFragment";
-    private Context context;
-    private Activity activity;
+    protected Context context;
+    protected Activity activity;
     private int layoutId;
     private View layoutView;
     protected NetEasyReq netEasyReq;
