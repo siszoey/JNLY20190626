@@ -135,4 +135,10 @@ public class TaskController {
         List<ConserveLog> list = CollectUtil.addRepeat(null, task, 30);
         return TTResult.Ok(list);
     }
+
+
+    @PostMapping(value = "api/v1/conserve/log/del")
+    public TTResult<Boolean> getConserveLogList(@RequestBody ConserveLog log) {
+        return TTResult.Ok(true);
+    }
 }

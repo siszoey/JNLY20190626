@@ -26,12 +26,13 @@ public class ConserveLogApt extends BaseRecycleAdapter<ConserveLog, BaseViewHold
         return new Holder(context, R.layout.patrolv1_apt_conserve_log_item);
     }
 
-    class Holder extends BaseViewHolder<ConserveLog> implements View.OnClickListener {
+    class Holder extends BaseViewHolder<ConserveLog> implements View.OnClickListener, View.OnLongClickListener {
 
 
         public Holder(Context context, int resId) {
             super(context, resId);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -42,6 +43,13 @@ public class ConserveLogApt extends BaseRecycleAdapter<ConserveLog, BaseViewHold
         @Override
         public void onClick(View v) {
             if (iViewClickListener != null) iViewClickListener.onClick(v, data, position);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (iLongViewClickListener != null)
+                iLongViewClickListener.onLongViewClick(v, data, position);
+            return true;
         }
     }
 }

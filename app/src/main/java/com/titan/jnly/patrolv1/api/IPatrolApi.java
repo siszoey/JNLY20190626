@@ -90,4 +90,14 @@ public interface IPatrolApi {
      */
     @GET("api/v1/conserve/log/list")
     Observable<TTResult<List<ConserveLog>>> httpGetConserveLogList(@Query("pageNumber") Integer number, @Query("pageSize") Integer size);
+
+
+    /**
+     * 施工任务>>日志删除
+     *
+     * @param log
+     * @return
+     */
+    @POST("api/v1/conserve/log/del")
+    Observable<TTResult<Boolean>> httpPostConserveLogDel(@Body ConserveLog log);
 }
