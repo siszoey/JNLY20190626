@@ -18,11 +18,6 @@
             android:layout_height="wrap_content"
             android:maxWidth="50dp" />
 
-        <CheckBox
-            android:id="@+id/cbBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="电子标签:" />
+                    android:text="古树电子编号:" />
 
                 <TextView
                     android:id="@+id/tvNum"
@@ -54,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="调查顺序号:" />
+                    android:text="树种:" />
 
                 <TextView
                     android:id="@+id/tvOrder"
@@ -71,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="中文树名:" />
+                    android:text="古树编号:" />
 
                 <TextView
                     android:id="@+id/tvName"
@@ -80,55 +75,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="调查时间:" />
-
-                <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="模型树龄:" />
-
-                <TextView
-                    android:id="@+id/tvAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="14sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/ivSync"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cloud_upload_gray" />
-
 
     </LinearLayout>
 
