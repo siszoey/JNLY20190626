@@ -12,42 +12,35 @@ import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.fragment.BaseFragment;
-import com.lib.bandaid.message.FuncManager;
-import com.lib.bandaid.message.FuncNoParamNoResult;
 import com.lib.bandaid.util.PageParam;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.api.IPatrolApi;
-import com.titan.jnly.patrolv1.apt.PatrolLogApt;
-import com.titan.jnly.patrolv1.apt.PatrolTaskApt;
-import com.titan.jnly.patrolv1.bean.PatrolLog;
-import com.titan.jnly.patrolv1.bean.PatrolTask;
-import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
+import com.titan.jnly.patrolv1.apt.ConserveLogApt;
+import com.titan.jnly.patrolv1.bean.ConserveLog;
 
 import java.util.List;
 
-public class PatrolTaskLogFrg extends BaseFragment
-        implements OnRefreshLoadMoreListener, BaseRecycleAdapter.IViewClickListener<PatrolLog> {
+public class ConserveLogListFrg extends BaseFragment
+        implements OnRefreshLoadMoreListener , BaseRecycleAdapter.IViewClickListener<ConserveLog>{
 
-    public final static String FUN_ADD = "FUN_ADD_PATROL_TASK_LOG";
-
-    public static PatrolTaskLogFrg newInstance() {
-        PatrolTaskLogFrg fragment = new PatrolTaskLogFrg();
-        fragment.name = "巡查日志";
+    public static ConserveLogListFrg newInstance() {
+        ConserveLogListFrg fragment = new ConserveLogListFrg();
+        fragment.name = "施工日志列表";
         return fragment;
     }
 
     private RecyclerView rvList;
     private SmartRefreshLayout swipeLayout;
-    private PatrolLogApt patrolLogApt;
+    private ConserveLogApt conserveLogApt;
     private PageParam page = PageParam.create();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.patrolv1_ui_aty_patrol_log);
+        setContentView(R.layout.patrolv1_ui_aty_conserve_log);
     }
 
     @Override
@@ -63,9 +56,8 @@ public class PatrolTaskLogFrg extends BaseFragment
 
     @Override
     protected void initClass() {
-        patrolLogApt = new PatrolLogApt(rvList);
-        patrolLogApt.setIViewClickListener(this);
-        dispatchFun();
+        conserveLogApt = new ConserveLogApt(rvList);
+        conserveLogApt.setIViewClickListener(this);
         requestList();
     }
 
@@ -82,37 +74,28 @@ public class PatrolTaskLogFrg extends BaseFragment
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<PatrolLog>>>() {
+        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<ConserveLog>>>() {
             @Override
-            public void onSuccess(TTResult<List<PatrolLog>> data) {
+            public void onSuccess(TTResult<List<ConserveLog>> data) {
                 boolean flag = data.getResult();
                 List list = data.getContent();
                 finishReq(flag, list);
             }
-        }).httpGetPatrolLogList(page.getNum(), page.getSize());
+        }).httpGetConserveLogList(page.getNum(), page.getSize());
     }
 
     private void finishReq(boolean flag, List data) {
         if (page.isNew()) {
             swipeLayout.finishRefresh(flag);
-            if (flag) patrolLogApt.replaceAll(data);
+            if (flag) conserveLogApt.replaceAll(data);
         } else {
             swipeLayout.finishLoadMore(flag);
-            if (flag) patrolLogApt.appendList(data);
+            if (flag) conserveLogApt.appendList(data);
         }
     }
 
-    void dispatchFun() {
-        FuncManager.getInstance().addFunc(new FuncNoParamNoResult(FUN_ADD) {
-            @Override
-            public void function() {
-                startActivity(new Intent(getContext(), PatrolLogAty.class));
-            }
-        });
-    }
-
     @Override
-    public void onClick(View view, PatrolLog data, int position) {
-        startActivity(new Intent(getContext(), PatrolLogAty.class));
+    public void onClick(View view, ConserveLog data, int position) {
+        //startActivity(new Intent(getContext(), PatrolLogAty.class));
     }
 }

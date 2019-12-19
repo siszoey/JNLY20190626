@@ -59,7 +59,9 @@ public class ConserveTaskListAty extends BaseMvpCompatAty
 
     @Override
     public void onClick(View view, ConserveTask data, int position) {
-        startActivity(new Intent(_context, ConserveTaskAty.class));
+        Intent intent = new Intent(_context, ConserveTaskAty.class);
+        intent.putExtra("task", data);
+        startActivity(intent);
     }
 
     @Override

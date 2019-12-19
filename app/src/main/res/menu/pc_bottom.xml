@@ -4,11 +4,11 @@
     <item
         android:id="@+id/navi_decision"
         android:icon="@drawable/ic_navi_decision_24dp"
-        android:title="古树巡查" />
+        android:title="巡查任务列表" />
 
     <item
         android:id="@+id/navi_manage"
         android:icon="@drawable/ic_navi_manage_24dp"
-        android:title="古树养护" />
+        android:title="施工任务列表" />
 
 </menu>

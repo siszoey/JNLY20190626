@@ -11,9 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.ui.frg.ConserveTaskListFrg;
-import com.titan.jnly.patrolv1.ui.frg.PatrolTaskDetailFrg;
 import com.titan.jnly.patrolv1.ui.frg.PatrolTaskListFrg;
-import com.titan.jnly.patrolv1.ui.frg.PatrolTaskLogFrg;
 
 
 public class PCMainAty extends BaseMvpCompatAty implements BottomNavigationView.OnNavigationItemSelectedListener {

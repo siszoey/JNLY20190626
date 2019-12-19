@@ -8,6 +8,7 @@ import com.lib.bandaid.data.remote.mock.annotation.RequestParam;
 import com.lib.bandaid.data.remote.mock.annotation.RestController;
 import com.lib.bandaid.util.CollectUtil;
 import com.titan.jnly.Config;
+import com.titan.jnly.patrolv1.bean.ConserveLog;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 import com.titan.jnly.patrolv1.bean.PatrolLog;
 import com.titan.jnly.patrolv1.bean.PatrolMsg;
@@ -86,4 +87,23 @@ public class TaskController {
         return TTResult.Ok(list);
     }
 
+    /**
+     * list
+     *
+     * @param pageNumber
+     * @param size
+     * @return
+     */
+    @GetMapping(value = "api/v1/conserve/log/list")
+    public TTResult<List<ConserveLog>> getConserveLogList(
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("pageNumber") Integer size) {
+
+        ConserveLog task = new ConserveLog();
+        task.setId("1122");
+        task.setDZBQH("1122");
+        task.setGSBH("1122");
+        List<ConserveLog> list = CollectUtil.addRepeat(null, task, 30);
+        return TTResult.Ok(list);
+    }
 }

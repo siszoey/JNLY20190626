@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EasyUiXml>
+    <name>巡查日志</name>
+    <alias>巡查日志</alias>
+    <uiXml>
+        <UiXml>
+            <alias>任务Id</alias>
+            <code>Id</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>古树编号</alias>
+            <code>GSBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>电子标签号</alias>
+            <code>DZBQH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>任务号</alias>
+            <code>RWH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>古树编号</alias>
+            <code>GSBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>任务号</alias>
+            <code>RWH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>县（市、区）</alias>
+            <code>XIAN_N</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>乡镇（街道）</alias>
+            <code>XIANG_N</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>村（居委会）</alias>
+            <code>CUN_N</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>小地名</alias>
+            <code>XDM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种中文名</alias>
+            <code>SZZWM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种拉丁名</alias>
+            <code>SZLDM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种俗名</alias>
+            <code>SZSM</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种科</alias>
+            <code>SZK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种属</alias>
+            <code>SZS</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>经度</alias>
+            <code>LON</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>纬度</alias>
+            <code>LAT</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>建设单位</alias>
+            <code>JSDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>设计单位</alias>
+            <code>SJDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>监理单位</alias>
+            <code>JLDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护单位</alias>
+            <code>YHDW</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写人</alias>
+            <code>TXR</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写时间</alias>
+            <code>TXSJ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>巡查员</alias>
+            <code>XCYID</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护任务标识描述</alias>
+            <code>TaskMarkDesp</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+    </uiXml>
+</EasyUiXml>

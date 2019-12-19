@@ -3,6 +3,7 @@ package com.titan.jnly.patrolv1.api;
 import com.lib.bandaid.data.remote.api.annotation.BaseUrl;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.titan.jnly.Config;
+import com.titan.jnly.patrolv1.bean.ConserveLog;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 import com.titan.jnly.patrolv1.bean.PatrolLog;
 import com.titan.jnly.patrolv1.bean.PatrolMsg;
@@ -59,4 +60,14 @@ public interface IPatrolApi {
     @GET("api/v1/conserve/task/list")
     Observable<TTResult<List<ConserveTask>>> httpGetConserveTaskList(@Query("pageNumber") Integer number, @Query("pageSize") Integer size);
 
+
+    /**
+     * 养护任务分页列表
+     *
+     * @param number
+     * @param size
+     * @return
+     */
+    @GET("api/v1/conserve/log/list")
+    Observable<TTResult<List<ConserveLog>>> httpGetConserveLogList(@Query("pageNumber") Integer number, @Query("pageSize") Integer size);
 }

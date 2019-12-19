@@ -18,7 +18,8 @@ import com.titan.jnly.patrolv1.apt.ConserveDesignApt;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 
 
-public class ConserveDesignListAty extends BaseMvpCompatAty implements BaseRecycleAdapter.IViewClickListener<ConserveTask>, OnRefreshLoadMoreListener {
+public class ConserveDesignListAty extends BaseMvpCompatAty
+        implements BaseRecycleAdapter.IViewClickListener<ConserveTask>, OnRefreshLoadMoreListener {
 
     private RecyclerView rvList;
     private SmartRefreshLayout swipeLayout;

@@ -21,20 +21,18 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.api.IPatrolApi;
 import com.titan.jnly.patrolv1.apt.PatrolMsgApt;
-import com.titan.jnly.patrolv1.apt.PatrolTaskApt;
 import com.titan.jnly.patrolv1.bean.PatrolMsg;
-import com.titan.jnly.patrolv1.bean.PatrolTask;
 import com.titan.jnly.patrolv1.ui.aty.PatrolMsgAty;
 
 import java.util.List;
 
-public class PatrolTaskMsgFrg extends BaseFragment
+public class PatrolMsgListFrg extends BaseFragment
         implements OnRefreshLoadMoreListener, BaseRecycleAdapter.IViewClickListener<PatrolMsg> {
 
     public final static String FUN_ADD = "FUN_ADD_PATROL_TASK_MSG";
 
-    public static PatrolTaskMsgFrg newInstance() {
-        PatrolTaskMsgFrg fragment = new PatrolTaskMsgFrg();
+    public static PatrolMsgListFrg newInstance() {
+        PatrolMsgListFrg fragment = new PatrolMsgListFrg();
         fragment.name = "巡查消息";
         return fragment;
     }
