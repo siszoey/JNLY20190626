@@ -1,5 +1,6 @@
 package com.titan.jnly.patrolv1.ui.aty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -46,7 +47,7 @@ public class ConserveTaskAty extends BaseMvpCompatAty {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_right_add) {
-
+            startActivity(new Intent(_context, ConserveLogAty.class));
         }
         return super.onOptionsItemSelected(item);
     }

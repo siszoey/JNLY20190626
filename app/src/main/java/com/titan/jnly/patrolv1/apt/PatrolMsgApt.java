@@ -24,7 +24,7 @@ public class PatrolMsgApt extends BaseRecycleAdapter<PatrolMsg, BaseViewHolder<P
         return new Holder(context, R.layout.patrolv1_apt_patrol_msg_item);
     }
 
-    class Holder extends BaseViewHolder<PatrolMsg> implements View.OnClickListener {
+    class Holder extends BaseViewHolder<PatrolMsg> implements View.OnClickListener, View.OnLongClickListener {
 
         TextView tvNum;
         TextView tvOrder;
@@ -34,6 +34,7 @@ public class PatrolMsgApt extends BaseRecycleAdapter<PatrolMsg, BaseViewHolder<P
             tvNum = $(R.id.tvNum);
             tvOrder = $(R.id.tvOrder);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -44,6 +45,13 @@ public class PatrolMsgApt extends BaseRecycleAdapter<PatrolMsg, BaseViewHolder<P
         @Override
         public void onClick(View v) {
             if (iViewClickListener != null) iViewClickListener.onClick(v, data, position);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (iLongViewClickListener != null)
+                iLongViewClickListener.onLongViewClick(v, data, position);
+            return true;
         }
     }
 }

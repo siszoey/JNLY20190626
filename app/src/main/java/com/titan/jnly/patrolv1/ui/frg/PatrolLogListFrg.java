@@ -8,12 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
 import com.lib.bandaid.fragment.BaseFragment;
 import com.lib.bandaid.message.FuncManager;
 import com.lib.bandaid.message.FuncNoParamNoResult;
+import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.PageParam;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -27,7 +30,9 @@ import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
 import java.util.List;
 
 public class PatrolLogListFrg extends BaseFragment
-        implements OnRefreshLoadMoreListener, BaseRecycleAdapter.IViewClickListener<PatrolLog> {
+        implements OnRefreshLoadMoreListener,
+        BaseRecycleAdapter.IViewClickListener<PatrolLog>,
+        BaseRecycleAdapter.ILongViewClickListener<PatrolLog> {
 
     public final static String FUN_ADD = "FUN_ADD_PATROL_TASK_LOG";
 
@@ -63,6 +68,7 @@ public class PatrolLogListFrg extends BaseFragment
     protected void initClass() {
         patrolLogApt = new PatrolLogApt(rvList);
         patrolLogApt.setIViewClickListener(this);
+        patrolLogApt.setILongViewClickListener(this);
         dispatchFun();
         requestList();
     }
@@ -112,5 +118,31 @@ public class PatrolLogListFrg extends BaseFragment
     @Override
     public void onClick(View view, PatrolLog data, int position) {
         startActivity(new Intent(getContext(), PatrolLogAty.class));
+    }
+
+    @Override
+    public void onLongViewClick(View view, PatrolLog data, int position) {
+        new ATEDialog.Theme_Alert(context)
+                .title("提示")
+                .content("确认删除？")
+                .positiveText("删除")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        reqDel(data);
+                    }
+                }).show();
+    }
+
+    public void reqDel(PatrolLog log) {
+        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<Boolean>>() {
+            @Override
+            public void onSuccess(TTResult<Boolean> data) {
+                boolean flag = data.getResult();
+                if (flag) patrolLogApt.removeItem(log);
+                else showLongToast("删除失败！");
+            }
+        }).httpPostPatrolLogDel(log);
     }
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EasyUiXml>
+    <name>施工日志</name>
+    <alias>施工日志</alias>
+    <uiXml>
+        <UiXml>
+            <alias>任务Id</alias>
+            <code>Id</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>古树编号</alias>
+            <code>GSBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>电子标签号</alias>
+            <code>DZBQH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>日志号</alias>
+            <code>RZH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>树种科</alias>
+            <code>SZK</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>县（市、区）</alias>
+            <code>XIAN</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>补水与排水</alias>
+            <code>BSYPS</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>有害生物防治</alias>
+            <code>YHSWFZ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>土壤管理</alias>
+            <code>TRGL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>树体保护</alias>
+            <code>STBH</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>环境改良</alias>
+            <code>HJGL</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>施肥</alias>
+            <code>SF</code>
+            <dataType class="java-class">java.lang.String</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>其他施工措施</alias>
+            <code>QTCS</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+        </UiXml>
+        <UiXml>
+            <alias>养护员</alias>
+            <code>CONSERVE_USER</code>
+            <dataType class="java-class">java.lang.Double</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>巡查时间</alias>
+            <code>CONSERVE_DATE</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>事件上报人Id</alias>
+            <code>USER_ID</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>填写时间</alias>
+            <code>TXSJ</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>数据状态</alias>
+            <code>VALID</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护日志审核状态</alias>
+            <code>Status</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护日志审核状态描述</alias>
+            <code>StatusDesp</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护日志审核结果</alias>
+            <code>Result</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护日志审核结果描述</alias>
+            <code>ResultDesp</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+        <UiXml>
+            <alias>养护单位</alias>
+            <code>ConserveDEP</code>
+            <dataType class="java-class">java.lang.String</dataType>
+            <readonly>true</readonly>
+        </UiXml>
+    </uiXml>
+</EasyUiXml>

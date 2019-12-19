@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 @BaseUrl(Config.BASE_URL.BaseUrl_Mock)
@@ -40,6 +42,15 @@ public interface IPatrolApi {
     Observable<TTResult<List<PatrolLog>>> httpGetPatrolLogList(@Query("pageNumber") Integer number, @Query("pageSize") Integer size);
 
     /**
+     * 巡查任务>>日志删除
+     *
+     * @param log
+     * @return
+     */
+    @POST("api/v1/patrol/log/del")
+    Observable<TTResult<Boolean>> httpPostPatrolLogDel(@Body PatrolLog log);
+
+    /**
      * 巡查任务>>消息分页列表
      *
      * @param number
@@ -49,6 +60,15 @@ public interface IPatrolApi {
     @GET("api/v1/patrol/msg/list")
     Observable<TTResult<List<PatrolMsg>>> httpGetPatrolMsgList(@Query("pageNumber") Integer number, @Query("pageSize") Integer size);
 
+
+    /**
+     * 巡查任务>>消息删除
+     *
+     * @param msg
+     * @return
+     */
+    @POST("api/v1/patrol/msg/del")
+    Observable<TTResult<Boolean>> httpPostPatrolMsgDel(@Body PatrolMsg msg);
 
     /**
      * 养护任务分页列表

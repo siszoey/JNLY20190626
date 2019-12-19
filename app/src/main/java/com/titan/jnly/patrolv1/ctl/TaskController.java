@@ -3,6 +3,8 @@ package com.titan.jnly.patrolv1.ctl;
 
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.mock.annotation.GetMapping;
+import com.lib.bandaid.data.remote.mock.annotation.PostMapping;
+import com.lib.bandaid.data.remote.mock.annotation.RequestBody;
 import com.lib.bandaid.data.remote.mock.annotation.RequestMapping;
 import com.lib.bandaid.data.remote.mock.annotation.RequestParam;
 import com.lib.bandaid.data.remote.mock.annotation.RestController;
@@ -17,7 +19,10 @@ import com.titan.jnly.patrolv1.bean.PatrolTask;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 @RestController
 @RequestMapping(Config.BASE_URL.BaseUrl_Mock)
@@ -56,6 +61,18 @@ public class TaskController {
         return TTResult.Ok(list);
     }
 
+    @PostMapping(value = "api/v1/patrol/log/del")
+    public TTResult<Boolean> patrolLogDel(@RequestBody PatrolLog log) {
+        return TTResult.Ok(true);
+    }
+
+    /**
+     * 分页获取巡查信息列表
+     *
+     * @param pageNumber
+     * @param size
+     * @return
+     */
     @GetMapping(value = "api/v1/patrol/msg/list")
     public TTResult<List<PatrolMsg>> getPatrolMsgList(
             @RequestParam("pageNumber") Integer pageNumber,
@@ -64,6 +81,18 @@ public class TaskController {
         List<PatrolMsg> list = CollectUtil.addRepeat(null, msg, 30);
         return TTResult.Ok(list);
     }
+
+    /**
+     * 删除巡查消息
+     *
+     * @param msg
+     * @return
+     */
+    @PostMapping(value = "api/v1/patrol/msg/del")
+    public TTResult<Boolean> patrolMsgDel(@RequestBody PatrolMsg msg) {
+        return TTResult.Ok(true);
+    }
+
 
     /**
      * list
