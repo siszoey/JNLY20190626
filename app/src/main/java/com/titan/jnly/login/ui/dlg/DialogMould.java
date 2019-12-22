@@ -1,4 +1,4 @@
-package com.titan.jnly.login.ui.dialog;
+package com.titan.jnly.login.ui.dlg;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -26,7 +26,7 @@ import com.lib.bandaid.util.PositionUtil;
 import com.lib.bandaid.widget.base.EGravity;
 import com.lib.bandaid.widget.drag.CustomDrawerLayout;
 import com.titan.jnly.R;
-import com.titan.jnly.examine.ui.dialog.NviDialog;
+import com.titan.jnly.examine.ui.dlg.NviDialog;
 import com.titan.jnly.examine.ui.frame.FrameLayer;
 import com.titan.jnly.common.frame.FrameQuery;
 import com.titan.jnly.common.tools.ToolClear;

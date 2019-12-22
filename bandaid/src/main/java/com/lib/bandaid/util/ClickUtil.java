@@ -1,6 +1,7 @@
 package com.lib.bandaid.util;
 
 import android.util.Log;
+import android.view.View;
 
 public final class ClickUtil {
     private static long lastClickTime = 0;
@@ -23,6 +24,10 @@ public final class ClickUtil {
      */
     public static boolean isFastDoubleClick(int buttonId) {
         return isFastDoubleClick(buttonId, DIFF);
+    }
+
+    public static boolean isFastDoubleClick(View button) {
+        return isFastDoubleClick(button.getId(), DIFF);
     }
 
     /**

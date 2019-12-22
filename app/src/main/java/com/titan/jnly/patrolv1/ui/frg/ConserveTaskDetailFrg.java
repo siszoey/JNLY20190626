@@ -14,7 +14,6 @@ import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
-import com.titan.jnly.patrolv1.bean.PatrolTask;
 import com.zy.foxui.util.ObjectUtil;
 
 import java.util.Map;

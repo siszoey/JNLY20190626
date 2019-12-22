@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * 正式环境
  */
-public final class Config extends Config_pro {
+public final class Config extends Config_dev {
 
     public static String APP_SPATIAL_DIR = "spatial";
     public static String APP_CACHE_DIR = "cache";

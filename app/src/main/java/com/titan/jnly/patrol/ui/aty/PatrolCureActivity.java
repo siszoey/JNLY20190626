@@ -32,7 +32,7 @@ import com.titan.jnly.common.tools.ToolClear;
 import com.titan.jnly.common.tools.ToolNavi;
 import com.titan.jnly.common.tools.ToolTrack;
 import com.titan.jnly.common.tools.ZoomLoc;
-import com.titan.jnly.patrol.ui.dialog.SearchDialog;
+import com.titan.jnly.patrol.ui.dlg.SearchDialog;
 import com.titan.jnly.patrol.ui.frame.FrameLayer;
 import com.titan.jnly.common.tools.ToolQuery;
 

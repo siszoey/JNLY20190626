@@ -23,6 +23,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.api.IPatrolApi;
 import com.titan.jnly.patrolv1.apt.ConserveLogApt;
 import com.titan.jnly.patrolv1.bean.ConserveLog;
+import com.titan.jnly.patrolv1.ui.aty.ConserveLogAty;
 
 import java.util.List;
 
@@ -102,7 +103,9 @@ public class ConserveLogListFrg extends BaseFragment
 
     @Override
     public void onClick(View view, ConserveLog data, int position) {
-        //startActivity(new Intent(getContext(), PatrolLogAty.class));
+        Intent intent = new Intent(getContext(), ConserveLogAty.class);
+        intent.putExtra("log", data);
+        startActivity(intent);
     }
 
     @Override

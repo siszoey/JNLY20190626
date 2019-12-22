@@ -7,10 +7,16 @@ import android.widget.Button;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.rw.file.xml.IoXml;
+import com.lib.bandaid.util.IntentUtil;
+import com.lib.bandaid.widget.easyui.convert.Resolution;
 import com.lib.bandaid.widget.easyui.ui_v1.ILifeCycle;
 import com.lib.bandaid.widget.easyui.ui_v1.PropertyView;
 import com.lib.bandaid.widget.easyui.xml.EasyUiXml;
 import com.titan.jnly.R;
+import com.titan.jnly.patrolv1.bean.ConserveLog;
+import com.zy.foxui.util.ObjectUtil;
+
+import java.util.Map;
 
 
 /**
@@ -18,6 +24,7 @@ import com.titan.jnly.R;
  */
 public class ConserveLogAty extends BaseMvpCompatAty implements View.OnClickListener {
 
+    private ConserveLog log;
     private EasyUiXml easyUiXml;
     private PropertyView propertyView;
     private Button btnExit, btnSubmit;
@@ -25,6 +32,7 @@ public class ConserveLogAty extends BaseMvpCompatAty implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        log = IntentUtil.getTData(_context, "log");
         initTitle(R.drawable.ic_back, "施工日志", Gravity.CENTER);
         setContentView(R.layout.patrolv1_ui_com_form_layout);
 
@@ -46,6 +54,8 @@ public class ConserveLogAty extends BaseMvpCompatAty implements View.OnClickList
     @Override
     protected void initClass() {
         easyUiXml = IoXml.readXmlFromAssets(_context, EasyUiXml.class, "patrolv1/XML_CONSERVE_MOUDLE_LOG.xml");
+        Map map = ObjectUtil.Common.convert(log, Map.class);
+        easyUiXml = Resolution.convert2EasyUiXml(easyUiXml, map);
         propertyView.setListener(new ILifeCycle() {
             @Override
             public void beforeCreate() {

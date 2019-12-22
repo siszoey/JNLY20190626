@@ -37,8 +37,7 @@ import com.titan.jnly.R;
 import com.titan.jnly.common.mvp.DicHandle;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
-import com.titan.jnly.invest.ui.aty.InvestActivity;
-import com.titan.jnly.common.uitl.NodeIteration;
+import com.lib.bandaid.arcruntime.util.NodeIteration;
 import com.titan.jnly.system.Constant;
 
 /**

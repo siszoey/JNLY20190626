@@ -19,10 +19,10 @@ import com.titan.jnly.common.mvp.DicHandle;
 import com.titan.jnly.examine.ui.aty.ExamineAty;
 import com.titan.jnly.invest.ui.aty.InvestActivity;
 import com.titan.jnly.login.bean.UserInfo;
-import com.titan.jnly.login.ui.dialog.DialogMould;
+import com.titan.jnly.login.ui.dlg.DialogMould;
 import com.titan.jnly.patrolv1.ui.aty.ConserveTaskListAty;
 import com.titan.jnly.patrolv1.ui.aty.PCMainAty;
-import com.titan.jnly.patrolv1.ui.aty.PatrolTaskListAty;
+import com.titan.jnly.pubser.ui.aty.PublicSerAty;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.system.version.bugly.BuglySetting;
 
@@ -120,7 +120,7 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
             startActivity(new Intent(_context, ConserveTaskListAty.class));
             //showToast("开发中");
         } else if (position == 3) {
-            showToast("开发中");
+            startActivity(new Intent(_context, PublicSerAty.class));
         } else if (position == 4) {
             //startActivity(new Intent(_context, PatrolLogAty.class));
             // startActivity(new Intent(_context, FieldInquireAty.class));

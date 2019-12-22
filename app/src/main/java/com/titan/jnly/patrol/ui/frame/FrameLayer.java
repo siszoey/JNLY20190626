@@ -21,7 +21,7 @@ import com.lib.bandaid.widget.treeview.bean.TreeNode;
 import com.lib.bandaid.widget.treeview.holder.ItemFactory;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.common.uitl.NodeIteration;
+import com.lib.bandaid.arcruntime.util.NodeIteration;
 import com.titan.jnly.login.bean.UserInfo;
 import com.titan.jnly.login.ui.aty.LoginAty;
 import com.titan.jnly.system.Constant;

@@ -53,13 +53,13 @@
         <activity android:name=".patrol.ui.aty.CureListAty" />
         <activity android:name=".patrol.ui.aty.CureItemAty" />
 
-        <!--新版本-->
+        <!--新版本养护巡查-->
         <activity android:name=".patrolv1.ui.aty.PCMainAty" />
         <activity android:name=".patrolv1.ui.aty.ConserveDesignAty" />
         <activity android:name=".patrolv1.ui.aty.ConserveDesignListAty" />
         <activity android:name=".patrolv1.ui.aty.ConserveTaskAty" />
         <activity android:name=".patrolv1.ui.aty.ConserveTaskListAty" />
-        <activity android:name=".patrolv1.ui.aty.ConserveLogAty"/>
+        <activity android:name=".patrolv1.ui.aty.ConserveLogAty" />
         <activity android:name=".patrolv1.ui.aty.PatrolLogAty" />
         <activity android:name=".patrolv1.ui.aty.PatrolLogListAty" />
         <activity android:name=".patrolv1.ui.aty.PatrolMsgAty" />
@@ -67,8 +67,8 @@
         <activity android:name=".patrolv1.ui.aty.PatrolTaskAty" />
         <activity android:name=".patrolv1.ui.aty.PatrolTaskListAty" />
 
-
-
+        <!--公共服务-->
+        <activity android:name=".pubser.ui.aty.PublicSerAty" />
 
         <activity android:name="com.lib.bandaid.widget.collect.image.CollectImgAty" />
         <activity android:name="com.lib.bandaid.widget.pick.ImgPickActivity" />
@@ -86,7 +86,9 @@
         <activity android:name=".main.ui.aty.MainFaceAty" />
 
         <activity android:name=".hardware.ui.aty.HardWareAty" />
-
+        <!--富文本框-->
+        <activity android:name=".common.activity.SimpleRhtAty" />
+        <activity android:name=".common.activity.ComRhtAty" />
 
         <!--zy: 服务注册-->
         <service android:name="com.lib.bandaid.service.imp.LocService" />

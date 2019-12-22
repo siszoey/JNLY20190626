@@ -11,6 +11,7 @@ import com.lib.bandaid.activity.BaseMvpCompatAty;
 import com.lib.bandaid.adapter.BaseFragmentAdapter;
 import com.lib.bandaid.fragment.BaseFragment;
 import com.lib.bandaid.message.FuncManager;
+import com.lib.bandaid.util.IntentUtil;
 import com.titan.jnly.R;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 import com.titan.jnly.patrolv1.ui.frg.ConserveLogListFrg;
@@ -31,7 +32,7 @@ public class ConserveTaskAty extends BaseMvpCompatAty {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent() != null) task = (ConserveTask) getIntent().getSerializableExtra("task");
+        if (getIntent() != null) task = IntentUtil.getTData(_context, "task");
         initTitle(R.drawable.ic_back, "养护任务", Gravity.CENTER);
         setContentView(R.layout.patrolv1_ui_aty_conserve_task_details);
     }
