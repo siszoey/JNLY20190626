@@ -341,7 +341,22 @@ public final class StringEngine {
         return pattern.matcher(str).matches();
     }
 
+
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str != null) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
+
     public static void main(String[] args) {
+        String s1 = "{\r\n\"Result\":true,\r\n\"Message\":\"requestsuccess\",\r\n\"Content\":{\r\n\"result\":[\r\n{\r\n\"FJ\":[],\r\n\"PoliciesRegulation\":{\r\n\"Id\":\"81cf2ed1-d1e5-4f49-9985-7a7fbc81fc3b\",\r\n\"Title\":\"测试接口\",\r\n\"PublishContent\":\"如附图附图图<imgsrc=\\\"/attached/image/20191220/20191220144525_9277.jpg\\\"alt=\\\"\\\"/>\",\r\n\"UserId\":\"6321cd11-f154-472e-adba-9fd97988b32b\",\r\n\"Publisher\":null,\r\n\"Fbsj\":\"2019-12-2014:44:55\",\r\n\"Category\":1,\r\n\"Remark\":null,\r\n\"VALID\":1,\r\n\"Enclosure\":null,\r\n\"BrowseCount\":null\r\n},\r\n\"PoliciesComment\":null\r\n}\r\n]\r\n}\r\n}";
+        String res = replaceBlank(s1);
+        System.out.println(res);
+
         boolean s = StringRightIChar(test1, "table", 1, "b");
         System.out.println(s);
 

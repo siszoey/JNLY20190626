@@ -28,5 +28,5 @@ public interface IPublicApi {
 
 
     @GET("api/GZFW/PoliciesRecord/PoliciesRegutions_Detail")
-    Observable<TTResult<Object>> httpGetDetail(@Query("Id") String id, @Query("pagetype") Integer type);
+    Observable<TTResult<ItemContent>> httpGetDetail(@Query("Id") String id, @Query("pagetype") Integer type);
 }

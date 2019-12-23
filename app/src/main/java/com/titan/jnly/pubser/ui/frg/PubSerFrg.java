@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
@@ -27,6 +29,8 @@ import com.zy.foxui.util.ObjectUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 公共服务Frg 模板
@@ -118,13 +122,10 @@ public class PubSerFrg extends BaseFragment
     }
 
     void reqDetail(Publish publish) {
-        netEasyReq.request(IPublicApi.class, (NetWorkListen<TTResult<Object>>) data -> {
-            Object obj = data.getContent();
-            Map map = ObjectUtil.Common.convert(obj, Map.class);
-            List<Map> rows = (List<Map>) map.get("rows");
-            List<ItemContent> list = ObjectUtil.Common.convert(rows, ItemContent.class);
-            ItemContent res = list.get(0);
-            ComRhtAty.start(activity, res);
+        netEasyReq.request(IPublicApi.class, (NetWorkListen<TTResult<ItemContent>>) data -> {
+            ItemContent content = data.getContent();
+            ComRhtAty.start(activity, content);
         }).httpGetDetail(publish.getId(), type);
     }
+
 }
