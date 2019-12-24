@@ -31,7 +31,6 @@ public final class RetrofitManager {
                     .addConverterFactory(ScalarsConverterFactory.create())
                     //.addConverterFactory(GsonConverterFactory.create(gsonFormat))
                     .addConverterFactory(SmartGsonConverterFactory.create())
-                    //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(baseUrl)
                     .build();
