@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
-import com.titan.jnly.patrolv1.api.IPatrolApi;
+import com.titan.jnly.patrolv1.api.IPatrolApiLocal;
 import com.titan.jnly.patrolv1.apt.PatrolTaskApt;
 import com.titan.jnly.patrolv1.bean.PatrolTask;
 
@@ -76,7 +76,7 @@ public class PatrolTaskListAty extends BaseMvpCompatAty
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<PatrolTask>>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<List<PatrolTask>>>() {
             @Override
             public void onSuccess(TTResult<List<PatrolTask>> data) {
                 boolean flag = data.getResult();

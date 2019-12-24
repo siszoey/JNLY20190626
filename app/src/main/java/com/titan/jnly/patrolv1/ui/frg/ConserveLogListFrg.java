@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
-import com.titan.jnly.patrolv1.api.IPatrolApi;
+import com.titan.jnly.patrolv1.api.IPatrolApiLocal;
 import com.titan.jnly.patrolv1.apt.ConserveLogApt;
 import com.titan.jnly.patrolv1.bean.ConserveLog;
 import com.titan.jnly.patrolv1.ui.aty.ConserveLogAty;
@@ -81,7 +81,7 @@ public class ConserveLogListFrg extends BaseFragment
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<ConserveLog>>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<List<ConserveLog>>>() {
             @Override
             public void onSuccess(TTResult<List<ConserveLog>> data) {
                 boolean flag = data.getResult();
@@ -124,7 +124,7 @@ public class ConserveLogListFrg extends BaseFragment
     }
 
     public void reqDel(ConserveLog msg) {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<Boolean>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<Boolean>>() {
             @Override
             public void onSuccess(TTResult<Boolean> data) {
                 boolean flag = data.getResult();

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
@@ -17,13 +19,19 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
+import com.titan.jnly.common.bean.PageRes;
 import com.titan.jnly.patrolv1.api.IPatrolApi;
+import com.titan.jnly.patrolv1.api.IPatrolApiLocal;
 import com.titan.jnly.patrolv1.apt.PatrolTaskApt;
 import com.titan.jnly.patrolv1.bean.PatrolTask;
 import com.titan.jnly.patrolv1.ui.aty.PatrolTaskAty;
+import com.titan.jnly.system.Constant;
 
 import java.util.List;
 
+/**
+ * 巡查任务列表
+ */
 public class PatrolTaskListFrg extends BaseFragment
         implements BaseRecycleAdapter.IViewClickListener<PatrolTask>,
         OnRefreshLoadMoreListener {
@@ -83,14 +91,11 @@ public class PatrolTaskListFrg extends BaseFragment
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<PatrolTask>>>() {
-            @Override
-            public void onSuccess(TTResult<List<PatrolTask>> data) {
-                boolean flag = data.getResult();
-                List list = data.getContent();
-                finishReq(flag, list);
-            }
-        }).httpGetPatrolTaskList(page.getNum(), page.getSize());
+        netEasyReq.request(IPatrolApi.class, (NetWorkListen<TTResult<PageRes<PatrolTask>>>) data -> {
+            boolean flag = data.getResult();
+            List list = data.getContent().getRows();
+            finishReq(flag, list);
+        }).httpGetPatrolTaskList("", page.getNum(), page.getSize(), Constant.getUserInfo().getId(), "");
     }
 
     private void finishReq(boolean flag, List data) {

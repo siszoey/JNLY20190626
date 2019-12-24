@@ -81,7 +81,7 @@ public class MainFaceAty extends BaseMvpCompatAty implements AdapterView.OnItemC
         items.add(GridItem.create(R.mipmap.ic_dc, "调查管理"));
         items.add(GridItem.create(R.mipmap.ic_xc, "巡查养护"));
         items.add(GridItem.create(R.mipmap.ic_zs, "综合展示"));
-        items.add(GridItem.create(R.mipmap.ic_fw, "公共服务"));
+        items.add(GridItem.create(R.mipmap.ic_fw, "公众服务"));
         items.add(GridItem.create(R.mipmap.ic_jc, "领导决策"));
         squareAdapter = new SquareAdapter(this, items);
         gridView.setAdapter(squareAdapter);

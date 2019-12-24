@@ -1,5 +1,6 @@
 package com.lib.bandaid.data.remote.util;
 
+import com.lib.bandaid.R;
 import com.lib.bandaid.data.remote.mock.annotation.DeleteMapping;
 import com.lib.bandaid.data.remote.mock.annotation.GetMapping;
 import com.lib.bandaid.data.remote.mock.annotation.PatchMapping;
@@ -21,6 +22,29 @@ import okhttp3.ResponseBody;
 public final class ResponseUtil {
 
     private static String CONTENT_TYPE = "content-type";
+
+
+    public static ResponseBody[] deepCopy(ResponseBody responseBody, int count) {
+        try {
+            byte[] bytes = responseBody.bytes();
+            MediaType type = responseBody.contentType();
+            ResponseBody[] res = new ResponseBody[count];
+            for (int i = 0; i < count; i++) {
+                res[i] = ResponseBody.create(type, bytes);
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void closes(ResponseBody[] bodies) {
+        for (ResponseBody body : bodies) {
+            body.close();
+        }
+    }
+
 
     public static Response createString(int status, String msg, Interceptor.Chain chain, String content) {
         return new Response.Builder()

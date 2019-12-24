@@ -1,4 +1,4 @@
-package com.titan.jnly.common.activity;
+package com.titan.jnly.common.activity.custom;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,24 +8,23 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.lib.bandaid.activity.BaseMvpCompatAty;
-import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.common.uitl.RichTxtUtil;
-import com.titan.jnly.pubser.bean.ItemContent;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnUrlClickListener;
 
-public class ComRhtAty extends BaseMvpCompatAty {
+/**
+ * 富文本显示框，主要用于新闻展示
+ */
+public class SimpleRhtAty extends BaseMvpCompatAty {
 
-    public static void start(Activity activity, ItemContent item) {
-        Intent intent = new Intent(activity, ComRhtAty.class);
-        ComRhtAty.title = item.getPoliciesRegulation().getTitle();
-        ComRhtAty.content = item.getPoliciesRegulation().getPublishContent();
+    public static void start(Activity activity, String title, String content) {
+        Intent intent = new Intent(activity, SimpleRhtAty.class);
+        SimpleRhtAty.title = title;
+        SimpleRhtAty.content = content;
         activity.startActivity(intent);
     }
 
-    //private static
     private static String title;
     private static String content;
     private TextView tvRich;
@@ -51,7 +50,6 @@ public class ComRhtAty extends BaseMvpCompatAty {
 
     @Override
     protected void initClass() {
-        content = RichTxtUtil.appendRichTxtImgUrl(content, Config.BASE_URL.ImgScanService);
         RichText.from(content)
                 .autoFix(true) // 是否自动修复，默认true
                 .autoPlay(true) // gif图片是否自动播放

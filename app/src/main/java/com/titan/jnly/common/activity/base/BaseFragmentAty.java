@@ -1,4 +1,4 @@
-package com.titan.jnly.common.activity;
+package com.titan.jnly.common.activity.base;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.lib.bandaid.activity.BaseAppCompatActivity;
-import com.lib.bandaid.activity.BaseMvpCompatAty;
-import com.lib.bandaid.data.remote.core.INetRequest;
 
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
@@ -18,7 +16,7 @@ import me.yokeyword.fragmentation.SupportActivityDelegate;
 import me.yokeyword.fragmentation.SupportHelper;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-public abstract class BaseMvpFrgAty<T extends INetRequest.BasePresenter> extends BaseMvpCompatAty<T> implements ISupportActivity {
+public abstract class BaseFragmentAty extends BaseAppCompatActivity implements ISupportActivity {
 
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
 

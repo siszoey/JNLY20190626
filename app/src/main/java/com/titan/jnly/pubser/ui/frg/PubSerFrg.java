@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.lib.bandaid.adapter.recycle.BaseRecycleAdapter;
 import com.lib.bandaid.data.remote.entity.TTResult;
 import com.lib.bandaid.data.remote.listen.NetWorkListen;
@@ -19,7 +17,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
-import com.titan.jnly.common.activity.ComRhtAty;
+import com.titan.jnly.common.activity.custom.ComRhtAty;
 import com.titan.jnly.pubser.api.IPublicApi;
 import com.titan.jnly.pubser.apt.PublishApt;
 import com.titan.jnly.pubser.bean.ItemContent;
@@ -28,9 +26,6 @@ import com.titan.jnly.pubser.bean.PublishPage;
 import com.zy.foxui.util.ObjectUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 公共服务Frg 模板
@@ -124,6 +119,7 @@ public class PubSerFrg extends BaseFragment
     void reqDetail(Publish publish) {
         netEasyReq.request(IPublicApi.class, (NetWorkListen<TTResult<ItemContent>>) data -> {
             ItemContent content = data.getContent();
+            if (ObjectUtil.Common.isEmpty(content)) return;
             ComRhtAty.start(activity, content);
         }).httpGetDetail(publish.getId(), type);
     }

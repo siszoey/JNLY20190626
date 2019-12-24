@@ -22,7 +22,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
-import com.titan.jnly.patrolv1.api.IPatrolApi;
+import com.titan.jnly.patrolv1.api.IPatrolApiLocal;
 import com.titan.jnly.patrolv1.apt.PatrolLogApt;
 import com.titan.jnly.patrolv1.bean.PatrolLog;
 import com.titan.jnly.patrolv1.ui.aty.PatrolLogAty;
@@ -86,7 +86,7 @@ public class PatrolLogListFrg extends BaseFragment
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<PatrolLog>>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<List<PatrolLog>>>() {
             @Override
             public void onSuccess(TTResult<List<PatrolLog>> data) {
                 boolean flag = data.getResult();
@@ -136,7 +136,7 @@ public class PatrolLogListFrg extends BaseFragment
     }
 
     public void reqDel(PatrolLog log) {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<Boolean>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<Boolean>>() {
             @Override
             public void onSuccess(TTResult<Boolean> data) {
                 boolean flag = data.getResult();

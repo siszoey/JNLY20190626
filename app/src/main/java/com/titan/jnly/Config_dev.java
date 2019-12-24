@@ -11,6 +11,7 @@ public class Config_dev {
      * 测试服务地址
      */
     public interface BASE_URL {
+        String BaseRich_Url = "http://101.201.54.143:9002/";
         String BaseUrl_Mock = "http://127.0.0.1:8080/";
         String BaseUrl_1 = "http://101.201.54.143:9003/";
         String BaseFileService = "http://101.201.54.143:9088";

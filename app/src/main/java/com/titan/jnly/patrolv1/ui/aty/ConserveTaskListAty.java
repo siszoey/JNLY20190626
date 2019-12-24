@@ -17,7 +17,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.titan.jnly.R;
-import com.titan.jnly.patrolv1.api.IPatrolApi;
+import com.titan.jnly.patrolv1.api.IPatrolApiLocal;
 import com.titan.jnly.patrolv1.apt.ConserveTaskApt;
 import com.titan.jnly.patrolv1.bean.ConserveTask;
 
@@ -77,7 +77,7 @@ public class ConserveTaskListAty extends BaseMvpCompatAty
     }
 
     public void requestList() {
-        netEasyReq.request(IPatrolApi.class, new NetWorkListen<TTResult<List<ConserveTask>>>() {
+        netEasyReq.request(IPatrolApiLocal.class, new NetWorkListen<TTResult<List<ConserveTask>>>() {
             @Override
             public void onSuccess(TTResult<List<ConserveTask>> data) {
                 boolean flag = data.getResult();

@@ -75,6 +75,10 @@
         <activity android:name=".demo.DemoActivity" />
 
 
+        <activity android:name=".demo.DocViewAty">
+
+        </activity>
+
         <activity android:name=".login.ui.aty.LoginAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,8 +91,8 @@
 
         <activity android:name=".hardware.ui.aty.HardWareAty" />
         <!--富文本框-->
-        <activity android:name=".common.activity.SimpleRhtAty" />
-        <activity android:name=".common.activity.ComRhtAty" />
+        <activity android:name=".common.activity.custom.SimpleRhtAty" />
+        <activity android:name=".common.activity.custom.ComRhtAty" />
 
         <!--zy: 服务注册-->
         <service android:name="com.lib.bandaid.service.imp.LocService" />

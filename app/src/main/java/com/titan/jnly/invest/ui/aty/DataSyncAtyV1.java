@@ -20,7 +20,7 @@ import com.lib.bandaid.system.theme.dialog.ATEDialog;
 import com.lib.bandaid.util.ObjectUtil;
 import com.lib.bandaid.widget.collect.image.CollectImgBean;
 import com.titan.jnly.R;
-import com.titan.jnly.common.activity.BaseMvpFrgAty;
+import com.titan.jnly.common.activity.base.BaseMvpFrgAty;
 import com.titan.jnly.common.fragment.BaseMainFragment;
 import com.titan.jnly.system.Constant;
 import com.titan.jnly.invest.apt.SyncFrgAdapter;

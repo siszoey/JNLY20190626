@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lib.bandaid.data.remote.api.annotation.BaseUrl;
+import com.lib.bandaid.data.remote.convert.SmartGsonConverterFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public final class RetrofitManager {
 
     private static Map<String, Retrofit> retrofitMap = new HashMap<>();
-    static Gson gsonFormat = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    //static Gson gsonFormat = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    //static Gson gsonFormat2 = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
     private static Retrofit createRetrofit(String baseUrl) {
         if (retrofitMap.containsKey(baseUrl)) {
@@ -27,7 +29,8 @@ public final class RetrofitManager {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(OkHttp3Util.okHttpClient)
                     .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gsonFormat))
+                    //.addConverterFactory(GsonConverterFactory.create(gsonFormat))
+                    .addConverterFactory(SmartGsonConverterFactory.create())
                     //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl(baseUrl)

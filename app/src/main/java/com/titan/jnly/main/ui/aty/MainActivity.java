@@ -18,7 +18,7 @@ import com.lib.bandaid.service.imp.LocService;
 import com.lib.bandaid.util.PositionUtil;
 import com.titan.jnly.Config;
 import com.titan.jnly.R;
-import com.titan.jnly.common.activity.BaseFragmentAty;
+import com.titan.jnly.common.activity.base.BaseFragmentAty;
 import com.titan.jnly.common.fragment.BaseMainFragment;
 import com.titan.jnly.main.ui.frg.decision.DecisionFragment;
 import com.titan.jnly.main.ui.frg.manage.ManagerFragment;

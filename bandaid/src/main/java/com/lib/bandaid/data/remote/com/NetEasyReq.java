@@ -124,8 +124,7 @@ public class NetEasyReq implements INetRequest.EasyPresenter {
                             } else if (throwable instanceof UnknownHostException) {
                                 UnknownHostException unknownHostException = (UnknownHostException) throwable;
                                 ToastUtils.showShort("未知主机:" + unknownHostException.getMessage());
-                                LogUtils.eTag("NetworkError", "未知主机:" +
-                                        unknownHostException.getMessage() + "----" + value);
+                                LogUtils.eTag("NetworkError", "未知主机:" + unknownHostException.getMessage() + "----" + value);
                             } else {
                                 ToastUtils.showShort("加载失败:" + throwable.getMessage());
                                 LogUtils.eTag("NetworkError", throwable.getMessage());
